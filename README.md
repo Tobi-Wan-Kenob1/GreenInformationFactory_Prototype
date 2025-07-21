@@ -6,7 +6,7 @@
 
 ## 📦 Project Structure
 
-
+```bash
 GreenInformationFactory/
 │
 ├── notebooks/            # Jupyter notebooks for preprocessing, exploration, etc.
@@ -21,6 +21,8 @@ GreenInformationFactory/
 ├── .gitignore
 └── README.md             # You're here!
 
+```
+
 📂 Data Access
 We rely on Zenodo for FAIR-compliant dataset storage:
 
@@ -31,9 +33,10 @@ Cleaned Dataset (v1)	10.5281/zenodo.YYYYYYY	Preprocessed for model training
 🤖 Model Outputs
 Trained models are stored in /models/ and linked to preprocessing versions.
 Example:
-
+```bash
 models/
 └── rf_model_v1.pkl
+```
 
 📜 License
 This project is licensed under the MIT License – see the LICENSE file for details.
