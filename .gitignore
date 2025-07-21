@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Conda
+.env/
+.venv/
+env/
+venv/
+*.conda
+*.env
+*.yml.lock
+
+# VSCode / IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data & models (store these externally or via Zenodo)
+data/*.csv
+data/*.xlsx
+data/*.json
+models/*.pkl
+models/*.joblib
+
+# Logs
+*.log
+
+# Secrets
+.env
+*.token
+*.key
