@@ -1,0 +1,32 @@
+name: greeninfo
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - requests
+  - joblib
+  - ipykernel
+  - pip
+
+  # Optional: for working with Zenodo REST APIs or JSON data
+  - pip:
+      - python-dotenv
+
+# How to Use
+
+# Create the environment
+#conda env create -f environment.yml
+
+# Activate the environment
+#conda activate greeninfo
+
+# Start JupyterLab (or notebook)
+#jupyter lab
