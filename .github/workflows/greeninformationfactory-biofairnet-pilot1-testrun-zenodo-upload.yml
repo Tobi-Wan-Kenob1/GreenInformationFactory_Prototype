@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 =======
-name: Upload release payload to Zenodo
+name: "Upload release payload to Zenodo"
 
 on:
   workflow_dispatch:
