@@ -28,7 +28,7 @@ jobs:
 
       - name: List payload
         run: |
-          ls -lah notebooks/release_payload || (echo "release_payload not found" && exit 1)
+          ls -lah GreenInformationFactory_Prototype/notebooks/release_payload || (echo "release_payload not found" && exit 1)
 
       - name: Create deposition
         id: dep
