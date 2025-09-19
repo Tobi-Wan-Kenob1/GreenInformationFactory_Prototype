@@ -1,0 +1,106 @@
+name: Upload release payload to Zenodo
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Zenodo title"
+        required: true
+        default: "__TITLE__"
+      description:
+        description: "Zenodo description"
+        required: true
+        default: "__DESCRIPTION__"
+      community:
+        description: "Zenodo community identifier"
+        required: true
+        default: "__COMMUNITY__"
+  push:
+    tags:
+      - "zenodo-*"
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: List payload
+        run: |
+          ls -lah release_payload || (echo "release_payload not found" && exit 1)
+
+      - name: Create deposition
+        id: dep
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+        run: |
+          META=$(jq -n \
+            --arg title "${{ github.event.inputs.title }}" \
+            --arg desc  "${{ github.event.inputs.description }}" \
+            --arg comm  "${{ github.event.inputs.community }}" \
+            --arg creator "__CREATOR__" \
+            --arg affil   "__AFFILIATION__" \
+            --arg orcid   "__ORCID__" \
+            --arg kw1     "__KW1__" \
+            --arg kw2     "__KW2__" \
+            --arg kw3     "__KW3__" \
+            --arg lic     "__LICENSE__" \
+            '{
+               metadata: {
+                 title: $title,
+                 upload_type: "dataset",
+                 description: $desc,
+                 creators: (
+                   if ($orcid | length) > 0 then
+                     [{name:$creator, affiliation:$affil, orcid:$orcid}]
+                   else
+                     [{name:$creator, affiliation:$affil}]
+                   end
+                 ),
+                 communities: [{identifier:$comm}],
+                 keywords: [$kw1, $kw2, $kw3],
+                 related_identifiers: [
+                   {identifier:"10.5281/zenodo.16256961", relation:"isDerivedFrom", scheme:"doi"}
+                 ],
+                 access_right: "open",
+                 license: $lic
+               }
+             }')
+          RES=$(curl -sS -X POST "https://zenodo.org/api/deposit/depositions" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $ZENODO_TOKEN" \
+              -d "$META")
+          echo "$RES" > dep.json
+          echo "id=$(jq -r '.id' dep.json)" >> $GITHUB_OUTPUT
+          echo "bucket=$(jq -r '.links.bucket' dep.json)" >> $GITHUB_OUTPUT
+          echo "html=$(jq -r '.links.html' dep.json)" >> $GITHUB_OUTPUT
+          test "$(jq -r '.id' dep.json)" != "null"
+
+      - name: Upload files
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+        run: |
+          set -e
+          for f in release_payload/*; do
+            echo "Uploading $f"
+            curl -sS --fail -H "Authorization: Bearer $ZENODO_TOKEN" \
+                 --upload-file "$f" "${{ steps.dep.outputs.bucket }}/$(basename "$f")"
+          done
+
+      - name: Publish
+        id: publish
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+        run: |
+          RES=$(curl -sS -X POST "https://zenodo.org/api/deposit/depositions/${{ steps.dep.outputs.id }}/actions/publish" \
+                 -H "Authorization: Bearer $ZENODO_TOKEN")
+          echo "$RES" > pub.json
+          echo "record=$(jq -r '.links.record_html' pub.json)" >> $GITHUB_OUTPUT
+          echo "doi=$(jq -r '.metadata.doi' pub.json)" >> $GITHUB_OUTPUT
+          test "$(jq -r '.metadata.doi' pub.json)" != "null"
+
+      - name: Output links
+        run: |
+          echo "Record: ${{ steps.publish.outputs.record }}"
+          echo "DOI:    ${{ steps.publish.outputs.doi }}"
