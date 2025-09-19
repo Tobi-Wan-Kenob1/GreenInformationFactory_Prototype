@@ -1,0 +1,135 @@
+name: Zenodo Download
+
+# Allow the workflow to push files back to the repo
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      doi:
+        description: "Zenodo DOI (e.g., 10.5281/zenodo.16256961)"
+        required: true
+        default: "10.5281/zenodo.16256961"
+      dest_dir:
+        description: "Destination directory at repo root"
+        required: true
+        default: "data/raw"
+  push:
+    tags:
+      - "zenodo-dl-*"
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true  # use GITHUB_TOKEN for push
+
+      - name: Ensure jq and curl available
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update -y
+            sudo apt-get install -y jq
+          fi
+          curl --version
+
+      - name: Determine DOI and destination
+        id: cfg
+        run: |
+          # Prefer file metadata/zenodo_download.json if present (tag-trigger use case)
+          DOI=""
+          DEST=""
+
+          if [ -f "metadata/zenodo_download.json" ]; then
+            DOI=$(jq -r '.doi // empty' metadata/zenodo_download.json)
+            DEST=$(jq -r '.dest_dir // empty' metadata/zenodo_download.json)
+          fi
+
+          # Fallback to workflow_dispatch inputs if provided
+          if [ -z "$DOI" ] && [ -n "${{ github.event.inputs.doi }}" ]; then
+            DOI="${{ github.event.inputs.doi }}"
+          fi
+          if [ -z "$DEST" ] && [ -n "${{ github.event.inputs.dest_dir }}" ]; then
+            DEST="${{ github.event.inputs.dest_dir }}"
+          fi
+
+          if [ -z "$DOI" ]; then
+            echo "::error ::No DOI provided. Provide metadata/zenodo_download.json or workflow inputs."
+            exit 1
+          fi
+
+          if [ -z "$DEST" ]; then
+            DEST="data/raw"
+          fi
+
+          echo "doi=$DOI"   >> $GITHUB_OUTPUT
+          echo "dest=$DEST" >> $GITHUB_OUTPUT
+          echo "Using DOI: $DOI"
+          echo "Destination: $DEST"
+
+      - name: Resolve Zenodo record id from DOI
+        id: rec
+        run: |
+          DOI="${{ steps.cfg.outputs.doi }}"
+          # Expecting DOI like: 10.5281/zenodo.1234567
+          REC_ID=$(echo "$DOI" | awk -F. '{print $NF}')
+          if ! [[ "$REC_ID" =~ ^[0-9]+$ ]]; then
+            echo "::error ::Could not parse record id from DOI: $DOI"
+            exit 1
+          fi
+          echo "rec_id=$REC_ID" >> $GITHUB_OUTPUT
+          echo "Record id: $REC_ID"
+
+      - name: Fetch record metadata and download files
+        run: |
+          set -euo pipefail
+          REC_ID="${{ steps.rec.outputs.rec_id }}"
+          DEST="${{ steps.cfg.outputs.dest }}"
+
+          mkdir -p "$DEST"
+
+          echo "Fetching record JSON…"
+          curl -sS -L "https://zenodo.org/api/records/${REC_ID}" -o record.json
+          if ! jq -e '.files | length > 0' record.json >/dev/null; then
+            echo "::error ::No files found in record or invalid JSON."
+            cat record.json
+            exit 1
+          fi
+
+          COUNT=$(jq '.files | length' record.json)
+          echo "Found $COUNT file(s)."
+
+          # Download each file to DEST using its download link
+          for i in $(seq 0 $((COUNT-1))); do
+            NAME=$(jq -r ".files[$i].key" record.json)
+            URL=$(jq -r ".files[$i].links.download // .files[$i].links.self" record.json)
+            if [ -z "$URL" ] || [ "$URL" = "null" ]; then
+              echo "::warning ::No download link for $NAME, skipping."
+              continue
+            fi
+            echo "Downloading: $NAME"
+            curl -sS -L "$URL" -o "$DEST/$NAME"
+          done
+
+          echo "Downloaded files to $DEST:"
+          ls -lah "$DEST"
+
+      - name: Commit and push downloaded files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST="${{ steps.cfg.outputs.dest }}"
+          git config user.name  "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+          git add "$DEST"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Add Zenodo download (${{ steps.cfg.outputs.doi }}) to ${DEST}"
+          git push
