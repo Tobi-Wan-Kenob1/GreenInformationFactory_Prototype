@@ -1,0 +1,4 @@
+,0
+LinearRegression,"{'best_score': np.float64(1.8948237821887208), 'best_params': {'fit_intercept': True}}"
+RandomForest,"{'best_score': np.float64(0.02236662308381961), 'best_params': {'max_depth': None, 'min_samples_split': 2, 'n_estimators': 100}}"
+GradientBoosting,"{'best_score': np.float64(0.029444870905003202), 'best_params': {'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 200}}"

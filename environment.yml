@@ -15,6 +15,7 @@ dependencies:
   - joblib
   - ipykernel
   - pip
+  - pyzenodo3
 
   # Optional: for working with Zenodo REST APIs or JSON data
   - pip:
