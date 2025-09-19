@@ -187,4 +187,3 @@ jobs:
         run: |
           echo "Record: ${{ steps.publish.outputs.record }}"
           echo "DOI:    ${{ steps.publish.outputs.doi }}"
->>>>>>> 3aca34b3d4f3f552180ec8ddfdeb9536480fa946
