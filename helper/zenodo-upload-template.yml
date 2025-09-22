@@ -103,22 +103,83 @@ jobs:
           ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
           ZENODO_SANDBOX_TOKEN: ${{ secrets.ZENODO_SANDBOX_TOKEN }}
         run: |
-          if [ "${{ steps.cfg.outputs.use_sandbox }}" = "true" ]; then
-            BASE="https://sandbox.zenodo.org"
-            TOKEN="${ZENODO_SANDBOX_TOKEN}"
-          else
+          if [ "${{ steps.meta.outputs.use_sandbox }}" = "false" ] || [ "${{ steps.meta.outputs.use_sandbox }}" = "False" ]; then
             BASE="https://zenodo.org"
             TOKEN="${ZENODO_TOKEN}"
+          else
+            BASE="https://sandbox.zenodo.org"
+            TOKEN="${ZENODO_SANDBOX_TOKEN}"
           fi
-
           if [ -z "$TOKEN" ]; then
             echo "::error ::Missing API token. For sandbox set repo secret ZENODO_SANDBOX_TOKEN; for production set ZENODO_TOKEN."
             exit 1
           fi
-
           echo "base=$BASE"   >> $GITHUB_OUTPUT
           echo "token=$TOKEN" >> $GITHUB_OUTPUT
           echo "API base: $BASE"
+          
+      - name: Resolve metadata inputs (support tag runs)
+        id: meta
+        run: |
+          set -euo pipefail
+
+          # 1) Defaults (hard-coded safety)
+          TITLE_DEF="GreenInformationFactory – Processed Data, Model & Performance"
+          DESC_DEF="Train/test splits, trained model(s), and evaluation figure. Raw data: 10.5281/zenodo.16256961."
+          COMM_DEF="biofairnet"
+          CREATOR_DEF="Rosnitschek, Tobias"
+          AFFIL_DEF="University of Bayreuth"
+          ORCID_DEF=""
+          KW_DEF="FAIR, machine learning, circular economy"
+          LIC_DEF="MIT"
+          SANDBOX_DEF="true"
+
+          # 2) Load from file if available
+          if [ -f metadata/zenodo_params.json ]; then
+            TITLE_FILE=$(jq -r '.title // empty' metadata/zenodo_params.json)
+            DESC_FILE=$(jq -r '.description // empty' metadata/zenodo_params.json)
+            COMM_FILE=$(jq -r '.community // empty' metadata/zenodo_params.json)
+            CREATOR_FILE=$(jq -r '.creator // empty' metadata/zenodo_params.json)
+            AFFIL_FILE=$(jq -r '.affiliation // empty' metadata/zenodo_params.json)
+            ORCID_FILE=$(jq -r '.orcid // empty' metadata/zenodo_params.json)
+            KW_FILE=$(jq -r '(.keywords // []) | join(", ")' metadata/zenodo_params.json)
+            LIC_FILE=$(jq -r '.license // empty' metadata/zenodo_params.json)
+            SBX_FILE=$(jq -r '(.use_sandbox // empty)' metadata/zenodo_params.json)
+          fi
+
+          # 3) Pull workflow_dispatch inputs (empty on tag pushes)
+          TITLE_IN="${{ github.event.inputs.title }}"
+          DESC_IN="${{ github.event.inputs.description }}"
+          COMM_IN="${{ github.event.inputs.community }}"
+          CREATOR_IN="${{ github.event.inputs.creator }}"
+          AFFIL_IN="${{ github.event.inputs.affiliation }}"
+          ORCID_IN="${{ github.event.inputs.orcid }}"
+          KW_IN="${{ github.event.inputs.keywords }}"
+          LIC_IN="${{ github.event.inputs.license_id }}"
+          SBX_IN="${{ github.event.inputs.use_sandbox }}"
+
+          # 4) Resolve precedence: inputs > file > defaults
+          TITLE="${TITLE_IN:-${TITLE_FILE:-$TITLE_DEF}}"
+          DESC="${DESC_IN:-${DESC_FILE:-$DESC_DEF}}"
+          COMM="${COMM_IN:-${COMM_FILE:-$COMM_DEF}}"
+          CREATOR="${CREATOR_IN:-${CREATOR_FILE:-$CREATOR_DEF}}"
+          AFFIL="${AFFIL_IN:-${AFFIL_FILE:-$AFFIL_DEF}}"
+          ORCID="${ORCID_IN:-${ORCID_FILE:-$ORCID_DEF}}"
+          KWCSV="${KW_IN:-${KW_FILE:-$KW_DEF}}"
+          LIC="${LIC_IN:-${LIC_FILE:-$LIC_DEF}}"
+          # For sandbox: anything other than literal "false"/"False" counts as true
+          SBX="${SBX_IN:-${SBX_FILE:-$SANDBOX_DEF}}"
+
+          echo "title=$TITLE"       >> $GITHUB_OUTPUT
+          echo "description=$DESC"  >> $GITHUB_OUTPUT
+          echo "community=$COMM"    >> $GITHUB_OUTPUT
+          echo "creator=$CREATOR"   >> $GITHUB_OUTPUT
+          echo "affiliation=$AFFIL" >> $GITHUB_OUTPUT
+          echo "orcid=$ORCID"       >> $GITHUB_OUTPUT
+          echo "keywords_csv=$KWCSV">> $GITHUB_OUTPUT
+          echo "license=$LIC"       >> $GITHUB_OUTPUT
+          echo "use_sandbox=$SBX"   >> $GITHUB_OUTPUT
+
 
       - name: Create deposition
         id: dep
@@ -126,18 +187,18 @@ jobs:
           BASE="${{ steps.endpoints.outputs.base }}"
           TOKEN="${{ steps.endpoints.outputs.token }}"
 
-          # Turn the CSV keywords input into a JSON array and trim spaces
-          KWCSV="${{ github.event.inputs.keywords }}"
-          KEYWORDS_JSON=$(jq -cn --arg kw "$KWCSV" '$kw | split(",") | map(gsub("^\\s+|\\s+$"; ""))')
+          # Keywords CSV → JSON array
+          KWCSV='${{ steps.meta.outputs.keywords_csv }}'
+          KEYWORDS_JSON=$(jq -cn --arg kw "$KWCSV" '$kw | split(",") | map(gsub("^\\s+|\\s+$"; "")) | map(select(length>0))')
 
           META=$(jq -n \
-            --arg title "${{ github.event.inputs.title }}" \
-            --arg desc  "${{ github.event.inputs.description }}" \
-            --arg comm  "${{ github.event.inputs.community }}" \
-            --arg creator "${{ github.event.inputs.creator }}" \
-            --arg affil   "${{ github.event.inputs.affiliation }}" \
-            --arg orcid   "${{ github.event.inputs.orcid }}" \
-            --arg lic     "${{ github.event.inputs.license_id }}" \
+            --arg title '${{ steps.meta.outputs.title }}' \
+            --arg desc  '${{ steps.meta.outputs.description }}' \
+            --arg comm  '${{ steps.meta.outputs.community }}' \
+            --arg creator '${{ steps.meta.outputs.creator }}' \
+            --arg affil   '${{ steps.meta.outputs.affiliation }}' \
+            --arg orcid   '${{ steps.meta.outputs.orcid }}' \
+            --arg lic     '${{ steps.meta.outputs.license }}' \
             --argjson keywords "$KEYWORDS_JSON" \
             '{
                metadata: {
@@ -181,6 +242,7 @@ jobs:
           echo "id=$dep_id"     >> $GITHUB_OUTPUT
           echo "bucket=$bucket" >> $GITHUB_OUTPUT
           echo "html=$html"     >> $GITHUB_OUTPUT
+
 
       - name: Upload files
         run: |
