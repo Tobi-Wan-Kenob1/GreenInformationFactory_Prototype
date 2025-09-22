@@ -10,5 +10,6 @@
     "machine learning",
     "circular economy"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "use_sandbox": "true"
 }
