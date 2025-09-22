@@ -26,8 +26,8 @@ on:
         default: "University of Bayreuth"
       orcid:
         description: "ORCID (leave empty if none)"
-        required: false
-        default: ""
+        required: true
+        default: "0000-0002-4876-2536"
       keywords:
         description: "Keywords (comma-separated)"
         required: true
