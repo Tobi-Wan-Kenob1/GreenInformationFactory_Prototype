@@ -26,26 +26,18 @@ on:
         default: "University of Bayreuth"
       orcid:
         description: "ORCID (leave empty if none)"
-        required: true
+        required: false
         default: ""
-      keyword1:
-        description: "Keyword 1"
+      keywords:
+        description: "Keywords (comma-separated)"
         required: true
-        default: "FAIR"
-      keyword2:
-        description: "Keyword 2"
-        required: true
-        default: "machine learning"
-      keyword3:
-        description: "Keyword 3"
-        required: true
-        default: "circular economy"
+        default: "FAIR, machine learning, circular economy"
       license_id:
         description: "License identifier"
         required: true
         default: "MIT"
       use_sandbox:
-        description: "Use Zenodo SANDBOX (recommended; safe for tests)"
+        description: "Use Zenodo SANDBOX (recommended)"
         required: true
         default: "true"    # ← default: sandbox
   push:
@@ -134,6 +126,10 @@ jobs:
           BASE="${{ steps.endpoints.outputs.base }}"
           TOKEN="${{ steps.endpoints.outputs.token }}"
 
+          # Turn the CSV keywords input into a JSON array and trim spaces
+          KWCSV="${{ github.event.inputs.keywords }}"
+          KEYWORDS_JSON=$(jq -cn --arg kw "$KWCSV" '$kw | split(",") | map(gsub("^\\s+|\\s+$"; ""))')
+
           META=$(jq -n \
             --arg title "${{ github.event.inputs.title }}" \
             --arg desc  "${{ github.event.inputs.description }}" \
@@ -141,10 +137,8 @@ jobs:
             --arg creator "${{ github.event.inputs.creator }}" \
             --arg affil   "${{ github.event.inputs.affiliation }}" \
             --arg orcid   "${{ github.event.inputs.orcid }}" \
-            --arg kw1     "${{ github.event.inputs.keyword1 }}" \
-            --arg kw2     "${{ github.event.inputs.keyword2 }}" \
-            --arg kw3     "${{ github.event.inputs.keyword3 }}" \
             --arg lic     "${{ github.event.inputs.license_id }}" \
+            --argjson keywords "$KEYWORDS_JSON" \
             '{
                metadata: {
                  title: $title,
@@ -158,7 +152,7 @@ jobs:
                    end
                  ),
                  communities: [{identifier:$comm}],
-                 keywords: [$kw1, $kw2, $kw3],
+                 keywords: $keywords,
                  related_identifiers: [
                    {identifier:"10.5281/zenodo.16256961", relation:"isDerivedFrom", scheme:"doi"}
                  ],
