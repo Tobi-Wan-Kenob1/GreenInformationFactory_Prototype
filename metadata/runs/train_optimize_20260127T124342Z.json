@@ -1,0 +1,24 @@
+{
+  "stage": "train_optimize",
+  "timestamp_utc": "2026-01-27T12:43:42+00:00",
+  "git": {
+    "repo_root": "/home/097e80f6-6687-4e65-aab6-9abf7b887006/GreenInformationFactory_Prototype",
+    "commit": "93e30d10beb82a6f3a914cbbb190ad7709a830ff",
+    "branch": "main",
+    "dirty": false
+  },
+  "env": {
+    "python": "3.11.13",
+    "platform": "linux"
+  },
+  "payload": {
+    "best_model": "rf",
+    "comparison_csv": "data/results/model_comparison.csv",
+    "plots": [
+      "data/results/val_scatter_top3.png",
+      "data/results/val_rmse_bar.png",
+      "data/results/val_r2_bar.png"
+    ],
+    "bundle": "notebooks/models/all_models.pkl"
+  }
+}
