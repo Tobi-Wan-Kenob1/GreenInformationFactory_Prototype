@@ -1,0 +1,17 @@
+{
+  "stage": "prepare_data",
+  "timestamp_utc": "2026-01-26T12:55:35+00:00",
+  "git": {
+    "repo_root": "/home/097e80f6-6687-4e65-aab6-9abf7b887006/GreenInformationFactory_Prototype",
+    "commit": "33a85f4b987f9bf4ef2a572894fbe76e394b43db",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.11.5",
+    "platform": "linux"
+  },
+  "payload": {
+    "message": "config loaded OK"
+  }
+}
