@@ -1,0 +1,30 @@
+{
+  "stage": "prepare_data",
+  "timestamp_utc": "2026-01-27T11:40:29+00:00",
+  "git": {
+    "repo_root": "/home/097e80f6-6687-4e65-aab6-9abf7b887006/GreenInformationFactory_Prototype",
+    "commit": "d50b2d686ebd6ad41541ba2b0d14ea638dea4936",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.11.13",
+    "platform": "linux"
+  },
+  "payload": {
+    "raw_file": "data/raw/BioFairNet_Pilot1_Testrun.csv",
+    "features": [
+      "time_s",
+      "Temperature (°C)",
+      "Stiring"
+    ],
+    "target": "Pressure (bar)",
+    "rows_final": 9225,
+    "splits": {
+      "train": 5904,
+      "test": 1476,
+      "validation": 1845
+    },
+    "schema_file": "metadata/prepared_schema.json"
+  }
+}

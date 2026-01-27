@@ -1,0 +1,23 @@
+{
+  "features": [
+    "time_s",
+    "Temperature (\u00b0C)",
+    "Stiring"
+  ],
+  "target": "Pressure (bar)",
+  "rows_total": 9225,
+  "splits": {
+    "train": 5904,
+    "test": 1476,
+    "validation": 1845
+  },
+  "source_file": "data/raw/BioFairNet_Pilot1_Testrun.csv",
+  "files": {
+    "X_train": "data/processed/Train/X_train.csv",
+    "y_train": "data/processed/Train/y_train.csv",
+    "X_test": "data/processed/Test/X_test.csv",
+    "y_test": "data/processed/Test/y_test.csv",
+    "X_val": "data/processed/Validation/X_val.csv",
+    "y_val": "data/processed/Validation/y_val.csv"
+  }
+}
