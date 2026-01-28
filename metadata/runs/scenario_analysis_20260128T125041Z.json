@@ -1,0 +1,28 @@
+{
+  "stage": "scenario_analysis",
+  "timestamp_utc": "2026-01-28T12:50:41+00:00",
+  "git": {
+    "repo_root": "/home/097e80f6-6687-4e65-aab6-9abf7b887006/GreenInformationFactory_Prototype",
+    "commit": "7a5b56bf4b4a04ea479c3dead9584741873a1ebc",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.11.13",
+    "platform": "linux"
+  },
+  "payload": {
+    "baseline_split": "Validation",
+    "baseline_idx": 0,
+    "scenario_vars": [
+      "time_s",
+      "Stiring"
+    ],
+    "grid_points": 25,
+    "outputs": {
+      "scenario_table": "data/results/scenario_results_oneway_rf.csv"
+    },
+    "model": "rf",
+    "notes": "Oneway sensitivity around a baseline row; includes v1, PCA (adaptive), and assumptions-based sustainability proxies."
+  }
+}
