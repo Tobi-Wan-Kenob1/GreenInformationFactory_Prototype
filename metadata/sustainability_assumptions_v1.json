@@ -1,0 +1,20 @@
+{
+  "drivers": {
+    "time": ["time_s", "time", "t", "Time"],
+    "temperature": ["temperature", "temp", "T", "Temperature"],
+    "stirring": ["stiring", "stirring", "rpm", "RPM", "Stiring", "Stirring"]
+  },
+  "energy": {
+    "method": "weighted_sum",
+    "weights": {
+      "time": 0.4,
+      "temperature": 0.4,
+      "stirring": 0.2
+    },
+    "normalize": "minmax"
+  },
+  "metrics": {
+    "co2": "0.7*energy + 0.3*y_pred_n",
+    "mci": "clip(1 - (0.6*energy + 0.4*y_pred_n), 0, 1)"
+  }
+}
