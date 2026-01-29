@@ -1,5 +1,5 @@
 {
-  "use_sandbox": true,
+  "use_sandbox": false,
   "community": "biofairnet",
   "license": "MIT",
   "upload_type": "dataset",
