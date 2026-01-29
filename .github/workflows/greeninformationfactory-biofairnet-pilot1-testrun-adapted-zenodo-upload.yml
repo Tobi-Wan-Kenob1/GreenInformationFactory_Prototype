@@ -1,6 +1,6 @@
 name: Upload release payload to Zenodo
 
-# Only this workflow reacts to "upload" tags
+# Only this workflow reacts to "Old-upload" tags
 on:
   workflow_dispatch:
     inputs:
@@ -42,7 +42,7 @@ on:
         default: "true"    # ← default: sandbox
   push:
     tags:
-      - "zenodo-ul-*"
+      - "zenodo-old_ul-*"
 
 permissions:
   contents: write
