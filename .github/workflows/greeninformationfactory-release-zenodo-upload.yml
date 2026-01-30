@@ -37,7 +37,7 @@ on:
         default: "MIT"
       use_sandbox:
         description: "Use Zenodo SANDBOX (recommended)"
-        required: true
+        required: false
         default: "true"
   push:
     tags:
