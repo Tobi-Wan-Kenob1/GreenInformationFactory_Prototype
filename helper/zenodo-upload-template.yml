@@ -1,63 +1,10 @@
-name: Upload release payload to Zenodo
-
-# Only this workflow reacts to "upload" tags
-on:
-  workflow_dispatch:
-    inputs:
-      title:
-        description: "Zenodo title"
-        required: true
-        default: "GreenInformationFactory – Processed Data, Model & Performance"
-      description:
-        description: "Zenodo description"
-        required: true
-        default: "Train/test splits, trained model(s), and evaluation figure. Raw data: 10.5281/zenodo.16256961."
-      community:
-        description: "Zenodo community identifier"
-        required: true
-        default: "biofairnet"
-      creator:
-        description: "Creator (Surname, Name)"
-        required: true
-        default: "Rosnitschek, Tobias"
-      affiliation:
-        description: "Affiliation"
-        required: true
-        default: "University of Bayreuth"
-      orcid:
-        description: "ORCID (leave empty if none)"
-        required: true
-        default: "0000-0002-4876-2536"
-      keywords:
-        description: "Keywords (comma-separated)"
-        required: true
-        default: "FAIR, machine learning, circular economy"
-      license_id:
-        description: "License identifier"
-        required: true
-        default: "MIT"
-      use_sandbox:
-        description: "Use Zenodo SANDBOX (recommended)"
-        required: true
-        default: "true"    # ← default: sandbox
-  push:
-    tags:
-      - "zenodo-ul-*"
-
-permissions:
-  contents: write
-
-concurrency:
-  group: zenodo-upload-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   upload:
-    # Guard: only run for upload tags or manual runs
     if: startsWith(github.ref_name, 'zenodo-ul-') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
       PAYLOAD_DIR: notebooks/release_payload
+      PARAMS_JSON: "__PARAMS_JSON__"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -69,61 +16,12 @@ jobs:
             sudo apt-get install -y jq
           fi
 
-      - name: Resolve parameters (including sandbox flag)
-        id: cfg
-        run: |
-          # Default to sandbox unless explicitly set to "false"
-          USE_SANDBOX_INPUT="${{ github.event.inputs.use_sandbox }}"
-          if [ "${USE_SANDBOX_INPUT}" = "false" ] || [ "${USE_SANDBOX_INPUT}" = "False" ]; then
-            USE_SANDBOX="false"
-          else
-            USE_SANDBOX="true"
-          fi
-          echo "use_sandbox=$USE_SANDBOX" >> $GITHUB_OUTPUT
-          echo "Using sandbox? $USE_SANDBOX"
-
-      - name: Verify payload directory and list files
-        run: |
-          echo "Using payload dir: ${PAYLOAD_DIR}"
-          if [ ! -d "${PAYLOAD_DIR}" ]; then
-            echo "::error ::Payload directory '${PAYLOAD_DIR}' does not exist at repo root."
-            exit 1
-          fi
-          file_count=$(find "${PAYLOAD_DIR}" -maxdepth 1 -type f | wc -l | tr -d ' ')
-          if [ "${file_count}" = "0" ]; then
-            echo "::error ::No files found in '${PAYLOAD_DIR}'. Place your CSVs/model/plots there and commit."
-            exit 1
-          fi
-          echo "Found ${file_count} file(s):"
-          ls -lah "${PAYLOAD_DIR}"
-
-      - name: Pick Zenodo base URL and token
-        id: endpoints
-        env:
-          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          ZENODO_SANDBOX_TOKEN: ${{ secrets.ZENODO_SANDBOX_TOKEN }}
-        run: |
-          if [ "${{ steps.meta.outputs.use_sandbox }}" = "false" ] || [ "${{ steps.meta.outputs.use_sandbox }}" = "False" ]; then
-            BASE="https://zenodo.org"
-            TOKEN="${ZENODO_TOKEN}"
-          else
-            BASE="https://sandbox.zenodo.org"
-            TOKEN="${ZENODO_SANDBOX_TOKEN}"
-          fi
-          if [ -z "$TOKEN" ]; then
-            echo "::error ::Missing API token. For sandbox set repo secret ZENODO_SANDBOX_TOKEN; for production set ZENODO_TOKEN."
-            exit 1
-          fi
-          echo "base=$BASE"   >> $GITHUB_OUTPUT
-          echo "token=$TOKEN" >> $GITHUB_OUTPUT
-          echo "API base: $BASE"
-          
       - name: Resolve metadata inputs (support tag runs)
         id: meta
         run: |
           set -euo pipefail
 
-          # 1) Defaults (hard-coded safety)
+          # Defaults
           TITLE_DEF="GreenInformationFactory – Processed Data, Model & Performance"
           DESC_DEF="Train/test splits, trained model(s), and evaluation figure. Raw data: 10.5281/zenodo.16256961."
           COMM_DEF="biofairnet"
@@ -134,20 +32,21 @@ jobs:
           LIC_DEF="MIT"
           SANDBOX_DEF="true"
 
-          # 2) Load from file if available
-          if [ -f metadata/zenodo_params.json ]; then
-            TITLE_FILE=$(jq -r '.title // empty' metadata/zenodo_params.json)
-            DESC_FILE=$(jq -r '.description // empty' metadata/zenodo_params.json)
-            COMM_FILE=$(jq -r '.community // empty' metadata/zenodo_params.json)
-            CREATOR_FILE=$(jq -r '.creator // empty' metadata/zenodo_params.json)
-            AFFIL_FILE=$(jq -r '.affiliation // empty' metadata/zenodo_params.json)
-            ORCID_FILE=$(jq -r '.orcid // empty' metadata/zenodo_params.json)
-            KW_FILE=$(jq -r '(.keywords // []) | join(", ")' metadata/zenodo_params.json)
-            LIC_FILE=$(jq -r '.license // empty' metadata/zenodo_params.json)
-            SBX_FILE=$(jq -r '(.use_sandbox // empty)' metadata/zenodo_params.json)
+          # Load from params file if available
+          if [ -f "${PARAMS_JSON}" ]; then
+            TITLE_FILE=$(jq -r '.title // empty' "${PARAMS_JSON}")
+            DESC_FILE=$(jq -r '.description // empty' "${PARAMS_JSON}")
+            COMM_FILE=$(jq -r '.community // empty' "${PARAMS_JSON}")
+            # support creators[0].name/affiliation/orcid
+            CREATOR_FILE=$(jq -r '.creators[0].name // empty' "${PARAMS_JSON}")
+            AFFIL_FILE=$(jq -r '.creators[0].affiliation // empty' "${PARAMS_JSON}")
+            ORCID_FILE=$(jq -r '.creators[0].orcid // empty' "${PARAMS_JSON}")
+            KW_FILE=$(jq -r '(.keywords // []) | join(", ")' "${PARAMS_JSON}")
+            LIC_FILE=$(jq -r '.license // empty' "${PARAMS_JSON}")
+            SBX_FILE=$(jq -r '(.use_sandbox // empty)' "${PARAMS_JSON}")
           fi
 
-          # 3) Pull workflow_dispatch inputs (empty on tag pushes)
+          # workflow_dispatch inputs (empty on tag)
           TITLE_IN="${{ github.event.inputs.title }}"
           DESC_IN="${{ github.event.inputs.description }}"
           COMM_IN="${{ github.event.inputs.community }}"
@@ -158,7 +57,7 @@ jobs:
           LIC_IN="${{ github.event.inputs.license_id }}"
           SBX_IN="${{ github.event.inputs.use_sandbox }}"
 
-          # 4) Resolve precedence: inputs > file > defaults
+          # precedence: inputs > file > defaults
           TITLE="${TITLE_IN:-${TITLE_FILE:-$TITLE_DEF}}"
           DESC="${DESC_IN:-${DESC_FILE:-$DESC_DEF}}"
           COMM="${COMM_IN:-${COMM_FILE:-$COMM_DEF}}"
@@ -167,7 +66,6 @@ jobs:
           ORCID="${ORCID_IN:-${ORCID_FILE:-$ORCID_DEF}}"
           KWCSV="${KW_IN:-${KW_FILE:-$KW_DEF}}"
           LIC="${LIC_IN:-${LIC_FILE:-$LIC_DEF}}"
-          # For sandbox: anything other than literal "false"/"False" counts as true
           SBX="${SBX_IN:-${SBX_FILE:-$SANDBOX_DEF}}"
 
           echo "title=$TITLE"       >> $GITHUB_OUTPUT
@@ -180,14 +78,58 @@ jobs:
           echo "license=$LIC"       >> $GITHUB_OUTPUT
           echo "use_sandbox=$SBX"   >> $GITHUB_OUTPUT
 
+      - name: Select Zenodo base + token (from resolved meta)
+        id: zbase
+        shell: bash
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+          ZENODO_SANDBOX_TOKEN: ${{ secrets.ZENODO_SANDBOX_TOKEN }}
+        run: |
+          set -euo pipefail
+          SBX="${{ steps.meta.outputs.use_sandbox }}"
+          echo "Resolved use_sandbox = ${SBX}"
+
+          if [[ "${SBX}" == "false" || "${SBX}" == "False" || "${SBX}" == "0" ]]; then
+            BASE="https://zenodo.org"
+            TOKEN="${ZENODO_TOKEN}"
+            MODE="production"
+          else
+            BASE="https://sandbox.zenodo.org"
+            TOKEN="${ZENODO_SANDBOX_TOKEN}"
+            MODE="sandbox"
+          fi
+
+          if [[ -z "${TOKEN}" ]]; then
+            echo "::error ::Missing token for ${MODE}. Set ZENODO_TOKEN or ZENODO_SANDBOX_TOKEN."
+            exit 1
+          fi
+
+          echo "base=${BASE}"   >> $GITHUB_OUTPUT
+          echo "token=${TOKEN}" >> $GITHUB_OUTPUT
+          echo "mode=${MODE}"   >> $GITHUB_OUTPUT
+          echo "Using Zenodo mode: ${MODE} (${BASE})"
+
+      - name: Verify payload directory and list files
+        run: |
+          echo "Using payload dir: ${PAYLOAD_DIR}"
+          if [ ! -d "${PAYLOAD_DIR}" ]; then
+            echo "::error ::Payload directory '${PAYLOAD_DIR}' does not exist at repo root."
+            exit 1
+          fi
+          file_count=$(find "${PAYLOAD_DIR}" -maxdepth 1 -type f | wc -l | tr -d ' ')
+          if [ "${file_count}" = "0" ]; then
+            echo "::error ::No files found in '${PAYLOAD_DIR}'."
+            exit 1
+          fi
+          echo "Found ${file_count} file(s):"
+          ls -lah "${PAYLOAD_DIR}"
 
       - name: Create deposition
         id: dep
         run: |
-          BASE="${{ steps.endpoints.outputs.base }}"
-          TOKEN="${{ steps.endpoints.outputs.token }}"
+          BASE="${{ steps.zbase.outputs.base }}"
+          TOKEN="${{ steps.zbase.outputs.token }}"
 
-          # Keywords CSV → JSON array
           KWCSV='${{ steps.meta.outputs.keywords_csv }}'
           KEYWORDS_JSON=$(jq -cn --arg kw "$KWCSV" '$kw | split(",") | map(gsub("^\\s+|\\s+$"; "")) | map(select(length>0))')
 
@@ -231,7 +173,6 @@ jobs:
 
           dep_id=$(jq -r '.id // empty' dep.json)
           bucket=$(jq -r '.links.bucket // empty' dep.json)
-          html=$(jq -r '.links.html // empty' dep.json)
 
           if [ -z "$dep_id" ] || [ -z "$bucket" ]; then
             echo "::error ::Failed to create deposition. Response:"
@@ -241,13 +182,11 @@ jobs:
 
           echo "id=$dep_id"     >> $GITHUB_OUTPUT
           echo "bucket=$bucket" >> $GITHUB_OUTPUT
-          echo "html=$html"     >> $GITHUB_OUTPUT
-
 
       - name: Upload files
         run: |
           set -euo pipefail
-          TOKEN="${{ steps.endpoints.outputs.token }}"
+          TOKEN="${{ steps.zbase.outputs.token }}"
           echo "Uploading from ${PAYLOAD_DIR}…"
           while IFS= read -r -d '' f; do
             base=$(basename "$f")
@@ -259,8 +198,8 @@ jobs:
       - name: Publish deposition
         id: publish
         run: |
-          BASE="${{ steps.endpoints.outputs.base }}"
-          TOKEN="${{ steps.endpoints.outputs.token }}"
+          BASE="${{ steps.zbase.outputs.base }}"
+          TOKEN="${{ steps.zbase.outputs.token }}"
           echo "Publishing deposition ${{ steps.dep.outputs.id }}…"
           RES=$(curl -sS -X POST "$BASE/api/deposit/depositions/${{ steps.dep.outputs.id }}/actions/publish" \
                  -H "Authorization: Bearer $TOKEN")
@@ -270,12 +209,12 @@ jobs:
           record=$(jq -r '.links.record_html // empty' pub.json)
 
           if [ -z "$doi" ] || [ -z "$record" ]; then
-            echo "::error ::Publish step failed. Response:"
+            echo "::error ::Publish failed. Response:"
             cat pub.json
             exit 1
           fi
 
-          echo "doi=$doi"    >> $GITHUB_OUTPUT
+          echo "doi=$doi"      >> $GITHUB_OUTPUT
           echo "record=$record" >> $GITHUB_OUTPUT
 
       - name: Output links
