@@ -37,8 +37,8 @@ on:
         default: "MIT"
       use_sandbox:
         description: "Use Zenodo SANDBOX (recommended)"
-        required: false
-        default: "true"
+        required: true
+        default: "false"
   push:
     tags:
       - "zenodo-ul-*"
@@ -78,7 +78,7 @@ jobs:
           ORCID_DEF=""
           KW_DEF="FAIR, machine learning, circular economy"
           LIC_DEF="MIT"
-          SANDBOX_DEF="true"
+          SANDBOX_DEF="false"
 
           # Load from params file if available
           if [ -f "${PARAMS_JSON}" ]; then
