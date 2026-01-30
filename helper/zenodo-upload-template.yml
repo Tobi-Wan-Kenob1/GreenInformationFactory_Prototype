@@ -114,7 +114,9 @@ jobs:
           ORCID="${ORCID_IN:-${ORCID_FILE:-$ORCID_DEF}}"
           KWCSV="${KW_IN:-${KW_FILE:-$KW_DEF}}"
           LIC="${LIC_IN:-${LIC_FILE:-$LIC_DEF}}"
-          SBX="${SBX_IN:-${SBX_FILE:-$SANDBOX_DEF}}"
+          # Making Notebook editing the single switch
+          #SBX="${SBX_IN:-${SBX_FILE:-$SANDBOX_DEF}}"
+          SBX="${SBX_FILE:-${SBX_IN:-$SANDBOX_DEF}}"
 
           echo "title=$TITLE"       >> $GITHUB_OUTPUT
           echo "description=$DESC"  >> $GITHUB_OUTPUT
@@ -126,6 +128,15 @@ jobs:
           echo "license=$LIC"       >> $GITHUB_OUTPUT
           echo "use_sandbox=$SBX"   >> $GITHUB_OUTPUT
 
+      - name: Debug resolved sandbox + params file
+        run:  |
+            echo "PARAMS_JSON=${PARAMS_JSON}"
+            ls -lah "${PARAMS_JSON}" || true
+            echo "use_sandbox in file:"
+            jq -r '.use_sandbos' "${PARAMS_JSON}" || true
+            echo "Resolved meta.use_sandbox:"
+            echo "${{ steps.meta.outputs.use_sandbox }}
+            
       - name: Select Zenodo base + token (from resolved meta)
         id: zbase
         shell: bash
