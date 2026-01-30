@@ -129,13 +129,17 @@ jobs:
           echo "use_sandbox=$SBX"   >> $GITHUB_OUTPUT
 
       - name: Debug resolved sandbox + params file
+        shell: bash
         run:  |
-            echo "PARAMS_JSON=${PARAMS_JSON}"
-            ls -lah "${PARAMS_JSON}" || true
-            echo "use_sandbox in file:"
-            jq -r '.use_sandbos' "${PARAMS_JSON}" || true
-            echo "Resolved meta.use_sandbox:"
-            echo "${{ steps.meta.outputs.use_sandbox }}
+          set -euo pipefail
+          echo "PARAMS_JSON=${PARAMS_JSON}"
+          ls -lah "${PARAMS_JSON}" || true
+
+          echo "use_sandbox in file:"
+          jq -r '.use_sandbox // "MISSING"' "${PARAMS_JSON}" || true
+
+          echo "Resolved meta.use_sandbox:"
+          printf '%s\n' "${{ steps.meta.outputs.use_sandbox }}"
             
       - name: Select Zenodo base + token (from resolved meta)
         id: zbase
