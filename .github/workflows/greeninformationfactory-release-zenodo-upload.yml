@@ -1,3 +1,51 @@
+name: Upload release payload to Zenodo
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Zenodo title"
+        required: true
+        default: "GreenInformationFactory – Processed Data, Model & Performance"
+      description:
+        description: "Zenodo description"
+        required: true
+        default: "Train/test splits, trained model(s), and evaluation figure. Raw data: 10.5281/zenodo.16256961."
+      community:
+        description: "Zenodo community identifier"
+        required: true
+        default: "biofairnet"
+      creator:
+        description: "Creator (Surname, Name)"
+        required: true
+        default: "Rosnitschek, Tobias"
+      affiliation:
+        description: "Affiliation"
+        required: true
+        default: "University of Bayreuth"
+      orcid:
+        description: "ORCID (leave empty if none)"
+        required: true
+        default: "0000-0002-4876-2536"
+      keywords:
+        description: "Keywords (comma-separated)"
+        required: true
+        default: "FAIR, machine learning, circular economy"
+      license_id:
+        description: "License identifier"
+        required: true
+        default: "MIT"
+      use_sandbox:
+        description: "Use Zenodo SANDBOX (recommended)"
+        required: true
+        default: "true"
+  push:
+    tags:
+      - "zenodo-ul-*"
+
+permissions:
+  contents: write
+
 jobs:
   upload:
     if: startsWith(github.ref_name, 'zenodo-ul-') || github.event_name == 'workflow_dispatch'
