@@ -38,7 +38,7 @@ on:
       use_sandbox:
         description: "Use Zenodo SANDBOX (recommended)"
         required: true
-        default: "false"
+        default: "true"
   push:
     tags:
       - "zenodo-ul-*"
