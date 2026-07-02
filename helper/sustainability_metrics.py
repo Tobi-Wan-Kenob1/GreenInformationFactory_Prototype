@@ -9,12 +9,55 @@ import json
 import re
 
 
-def pick_col(df: pd.DataFrame, candidates: Iterable[str]) -> Optional[str]:
-    """Return first candidate column that exists in df."""
+def normalize_colname(s: str) -> str:
+    """Normalize a column name for tolerant matching.
+
+    Lowercases, trims, and strips a trailing parenthetical unit so that e.g.
+    ``"Temperature (°C)"`` and ``"temperature"`` compare equal. This is what
+    lets the sustainability proxies pick up the real, unit-suffixed data
+    columns instead of silently treating them as absent.
+    """
+    s = str(s).strip().lower()
+    s = re.sub(r"\s*\([^)]*\)\s*$", "", s)  # drop a trailing "(unit)"
+    return s.strip()
+
+
+def resolve_present(columns: Iterable[str], candidates: Iterable[str]) -> list:
+    """Resolve candidate names to actual columns present in ``columns``.
+
+    Two passes so exact matches always win over normalized ones:
+      1. exact membership (preserves prior behavior/precedence);
+      2. normalized fallback (case-insensitive, unit-suffix-insensitive),
+         skipping single-character candidates to avoid false positives.
+    Returns the matched *actual* column names, de-duplicated, in candidate order.
+    """
+    columns = list(columns)
+    resolved: list = []
+    seen: set = set()
     for c in candidates:
-        if c in df.columns:
-            return c
-    return None
+        if c in columns and c not in seen:
+            resolved.append(c)
+            seen.add(c)
+    norm_map: Dict[str, str] = {}
+    for col in columns:
+        norm_map.setdefault(normalize_colname(col), col)
+    for c in candidates:
+        nc = normalize_colname(c)
+        if len(nc) > 1 and nc in norm_map and norm_map[nc] not in seen:
+            resolved.append(norm_map[nc])
+            seen.add(norm_map[nc])
+    return resolved
+
+
+def pick_col(df: pd.DataFrame, candidates: Iterable[str]) -> Optional[str]:
+    """Return the first candidate column present in ``df``.
+
+    Matching is exact first, then tolerant of case and trailing unit suffixes
+    (see :func:`resolve_present`), so ``"Temperature (°C)"`` resolves against a
+    ``"temperature"`` candidate.
+    """
+    matches = resolve_present(df.columns, candidates)
+    return matches[0] if matches else None
 
 
 def minmax01(x) -> np.ndarray:
@@ -102,7 +145,8 @@ def sustainability_pca_energy_index(
       (out_df, info_dict)
     """
     out = df.copy()
-    used_cols = [c for c in feature_candidates if c in out.columns]
+    # Tolerant match so unit-suffixed columns (e.g. "Temperature (°C)") are used.
+    used_cols = resolve_present(out.columns, feature_candidates)
 
     # predictions normalized
     ypred = out[y_pred_col].to_numpy(dtype=float)
@@ -295,4 +339,43 @@ def sustainability_from_assumptions(
         "energy": {"method": method, "normalize": norm, "weights": weights},
         "computed_metrics": computed,
     }
+    return out, info
+
+
+# Eco-efficiency proxy
+
+
+def sustainability_eco_efficiency(
+    df: pd.DataFrame,
+    *,
+    burden_col: str,
+    y_pred_col: str = "y_pred",
+    eps: float = 1e-6,
+) -> Tuple[pd.DataFrame, Dict[str, Optional[str]]]:
+    """Eco-efficiency proxy: functional output per unit environmental burden.
+
+    Following the ISO 14045 notion of eco-efficiency (value of a system /
+    environmental impact), this computes ``y_pred_n / (burden + eps)`` and
+    min-max scales it to ``0..1`` (higher = more output per unit burden).
+
+    ``burden_col`` is any already-computed impact column, e.g. ``co2_proxy``,
+    ``co2_pca_proxy`` or ``co2_assumed``. This makes the metric composable on
+    top of any of the three proxy methods.
+
+    Adds:
+      - ``eco_eff_proxy`` (0..1, higher = better)
+
+    Returns:
+      (out_df, info)
+    """
+    if burden_col not in df.columns:
+        raise KeyError(
+            f"burden_col {burden_col!r} not found. Available: {list(df.columns)}"
+        )
+    out = df.copy()
+    y_pred_n = minmax01(out[y_pred_col].to_numpy(dtype=float))
+    burden = out[burden_col].to_numpy(dtype=float)
+    eco = y_pred_n / (np.abs(burden) + eps)
+    out["eco_eff_proxy"] = minmax01(eco)
+    info = {"burden_col": burden_col, "y_pred_col": y_pred_col}
     return out, info

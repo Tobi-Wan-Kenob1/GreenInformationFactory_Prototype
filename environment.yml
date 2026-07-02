@@ -14,12 +14,16 @@ dependencies:
   - requests
   - joblib
   - ipykernel
+  - pytest
   - pip
   - pyzenodo3
 
   # Optional: for working with Zenodo REST APIs or JSON data
   - pip:
       - python-dotenv
+      # Install this repo as an editable package so `import gif`, `import
+      # helper` and the `gif` CLI all work from anywhere in the tree.
+      - -e .
 
 # How to Use
 

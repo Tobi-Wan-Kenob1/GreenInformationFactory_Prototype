@@ -43,6 +43,12 @@ Notebook	Purpose
 
 This structure ensures clarity and accessibility for users unfamiliar with ML pipelines.
 
+> ℹ️ Notebooks 02–05 are now **thin drivers** over the importable `gif` package
+> (`src/gif/`): each one calls a single `gif.pipeline.run_*` function so the same
+> logic runs identically from a notebook, the `gif` CLI, or CI. Column selection
+> is config-driven (`metadata/pipeline_config.json`) rather than interactive, so
+> runs are fully reproducible. See **Scripted / Non-Interactive Usage** below.
+
 🧠 Machine Learning Models
 
 By default, the pipeline trains and evaluates:
@@ -215,6 +221,57 @@ metadata/zenodo_params.json
 metadata/sustainability_assumptions_v1.json
 
 Publish results to Zenodo via notebook 06 or GitHub Actions
+
+🧑‍💻 Scripted / Non-Interactive Usage (`gif` package + CLI)
+
+In addition to the notebooks, the pipeline logic is available as an importable
+package under `src/gif/`, so the whole workflow can be run unattended (CI,
+servers, batch jobs) — no `input()` prompts.
+
+Install (editable) — this also installs the `helper` package and the `gif` CLI:
+
+```bash
+pip install -e ".[dev]"      # dev extras add pytest; add ".[xgboost]" for XGBoost
+```
+
+Run stages from anywhere inside the repo (repo root is auto-detected):
+
+```bash
+gif validate                 # sanity-check the raw input file
+gif models                   # list models available in this environment
+gif prepare                  # clean + split raw data (writes data/processed + metadata)
+gif train                    # train & grid-search models, save bundle + comparison
+gif scenario --grid-points 41
+gif all                      # prepare → train → scenario, end to end
+```
+
+Or from Python:
+
+```python
+from gif import run_all           # or: from gif.pipeline import run_prepare, run_train
+result = run_all()
+print(result["trained"].best_name)
+```
+
+**Models.** The zoo now includes `linreg, enet, rf, extratrees, gbr, svr, mlp`
+plus optional `xgb` (registered automatically only if `xgboost` is installed).
+
+**Sustainability.** A new composable eco-efficiency proxy
+(`helper.sustainability_metrics.sustainability_eco_efficiency`, output per unit
+environmental burden, ISO 14045 flavour) sits alongside the v1 / PCA /
+assumption-based proxies.
+
+🧪 Tests & CI
+
+A `pytest` suite under `tests/` covers data prep, the model registry, training,
+scenario analysis and all sustainability proxies:
+
+```bash
+pytest -q
+```
+
+GitHub Actions (`.github/workflows/ci.yml`) runs the suite on Python 3.10–3.12
+for every push and pull request.
 
 📜 License
 

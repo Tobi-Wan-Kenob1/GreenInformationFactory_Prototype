@@ -5,8 +5,14 @@ EMAIL="your_email@example.com"
 KEY_PATH="$HOME/.ssh/id_ed25519"
 
 # === STEP 1: Generate SSH key ===
-echo "🔐 Generating new SSH key..."
-ssh-keygen -t ed25519 -C "$EMAIL" -f "$KEY_PATH" -N ""
+if [ -f "$KEY_PATH" ]; then
+    echo "⚠️  An SSH key already exists at $KEY_PATH."
+    echo "   Refusing to overwrite it. Delete/move it first, or set KEY_PATH to a new path."
+    echo "   Reusing the existing key for the steps below."
+else
+    echo "🔐 Generating new SSH key..."
+    ssh-keygen -t ed25519 -C "$EMAIL" -f "$KEY_PATH" -N ""
+fi
 
 # === STEP 2: Start SSH agent ===
 echo "🚀 Starting ssh-agent..."

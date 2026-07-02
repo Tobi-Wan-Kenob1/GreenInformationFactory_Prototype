@@ -90,7 +90,6 @@ def prepare_release_payload(
             if f.is_file():
                 f.unlink()
             elif f.is_dir():
-                import shutil
                 shutil.rmtree(f)
     payload.mkdir(parents=True, exist_ok=True)
 

@@ -149,6 +149,23 @@ jobs:
           echo "DOI:    ${{ steps.publish.outputs.doi }}"
 """
 
+def _yaml_dq(s: str) -> str:
+    """Escape a value destined for a YAML double-quoted scalar (e.g. default: "...")."""
+    return s.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def _bash_dq(s: str) -> str:
+    """Escape a value destined for a bash double-quoted string embedded in a
+    YAML block scalar (e.g. jq --arg creator "..."). Guards against quotes as
+    well as shell metacharacters ($ and `) that would otherwise be expanded."""
+    return (
+        s.replace("\\", "\\\\")
+         .replace('"', '\\"')
+         .replace("$", "\\$")
+         .replace("`", "\\`")
+    )
+
+
 def git_repo_root():
     """Try to find the git repo root; fallback to cwd."""
     try:
@@ -214,17 +231,21 @@ def main():
             sys.exit(0)
 
     # Fill template
+    # Title/description/community land in YAML `default: "..."` scalars;
+    # the remaining values land in bash `--arg ... "..."` strings inside a
+    # YAML block scalar. Escape each for its target context so values that
+    # contain quotes or shell metacharacters cannot break the generated file.
     content = WORKFLOW_TEMPLATE
-    content = content.replace("__TITLE__", title)\
-                     .replace("__DESCRIPTION__", description)\
-                     .replace("__COMMUNITY__", community)\
-                     .replace("__CREATOR__", creator)\
-                     .replace("__AFFILIATION__", affiliation)\
-                     .replace("__ORCID__", orcid)\
-                     .replace("__KW1__", keywords[0] if len(keywords) > 0 else "")\
-                     .replace("__KW2__", keywords[1] if len(keywords) > 1 else "")\
-                     .replace("__KW3__", keywords[2] if len(keywords) > 2 else "")\
-                     .replace("__LICENSE__", license_id)
+    content = content.replace("__TITLE__", _yaml_dq(title))\
+                     .replace("__DESCRIPTION__", _yaml_dq(description))\
+                     .replace("__COMMUNITY__", _yaml_dq(community))\
+                     .replace("__CREATOR__", _bash_dq(creator))\
+                     .replace("__AFFILIATION__", _bash_dq(affiliation))\
+                     .replace("__ORCID__", _bash_dq(orcid))\
+                     .replace("__KW1__", _bash_dq(keywords[0]) if len(keywords) > 0 else "")\
+                     .replace("__KW2__", _bash_dq(keywords[1]) if len(keywords) > 1 else "")\
+                     .replace("__KW3__", _bash_dq(keywords[2]) if len(keywords) > 2 else "")\
+                     .replace("__LICENSE__", _bash_dq(license_id))
 
     wf_path.write_text(content, encoding="utf-8")
 

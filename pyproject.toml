@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "greeninformationfactory"
+version = "0.2.0"
+description = "Open, FAIR, reproducible ML pipeline for sustainability assessment (BioFairNet)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Tobias Rosnitschek", email = "tobias.rosnitschek@uni-bayreuth.de" },
+]
+keywords = ["FAIR", "machine learning", "sustainability assessment", "bioeconomy"]
+dependencies = [
+    "numpy>=1.21",
+    "pandas>=1.3",
+    "scikit-learn>=1.0",
+    "matplotlib>=3.4",
+    "seaborn>=0.11",
+]
+
+[project.optional-dependencies]
+xgboost = ["xgboost>=1.6"]
+dev = ["pytest>=7.0", "pytest-cov>=3.0"]
+
+[project.scripts]
+gif = "gif.cli:main"
+
+[tool.setuptools]
+# Mixed layout: the pipeline package lives in src/, the low-level helpers at
+# the repo root. Both are shipped so `import gif` and `import helper` work.
+packages = ["gif", "helper"]
+
+[tool.setuptools.package-dir]
+gif = "src/gif"
+helper = "helper"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

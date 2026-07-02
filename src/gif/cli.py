@@ -1,0 +1,105 @@
+"""Command-line entrypoint for the GreenInformationFactory pipeline.
+
+Enables fully non-interactive, reproducible runs (CI, servers, batch jobs)::
+
+    python -m gif.cli prepare
+    python -m gif.cli train
+    python -m gif.cli scenario --grid-points 41
+    python -m gif.cli all
+    python -m gif.cli validate      # validate raw input only
+    python -m gif.cli models        # list available models in this env
+
+Run from anywhere inside the repo; the repo root is auto-detected.
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+from typing import List, Optional
+
+from .config import load_config, resolve_paths
+from .data import load_raw, validate_raw
+from .models import available_models
+from . import pipeline
+
+
+def _cmd_validate(args) -> int:
+    cfg = load_config()
+    paths = resolve_paths(cfg)
+    raw_path = paths.raw_dir / cfg["dataset"]["raw_filename"]
+    df = load_raw(raw_path, sep=cfg["dataset"].get("separator", ";"),
+                  encoding=cfg["dataset"].get("encoding", "utf-8"))
+    problems = validate_raw(df, min_rows=1)
+    if problems:
+        print("❌ Raw data validation problems:")
+        for p in problems:
+            print("  -", p)
+        return 1
+    print(f"✅ Raw data OK: {df.shape[0]} rows × {df.shape[1]} cols at {raw_path}")
+    return 0
+
+
+def _cmd_models(args) -> int:
+    print("Available models in this environment:")
+    for m in available_models():
+        print("  -", m)
+    return 0
+
+
+def _cmd_prepare(args) -> int:
+    prepared = pipeline.run_prepare(strict=not args.lenient)
+    print(f"✅ prepare: {prepared.report['rows_after_clean']} rows, "
+          f"splits={prepared.report['splits']}")
+    return 0
+
+
+def _cmd_train(args) -> int:
+    result = pipeline.run_train()
+    print(f"✅ train: best model = {result.best_name}")
+    print(result.results.to_string(index=False))
+    return 0
+
+
+def _cmd_scenario(args) -> int:
+    out = pipeline.run_scenario(grid_points=args.grid_points, baseline_idx=args.baseline_idx)
+    print(f"✅ scenario: {len(out)} rows across vars {sorted(out['_var'].unique())}")
+    return 0
+
+
+def _cmd_all(args) -> int:
+    res = pipeline.run_all(grid_points=args.grid_points)
+    print(f"✅ pipeline complete. best model = {res['trained'].best_name}")
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(prog="gif", description="GreenInformationFactory pipeline CLI")
+    sub = p.add_subparsers(dest="command", required=True)
+
+    sub.add_parser("validate", help="Validate the raw input file").set_defaults(func=_cmd_validate)
+    sub.add_parser("models", help="List available models").set_defaults(func=_cmd_models)
+
+    prep = sub.add_parser("prepare", help="Clean & split raw data")
+    prep.add_argument("--lenient", action="store_true", help="Warn instead of failing on validation problems")
+    prep.set_defaults(func=_cmd_prepare)
+
+    sub.add_parser("train", help="Train & grid-search models").set_defaults(func=_cmd_train)
+
+    sc = sub.add_parser("scenario", help="One-way scenario analysis")
+    sc.add_argument("--grid-points", type=int, default=25)
+    sc.add_argument("--baseline-idx", type=int, default=0)
+    sc.set_defaults(func=_cmd_scenario)
+
+    al = sub.add_parser("all", help="Run prepare → train → scenario")
+    al.add_argument("--grid-points", type=int, default=25)
+    al.set_defaults(func=_cmd_all)
+    return p
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    args = build_parser().parse_args(argv)
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

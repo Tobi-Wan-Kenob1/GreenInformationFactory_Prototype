@@ -114,9 +114,11 @@ jobs:
           ORCID="${ORCID_IN:-${ORCID_FILE:-$ORCID_DEF}}"
           KWCSV="${KW_IN:-${KW_FILE:-$KW_DEF}}"
           LIC="${LIC_IN:-${LIC_FILE:-$LIC_DEF}}"
-          # Making Notebook editing the single switch
-          #SBX="${SBX_IN:-${SBX_FILE:-$SANDBOX_DEF}}"
-          SBX="${SBX_FILE:-${SBX_IN:-$SANDBOX_DEF}}"
+          # Precedence: explicit UI input > params file > default.
+          # A manual workflow_dispatch choice must always win so the
+          # sandbox/production dropdown is never a silent no-op. On tag
+          # pushes SBX_IN is empty, so the notebook-written file drives it.
+          SBX="${SBX_IN:-${SBX_FILE:-$SANDBOX_DEF}}"
 
           echo "title=$TITLE"       >> $GITHUB_OUTPUT
           echo "description=$DESC"  >> $GITHUB_OUTPUT
