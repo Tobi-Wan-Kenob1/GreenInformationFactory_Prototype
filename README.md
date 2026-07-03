@@ -305,6 +305,17 @@ for manual coding). Best model per task is bundled in
 `notebooks/models/literature_coder.pkl`; apply it to new papers with
 `gif.lit_ml.predict_codes`.
 
+**FAIR release** (`gif literature stage-release`, notebook
+`10_literature_release.ipynb`): stages the derived corpus + analytics +
+coder bundle into `notebooks/release_payload/` and writes
+`metadata/zenodo_params.json` with `isDerivedFrom` links to both source DOIs
+and **CC-BY-4.0** (required — the payload derives from CC-BY data).
+Staging never uploads: trigger the upload workflow afterwards **via a
+`zenodo-ul-*` tag** (not the Actions UI form, whose defaults override the
+params file). `use_sandbox: true` is the staged default — verify the sandbox
+record, then flip it to `false` for the production DOI. The upload workflow
+now reads `related_dois` and `upload_type` from the params file.
+
 🧪 Tests & CI
 
 A `pytest` suite under `tests/` covers data prep, the model registry, training,

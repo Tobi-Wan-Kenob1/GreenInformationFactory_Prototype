@@ -55,6 +55,7 @@ def prepare_release_payload(
     models: Iterable[PathLike],
     payload_subdir: str = "notebooks/release_payload",
     require_all: bool = False,
+    repo_root: Path | None = None,
 ) -> Dict[str, object]:
     """
     Collect project artifacts into a single payload directory for release/Zenodo upload.
@@ -74,6 +75,9 @@ def prepare_release_payload(
         Destination under the repo root where files are copied. Default "notebooks/release_payload".
     require_all : bool
         If True, raise FileNotFoundError when any source is missing.
+    repo_root : Path, optional
+        Repository root to resolve against. Default: walk upwards from the
+        current working directory until a .git folder is found.
 
     Returns
     -------
@@ -82,7 +86,7 @@ def prepare_release_payload(
         - 'copied'      : list[Path] (dest paths)
         - 'missing'     : list[Path] (source paths that did not exist)
     """
-    repo_root = _find_repo_root()
+    repo_root = Path(repo_root) if repo_root is not None else _find_repo_root()
     payload = repo_root / payload_subdir
     # Clean out any existing payload contents to ensure only one upload at a time
     if payload.exists():

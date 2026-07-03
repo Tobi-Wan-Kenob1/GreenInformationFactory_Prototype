@@ -198,6 +198,22 @@ jobs:
           KWCSV='${{ steps.meta.outputs.keywords_csv }}'
           KEYWORDS_JSON=$(jq -cn --arg kw "$KWCSV" '$kw | split(",") | map(gsub("^\\s+|\\s+$"; "")) | map(select(length>0))')
 
+          # Related identifiers + upload type come from the params file so
+          # different releases (process data, literature corpus, ...) can
+          # declare their own provenance. Fallback: the original pilot DOI.
+          RELATED_JSON='[{"identifier":"10.5281/zenodo.16256961","relation":"isDerivedFrom","scheme":"doi"}]'
+          UPTYPE="dataset"
+          if [ -f "${PARAMS_JSON}" ]; then
+            R=$(jq -c '[(.related_dois // empty)[] | {identifier: ., relation: "isDerivedFrom", scheme: "doi"}]' "${PARAMS_JSON}" 2>/dev/null || echo "")
+            if [ -n "$R" ] && [ "$R" != "[]" ]; then
+              RELATED_JSON="$R"
+            fi
+            UT=$(jq -r '.upload_type // empty' "${PARAMS_JSON}")
+            if [ -n "$UT" ]; then
+              UPTYPE="$UT"
+            fi
+          fi
+
           META=$(jq -n \
             --arg title '${{ steps.meta.outputs.title }}' \
             --arg desc  '${{ steps.meta.outputs.description }}' \
@@ -206,11 +222,13 @@ jobs:
             --arg affil   '${{ steps.meta.outputs.affiliation }}' \
             --arg orcid   '${{ steps.meta.outputs.orcid }}' \
             --arg lic     '${{ steps.meta.outputs.license }}' \
+            --arg uptype  "$UPTYPE" \
             --argjson keywords "$KEYWORDS_JSON" \
+            --argjson related "$RELATED_JSON" \
             '{
                metadata: {
                  title: $title,
-                 upload_type: "dataset",
+                 upload_type: $uptype,
                  description: $desc,
                  creators: (
                    if ($orcid | length) > 0 then
@@ -221,9 +239,7 @@ jobs:
                  ),
                  communities: [{identifier:$comm}],
                  keywords: $keywords,
-                 related_identifiers: [
-                   {identifier:"10.5281/zenodo.16256961", relation:"isDerivedFrom", scheme:"doi"}
-                 ],
+                 related_identifiers: $related,
                  access_right: "open",
                  license: $lic
                }

@@ -1,0 +1,76 @@
+dimension,code,papers
+barriers,data,122
+barriers,land,96
+barriers,water,88
+barriers,landscape,33
+barriers,database,21
+barriers,landscapes,18
+barriers,transport,17
+barriers,storage,15
+barriers,infrastructure,14
+barriers,transportation,14
+barriers,collection,12
+barriers,dataset,12
+barriers,datasets,12
+barriers,waters,11
+barriers,databases,10
+bio,biogas,13
+bio,biomethane,6
+bio,anaerobic digestion,5
+bio,biochar,5
+bio,bioenergy,5
+bio,digestate,4
+bio,bioethanol,3
+bio,lignocellulosic,3
+bio,biorefinery,2
+bio,composting,2
+bio,pyrolysis,2
+bio,biochars,1
+bio,biodiesel,1
+bio,biomass,1
+bio,bioreactors,1
+ce,recycling,9
+ce,reuse,2
+ce,waste management,2
+ce,closed-loop,1
+ce,food supply chain,1
+ce,mining raw materials,1
+ce,mining waste as construction alternative materials,1
+ce,recovery of critical elements,1
+ce,recovery of mining waste,1
+ce,recovery of resources,1
+ce,recovery of valuable mining resources,1
+ce,recyclable,1
+ce,recyclables,1
+ce,recycle,1
+ce,recycled,1
+drivers,demand,41
+drivers,efficiency,24
+drivers,technology,24
+drivers,lca,6
+drivers,collaboration,5
+drivers,fundamental,5
+drivers,incentives,5
+drivers,demands,4
+drivers,funds,4
+drivers,investment,4
+drivers,monitoring,4
+drivers,regulations,4
+drivers,spatial analysis,4
+drivers,incentive,3
+drivers,investments,3
+stakeholders,farmers,28
+stakeholders,policymakers,25
+stakeholders,scholars,10
+stakeholders,consumers,8
+stakeholders,consumer,7
+stakeholders,producers,7
+stakeholders,policy makers,6
+stakeholders,producer,6
+stakeholders,regions,6
+stakeholders,regulatory,5
+stakeholders,government,4
+stakeholders,local communities,4
+stakeholders,agency,3
+stakeholders,bank,3
+stakeholders,municipality,3

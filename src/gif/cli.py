@@ -136,6 +136,21 @@ def _cmd_literature_train_coder(args) -> int:
     return 0
 
 
+def _cmd_literature_stage_release(args) -> int:
+    from .lit_release import stage_literature_release
+    report = stage_literature_release(use_sandbox=not args.production)
+    print(f"\n📦 Staged {len(report['copied'])} file(s) → {report['payload_dir']}")
+    if report["missing"]:
+        print(f"⚠️ Missing: {report['missing']}")
+    print(f"📝 Params: {report['params_path']} "
+          f"(use_sandbox={report['use_sandbox']}, license={report['license']})")
+    print("🔗 isDerivedFrom:", ", ".join(report["related_dois"]))
+    print("\nNext steps:")
+    for s in report["next_steps"]:
+        print("  -", s)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="gif", description="GreenInformationFactory pipeline CLI")
     sub = p.add_subparsers(dest="command", required=True)
@@ -194,6 +209,11 @@ def build_parser() -> argparse.ArgumentParser:
                     help="Minimum papers per code to train a per-code classifier")
     lt.add_argument("--cv", type=int, default=5)
     lt.set_defaults(func=_cmd_literature_train_coder)
+    lr = lsub.add_parser("stage-release",
+                         help="Stage the derived literature payload + Zenodo params (no upload)")
+    lr.add_argument("--production", action="store_true",
+                    help="Write use_sandbox=false (default: sandbox — flip only after review)")
+    lr.set_defaults(func=_cmd_literature_stage_release)
     return p
 
 

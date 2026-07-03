@@ -1,0 +1,16 @@
+code,AGRI_EU,AGRI_OUT,MINING_EU,MIN_OUT,total
+data,68,32,20,2,122
+land,66,18,11,1,96
+water,41,15,32,0,88
+landscape,13,11,9,0,33
+database,12,4,5,0,21
+landscapes,7,6,5,0,18
+transport,8,6,3,0,17
+storage,9,4,2,0,15
+infrastructure,8,3,3,0,14
+transportation,11,3,0,0,14
+datasets,6,4,2,0,12
+dataset,8,4,0,0,12
+collection,5,4,2,1,12
+waters,2,1,8,0,11
+standard,4,4,2,0,10

@@ -1,0 +1,55 @@
+{
+  "stage": "literature_release_staged",
+  "timestamp_utc": "2026-07-03T14:01:47+00:00",
+  "git": {
+    "repo_root": "/Users/tobiasweiss/Claude_Code/GreenInformationFactory_Prototype",
+    "commit": "d237c8066b83a4f8fece19753eb46eb30655cccc",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.8.8",
+    "platform": "darwin"
+  },
+  "payload": {
+    "payload_dir": "/Users/tobiasweiss/Claude_Code/GreenInformationFactory_Prototype/notebooks/release_payload",
+    "copied": [
+      "codes_long.csv",
+      "papers.csv",
+      "papers_coded.csv",
+      "lit_barriers_by_sector.csv",
+      "lit_coding_best_models.csv",
+      "lit_coding_f1_by_task.png",
+      "lit_coding_model_comparison.csv",
+      "lit_coding_sector_confusion.png",
+      "lit_cooccurrence_barriers_drivers.csv",
+      "lit_cooccurrence_barriers_drivers.png",
+      "lit_country_counts.csv",
+      "lit_country_counts.png",
+      "lit_drivers_by_sector.csv",
+      "lit_geo_levels.csv",
+      "lit_relevance_by_sector.csv",
+      "lit_stakeholders_by_sector.csv",
+      "lit_top_barriers.png",
+      "lit_top_codes.csv",
+      "lit_top_drivers.png",
+      "lit_top_stakeholders.png",
+      "lit_year_by_sector.csv",
+      "lit_year_by_sector.png",
+      "literature_coder.pkl"
+    ],
+    "missing": [],
+    "params_path": "/Users/tobiasweiss/Claude_Code/GreenInformationFactory_Prototype/metadata/zenodo_params.json",
+    "use_sandbox": true,
+    "license": "cc-by-4.0",
+    "related_dois": [
+      "10.5281/zenodo.20743706",
+      "10.5281/zenodo.20744025"
+    ],
+    "next_steps": [
+      "Review the payload listing and the analytics outputs.",
+      "Commit payload + params, then trigger the upload workflow (GitHub Actions UI or a zenodo-ul-* tag) — sandbox first.",
+      "After checking the sandbox record, set use_sandbox=false in metadata/zenodo_params.json and trigger again for the DOI."
+    ]
+  }
+}
