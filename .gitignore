@@ -43,3 +43,6 @@ models/*.joblib
 .env
 *.token
 *.key
+
+# Raw Zenodo downloads (re-fetch via: gif zenodo pull / gif literature fetch)
+data/external/

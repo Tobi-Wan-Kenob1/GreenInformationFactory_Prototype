@@ -19,6 +19,8 @@ dependencies = [
     "scikit-learn>=1.0",
     "matplotlib>=3.4",
     "seaborn>=0.11",
+    "requests>=2.25",   # gif.zenodo (Zenodo REST API)
+    "openpyxl>=3.0",    # gif.literature xlsx reading (stdlib fallback exists)
 ]
 
 [project.optional-dependencies]

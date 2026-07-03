@@ -1,0 +1,24 @@
+{
+  "stage": "zenodo_download",
+  "timestamp_utc": "2026-07-03T03:47:42+00:00",
+  "git": {
+    "repo_root": "/Users/tobiasweiss/Claude_Code/GreenInformationFactory_Prototype",
+    "commit": "82c8a9fe06feda90e30e165e97449ac86a24efa2",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.8.8",
+    "platform": "darwin"
+  },
+  "payload": {
+    "doi": "10.5281/zenodo.20744025",
+    "record_id": 20744025,
+    "title": "Codebook_D1.2_BioFairNet",
+    "dest_dir": "data/external",
+    "files": [
+      "Literature Analysis _ Coded File.xlsx"
+    ],
+    "skipped_existing": []
+  }
+}

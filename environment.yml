@@ -15,6 +15,7 @@ dependencies:
   - joblib
   - ipykernel
   - pytest
+  - openpyxl
   - pip
   - pyzenodo3
 

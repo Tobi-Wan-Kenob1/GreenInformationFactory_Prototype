@@ -1,0 +1,1439 @@
+paper_id,dimension,source,code
+0,ce,title_kw,recycling
+1,ce,title_kw,recyclable
+1,ce,title_kw,recycling
+2,ce,title_kw,recycling
+3,ce,title_kw,recycling
+27,ce,title_kw,recycle
+27,ce,title_kw,recycling
+27,ce,title_kw,secondary material
+42,ce,title_kw,recycling
+135,ce,title_kw,closed-loop
+166,ce,title_kw,reuse
+189,ce,title_kw,recycling
+189,ce,title_kw,reuse
+211,ce,title_kw,recyclables
+249,ce,title_kw,recycled
+249,ce,title_kw,recycling
+257,ce,title_kw,recycling
+257,ce,title_kw,reused
+286,ce,title_kw,take-back
+0,ce,abstract,recycling of waste resources
+2,ce,abstract,solid waste management
+3,ce,abstract,mining raw materials
+13,ce,abstract,recovery of valuable mining resources
+35,ce,abstract,mining waste as construction alternative materials
+36,ce,abstract,recovery of critical elements
+42,ce,abstract,waste material reclamation and integration
+42,ce,abstract,recovery of resources
+58,ce,abstract,waste management
+72,ce,abstract,recovery of mining waste
+164,ce,abstract,waste management
+166,ce,abstract,resources
+183,ce,abstract,food supply chain
+70,bio,title_kw,biochars
+104,bio,title_kw,biogas
+109,bio,title_kw,biochar
+113,bio,title_kw,biogas
+137,bio,title_kw,biochar
+148,bio,title_kw,biomethane
+164,bio,title_kw,biogas
+174,bio,title_kw,biomethane
+189,bio,title_kw,biogas
+192,bio,title_kw,biogas
+198,bio,title_kw,anaerobic digestion
+198,bio,title_kw,composting
+198,bio,title_kw,digestate
+199,bio,title_kw,anaerobic digestion
+199,bio,title_kw,biochar
+199,bio,title_kw,biomethane
+199,bio,title_kw,pyrolysis
+205,bio,title_kw,biogas
+215,bio,title_kw,biogas
+215,bio,title_kw,biomethane
+219,bio,title_kw,biochar
+230,bio,title_kw,lignocellulosic
+235,bio,title_kw,anaerobic digestion
+235,bio,title_kw,biogas
+240,bio,title_kw,composting
+242,bio,title_kw,biogas
+249,bio,title_kw,biogas
+254,bio,title_kw,bioethanol
+259,bio,title_kw,compost
+264,bio,title_kw,biogas
+264,bio,title_kw,digestate
+266,bio,title_kw,biodiesel
+268,bio,title_kw,anaerobic digestion
+268,bio,title_kw,biogas
+268,bio,title_kw,digestate
+269,bio,title_kw,biorefinery
+272,bio,title_kw,digestate
+279,bio,title_kw,bioethanol
+279,bio,title_kw,lignocellulosic
+281,bio,title_kw,biomethane
+287,bio,title_kw,biorefinery
+329,bio,title_kw,anaerobic digestion
+329,bio,title_kw,biogas
+329,bio,title_kw,biomethane
+351,bio,title_kw,bioethanol
+352,bio,title_kw,biochar
+352,bio,title_kw,lignocellulosic
+352,bio,title_kw,pyrolysis
+27,bio,abstract,metal biomining
+104,bio,abstract,biogas
+109,bio,abstract,biochar
+116,bio,abstract,bioreactors
+125,bio,abstract,organic viticulture
+137,bio,abstract,biomass
+137,bio,abstract,bioenergy
+137,bio,abstract,biochar
+138,bio,abstract,bioenergy
+148,bio,abstract,bioenergy
+164,bio,abstract,biogas
+174,bio,abstract,bioenergy
+178,bio,abstract,bioenergy
+0,barriers,title_kw,collection
+0,barriers,title_kw,data
+0,barriers,title_kw,databases
+0,barriers,title_kw,landscape
+1,barriers,title_kw,data
+1,barriers,title_kw,infrastructure
+1,barriers,title_kw,investment
+2,barriers,title_kw,data
+2,barriers,title_kw,standardising
+2,barriers,title_kw,standards
+3,barriers,title_kw,regulations
+4,barriers,title_kw,data
+5,barriers,title_kw,data
+5,barriers,title_kw,database
+5,barriers,title_kw,databases
+5,barriers,title_kw,datasets
+6,barriers,title_kw,data
+13,barriers,title_kw,water
+14,barriers,title_kw,data
+15,barriers,title_kw,water
+15,barriers,title_kw,waters
+16,barriers,title_kw,land
+16,barriers,title_kw,landscape
+16,barriers,title_kw,landscapes
+17,barriers,title_kw,landscape
+17,barriers,title_kw,landscapes
+18,barriers,title_kw,landscapes
+18,barriers,title_kw,regulation
+18,barriers,title_kw,water
+19,barriers,title_kw,water
+19,barriers,title_kw,waters
+20,barriers,title_kw,regulations
+21,barriers,title_kw,data
+21,barriers,title_kw,water
+22,barriers,title_kw,infrastructures
+23,barriers,title_kw,standardization
+23,barriers,title_kw,standards
+23,barriers,title_kw,water
+25,barriers,title_kw,water
+28,barriers,title_kw,database
+28,barriers,title_kw,water
+28,barriers,title_kw,waters
+29,barriers,title_kw,data
+29,barriers,title_kw,databases
+29,barriers,title_kw,water
+30,barriers,title_kw,data
+30,barriers,title_kw,land
+30,barriers,title_kw,landsat
+32,barriers,title_kw,database
+32,barriers,title_kw,water
+33,barriers,title_kw,datasets
+33,barriers,title_kw,land
+34,barriers,title_kw,water
+34,barriers,title_kw,watercourse
+35,barriers,title_kw,water
+36,barriers,title_kw,data
+36,barriers,title_kw,infrastructure
+36,barriers,title_kw,transport
+38,barriers,title_kw,investment
+39,barriers,title_kw,infrastructure
+40,barriers,title_kw,data
+41,barriers,title_kw,regulations
+41,barriers,title_kw,water
+42,barriers,title_kw,land
+43,barriers,title_kw,lands
+45,barriers,title_kw,investment
+45,barriers,title_kw,regulations
+46,barriers,title_kw,storage
+46,barriers,title_kw,water
+47,barriers,title_kw,data
+47,barriers,title_kw,landscape
+47,barriers,title_kw,water
+48,barriers,title_kw,standards
+49,barriers,title_kw,standard
+49,barriers,title_kw,water
+49,barriers,title_kw,watercourses
+51,barriers,title_kw,standards
+51,barriers,title_kw,water
+53,barriers,title_kw,water
+54,barriers,title_kw,data
+55,barriers,title_kw,standards
+57,barriers,title_kw,data
+58,barriers,title_kw,waters
+59,barriers,title_kw,collection
+59,barriers,title_kw,water
+60,barriers,title_kw,lands
+60,barriers,title_kw,water
+65,barriers,title_kw,water
+66,barriers,title_kw,database
+66,barriers,title_kw,land
+67,barriers,title_kw,data
+67,barriers,title_kw,seasonality
+69,barriers,title_kw,land
+69,barriers,title_kw,landfills
+69,barriers,title_kw,landscape
+70,barriers,title_kw,land
+70,barriers,title_kw,landscape
+70,barriers,title_kw,water
+71,barriers,title_kw,water
+74,barriers,title_kw,data
+74,barriers,title_kw,database
+75,barriers,title_kw,data
+75,barriers,title_kw,water
+75,barriers,title_kw,waters
+76,barriers,title_kw,data
+77,barriers,title_kw,transport
+78,barriers,title_kw,water
+79,barriers,title_kw,water
+79,barriers,title_kw,waters
+82,barriers,title_kw,land
+82,barriers,title_kw,landscape
+82,barriers,title_kw,landscapes
+83,barriers,title_kw,land
+83,barriers,title_kw,landforms
+83,barriers,title_kw,water
+84,barriers,title_kw,regulations
+84,barriers,title_kw,transport
+84,barriers,title_kw,water
+84,barriers,title_kw,waters
+85,barriers,title_kw,water
+87,barriers,title_kw,standard
+89,barriers,title_kw,landscape
+89,barriers,title_kw,landscapes
+91,barriers,title_kw,land
+91,barriers,title_kw,landsat
+91,barriers,title_kw,landscape
+93,barriers,title_kw,databases
+95,barriers,title_kw,data
+95,barriers,title_kw,storage
+96,barriers,title_kw,water
+96,barriers,title_kw,waters
+97,barriers,title_kw,water
+98,barriers,title_kw,water
+99,barriers,title_kw,land
+99,barriers,title_kw,landslide
+99,barriers,title_kw,landslides
+104,barriers,title_kw,transportation
+104,barriers,title_kw,transporting
+106,barriers,title_kw,landscape
+107,barriers,title_kw,land
+108,barriers,title_kw,dataset
+108,barriers,title_kw,water
+109,barriers,title_kw,data
+110,barriers,title_kw,land
+112,barriers,title_kw,data
+112,barriers,title_kw,land
+113,barriers,title_kw,landfill
+113,barriers,title_kw,landfills
+113,barriers,title_kw,seasonality
+114,barriers,title_kw,funding
+114,barriers,title_kw,storage
+115,barriers,title_kw,data
+115,barriers,title_kw,dataset
+116,barriers,title_kw,water
+117,barriers,title_kw,data
+117,barriers,title_kw,land
+117,barriers,title_kw,landscape
+117,barriers,title_kw,water
+118,barriers,title_kw,landfills
+118,barriers,title_kw,regulations
+118,barriers,title_kw,standardization
+121,barriers,title_kw,landscape
+121,barriers,title_kw,landscapes
+121,barriers,title_kw,water
+122,barriers,title_kw,landscape
+122,barriers,title_kw,landscapes
+122,barriers,title_kw,water
+123,barriers,title_kw,data
+123,barriers,title_kw,datasets
+123,barriers,title_kw,land
+124,barriers,title_kw,land
+125,barriers,title_kw,data
+125,barriers,title_kw,standard
+125,barriers,title_kw,standards
+126,barriers,title_kw,dataset
+126,barriers,title_kw,land
+128,barriers,title_kw,data
+128,barriers,title_kw,regulation
+128,barriers,title_kw,standards
+129,barriers,title_kw,collection
+130,barriers,title_kw,land
+131,barriers,title_kw,infrastructure
+131,barriers,title_kw,investments
+132,barriers,title_kw,data
+132,barriers,title_kw,landslides
+133,barriers,title_kw,data
+133,barriers,title_kw,infrastructure
+133,barriers,title_kw,standards
+135,barriers,title_kw,infrastructure
+136,barriers,title_kw,data
+136,barriers,title_kw,land
+137,barriers,title_kw,storage
+138,barriers,title_kw,feedstocks
+138,barriers,title_kw,land
+139,barriers,title_kw,water
+140,barriers,title_kw,infrastructure
+140,barriers,title_kw,infrastructures
+140,barriers,title_kw,land
+140,barriers,title_kw,water
+141,barriers,title_kw,land
+141,barriers,title_kw,water
+142,barriers,title_kw,data
+142,barriers,title_kw,landscapes
+143,barriers,title_kw,land
+143,barriers,title_kw,regulation
+143,barriers,title_kw,water
+145,barriers,title_kw,data
+146,barriers,title_kw,database
+146,barriers,title_kw,land
+146,barriers,title_kw,landscape
+147,barriers,title_kw,data
+149,barriers,title_kw,investment
+149,barriers,title_kw,land
+150,barriers,title_kw,land
+151,barriers,title_kw,infrastructure
+151,barriers,title_kw,transportation
+151,barriers,title_kw,water
+152,barriers,title_kw,water
+153,barriers,title_kw,data
+153,barriers,title_kw,land
+154,barriers,title_kw,land
+155,barriers,title_kw,data
+155,barriers,title_kw,land
+156,barriers,title_kw,data
+156,barriers,title_kw,land
+157,barriers,title_kw,data
+158,barriers,title_kw,data
+158,barriers,title_kw,land
+158,barriers,title_kw,lands
+158,barriers,title_kw,landscape
+158,barriers,title_kw,water
+159,barriers,title_kw,data
+159,barriers,title_kw,database
+160,barriers,title_kw,data
+160,barriers,title_kw,land
+160,barriers,title_kw,water
+161,barriers,title_kw,databases
+162,barriers,title_kw,database
+162,barriers,title_kw,infrastructure
+162,barriers,title_kw,land
+163,barriers,title_kw,data
+163,barriers,title_kw,database
+163,barriers,title_kw,land
+164,barriers,title_kw,data
+164,barriers,title_kw,transportation
+165,barriers,title_kw,data
+165,barriers,title_kw,land
+167,barriers,title_kw,data
+167,barriers,title_kw,database
+168,barriers,title_kw,land
+170,barriers,title_kw,data
+171,barriers,title_kw,database
+172,barriers,title_kw,land
+172,barriers,title_kw,water
+173,barriers,title_kw,land
+174,barriers,title_kw,data
+174,barriers,title_kw,transport
+174,barriers,title_kw,transportation
+175,barriers,title_kw,land
+176,barriers,title_kw,data
+176,barriers,title_kw,transportation
+181,barriers,title_kw,database
+182,barriers,title_kw,land
+184,barriers,title_kw,land
+184,barriers,title_kw,water
+185,barriers,title_kw,database
+185,barriers,title_kw,regulation
+187,barriers,title_kw,data
+187,barriers,title_kw,datapoints
+187,barriers,title_kw,dataset
+187,barriers,title_kw,standard
+189,barriers,title_kw,investments
+189,barriers,title_kw,landscape
+189,barriers,title_kw,logistics
+189,barriers,title_kw,transport
+190,barriers,title_kw,collection
+190,barriers,title_kw,data
+190,barriers,title_kw,database
+193,barriers,title_kw,water
+194,barriers,title_kw,land
+194,barriers,title_kw,landscapes
+196,barriers,title_kw,water
+198,barriers,title_kw,land
+198,barriers,title_kw,storage
+199,barriers,title_kw,infrastructure
+199,barriers,title_kw,storage
+200,barriers,title_kw,data
+200,barriers,title_kw,waters
+201,barriers,title_kw,data
+201,barriers,title_kw,databases
+201,barriers,title_kw,land
+201,barriers,title_kw,storage
+202,barriers,title_kw,data
+203,barriers,title_kw,funding
+203,barriers,title_kw,land
+204,barriers,title_kw,landscapes
+206,barriers,title_kw,databases
+206,barriers,title_kw,datasets
+206,barriers,title_kw,water
+208,barriers,title_kw,data
+208,barriers,title_kw,land
+208,barriers,title_kw,landscape
+209,barriers,title_kw,water
+211,barriers,title_kw,land
+211,barriers,title_kw,water
+212,barriers,title_kw,data
+212,barriers,title_kw,land
+212,barriers,title_kw,water
+212,barriers,title_kw,waters
+214,barriers,title_kw,dataset
+214,barriers,title_kw,land
+215,barriers,title_kw,feedstocks
+216,barriers,title_kw,datasets
+216,barriers,title_kw,water
+217,barriers,title_kw,land
+217,barriers,title_kw,water
+218,barriers,title_kw,data
+218,barriers,title_kw,land
+218,barriers,title_kw,lands
+219,barriers,title_kw,database
+219,barriers,title_kw,water
+220,barriers,title_kw,data
+220,barriers,title_kw,water
+221,barriers,title_kw,water
+222,barriers,title_kw,data
+222,barriers,title_kw,land
+223,barriers,title_kw,data
+223,barriers,title_kw,landscape
+224,barriers,title_kw,dataset
+225,barriers,title_kw,data
+225,barriers,title_kw,land
+226,barriers,title_kw,data
+226,barriers,title_kw,database
+226,barriers,title_kw,land
+226,barriers,title_kw,storage
+226,barriers,title_kw,water
+226,barriers,title_kw,waterbodies
+226,barriers,title_kw,watercourses
+227,barriers,title_kw,land
+227,barriers,title_kw,landscape
+228,barriers,title_kw,data
+228,barriers,title_kw,land
+228,barriers,title_kw,regulation
+229,barriers,title_kw,land
+230,barriers,title_kw,collection
+230,barriers,title_kw,data
+233,barriers,title_kw,land
+234,barriers,title_kw,data
+234,barriers,title_kw,storage
+234,barriers,title_kw,water
+235,barriers,title_kw,feedstock
+235,barriers,title_kw,feedstocks
+236,barriers,title_kw,land
+236,barriers,title_kw,regulation
+236,barriers,title_kw,water
+236,barriers,title_kw,waterrelated
+237,barriers,title_kw,land
+238,barriers,title_kw,investments
+239,barriers,title_kw,data
+239,barriers,title_kw,datasets
+239,barriers,title_kw,land
+240,barriers,title_kw,data
+240,barriers,title_kw,storage
+240,barriers,title_kw,water
+241,barriers,title_kw,data
+241,barriers,title_kw,transportation
+242,barriers,title_kw,transport
+243,barriers,title_kw,land
+244,barriers,title_kw,logistics
+245,barriers,title_kw,data
+245,barriers,title_kw,datasets
+247,barriers,title_kw,data
+249,barriers,title_kw,data
+249,barriers,title_kw,transport
+249,barriers,title_kw,transported
+250,barriers,title_kw,data
+250,barriers,title_kw,land
+250,barriers,title_kw,water
+251,barriers,title_kw,data
+252,barriers,title_kw,data
+252,barriers,title_kw,transportation
+253,barriers,title_kw,data
+253,barriers,title_kw,land
+253,barriers,title_kw,landscape
+253,barriers,title_kw,water
+254,barriers,title_kw,water
+255,barriers,title_kw,data
+255,barriers,title_kw,land
+256,barriers,title_kw,collection
+257,barriers,title_kw,transport
+257,barriers,title_kw,transportation
+257,barriers,title_kw,transports
+258,barriers,title_kw,data
+258,barriers,title_kw,land
+259,barriers,title_kw,data
+261,barriers,title_kw,data
+262,barriers,title_kw,data
+262,barriers,title_kw,standard
+262,barriers,title_kw,standardised
+263,barriers,title_kw,data
+263,barriers,title_kw,dataset
+263,barriers,title_kw,land
+264,barriers,title_kw,data
+264,barriers,title_kw,feedstock
+264,barriers,title_kw,land
+264,barriers,title_kw,transportation
+266,barriers,title_kw,landscape
+266,barriers,title_kw,water
+267,barriers,title_kw,data
+267,barriers,title_kw,database
+267,barriers,title_kw,datasets
+267,barriers,title_kw,land
+267,barriers,title_kw,regulation
+268,barriers,title_kw,data
+268,barriers,title_kw,land
+268,barriers,title_kw,standard
+268,barriers,title_kw,storage
+269,barriers,title_kw,feedstock
+270,barriers,title_kw,dataset
+270,barriers,title_kw,land
+270,barriers,title_kw,water
+271,barriers,title_kw,collection
+272,barriers,title_kw,feedstock
+272,barriers,title_kw,transport
+275,barriers,title_kw,water
+276,barriers,title_kw,transportation
+277,barriers,title_kw,data
+277,barriers,title_kw,feedstock
+277,barriers,title_kw,feedstocks
+277,barriers,title_kw,land
+278,barriers,title_kw,data
+278,barriers,title_kw,landscapes
+279,barriers,title_kw,data
+279,barriers,title_kw,feedstock
+279,barriers,title_kw,land
+280,barriers,title_kw,data
+281,barriers,title_kw,feedstocks
+281,barriers,title_kw,land
+282,barriers,title_kw,land
+282,barriers,title_kw,landscape
+282,barriers,title_kw,landscapes
+282,barriers,title_kw,water
+284,barriers,title_kw,water
+285,barriers,title_kw,data
+285,barriers,title_kw,water
+286,barriers,title_kw,infrastructure
+287,barriers,title_kw,feedstocks
+290,barriers,title_kw,data
+290,barriers,title_kw,water
+291,barriers,title_kw,transportation
+292,barriers,title_kw,transport
+293,barriers,title_kw,land
+293,barriers,title_kw,transport
+293,barriers,title_kw,water
+295,barriers,title_kw,collection
+295,barriers,title_kw,data
+297,barriers,title_kw,data
+297,barriers,title_kw,land
+298,barriers,title_kw,land
+298,barriers,title_kw,waterbodies
+298,barriers,title_kw,watercourse
+298,barriers,title_kw,watershed
+299,barriers,title_kw,datasets
+301,barriers,title_kw,data
+301,barriers,title_kw,dataset
+302,barriers,title_kw,data
+302,barriers,title_kw,land
+302,barriers,title_kw,lands
+303,barriers,title_kw,data
+303,barriers,title_kw,land
+304,barriers,title_kw,data
+304,barriers,title_kw,land
+305,barriers,title_kw,data
+305,barriers,title_kw,databases
+306,barriers,title_kw,data
+306,barriers,title_kw,land
+306,barriers,title_kw,lands
+306,barriers,title_kw,watershed
+307,barriers,title_kw,lands
+309,barriers,title_kw,data
+309,barriers,title_kw,datasets
+309,barriers,title_kw,transportation
+310,barriers,title_kw,data
+311,barriers,title_kw,landscape
+311,barriers,title_kw,watering
+312,barriers,title_kw,data
+313,barriers,title_kw,data
+313,barriers,title_kw,dataset
+314,barriers,title_kw,data
+314,barriers,title_kw,land
+315,barriers,title_kw,land
+315,barriers,title_kw,landsat
+315,barriers,title_kw,landscape
+316,barriers,title_kw,transport
+318,barriers,title_kw,database
+318,barriers,title_kw,dataset
+318,barriers,title_kw,landscape
+319,barriers,title_kw,transport
+320,barriers,title_kw,water
+321,barriers,title_kw,data
+321,barriers,title_kw,transport
+321,barriers,title_kw,transportation
+322,barriers,title_kw,data
+322,barriers,title_kw,land
+322,barriers,title_kw,landscape
+322,barriers,title_kw,landscapes
+323,barriers,title_kw,infrastructure
+323,barriers,title_kw,land
+323,barriers,title_kw,transport
+323,barriers,title_kw,water
+324,barriers,title_kw,data
+324,barriers,title_kw,dataset
+324,barriers,title_kw,land
+325,barriers,title_kw,data
+325,barriers,title_kw,standard
+325,barriers,title_kw,water
+326,barriers,title_kw,data
+326,barriers,title_kw,datasets
+326,barriers,title_kw,landfills
+327,barriers,title_kw,data
+327,barriers,title_kw,land
+328,barriers,title_kw,landform
+328,barriers,title_kw,landscape
+328,barriers,title_kw,standard
+328,barriers,title_kw,water
+329,barriers,title_kw,landfills
+330,barriers,title_kw,collection
+330,barriers,title_kw,data
+330,barriers,title_kw,land
+330,barriers,title_kw,storage
+330,barriers,title_kw,water
+332,barriers,title_kw,landscape
+332,barriers,title_kw,landscapes
+333,barriers,title_kw,water
+334,barriers,title_kw,collection
+334,barriers,title_kw,datasets
+334,barriers,title_kw,infrastructure
+334,barriers,title_kw,land
+334,barriers,title_kw,standard
+335,barriers,title_kw,storage
+337,barriers,title_kw,data
+337,barriers,title_kw,infrastructure
+338,barriers,title_kw,data
+338,barriers,title_kw,landsat
+338,barriers,title_kw,water
+339,barriers,title_kw,data
+339,barriers,title_kw,land
+340,barriers,title_kw,data
+340,barriers,title_kw,landscape
+340,barriers,title_kw,landscapes
+340,barriers,title_kw,water
+341,barriers,title_kw,data
+341,barriers,title_kw,database
+341,barriers,title_kw,databases
+341,barriers,title_kw,standard
+342,barriers,title_kw,collection
+342,barriers,title_kw,databases
+342,barriers,title_kw,landscape
+342,barriers,title_kw,storage
+343,barriers,title_kw,transport
+343,barriers,title_kw,water
+344,barriers,title_kw,landscape
+345,barriers,title_kw,water
+346,barriers,title_kw,data
+347,barriers,title_kw,data
+347,barriers,title_kw,database
+347,barriers,title_kw,transport
+348,barriers,title_kw,data
+349,barriers,title_kw,landscape
+349,barriers,title_kw,landscapes
+349,barriers,title_kw,water
+349,barriers,title_kw,waterbodies
+349,barriers,title_kw,waters
+351,barriers,title_kw,feedstock
+351,barriers,title_kw,investments
+352,barriers,title_kw,feedstocks
+352,barriers,title_kw,land
+352,barriers,title_kw,transportation
+353,barriers,title_kw,data
+354,barriers,title_kw,water
+355,barriers,title_kw,data
+357,barriers,title_kw,data
+357,barriers,title_kw,land
+357,barriers,title_kw,landscapes
+358,barriers,title_kw,collection
+358,barriers,title_kw,storage
+359,barriers,title_kw,data
+359,barriers,title_kw,landscapes
+359,barriers,title_kw,seasonality
+359,barriers,title_kw,water
+359,barriers,title_kw,watershed
+359,barriers,title_kw,watersheds
+360,barriers,title_kw,database
+360,barriers,title_kw,water
+361,barriers,title_kw,land
+362,barriers,title_kw,data
+363,barriers,title_kw,water
+365,barriers,title_kw,land
+365,barriers,title_kw,landscape
+365,barriers,title_kw,data
+1,barriers,abstract,tailored policy (regional)
+2,barriers,abstract,inaction
+4,barriers,abstract,accurate emission estimates
+5,barriers,abstract,high cumulative energy demanda
+5,barriers,abstract,a more effective to calculate lca via differentiating software and database
+6,barriers,abstract,no data concerning short-term ch4 emissions from coal mines have been accessible worldwide
+7,barriers,abstract,lack of modern flue gas treatment
+10,barriers,abstract,stronger national policies
+11,barriers,abstract,one-size-fits-all approaches
+12,barriers,abstract,product space methods
+13,barriers,abstract,flotation tailings and waste rocks scattered around the mining village
+14,barriers,abstract,increase in exploiting european reserves
+16,barriers,abstract,surface mining
+17,barriers,abstract,impacts of mining and decommisioning
+18,barriers,abstract,extractivism in mountain areas
+19,barriers,abstract,leaking water in mines
+20,barriers,abstract,lacking regulations
+20,barriers,abstract,economic costs
+21,barriers,abstract,lead–zinc mining
+24,barriers,abstract,external management of mines
+25,barriers,abstract,deep-sea mining can remobilize large amounts of inert metals
+26,barriers,abstract,trapped pollutants in sediments
+27,barriers,abstract,few studies
+27,barriers,abstract,poor process kinetics
+27,barriers,abstract,metal toxicity
+27,barriers,abstract,regulatory issues
+27,barriers,abstract,public awarness/acceptance
+28,barriers,abstract,inexistence of ecological barriers
+29,barriers,abstract,potential toxicity of xanthates
+29,barriers,abstract,limited data on xanthate presence
+29,barriers,abstract,lack of xanthate-related monitoring data
+31,barriers,abstract,seasonality
+33,barriers,abstract,identification of resources
+34,barriers,abstract,untreated waters
+35,barriers,abstract,unmanaged tailings
+36,barriers,abstract,lack of data
+36,barriers,abstract,untreated tailings
+38,barriers,abstract,resource competition
+38,barriers,abstract,coal extraction volumes
+39,barriers,abstract,abandonment
+41,barriers,abstract,sediments from mining activities
+43,barriers,abstract,use of fertilisers
+44,barriers,abstract,seismic activity
+45,barriers,abstract,high costs
+45,barriers,abstract,unprofitable land restorations
+46,barriers,abstract,self-heating in dumps
+47,barriers,abstract,seasonality
+48,barriers,abstract,not considered risks
+49,barriers,abstract,less restrictive regulations for closed mines in the past
+49,barriers,abstract,metalloid mobility
+50,barriers,abstract,sulphur mining and processing
+51,barriers,abstract,dumps
+52,barriers,abstract,global competition
+54,barriers,abstract,coal exploitation
+55,barriers,abstract,air mass accumulation
+57,barriers,abstract,direct discharges
+57,barriers,abstract,resuspension
+57,barriers,abstract,changes in sediment conditions
+59,barriers,abstract,floods
+60,barriers,abstract,lack of technical assistance
+60,barriers,abstract,lack of projects' execution
+62,barriers,abstract,technical constraints
+62,barriers,abstract,high public expenditures
+63,barriers,abstract,anthropogenic remobilisation of pollutants
+65,barriers,abstract,microbial activity
+66,barriers,abstract,clay
+66,barriers,abstract,ph
+67,barriers,abstract,human industrial activities
+68,barriers,abstract,anthropogenic impact
+69,barriers,abstract,arctic environment
+70,barriers,abstract,inadequate remediation
+71,barriers,abstract,expensive monitoring methods
+72,barriers,abstract,untreated tailings from past activities
+73,barriers,abstract,release of hazardous pollutants
+75,barriers,abstract,metal transfer in the environment
+76,barriers,abstract,self-combustion
+77,barriers,abstract,as and be concentration
+78,barriers,abstract,low karst water level
+79,barriers,abstract,re-openings
+80,barriers,abstract,abandoned mines
+80,barriers,abstract,tailings
+82,barriers,abstract,conflicts for land
+83,barriers,abstract,land subsidence
+84,barriers,abstract,water as a transfer mean
+85,barriers,abstract,heavy metal exposure
+86,barriers,abstract,lack of recognition of the rock mass in terms of its mechanical properties
+86,barriers,abstract,not used in practical forecasting
+88,barriers,abstract,concentration of pollutants
+89,barriers,abstract,exploration and mining allowed in protected areas of germany
+90,barriers,abstract,contamination at medium altitude
+91,barriers,abstract,degradated land
+92,barriers,abstract,conflicts
+95,barriers,abstract,antibiotic tolerance of microbiota
+97,barriers,abstract,sewage
+97,barriers,abstract,industrial wastewater
+98,barriers,abstract,reopening of pollutant mines
+99,barriers,abstract,dewatering
+100,barriers,abstract,dangerous
+100,barriers,abstract,air pollution
+101,barriers,abstract,not all plants survive heavy metal contamination
+102,barriers,abstract,absolute emission levels
+103,barriers,abstract,transfer of pollutants
+104,barriers,abstract,transportation of manure to plants
+105,barriers,abstract,spatial and seasonal variations of emissions
+106,barriers,abstract,increase of ch4
+107,barriers,abstract,corn and rice emissions
+108,barriers,abstract,irrigation
+109,barriers,abstract,not effective in all regions
+110,barriers,abstract,impact of photovoltaic over agricultur usage of land
+110,barriers,abstract,land use conflict
+111,barriers,abstract,industrialisation
+111,barriers,abstract,economic growth and financial globalization impact the environmental quality
+112,barriers,abstract,heterogeneity of climate and land use changes
+113,barriers,abstract,seasonality
+114,barriers,abstract,resistance to change
+115,barriers,abstract,lack of adoption
+116,barriers,abstract,low temperatures
+117,barriers,abstract,pressure
+118,barriers,abstract,few studies
+119,barriers,abstract,regional differences
+121,barriers,abstract,climate change
+122,barriers,abstract,drought pressure
+123,barriers,abstract,polarization between economic and environmental sustainability
+124,barriers,abstract,land consumption
+125,barriers,abstract,low yield
+125,barriers,abstract,copper toxicity
+126,barriers,abstract,regional variations in land degradation
+127,barriers,abstract,regionalised use of blockchain
+128,barriers,abstract,climate change
+129,barriers,abstract,research gaps
+131,barriers,abstract,variations of profit and yield
+133,barriers,abstract,urbanisation
+133,barriers,abstract,renewable energy
+137,barriers,abstract,unkown territorial influences
+139,barriers,abstract,water-related hotspots
+140,barriers,abstract,underrepresented regional hotsposts
+142,barriers,abstract,lack of data and simulations
+143,barriers,abstract,no changes in central residential areas
+143,barriers,abstract,land use conflicts
+144,barriers,abstract,assumptions of models affect results
+145,barriers,abstract,total cropland
+145,barriers,abstract,gdp per capita
+146,barriers,abstract,sowing
+146,barriers,abstract,no codes of conduct about workers' rights
+147,barriers,abstract,seasonality
+147,barriers,abstract,fertilisation period
+149,barriers,abstract,cost-benefit considerations
+150,barriers,abstract,loss of biodiversity
+151,barriers,abstract,electricity consumption
+152,barriers,abstract,loss of organic matter and microbiota
+152,barriers,abstract,loss of vegetation
+153,barriers,abstract,model not fitting the observations
+154,barriers,abstract,reorganisation of land use
+155,barriers,abstract,climate change
+156,barriers,abstract,bad government
+158,barriers,abstract,drought
+160,barriers,abstract,worsening of climate conditions
+162,barriers,abstract,mining
+162,barriers,abstract,agriculture
+162,barriers,abstract,international trade
+163,barriers,abstract,import of goods
+165,barriers,abstract,climate change scenarios
+166,barriers,abstract,urbanisation
+169,barriers,abstract,amplified atmospheric nitrogen deposition
+170,barriers,abstract,agriculture
+171,barriers,abstract,global agriculture trade
+172,barriers,abstract,land use
+173,barriers,abstract,solar radiations
+173,barriers,abstract,land use
+174,barriers,abstract,use of unclean fuels
+175,barriers,abstract,deforestation
+175,barriers,abstract,loss of biodiversity
+177,barriers,abstract,oil by-product
+177,barriers,abstract,feeding mechanisms
+178,barriers,abstract,fertilisers
+179,barriers,abstract,crops
+179,barriers,abstract,animals
+180,barriers,abstract,overfertilisation
+182,barriers,abstract,demand
+184,barriers,abstract,excess of nitrogen in water
+184,barriers,abstract,livestock
+353,barriers,abstract,data
+358,barriers,abstract,"better field data, model calibration, and monitoring"
+361,barriers,abstract,rapid economic and population growth
+362,barriers,abstract,ndvi as measurement
+365,barriers,abstract,lack of knowlegde
+1,drivers,title_kw,efficiency
+1,drivers,title_kw,investment
+3,drivers,title_kw,demand
+3,drivers,title_kw,partnership
+5,drivers,title_kw,demand
+7,drivers,title_kw,efficiency
+10,drivers,title_kw,technology
+11,drivers,title_kw,efficiency
+18,drivers,title_kw,demand
+19,drivers,title_kw,efficiency
+20,drivers,title_kw,demand
+24,drivers,title_kw,fundamental
+27,drivers,title_kw,demand
+29,drivers,title_kw,demand
+32,drivers,title_kw,demand
+33,drivers,title_kw,technology
+35,drivers,title_kw,technology
+36,drivers,title_kw,demand
+38,drivers,title_kw,collaboration
+38,drivers,title_kw,efficiency
+38,drivers,title_kw,incentives
+38,drivers,title_kw,investment
+45,drivers,title_kw,investment
+46,drivers,title_kw,maturity
+81,drivers,title_kw,partnership
+98,drivers,title_kw,technology
+107,drivers,title_kw,demands
+110,drivers,title_kw,demand
+111,drivers,title_kw,technology
+114,drivers,title_kw,efficiency
+114,drivers,title_kw,funding
+115,drivers,title_kw,demand
+115,drivers,title_kw,efficiency
+116,drivers,title_kw,efficiency
+118,drivers,title_kw,demand
+121,drivers,title_kw,efficiency
+123,drivers,title_kw,incentives
+127,drivers,title_kw,collaborations
+127,drivers,title_kw,technology
+130,drivers,title_kw,collaboration
+131,drivers,title_kw,investments
+132,drivers,title_kw,technology
+133,drivers,title_kw,demand
+135,drivers,title_kw,collaboration
+138,drivers,title_kw,subsidy
+139,drivers,title_kw,demand
+140,drivers,title_kw,fundamental
+148,drivers,title_kw,efficiency
+149,drivers,title_kw,investment
+150,drivers,title_kw,demand
+151,drivers,title_kw,demand
+151,drivers,title_kw,efficiency
+155,drivers,title_kw,demand
+157,drivers,title_kw,funds
+162,drivers,title_kw,demand
+167,drivers,title_kw,technology
+170,drivers,title_kw,demands
+173,drivers,title_kw,technology
+174,drivers,title_kw,demand
+176,drivers,title_kw,demand
+178,drivers,title_kw,demand
+182,drivers,title_kw,demand
+185,drivers,title_kw,collaboration
+185,drivers,title_kw,technology
+186,drivers,title_kw,demand
+186,drivers,title_kw,technology
+188,drivers,title_kw,funds
+189,drivers,title_kw,investments
+190,drivers,title_kw,technology
+192,drivers,title_kw,demand
+192,drivers,title_kw,incentive
+192,drivers,title_kw,technology
+195,drivers,title_kw,incentives
+196,drivers,title_kw,efficiency
+200,drivers,title_kw,technology
+203,drivers,title_kw,funding
+203,drivers,title_kw,funds
+207,drivers,title_kw,efficiency
+210,drivers,title_kw,efficiency
+210,drivers,title_kw,technology
+211,drivers,title_kw,collaboration
+212,drivers,title_kw,efficiency
+216,drivers,title_kw,demand
+224,drivers,title_kw,technology
+232,drivers,title_kw,demand
+235,drivers,title_kw,technology
+238,drivers,title_kw,funds
+238,drivers,title_kw,investments
+242,drivers,title_kw,fundamental
+244,drivers,title_kw,efficiency
+248,drivers,title_kw,efficiency
+249,drivers,title_kw,demand
+249,drivers,title_kw,demands
+251,drivers,title_kw,demand
+256,drivers,title_kw,fundamentally
+260,drivers,title_kw,fundamental
+264,drivers,title_kw,demand
+264,drivers,title_kw,demands
+264,drivers,title_kw,technology
+267,drivers,title_kw,demand
+267,drivers,title_kw,funded
+271,drivers,title_kw,incentives
+273,drivers,title_kw,demand
+274,drivers,title_kw,demand
+276,drivers,title_kw,incentive
+279,drivers,title_kw,technology
+281,drivers,title_kw,efficiency
+284,drivers,title_kw,demand
+284,drivers,title_kw,efficiency
+286,drivers,title_kw,incentives
+286,drivers,title_kw,technology
+289,drivers,title_kw,demand
+290,drivers,title_kw,demand
+293,drivers,title_kw,demand
+293,drivers,title_kw,efficiency
+309,drivers,title_kw,demand
+310,drivers,title_kw,efficiency
+311,drivers,title_kw,fundamental
+323,drivers,title_kw,demand
+334,drivers,title_kw,efficiency
+335,drivers,title_kw,demand
+341,drivers,title_kw,technology
+348,drivers,title_kw,demand
+350,drivers,title_kw,efficiency
+350,drivers,title_kw,incentive
+354,drivers,title_kw,demand
+356,drivers,title_kw,demand
+360,drivers,title_kw,partnerships
+362,drivers,title_kw,efficiency
+1,drivers,abstract,private investment
+2,drivers,abstract,"upgrading open dumps, standardising household-level waste separation procedures, minimising food waste, establishing national recycling targets, and promoting circular economy through a zero-waste approach"
+3,drivers,abstract,"leveraging eu domestic instruments and regulations, strengthening the green deal and sdg diplomacy and financing, and promoting responsible consumption, recycling and innovation"
+5,drivers,abstract,electricy mix
+10,drivers,abstract,innovations
+11,drivers,abstract,improvement in production and carbon efficiency
+11,drivers,abstract,decarboning the energy mix
+13,drivers,abstract,reprocessing of mine tailings
+14,drivers,abstract,reduce dependence from abroad and facilitate the green transition
+16,drivers,abstract,land reclamation works
+19,drivers,abstract,use of iron scraps to reduce heavy metals' concentration in leaking water
+22,drivers,abstract,technology
+23,drivers,abstract,sustainability reporting
+23,drivers,abstract,double materiality
+24,drivers,abstract,geo-tourism
+25,drivers,abstract,leveraging the chemical and isotope signatures of toxic metals
+26,drivers,abstract,monitoring
+27,drivers,abstract,cleaner than traditional mining
+29,drivers,abstract,water sampling and chemical analysis
+30,drivers,abstract,landsat-type data for monitoring of mining activity
+34,drivers,abstract,water treatment
+35,drivers,abstract,technology
+36,drivers,abstract,modern investigations
+37,drivers,abstract,hyperspectral remote sensing technology
+38,drivers,abstract,government support
+38,drivers,abstract,financial incentives
+38,drivers,abstract,regulatory processes
+39,drivers,abstract,industrial heritage
+40,drivers,abstract,improved statistical tools
+41,drivers,abstract,ecological risk assessment
+42,drivers,abstract,sustainable chemical processes
+43,drivers,abstract,machine learning
+43,drivers,abstract,high predictive power
+44,drivers,abstract,renewal of the technical exploitation documentation
+45,drivers,abstract,cost revenue analysis
+46,drivers,abstract,slow low-temperature weathering of coal mining wastes
+47,drivers,abstract,predictive statistics
+48,drivers,abstract,vulnerability analysis
+50,drivers,abstract,risk evaluation matrix
+53,drivers,abstract,hazard analysis
+55,drivers,abstract,strategic mitigation
+56,drivers,abstract,spectrometry analysis
+57,drivers,abstract,the ecosystem retains heavy metals
+58,drivers,abstract,eco-technologies
+60,drivers,abstract,remediation techniques
+61,drivers,abstract,plants as indicators of soil pollution
+62,drivers,abstract,social preferences
+63,drivers,abstract,sediments and soils analysis
+66,drivers,abstract,machine learning
+69,drivers,abstract,revegetation
+69,drivers,abstract,pre-mining traces restored
+70,drivers,abstract,regulations
+70,drivers,abstract,revegetation
+70,drivers,abstract,modern mining practices
+71,drivers,abstract,microbiota analysis
+72,drivers,abstract,analysis of tailings
+73,drivers,abstract,technologies
+74,drivers,abstract,mapping chemical elements
+75,drivers,abstract,new analysis
+76,drivers,abstract,multidisciplinarity
+77,drivers,abstract,identification of the as and be hotspots
+77,drivers,abstract,reduction of the mobility and plant availability of cd in the whole investigated area
+79,drivers,abstract,multivariate cluster analysis
+79,drivers,abstract,biogeochemical diagnosis
+80,drivers,abstract,appropriate measures
+80,drivers,abstract,birds' feeding behaviour
+81,drivers,abstract,monitoring
+82,drivers,abstract,tourism
+82,drivers,abstract,landscape study
+82,drivers,abstract,marnie spatial planning
+84,drivers,abstract,monitoring
+85,drivers,abstract,new mining practices
+86,drivers,abstract,mechanical similarity models
+87,drivers,abstract,multiple methodologies
+87,drivers,abstract,alternative to standard archelogical investigtion
+89,drivers,abstract,mining as cultural driver
+91,drivers,abstract,spontaneous vegetation
+91,drivers,abstract,forestation
+92,drivers,abstract,shared stakeholders' objectives
+92,drivers,abstract,informed company management
+93,drivers,abstract,plant-based remediation
+94,drivers,abstract,toxic elements biomonitoring
+96,drivers,abstract,multiple sampling techniques
+97,drivers,abstract,environmental and physiochemical analyses
+98,drivers,abstract,monitoring
+98,drivers,abstract,technology
+99,drivers,abstract,geotechnical and hydrogeological studies
+100,drivers,abstract,technology
+100,drivers,abstract,studies
+101,drivers,abstract,accumulation of heavy metals in plants
+102,drivers,abstract,comparative analysis
+103,drivers,abstract,analysis of soil enzyms
+104,drivers,abstract,lca
+104,drivers,abstract,regional-scale activities
+105,drivers,abstract,concentration of other elements
+106,drivers,abstract,temporal trends
+107,drivers,abstract,precise and high-resolution spatial prediction
+107,drivers,abstract,regulations
+107,drivers,abstract,policies
+108,drivers,abstract,water management
+108,drivers,abstract,lca
+109,drivers,abstract,regional characterisation
+109,drivers,abstract,biomass
+109,drivers,abstract,statistical analysis
+110,drivers,abstract,technology
+111,drivers,abstract,all countries benefit from knowledge spillover effects from green technology
+112,drivers,abstract,land use optimisation and planning
+113,drivers,abstract,spatial analysis
+114,drivers,abstract,assessment
+114,drivers,abstract,technolgy
+115,drivers,abstract,income stability
+116,drivers,abstract,microbiota
+117,drivers,abstract,risk assessment
+118,drivers,abstract,risk assessment
+118,drivers,abstract,regulations
+118,drivers,abstract,standardisatio
+119,drivers,abstract,regional transition analysis
+119,drivers,abstract,spatial analysis
+119,drivers,abstract,innovations
+119,drivers,abstract,community-led networks
+121,drivers,abstract,selecting olive cultivars with lower chilling requirements
+121,drivers,abstract,implementing cover crops to enhance water use efficiency under increased co2 concentration and uncertain precipitation projections
+121,drivers,abstract,and targeting the spring generation of the fly and diversifying the olive landscape to reduce infestation levels
+122,drivers,abstract,temperature analysis
+123,drivers,abstract,regional specificities
+124,drivers,abstract,regulations
+125,drivers,abstract,organic viticulture generally performs better on an area basis across most environmental categories
+125,drivers,abstract,lca
+126,drivers,abstract,spatial analysis
+127,drivers,abstract,use of blockchain in the green energy production and marketisation
+127,drivers,abstract,green energy trading policies
+128,drivers,abstract,labelling
+128,drivers,abstract,sustainability certification
+129,drivers,abstract,comprehensive analysis
+130,drivers,abstract,from macro to micro apporaches
+131,drivers,abstract,numerical optimization model
+132,drivers,abstract,text mining
+133,drivers,abstract,environmental taxes
+136,drivers,abstract,territorial lca methodologies
+137,drivers,abstract,regional analysis
+138,drivers,abstract,carbon subsides
+139,drivers,abstract,biodegradable mulching
+141,drivers,abstract,scientometrics
+142,drivers,abstract,mitigation via cover crops
+143,drivers,abstract,lower residential tempratures
+143,drivers,abstract,local supply chain
+144,drivers,abstract,combination of methodologies
+144,drivers,abstract,crop rotation
+146,drivers,abstract,lca
+147,drivers,abstract,satellite data
+148,drivers,abstract,location
+148,drivers,abstract,gas network
+149,drivers,abstract,behaviours
+150,drivers,abstract,diets with less animal products
+151,drivers,abstract,lower ghg emissions
+152,drivers,abstract,time
+153,drivers,abstract,spatial model
+154,drivers,abstract,fuel saving
+155,drivers,abstract,geo-portal
+156,drivers,abstract,good government
+156,drivers,abstract,institution
+156,drivers,abstract,planning systems
+157,drivers,abstract,pro-environmental activity of farms
+158,drivers,abstract,risk map
+159,drivers,abstract,fair trade
+159,drivers,abstract,responsible sourcing
+160,drivers,abstract,adaptation measures
+161,drivers,abstract,ghg regional map
+162,drivers,abstract,sourcing sustainable products
+163,drivers,abstract,biodiversity impact assessment
+164,drivers,abstract,local economy
+164,drivers,abstract,lowest transportation needs
+165,drivers,abstract,satellite data
+165,drivers,abstract,spatial modelling
+166,drivers,abstract,local determinants
+166,drivers,abstract,spatial analysis
+167,drivers,abstract,literature review
+167,drivers,abstract,digital intelligence
+168,drivers,abstract,lca
+170,drivers,abstract,mitigations
+171,drivers,abstract,optimise the import/export structure
+172,drivers,abstract,legume production
+173,drivers,abstract,food and energy production
+174,drivers,abstract,biomasses
+175,drivers,abstract,regional contexts
+176,drivers,abstract,digital infrastructure
+177,drivers,abstract,resource consumption reduction
+177,drivers,abstract,eco-certification
+177,drivers,abstract,ecosystem-based management
+178,drivers,abstract,biomass waste
+178,drivers,abstract,photovoltaic panels
+179,drivers,abstract,prevention and control policies
+180,drivers,abstract,removing synthetic nitroge fertilizers
+180,drivers,abstract,removing urea
+181,drivers,abstract,scientometric visualisation analysis
+182,drivers,abstract,environmental and social impacts
+183,drivers,abstract,lca
+183,drivers,abstract,behaviours
+184,drivers,abstract,mitigation policies
+185,drivers,abstract,regulation
+365,drivers,abstract,spatial delineation of areas with high land clearing
+1,stakeholders,title_kw,policymakers
+3,stakeholders,title_kw,consumer
+25,stakeholders,title_kw,bank
+27,stakeholders,title_kw,regulatory
+29,stakeholders,title_kw,consumer
+38,stakeholders,title_kw,government
+38,stakeholders,title_kw,regulatory
+45,stakeholders,title_kw,regulatory
+55,stakeholders,title_kw,policymakers
+58,stakeholders,title_kw,regulatory
+76,stakeholders,title_kw,producers
+81,stakeholders,title_kw,university
+92,stakeholders,title_kw,investors
+92,stakeholders,title_kw,regulator
+96,stakeholders,title_kw,dgt
+96,stakeholders,title_kw,dgts
+111,stakeholders,title_kw,policymakers
+114,stakeholders,title_kw,customers
+115,stakeholders,title_kw,farmers
+118,stakeholders,title_kw,policymakers
+118,stakeholders,title_kw,regulatory
+121,stakeholders,title_kw,producer
+121,stakeholders,title_kw,user
+126,stakeholders,title_kw,policymakers
+127,stakeholders,title_kw,government
+127,stakeholders,title_kw,governments
+129,stakeholders,title_kw,policymakers
+131,stakeholders,title_kw,farmers
+132,stakeholders,title_kw,research institutes
+133,stakeholders,title_kw,government
+139,stakeholders,title_kw,farmers
+144,stakeholders,title_kw,farmers
+146,stakeholders,title_kw,municipality
+149,stakeholders,title_kw,farmers
+153,stakeholders,title_kw,policy-makers
+155,stakeholders,title_kw,user
+155,stakeholders,title_kw,users
+156,stakeholders,title_kw,government
+157,stakeholders,title_kw,agency
+157,stakeholders,title_kw,farmers
+160,stakeholders,title_kw,farmers
+162,stakeholders,title_kw,consumers
+166,stakeholders,title_kw,policy makers
+167,stakeholders,title_kw,university
+168,stakeholders,title_kw,producers
+170,stakeholders,title_kw,farmers
+178,stakeholders,title_kw,consumers
+182,stakeholders,title_kw,consumers
+182,stakeholders,title_kw,producers
+186,stakeholders,title_kw,retailer
+188,stakeholders,title_kw,farmers
+190,stakeholders,title_kw,consumer
+191,stakeholders,title_kw,producer
+195,stakeholders,title_kw,farmers
+198,stakeholders,title_kw,farmers
+198,stakeholders,title_kw,policy makers
+202,stakeholders,title_kw,producer
+212,stakeholders,title_kw,farmers
+226,stakeholders,title_kw,farmers
+226,stakeholders,title_kw,policy makers
+228,stakeholders,title_kw,farmers
+231,stakeholders,title_kw,farmers
+241,stakeholders,title_kw,municipality
+244,stakeholders,title_kw,european commission
+250,stakeholders,title_kw,manufacturers
+256,stakeholders,title_kw,consumers
+257,stakeholders,title_kw,producers
+264,stakeholders,title_kw,manufacturer
+264,stakeholders,title_kw,municipality
+264,stakeholders,title_kw,university
+265,stakeholders,title_kw,farmers
+267,stakeholders,title_kw,agency
+267,stakeholders,title_kw,policy makers
+267,stakeholders,title_kw,user
+271,stakeholders,title_kw,consumer
+271,stakeholders,title_kw,consumers
+271,stakeholders,title_kw,producers
+271,stakeholders,title_kw,retailers
+272,stakeholders,title_kw,operators
+272,stakeholders,title_kw,policymakers
+273,stakeholders,title_kw,consumer
+273,stakeholders,title_kw,farmer
+273,stakeholders,title_kw,farmers
+283,stakeholders,title_kw,farmers
+285,stakeholders,title_kw,consumers
+285,stakeholders,title_kw,policy-makers
+286,stakeholders,title_kw,retailer
+293,stakeholders,title_kw,producers
+299,stakeholders,title_kw,ngorongoro
+303,stakeholders,title_kw,policymakers
+321,stakeholders,title_kw,farmer
+321,stakeholders,title_kw,producer
+329,stakeholders,title_kw,policy makers
+334,stakeholders,title_kw,utility
+337,stakeholders,title_kw,bank
+337,stakeholders,title_kw,policymakers
+338,stakeholders,title_kw,agency
+339,stakeholders,title_kw,farmers
+346,stakeholders,title_kw,policymakers
+350,stakeholders,title_kw,policy makers
+350,stakeholders,title_kw,producer
+350,stakeholders,title_kw,producers
+355,stakeholders,title_kw,consumers
+355,stakeholders,title_kw,policy-makers
+360,stakeholders,title_kw,bank
+360,stakeholders,title_kw,consumer
+360,stakeholders,title_kw,ngos
+360,stakeholders,title_kw,producer
+362,stakeholders,title_kw,utility
+1,stakeholders,abstract,policymakers
+2,stakeholders,abstract,"un, eu, european regions, municipalities"
+3,stakeholders,abstract,"eu, eu's trading partners"
+5,stakeholders,abstract,consumer
+10,stakeholders,abstract,south africa's department of science and technology
+13,stakeholders,abstract,mine owners
+13,stakeholders,abstract,policymakers
+13,stakeholders,abstract,authorities of mining villages
+17,stakeholders,abstract,local communities
+23,stakeholders,abstract,local communities and residents
+24,stakeholders,abstract,alps communities
+24,stakeholders,abstract,former miners
+27,stakeholders,abstract,scholars
+27,stakeholders,abstract,policymakers
+29,stakeholders,abstract,policymakers
+38,stakeholders,abstract,policymakers
+44,stakeholders,abstract,workers
+44,stakeholders,abstract,local communities
+45,stakeholders,abstract,local communities
+45,stakeholders,abstract,policymakers
+45,stakeholders,abstract,entrepreneurs
+47,stakeholders,abstract,mining enterprises
+47,stakeholders,abstract,villages
+48,stakeholders,abstract,policimakers
+48,stakeholders,abstract,local population
+49,stakeholders,abstract,hydrological planning office
+50,stakeholders,abstract,local communities
+51,stakeholders,abstract,humans
+52,stakeholders,abstract,industries
+52,stakeholders,abstract,companies
+52,stakeholders,abstract,communities
+52,stakeholders,abstract,decision-makers
+55,stakeholders,abstract,residents
+55,stakeholders,abstract,policymakers
+55,stakeholders,abstract,urban planners
+60,stakeholders,abstract,regions
+62,stakeholders,abstract,private sector
+67,stakeholders,abstract,local human population and wildlife
+67,stakeholders,abstract,municipalities
+70,stakeholders,abstract,regions
+81,stakeholders,abstract,university
+81,stakeholders,abstract,national agencies
+81,stakeholders,abstract,municipalities
+82,stakeholders,abstract,active mines
+84,stakeholders,abstract,eu and national legislators
+86,stakeholders,abstract,scholars
+88,stakeholders,abstract,eu legislators
+89,stakeholders,abstract,eu countries
+92,stakeholders,abstract,state
+92,stakeholders,abstract,a canadian company
+92,stakeholders,abstract,general public
+92,stakeholders,abstract,environmental campaigners
+92,stakeholders,abstract,cultural agencies
+92,stakeholders,abstract,investors
+92,stakeholders,abstract,company management
+99,stakeholders,abstract,local villages
+100,stakeholders,abstract,workers
+102,stakeholders,abstract,countries
+103,stakeholders,abstract,regions
+106,stakeholders,abstract,noaa network
+107,stakeholders,abstract,policymakers
+109,stakeholders,abstract,regions
+111,stakeholders,abstract,policymakers
+113,stakeholders,abstract,landfills
+114,stakeholders,abstract,un
+114,stakeholders,abstract,winemakers
+114,stakeholders,abstract,farmers
+115,stakeholders,abstract,farmers
+118,stakeholders,abstract,regulatory boides
+118,stakeholders,abstract,policymakers
+119,stakeholders,abstract,regions
+119,stakeholders,abstract,communities
+121,stakeholders,abstract,farmers
+123,stakeholders,abstract,farmers
+123,stakeholders,abstract,policymakers
+124,stakeholders,abstract,policymakers
+125,stakeholders,abstract,farmers
+126,stakeholders,abstract,policymakers
+127,stakeholders,abstract,economic establishments
+127,stakeholders,abstract,green energy supply organizations
+127,stakeholders,abstract,tech designers
+127,stakeholders,abstract,governments
+127,stakeholders,abstract,researchers
+128,stakeholders,abstract,farmers
+128,stakeholders,abstract,post-harvest organisations
+129,stakeholders,abstract,scholars
+130,stakeholders,abstract,scholars
+131,stakeholders,abstract,farmers
+132,stakeholders,abstract,scholars
+133,stakeholders,abstract,policymakers
+133,stakeholders,abstract,urban planners
+135,stakeholders,abstract,scholars
+136,stakeholders,abstract,public authorities
+137,stakeholders,abstract,regions
+140,stakeholders,abstract,scholars
+140,stakeholders,abstract,policymakers
+141,stakeholders,abstract,scholars
+146,stakeholders,abstract,famers
+146,stakeholders,abstract,suppliers
+148,stakeholders,abstract,decisio-makers
+149,stakeholders,abstract,farmers
+150,stakeholders,abstract,consumers
+151,stakeholders,abstract,farmers
+151,stakeholders,abstract,suppliers
+155,stakeholders,abstract,users
+155,stakeholders,abstract,farmers
+157,stakeholders,abstract,farmers
+161,stakeholders,abstract,policymakers
+166,stakeholders,abstract,scholars
+167,stakeholders,abstract,scholars
+176,stakeholders,abstract,farmers
+180,stakeholders,abstract,policymakers
+180,stakeholders,abstract,farmers
+182,stakeholders,abstract,producers
+182,stakeholders,abstract,consumers
+182,stakeholders,abstract,trading partners
+184,stakeholders,abstract,policymakers
+185,stakeholders,abstract,policymakers
+356,stakeholders,abstract,policymakers
+358,stakeholders,abstract,smallholders

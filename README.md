@@ -261,6 +261,36 @@ plus optional `xgb` (registered automatically only if `xgboost` is installed).
 environmental burden, ISO 14045 flavour) sits alongside the v1 / PCA /
 assumption-based proxies.
 
+📥 Zenodo Ingestion & WP1/D1.2 Literature Data
+
+`gif.zenodo` talks to the Zenodo REST API directly — no GitHub-Actions detour —
+with MD5 verification and provenance run-logs:
+
+```bash
+gif zenodo list --community biofairnet          # discover community records
+gif zenodo pull 10.5281/zenodo.20743706         # download any record by DOI
+```
+
+`gif.literature` (+ notebook `07_literature_ingest.ipynb`) ingests the two
+June-2026 WP1/D1.2 uploads — the literature **full list**
+([10.5281/zenodo.20743706](https://doi.org/10.5281/zenodo.20743706)) and the
+manually coded **codebook**
+([10.5281/zenodo.20744025](https://doi.org/10.5281/zenodo.20744025), both
+CC-BY-4.0 by Guerreschi, Lomuscio & Albanese) — into tidy, validated CSVs under
+`data/processed/literature/`:
+
+```bash
+gif literature fetch      # download both records + prepare in one step
+```
+
+Outputs: `papers.csv` (366 papers, English snake_case columns),
+`codes_long.csv` (tidy paper × dimension × source × code), and
+`papers_coded.csv` (papers joined with the manual codes). The join is
+title-based and validated — the codebook's positional ids drift after blank
+spreadsheet rows, so mismatches are reported rather than silently misassigned.
+This labeled corpus is the training data for the upcoming ML-assisted
+literature coding stage.
+
 🧪 Tests & CI
 
 A `pytest` suite under `tests/` covers data prep, the model registry, training,

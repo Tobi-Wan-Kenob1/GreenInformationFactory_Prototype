@@ -1,0 +1,60 @@
+{
+  "stage": "literature_prepare",
+  "timestamp_utc": "2026-07-03T03:47:43+00:00",
+  "git": {
+    "repo_root": "/Users/tobiasweiss/Claude_Code/GreenInformationFactory_Prototype",
+    "commit": "82c8a9fe06feda90e30e165e97449ac86a24efa2",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.8.8",
+    "platform": "darwin"
+  },
+  "payload": {
+    "sources": {
+      "full_list": {
+        "path": "data/external/Literature Analysis _ FULL LIST.xlsx",
+        "doi": "10.5281/zenodo.20743706"
+      },
+      "codebook": {
+        "path": "data/external/Literature Analysis _ Coded File.xlsx",
+        "doi": "10.5281/zenodo.20744025",
+        "sheet": "abstract_only"
+      }
+    },
+    "join": {
+      "papers": 366,
+      "coded": 363,
+      "joined": 366,
+      "title_mismatches": 0,
+      "mismatch_examples": [],
+      "alignment": {
+        "coded_rows": 368,
+        "matched": 363,
+        "unmatched_titles": [],
+        "unmatched_count": 0,
+        "duplicate_paper_titles": [
+          "Global research trends in zero-waste cities: a comprehensive bibliometric analysis",
+          "Greenhouse gas emissions from cattle enclosures in semi-arid sub-Saharan Africa: The case of a rangeland in South-Central Kenya",
+          "Derivation of greenhouse gas emission factors for peatlands managed for extraction in the Republic of Ireland and the United Kingdom"
+        ],
+        "duplicate_coded_rows_dropped": 3
+      }
+    },
+    "codes_assigned": 1438,
+    "code_dimensions": [
+      "barriers",
+      "bio",
+      "ce",
+      "drivers",
+      "stakeholders"
+    ],
+    "outputs": {
+      "papers": "data/processed/literature/papers.csv",
+      "codes_long": "data/processed/literature/codes_long.csv",
+      "papers_coded": "data/processed/literature/papers_coded.csv"
+    },
+    "license_note": "Derived from CC-BY-4.0 datasets by Guerreschi, Lomuscio & Albanese; attribute in downstream releases."
+  }
+}
