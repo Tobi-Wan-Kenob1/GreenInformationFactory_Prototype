@@ -115,6 +115,27 @@ def _cmd_literature_fetch(args) -> int:
     return 0
 
 
+def _cmd_literature_analyze(args) -> int:
+    from .lit_analytics import run_literature_analytics
+    report = run_literature_analytics(args.lit_dir, args.results_dir)
+    print(f"✅ analytics: {report['papers']} papers, {report['codes']} codes")
+    print(f"  tables : {len(report['tables'])} CSV(s)")
+    print(f"  figures: {len(report['figures'])} PNG(s) in {args.results_dir}")
+    return 0
+
+
+def _cmd_literature_train_coder(args) -> int:
+    from .lit_ml import run_literature_coding
+    result = run_literature_coding(
+        args.lit_dir, args.results_dir, args.models_dir,
+        min_papers=args.min_papers, cv=args.cv,
+    )
+    print(f"✅ trained {len(result.models)} coding task(s). Best models (CV macro-F1):")
+    print(result.best[["task", "model", "f1_macro", "accuracy", "n"]]
+          .to_string(index=False))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="gif", description="GreenInformationFactory pipeline CLI")
     sub = p.add_subparsers(dest="command", required=True)
@@ -161,6 +182,18 @@ def build_parser() -> argparse.ArgumentParser:
     lf.add_argument("--dest", default="data/external")
     lf.add_argument("--out", default="data/processed/literature")
     lf.set_defaults(func=_cmd_literature_fetch)
+    la = lsub.add_parser("analyze", help="Descriptive hotspot analytics (tables + figures)")
+    la.add_argument("--lit-dir", default="data/processed/literature")
+    la.add_argument("--results-dir", default="data/results/literature")
+    la.set_defaults(func=_cmd_literature_analyze)
+    lt = lsub.add_parser("train-coder", help="Train ML-assisted literature coding models")
+    lt.add_argument("--lit-dir", default="data/processed/literature")
+    lt.add_argument("--results-dir", default="data/results/literature")
+    lt.add_argument("--models-dir", default="notebooks/models")
+    lt.add_argument("--min-papers", type=int, default=15,
+                    help="Minimum papers per code to train a per-code classifier")
+    lt.add_argument("--cv", type=int, default=5)
+    lt.set_defaults(func=_cmd_literature_train_coder)
     return p
 
 

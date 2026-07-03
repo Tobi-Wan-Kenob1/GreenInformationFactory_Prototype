@@ -1,0 +1,43 @@
+{
+  "stage": "literature_analytics",
+  "timestamp_utc": "2026-07-03T04:02:50+00:00",
+  "git": {
+    "repo_root": "/Users/tobiasweiss/Claude_Code/GreenInformationFactory_Prototype",
+    "commit": "ec2bc97bcd867582c3af409874c9b8f2e173776b",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.8.8",
+    "platform": "darwin"
+  },
+  "payload": {
+    "papers": 366,
+    "codes": 1438,
+    "sectors": {
+      "AGRI_EU": 190,
+      "MINING_EU": 104,
+      "AGRI_OUT": 68,
+      "MIN_OUT": 4
+    },
+    "tables": {
+      "lit_top_codes": "data/results/literature/lit_top_codes.csv",
+      "lit_country_counts": "data/results/literature/lit_country_counts.csv",
+      "lit_geo_levels": "data/results/literature/lit_geo_levels.csv",
+      "lit_relevance_by_sector": "data/results/literature/lit_relevance_by_sector.csv",
+      "lit_year_by_sector": "data/results/literature/lit_year_by_sector.csv",
+      "lit_barriers_by_sector": "data/results/literature/lit_barriers_by_sector.csv",
+      "lit_drivers_by_sector": "data/results/literature/lit_drivers_by_sector.csv",
+      "lit_stakeholders_by_sector": "data/results/literature/lit_stakeholders_by_sector.csv",
+      "lit_cooccurrence_barriers_drivers": "data/results/literature/lit_cooccurrence_barriers_drivers.csv"
+    },
+    "figures": [
+      "data/results/literature/lit_top_barriers.png",
+      "data/results/literature/lit_top_drivers.png",
+      "data/results/literature/lit_top_stakeholders.png",
+      "data/results/literature/lit_country_counts.png",
+      "data/results/literature/lit_year_by_sector.png",
+      "data/results/literature/lit_cooccurrence_barriers_drivers.png"
+    ]
+  }
+}

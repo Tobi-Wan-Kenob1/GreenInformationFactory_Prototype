@@ -288,8 +288,22 @@ Outputs: `papers.csv` (366 papers, English snake_case columns),
 `papers_coded.csv` (papers joined with the manual codes). The join is
 title-based and validated — the codebook's positional ids drift after blank
 spreadsheet rows, so mismatches are reported rather than silently misassigned.
-This labeled corpus is the training data for the upcoming ML-assisted
-literature coding stage.
+
+**Hotspot analytics** (`gif literature analyze`, notebook
+`08_literature_analytics.ipynb`): code frequencies by sector, country
+mentions, geographic levels, publication years, and barrier×driver
+co-occurrence → tables + figures under `data/results/literature/`.
+
+**ML-assisted coding** (`gif literature train-coder`, notebook
+`09_literature_coding_ml.ipynb`): TF-IDF text classifiers trained on the
+manual codes so future literature batches can be pre-coded and only reviewed
+by hand. Cross-validated macro-F1 on the current corpus: sector (AGRI vs
+MINING) ≈ 0.93, region (EU vs non-EU) ≈ 1.0 — legitimately easy, non-EU
+papers name Kenya/Canada in their abstracts — top barrier codes ≈ 0.80,
+relevance ≈ 0.57 (only ~101 labeled papers; screening aid, not a replacement
+for manual coding). Best model per task is bundled in
+`notebooks/models/literature_coder.pkl`; apply it to new papers with
+`gif.lit_ml.predict_codes`.
 
 🧪 Tests & CI
 

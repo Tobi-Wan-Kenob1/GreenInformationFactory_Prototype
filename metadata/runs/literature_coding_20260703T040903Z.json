@@ -1,0 +1,125 @@
+{
+  "stage": "literature_coding",
+  "timestamp_utc": "2026-07-03T04:09:03+00:00",
+  "git": {
+    "repo_root": "/Users/tobiasweiss/Claude_Code/GreenInformationFactory_Prototype",
+    "commit": "ec2bc97bcd867582c3af409874c9b8f2e173776b",
+    "branch": "main",
+    "dirty": true
+  },
+  "env": {
+    "python": "3.8.8",
+    "platform": "darwin"
+  },
+  "payload": {
+    "tasks": 16,
+    "skipped": [],
+    "best_by_task": [
+      {
+        "task": "region",
+        "model": "rf",
+        "f1_macro": 1.0,
+        "n": 366
+      },
+      {
+        "task": "sector",
+        "model": "linear_svc",
+        "f1_macro": 0.9306783810123159,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:water",
+        "model": "linear_svc",
+        "f1_macro": 0.801365653707774,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:land",
+        "model": "logreg",
+        "f1_macro": 0.8004697577792012,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:data",
+        "model": "rf",
+        "f1_macro": 0.7288432671891053,
+        "n": 366
+      },
+      {
+        "task": "code:drivers:demand",
+        "model": "logreg",
+        "f1_macro": 0.7261161303014594,
+        "n": 366
+      },
+      {
+        "task": "code:stakeholders:farmers",
+        "model": "logreg",
+        "f1_macro": 0.6619771292940296,
+        "n": 366
+      },
+      {
+        "task": "code:drivers:technology",
+        "model": "logreg",
+        "f1_macro": 0.6436268675885097,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:database",
+        "model": "logreg",
+        "f1_macro": 0.6073036163716414,
+        "n": 366
+      },
+      {
+        "task": "relevance",
+        "model": "rf",
+        "f1_macro": 0.5656502735924316,
+        "n": 101
+      },
+      {
+        "task": "code:drivers:efficiency",
+        "model": "logreg",
+        "f1_macro": 0.5577598288236586,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:landscape",
+        "model": "linear_svc",
+        "f1_macro": 0.552706268446324,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:landscapes",
+        "model": "logreg",
+        "f1_macro": 0.5380820666031934,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:transport",
+        "model": "logreg",
+        "f1_macro": 0.5288008563540478,
+        "n": 366
+      },
+      {
+        "task": "code:barriers:storage",
+        "model": "logreg",
+        "f1_macro": 0.48953942609115025,
+        "n": 366
+      },
+      {
+        "task": "code:stakeholders:policymakers",
+        "model": "linear_svc",
+        "f1_macro": 0.482319099340376,
+        "n": 366
+      }
+    ],
+    "outputs": {
+      "comparison": "data/results/literature/lit_coding_model_comparison.csv",
+      "best": "data/results/literature/lit_coding_best_models.csv",
+      "bundle": "notebooks/models/literature_coder.pkl"
+    },
+    "figures": [
+      "data/results/literature/lit_coding_f1_by_task.png",
+      "data/results/literature/lit_coding_sector_confusion.png"
+    ]
+  }
+}
