@@ -7,10 +7,11 @@
 <meta name="description" content="Animated guided tour of the GreenInformationFactory: an open, FAIR machine-learning pipeline for sustainability assessment developed in the BioFairNet project (Horizon Europe).">
 <style>
   :root {
-    --teal: #0F6E56; --teal-fill: #E1F5EE; --teal-mid: #1D9E75;
-    --purple: #534AB7; --purple-fill: #EEEDFE; --purple-mid: #7F77DD;
-    --coral: #993C1D; --coral-fill: #FAECE7; --coral-mid: #D85A30;
-    --ink: #1e2321; --muted: #5c6662; --faint: #8a938f;
+    /* BioFairNet visual identity: teal #0A6B65, amber #FFBE5C, charcoal #383535, muted teal #84B2AF */
+    --teal: #0A6B65; --teal-fill: #E4F0EF; --teal-mid: #84B2AF;
+    --mteal: #3D7A75; --mteal-fill: #EDF4F3; --mteal-mid: #84B2AF;
+    --amber: #8A5B14; --amber-fill: #FFF4DE; --amber-mid: #FFBE5C; --amber-sub: #B67F27;
+    --ink: #383535; --muted: #5c6662; --faint: #8a938f;
     --bg: #fafbfa; --card: #ffffff; --line: #e3e8e5;
   }
   * { box-sizing: border-box; }
@@ -20,6 +21,8 @@
     line-height: 1.6;
   }
   .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 48px; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 84px; height: 84px; flex: none; }
   header .eyebrow {
     font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--teal); font-weight: 600; margin-bottom: 6px;
@@ -99,8 +102,13 @@
 <div class="wrap">
 
 <header>
-  <div class="eyebrow">BioFairNet · Horizon Europe</div>
-  <h1>The Green Information Factory</h1>
+  <div class="brand">
+    <img src="assets/biofairnet_logo.png" alt="BioFairNet project logo">
+    <div>
+      <div class="eyebrow">BioFairNet · Horizon Europe</div>
+      <h1>The Green Information Factory</h1>
+    </div>
+  </div>
   <p class="sub">How open data becomes open evidence: a guided tour of an automated, reproducible
   pipeline for sustainability assessment in the circular bioeconomy.</p>
   <div class="badges">
@@ -120,16 +128,16 @@
       </marker>
     </defs>
 
-    <path class="flow" d="M140 150 C 158 150, 152 85, 170 85" fill="none" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <path class="flow" d="M140 180 C 158 180, 152 255, 170 255" fill="none" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line class="flow" x1="270" y1="85" x2="290" y2="85" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line class="flow" x1="390" y1="85" x2="410" y2="85" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line class="flow" x1="510" y1="85" x2="530" y2="85" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line class="flow" x1="270" y1="255" x2="290" y2="255" stroke="#D85A30" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line class="flow" x1="390" y1="255" x2="410" y2="255" stroke="#D85A30" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line class="flow" x1="580" y1="110" x2="580" y2="228" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line class="flow" x1="510" y1="255" x2="528" y2="255" stroke="#D85A30" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <path class="flow" d="M580 280 C 580 345, 85 345, 85 192" fill="none" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <path class="flow" d="M140 150 C 158 150, 152 85, 170 85" fill="none" stroke="#0A6B65" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <path class="flow" d="M140 180 C 158 180, 152 255, 170 255" fill="none" stroke="#0A6B65" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="270" y1="85" x2="290" y2="85" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="390" y1="85" x2="410" y2="85" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="510" y1="85" x2="530" y2="85" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="270" y1="255" x2="290" y2="255" stroke="#FFBE5C" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="390" y1="255" x2="410" y2="255" stroke="#FFBE5C" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="580" y1="110" x2="580" y2="228" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="510" y1="255" x2="528" y2="255" stroke="#FFBE5C" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <path class="flow" d="M580 280 C 580 345, 85 345, 85 192" fill="none" stroke="#0A6B65" stroke-width="1.5" marker-end="url(#arrow)"/>
 
     <g id="n-zenodo" class="node">
       <rect x="30" y="130" width="110" height="70" rx="10" fill="var(--teal-fill)" stroke="var(--teal-mid)"/>
@@ -137,39 +145,39 @@
       <text class="nsub" x="85" y="180" text-anchor="middle" fill="var(--teal-mid)">FAIR repository</text>
     </g>
     <g id="n-prep" class="node">
-      <rect x="170" y="60" width="100" height="50" rx="8" fill="var(--purple-fill)" stroke="var(--purple-mid)"/>
-      <text class="nlabel" x="220" y="82" text-anchor="middle" fill="var(--purple)">Prepare</text>
-      <text class="nsub" x="220" y="99" text-anchor="middle" fill="var(--purple-mid)">clean + split</text>
+      <rect x="170" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="220" y="82" text-anchor="middle" fill="var(--mteal)">Prepare</text>
+      <text class="nsub" x="220" y="99" text-anchor="middle" fill="var(--mteal-mid)">clean + split</text>
     </g>
     <g id="n-train" class="node">
-      <rect x="290" y="60" width="100" height="50" rx="8" fill="var(--purple-fill)" stroke="var(--purple-mid)"/>
-      <text class="nlabel" x="340" y="82" text-anchor="middle" fill="var(--purple)">Train</text>
-      <text class="nsub" x="340" y="99" text-anchor="middle" fill="var(--purple-mid)">8 ML models</text>
+      <rect x="290" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="340" y="82" text-anchor="middle" fill="var(--mteal)">Train</text>
+      <text class="nsub" x="340" y="99" text-anchor="middle" fill="var(--mteal-mid)">8 ML models</text>
     </g>
     <g id="n-sust" class="node">
-      <rect x="410" y="60" width="100" height="50" rx="8" fill="var(--purple-fill)" stroke="var(--purple-mid)"/>
-      <text class="nlabel" x="460" y="82" text-anchor="middle" fill="var(--purple)">Indicators</text>
-      <text class="nsub" x="460" y="99" text-anchor="middle" fill="var(--purple-mid)">CO₂ + circularity</text>
+      <rect x="410" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="460" y="82" text-anchor="middle" fill="var(--mteal)">Indicators</text>
+      <text class="nsub" x="460" y="99" text-anchor="middle" fill="var(--mteal-mid)">CO₂ + circularity</text>
     </g>
     <g id="n-scen" class="node">
-      <rect x="530" y="60" width="100" height="50" rx="8" fill="var(--purple-fill)" stroke="var(--purple-mid)"/>
-      <text class="nlabel" x="580" y="82" text-anchor="middle" fill="var(--purple)">Scenarios</text>
-      <text class="nsub" x="580" y="99" text-anchor="middle" fill="var(--purple-mid)">what if…?</text>
+      <rect x="530" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="580" y="82" text-anchor="middle" fill="var(--mteal)">Scenarios</text>
+      <text class="nsub" x="580" y="99" text-anchor="middle" fill="var(--mteal-mid)">what if…?</text>
     </g>
     <g id="n-lit" class="node">
-      <rect x="170" y="230" width="100" height="50" rx="8" fill="var(--coral-fill)" stroke="var(--coral-mid)"/>
-      <text class="nlabel" x="220" y="252" text-anchor="middle" fill="var(--coral)">Literature</text>
-      <text class="nsub" x="220" y="269" text-anchor="middle" fill="var(--coral-mid)">366 studies</text>
+      <rect x="170" y="230" width="100" height="50" rx="8" fill="var(--amber-fill)" stroke="var(--amber-mid)"/>
+      <text class="nlabel" x="220" y="252" text-anchor="middle" fill="var(--amber)">Literature</text>
+      <text class="nsub" x="220" y="269" text-anchor="middle" fill="var(--amber-sub)">366 studies</text>
     </g>
     <g id="n-ana" class="node">
-      <rect x="290" y="230" width="100" height="50" rx="8" fill="var(--coral-fill)" stroke="var(--coral-mid)"/>
-      <text class="nlabel" x="340" y="252" text-anchor="middle" fill="var(--coral)">Hotspots</text>
-      <text class="nsub" x="340" y="269" text-anchor="middle" fill="var(--coral-mid)">what &amp; where</text>
+      <rect x="290" y="230" width="100" height="50" rx="8" fill="var(--amber-fill)" stroke="var(--amber-mid)"/>
+      <text class="nlabel" x="340" y="252" text-anchor="middle" fill="var(--amber)">Hotspots</text>
+      <text class="nsub" x="340" y="269" text-anchor="middle" fill="var(--amber-sub)">what &amp; where</text>
     </g>
     <g id="n-ml" class="node">
-      <rect x="410" y="230" width="100" height="50" rx="8" fill="var(--coral-fill)" stroke="var(--coral-mid)"/>
-      <text class="nlabel" x="460" y="252" text-anchor="middle" fill="var(--coral)">AI screening</text>
-      <text class="nsub" x="460" y="269" text-anchor="middle" fill="var(--coral-mid)">assists experts</text>
+      <rect x="410" y="230" width="100" height="50" rx="8" fill="var(--amber-fill)" stroke="var(--amber-mid)"/>
+      <text class="nlabel" x="460" y="252" text-anchor="middle" fill="var(--amber)">AI screening</text>
+      <text class="nsub" x="460" y="269" text-anchor="middle" fill="var(--amber-sub)">assists experts</text>
     </g>
     <g id="n-rel" class="node">
       <rect x="530" y="230" width="100" height="50" rx="8" fill="var(--teal-fill)" stroke="var(--teal-mid)"/>
@@ -233,30 +241,37 @@
     },
     {
       t: "2 · From measurements to models",
-      d: "The factory cleans and splits the pilot data reproducibly, then lets eight machine-learning models compete. The best one predicts process behaviour almost perfectly on data it has never seen — the foundation for asking “what if?” questions without running costly experiments.",
+      d: "The factory cleans and splits the pilot data reproducibly, then lets eight machine-learning models compete. The best one predicts process behaviour almost perfectly on data it has never seen — the foundation for asking \u201cwhat if?\u201d questions without running costly experiments.",
       n: ["n-zenodo", "n-prep", "n-train"],
       figs: [[ "val_scatter_top3.png", "Model predictions versus real measurements on held-out validation data — the closer to the diagonal, the better." ]],
       dois: []
     },
     {
       t: "3 · Sustainability at a glance",
-      d: "Trained models are combined with sustainability indicators — CO₂ and material-circularity proxies — and swept across operating scenarios. The result: charts that show decision-makers where a process is sustainable, and which levers (time, temperature, stirring) move it there.",
+      d: "Trained models are combined with sustainability indicators — CO\u2082 and material-circularity proxies — and swept across operating scenarios. The result: charts that show decision-makers where a process is sustainable, and which levers (time, temperature, stirring) move it there.",
       n: ["n-sust", "n-scen"],
       figs: [
-        [ "scenario_co2_time_s_rf.png", "CO₂ proxy as processing time varies — three independent estimation methods, shown side by side for transparency." ],
-        [ "scenario_sustainable_region_pca_Stiring_rf.png", "The “sustainable region”: operating points that combine low CO₂ with high circularity." ]
+        [ "scenario_co2_time_s_rf.png", "CO\u2082 proxy as processing time varies — three independent estimation methods, shown side by side for transparency." ],
+        [ "scenario_sustainable_region_pca_Stiring_rf.png", "The \u201csustainable region\u201d: operating points that combine low CO\u2082 with high circularity." ]
       ],
       dois: []
     },
     {
-      t: "4 · What 366 studies tell us",
+      t: "4 · Can the results be trusted?",
+      d: "Before any result informs a decision, the factory checks itself. Sustainability indicators are computed twice — on the test data used during development, and on validation data the models never saw — and plotted together. When the two clouds overlap, the underlying data covers the process space well: a built-in, visual answer to the question \u201cis the data base sufficient?\u201d",
+      n: ["n-prep", "n-sust"],
+      figs: [[ "tradeoff_test_vs_validation_pca_rf.png", "CO\u2082\u2013circularity trade-off for test versus validation data. Overlapping point clouds mean the evidence generalizes beyond the data it was built on." ]],
+      dois: []
+    },
+    {
+      t: "5 · What 366 studies tell us",
       d: "The same factory processes evidence, not just measurements. The WP1 literature review — 366 studies on agricultural and mining regions, hand-coded by researchers — is transformed into transparent statistics: which barriers and drivers of the green transition appear again and again.",
       n: ["n-lit", "n-ana"],
       figs: [[ "lit_top_barriers.png", "The most frequently coded barriers across the corpus — data availability, land and water dominate." ]],
       dois: []
     },
     {
-      t: "5 · Where the evidence comes from",
+      t: "6 · Where the evidence comes from",
       d: "Hotspot analytics also show the geography and momentum of the field: which countries the studies examine — including the deliberate extension beyond the EU to Canada and Kenya — and how rapidly the evidence base has grown in recent years.",
       n: ["n-ana"],
       figs: [
@@ -266,14 +281,14 @@
       dois: []
     },
     {
-      t: "6 · AI that assists the experts",
+      t: "7 · AI that assists the experts",
       d: "Manual coding of hundreds of papers is expensive. Using the researchers' own codes as ground truth, the factory trains text classifiers that pre-sort future literature: the sector of a study is identified correctly for more than 9 out of 10 papers. Experts review suggestions instead of starting from zero — human judgement stays in charge.",
       n: ["n-ml"],
       figs: [[ "lit_coding_f1_by_task.png", "How learnable each coding task is (cross-validated macro-F1; dashed line = 0.5). Sector and key barrier codes are reliably automated; rarer codes still need human eyes." ]],
       dois: []
     },
     {
-      t: "7 · The loop closes",
+      t: "8 · The loop closes",
       d: "Every result — tidy data, statistics, figures, trained models — is published back to Zenodo under an open license, machine-linked to its sources. Anyone can verify, reuse or extend the work; every output becomes an input for the next cycle. That is what makes it a factory for green information.",
       n: ["n-scen", "n-ml", "n-rel", "n-zenodo"],
       figs: [],
