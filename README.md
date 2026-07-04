@@ -316,6 +316,15 @@ params file). `use_sandbox: true` is the staged default — verify the sandbox
 record, then flip it to `false` for the production DOI. The upload workflow
 now reads `related_dois` and `upload_type` from the params file.
 
+🎬 Guided Demo Tour (Dissemination)
+
+An animated, self-contained walkthrough of the whole factory — pipeline
+diagram with flowing data, 8 tour stations with the real result figures,
+auto-play mode for booth screens — lives at [`docs/index.html`](docs/index.html).
+Built for conference and policy audiences (IAERE 2026 etc.); open it locally in
+any browser, or enable GitHub Pages (Settings → Pages → deploy from `main`
+`/docs`) for a shareable URL.
+
 🧪 Tests & CI
 
 A `pytest` suite under `tests/` covers data prep, the model registry, training,
