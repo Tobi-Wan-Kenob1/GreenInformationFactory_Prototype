@@ -318,12 +318,20 @@ now reads `related_dois` and `upload_type` from the params file.
 
 🎬 Guided Demo Tour (Dissemination)
 
-An animated, self-contained walkthrough of the whole factory — pipeline
-diagram with flowing data, 8 tour stations with the real result figures,
-auto-play mode for booth screens — lives at [`docs/index.html`](docs/index.html).
-Built for conference and policy audiences (IAERE 2026 etc.); open it locally in
-any browser, or enable GitHub Pages (Settings → Pages → deploy from `main`
-`/docs`) for a shareable URL.
+Two animated, self-contained walkthroughs live at
+**https://tobi-wan-kenob1.github.io/GreenInformationFactory_Prototype/**:
+
+- **Guided tour** ([`docs/index.html`](docs/index.html)) — what the factory
+  does, for conference and policy audiences: pipeline diagram with flowing
+  data, 9 stations with the real result figures, auto-play mode for booth
+  screens.
+- **Researcher how-to** ([`docs/howto.html`](docs/howto.html)) — how to run it
+  on your own data, step by step: publish your dataset on Zenodo → configure →
+  `gif prepare/train/scenario` → publish your results back to Zenodo. With
+  copy-paste command blocks.
+
+A flipbook GIF for project reporting (`docs/assets/biofairnet_tour.gif`) is
+regenerated with `python docs/make_tour_gif.py`.
 
 🧪 Tests & CI
 

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run the pipeline on your own data — step by step | GreenInformationFactory</title>
+<meta name="description" content="Step-by-step instructions for researchers: publish your dataset on Zenodo, run the GreenInformationFactory ML and scenario pipeline, and publish your results back to Zenodo.">
+<style>
+  :root {
+    /* BioFairNet visual identity */
+    --teal: #0A6B65; --teal-fill: #E4F0EF; --teal-mid: #84B2AF;
+    --mteal: #3D7A75; --mteal-fill: #EDF4F3; --mteal-mid: #84B2AF;
+    --amber: #8A5B14; --amber-fill: #FFF4DE; --amber-mid: #FFBE5C; --amber-sub: #B67F27;
+    --ink: #383535; --muted: #5c6662; --faint: #8a938f;
+    --bg: #fafbfa; --card: #ffffff; --line: #e3e8e5; --code-bg: #2e3231;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 48px; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 84px; height: 84px; flex: none; }
+  header .eyebrow { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--teal); font-weight: 600; margin-bottom: 6px; }
+  h1 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 8px; font-weight: 650; letter-spacing: -0.01em; }
+  .sub { font-size: 16.5px; color: var(--muted); max-width: 660px; margin: 0 0 14px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+  .badge { font-size: 12.5px; text-decoration: none; padding: 5px 12px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card); color: var(--muted); }
+  .badge:hover { border-color: var(--teal-mid); color: var(--teal); }
+  .badge strong { color: var(--teal); font-weight: 600; }
+
+  .stage { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 18px 8px; }
+  svg { display: block; width: 100%; height: auto; }
+  .nlabel { font-size: 14px; font-weight: 600; }
+  .nsub { font-size: 11.5px; }
+  .node { transition: opacity .5s; cursor: default; }
+  .dimmed { opacity: 0.15; }
+  @media (prefers-reduced-motion: no-preference) {
+    .flow { stroke-dasharray: 6 6; animation: dashmove 1.15s linear infinite; }
+    @keyframes dashmove { to { stroke-dashoffset: -12; } }
+  }
+
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px 26px; margin-top: 14px; min-height: 170px; }
+  .panel h2 { margin: 0 0 8px; font-size: 20px; font-weight: 650; }
+  .panel p { margin: 0 0 10px; font-size: 15px; color: var(--muted); max-width: 76ch; }
+  .panel ul { margin: 4px 0 10px; padding-left: 20px; font-size: 14.5px; color: var(--muted); }
+  .panel li { margin-bottom: 4px; }
+  .codeblock { position: relative; margin: 12px 0; }
+  pre { background: var(--code-bg); color: #e8ecea; border-radius: 10px;
+    padding: 14px 16px; overflow-x: auto; font-size: 13px; line-height: 1.55; margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre .c { color: #84B2AF; }           /* comments */
+  pre .hl { color: #FFBE5C; }          /* highlighted values to change */
+  .copy { position: absolute; top: 8px; right: 8px; font-size: 11.5px; padding: 4px 10px;
+    border-radius: 7px; border: 1px solid #55605d; background: transparent; color: #aeb8b4;
+    cursor: pointer; }
+  .copy:hover { color: #fff; border-color: #84B2AF; }
+  .note { background: var(--amber-fill); border: 1px solid var(--amber-mid); border-radius: 10px;
+    padding: 10px 14px; font-size: 13.5px; color: var(--amber); margin: 12px 0 0; max-width: 76ch; }
+  .get { font-size: 13.5px; color: var(--faint); margin-top: 10px; }
+  .get strong { color: var(--muted); font-weight: 600; }
+
+  .controls { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  button { font: inherit; font-size: 14.5px; padding: 9px 18px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; transition: all .15s; }
+  button:hover { border-color: var(--teal-mid); color: var(--teal); }
+  button:active { transform: scale(0.97); }
+  button.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+  button.primary:hover { background: var(--teal-mid); border-color: var(--teal-mid); color: #fff; }
+  .pills { display: flex; gap: 7px; flex: 1; justify-content: center; min-width: 160px; }
+  .pill { width: 9px; height: 9px; border-radius: 50%; background: var(--line); cursor: pointer;
+    border: none; padding: 0; transition: all .2s; }
+  .pill.on { background: var(--teal); transform: scale(1.35); }
+  .hint { font-size: 12px; color: var(--faint); margin-top: 8px; text-align: center; }
+
+  footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 13px; color: var(--faint); }
+  footer p { margin: 0 0 8px; max-width: 84ch; }
+  footer a { color: var(--teal); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <img src="assets/biofairnet_logo.png" alt="BioFairNet project logo">
+    <div>
+      <div class="eyebrow">BioFairNet · Horizon Europe</div>
+      <h1>Run the factory on your own data</h1>
+    </div>
+  </div>
+  <p class="sub">Step-by-step instructions for researchers: publish your dataset on Zenodo,
+  let the pipeline learn, evaluate and explore scenarios — and publish your results back
+  to Zenodo with full provenance. No machine-learning background required.</p>
+  <div class="badges">
+    <a class="badge" href="index.html"><strong>←</strong> Guided tour (what it does)</a>
+    <a class="badge" href="https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype"><strong>GitHub</strong> source &amp; notebooks</a>
+    <a class="badge" href="https://doi.org/10.5281/zenodo.18428335"><strong>DOI</strong> cite the software</a>
+  </div>
+</header>
+
+<div class="stage">
+  <svg viewBox="0 0 680 380" role="img" aria-labelledby="svgtitle svgdesc">
+    <title id="svgtitle">Your journey through the pipeline</title>
+    <desc id="svgdesc">From your dataset on Zenodo through preparation, training, sustainability and scenario analysis to a published results release on Zenodo.</desc>
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <path class="flow" d="M140 150 C 158 150, 152 85, 170 85" fill="none" stroke="#0A6B65" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <path class="flow" d="M140 180 C 158 180, 152 255, 170 255" fill="none" stroke="#0A6B65" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="270" y1="85" x2="290" y2="85" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="390" y1="85" x2="410" y2="85" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="510" y1="85" x2="530" y2="85" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="270" y1="255" x2="290" y2="255" stroke="#FFBE5C" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="390" y1="255" x2="410" y2="255" stroke="#FFBE5C" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="580" y1="110" x2="580" y2="228" stroke="#84B2AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line class="flow" x1="510" y1="255" x2="528" y2="255" stroke="#FFBE5C" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <path class="flow" d="M580 280 C 580 345, 85 345, 85 192" fill="none" stroke="#0A6B65" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <g id="n-zenodo" class="node">
+      <rect x="30" y="130" width="110" height="70" rx="10" fill="var(--teal-fill)" stroke="var(--teal-mid)"/>
+      <text class="nlabel" x="85" y="160" text-anchor="middle" fill="var(--teal)">Zenodo</text>
+      <text class="nsub" x="85" y="180" text-anchor="middle" fill="var(--mteal)">your dataset</text>
+    </g>
+    <g id="n-prep" class="node">
+      <rect x="170" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="220" y="82" text-anchor="middle" fill="var(--mteal)">Prepare</text>
+      <text class="nsub" x="220" y="99" text-anchor="middle" fill="var(--mteal-mid)">gif prepare</text>
+    </g>
+    <g id="n-train" class="node">
+      <rect x="290" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="340" y="82" text-anchor="middle" fill="var(--mteal)">Train</text>
+      <text class="nsub" x="340" y="99" text-anchor="middle" fill="var(--mteal-mid)">gif train</text>
+    </g>
+    <g id="n-sust" class="node">
+      <rect x="410" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="460" y="82" text-anchor="middle" fill="var(--mteal)">Indicators</text>
+      <text class="nsub" x="460" y="99" text-anchor="middle" fill="var(--mteal-mid)">notebook 04</text>
+    </g>
+    <g id="n-scen" class="node">
+      <rect x="530" y="60" width="100" height="50" rx="8" fill="var(--mteal-fill)" stroke="var(--mteal-mid)"/>
+      <text class="nlabel" x="580" y="82" text-anchor="middle" fill="var(--mteal)">Scenarios</text>
+      <text class="nsub" x="580" y="99" text-anchor="middle" fill="var(--mteal-mid)">gif scenario</text>
+    </g>
+    <g id="n-lit" class="node">
+      <rect x="170" y="230" width="100" height="50" rx="8" fill="var(--amber-fill)" stroke="var(--amber-mid)"/>
+      <text class="nlabel" x="220" y="252" text-anchor="middle" fill="var(--amber)">Literature</text>
+      <text class="nsub" x="220" y="269" text-anchor="middle" fill="var(--amber-sub)">optional</text>
+    </g>
+    <g id="n-ana" class="node">
+      <rect x="290" y="230" width="100" height="50" rx="8" fill="var(--amber-fill)" stroke="var(--amber-mid)"/>
+      <text class="nlabel" x="340" y="252" text-anchor="middle" fill="var(--amber)">Hotspots</text>
+      <text class="nsub" x="340" y="269" text-anchor="middle" fill="var(--amber-sub)">analytics</text>
+    </g>
+    <g id="n-ml" class="node">
+      <rect x="410" y="230" width="100" height="50" rx="8" fill="var(--amber-fill)" stroke="var(--amber-mid)"/>
+      <text class="nlabel" x="460" y="252" text-anchor="middle" fill="var(--amber)">AI screening</text>
+      <text class="nsub" x="460" y="269" text-anchor="middle" fill="var(--amber-sub)">train-coder</text>
+    </g>
+    <g id="n-rel" class="node">
+      <rect x="530" y="230" width="100" height="50" rx="8" fill="var(--teal-fill)" stroke="var(--teal-mid)"/>
+      <text class="nlabel" x="580" y="252" text-anchor="middle" fill="var(--teal)">Publish</text>
+      <text class="nsub" x="580" y="269" text-anchor="middle" fill="var(--mteal)">your DOI</text>
+    </g>
+  </svg>
+</div>
+
+<div class="panel" id="panel" aria-live="polite">
+  <h2 id="stitle"></h2>
+  <div id="sbody"></div>
+</div>
+
+<div class="controls">
+  <button id="prev" aria-label="Previous step">‹ Previous</button>
+  <div class="pills" id="pills" role="tablist" aria-label="Steps"></div>
+  <button id="next" class="primary" aria-label="Next step">Next ›</button>
+</div>
+<div class="hint">Tip: use the ← → arrow keys. Every code block has a copy button.</div>
+
+<footer>
+  <p>Developed within <strong>BioFairNet</strong>, funded by the European Union's Horizon
+  Europe research and innovation programme. Pipeline software: MIT license
+  (<a href="https://doi.org/10.5281/zenodo.18428335">10.5281/zenodo.18428335</a>).
+  Questions or problems? <a href="https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype/issues">Open a GitHub issue</a>.</p>
+</footer>
+
+</div>
+<script>
+(function () {
+  // Each step: title + HTML body (paragraphs, code blocks, notes).
+  function code(c) {
+    return '<div class="codeblock"><button class="copy">copy</button><pre>' + c + '</pre></div>';
+  }
+  const steps = [
+    { t: "Before you start: get the factory",
+      n: null,
+      b: "<p>Clone the repository and create the environment once. Everything afterwards is driven by the <code>gif</code> command-line tool or the numbered notebooks — whichever you prefer.</p>"
+        + code('git clone https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype.git\ncd GreenInformationFactory_Prototype\n\n<span class="c"># option A: conda (includes JupyterLab for the notebooks)</span>\nconda env create -f environment.yml\nconda activate greeninfo\n\n<span class="c"># option B: plain pip</span>\npip install -e ".[dev]"\n\n<span class="c"># sanity check — should list the available models</span>\ngif models')
+        + '<p class="get"><strong>You get:</strong> a working installation; <code>gif --help</code> shows every command used below.</p>' },
+    { t: "Step 1 · Publish your dataset on Zenodo",
+      n: ["n-zenodo"],
+      b: "<p>Upload your raw measurement file to <a href='https://zenodo.org/uploads/new'>Zenodo</a> (choose the <em>biofairnet</em> community if applicable) and publish to receive a DOI. This makes your input citable and lets anyone reproduce your run from scratch.</p>"
+        + "<ul><li>Format: a delimited text file (CSV); semicolons and decimal commas are fine.</li>"
+        + "<li>Columns: numeric process variables (your features), one target column, optionally a time column like <code>14:12:16</code>.</li>"
+        + "<li>No personal or sensitive data — the file becomes public.</li></ul>"
+        + '<p class="get"><strong>You get:</strong> a DOI like <code>10.5281/zenodo.1234567</code> — your dataset’s permanent address.</p>' },
+    { t: "Step 2 · Point the factory at your data",
+      n: ["n-zenodo", "n-prep"],
+      b: "<p>Edit <code>metadata/pipeline_config.json</code> — the single file that describes your dataset and column choices (amber values are the ones you change):</p>"
+        + code('"dataset": {\n  "doi": "<span class="hl">10.5281/zenodo.1234567</span>",\n  "raw_filename": "<span class="hl">MyExperiment.csv</span>",\n  "separator": "<span class="hl">;</span>"\n},\n"ml": {\n  "features": [<span class="hl">"time", "temperature", "stirring"</span>],\n  "target": "<span class="hl">pressure</span>"\n}')
+        + "<p>Then download the file straight from Zenodo (checksums are verified automatically):</p>"
+        + code('gif zenodo pull <span class="hl">10.5281/zenodo.1234567</span> --dest data/raw')
+        + '<p class="get"><strong>You get:</strong> your raw file in <code>data/raw/</code> plus a provenance log in <code>metadata/runs/</code>.</p>' },
+    { t: "Step 3 · Validate and prepare",
+      n: ["n-prep"],
+      b: "<p>Two commands clean your data and split it reproducibly (80/20 train–validation, then 80/20 train–test). Decimal commas, unit suffixes and <code>hh:mm:ss</code> time columns are handled automatically.</p>"
+        + code('gif validate   <span class="c"># sanity-checks the raw file, tells you what’s wrong if anything</span>\ngif prepare    <span class="c"># cleans, converts time to seconds, writes the three splits</span>')
+        + '<p class="get"><strong>You get:</strong> <code>data/processed/{Train,Test,Validation}/</code> plus a schema and SHA-256 hashes in <code>metadata/</code> — the fingerprint that makes your run verifiable.</p>' },
+    { t: "Step 4 · Train and compare models",
+      n: ["n-train"],
+      b: "<p>One command trains up to eight regression models (linear, elastic net, random forest, extra trees, gradient boosting, SVR, neural network, optional XGBoost) with hyper-parameter search, and ranks them on validation error:</p>"
+        + code('gif train')
+        + '<p class="get"><strong>You get:</strong> <code>data/results/model_comparison.csv</code> (the ranking), prediction files, validation plots, and the best model saved to <code>notebooks/models/all_models.pkl</code>.</p>'
+        + '<div class="note">Slow machine? Trim <code>ml.models_default</code> in the config to e.g. <code>["linreg","rf"]</code> — the pipeline adapts automatically.</div>' },
+    { t: "Step 5 · Sustainability indicators & scenarios",
+      n: ["n-sust", "n-scen"],
+      b: "<p>Notebook <code>04_sustainability_evaluation.ipynb</code> computes three independent CO₂ / circularity proxy methods and their agreement. Then sweep operating scenarios with the best model:</p>"
+        + code('gif scenario --grid-points 41')
+        + '<p class="get"><strong>You get:</strong> sensitivity curves per process variable, the CO₂–circularity trade-off, the test-vs-validation trust check, and “sustainable region” charts — all in <code>data/results/</code>.</p>' },
+    { t: "Optional · The literature branch",
+      n: ["n-lit", "n-ana", "n-ml"],
+      b: "<p>Working with coded literature instead of (or alongside) process data? The same factory ingests review spreadsheets, computes hotspot statistics and trains AI screening models on your manual codes:</p>"
+        + code('gif literature fetch        <span class="c"># download + tidy the WP1/D1.2 corpus</span>\ngif literature analyze      <span class="c"># hotspot tables + figures</span>\ngif literature train-coder  <span class="c"># train the pre-coding classifiers</span>')
+        + '<p class="get"><strong>You get:</strong> tidy corpus CSVs, analytics in <code>data/results/literature/</code>, and a reusable coder bundle for the next review round.</p>' },
+    { t: "Step 6 · Publish your results on Zenodo",
+      n: ["n-rel", "n-zenodo"],
+      b: "<p>Close the loop. Add your Zenodo API tokens as GitHub repository secrets (<code>ZENODO_TOKEN</code>, <code>ZENODO_SANDBOX_TOKEN</code>), stage the release payload with notebook <code>06_release_zenodo_publication.ipynb</code> (it writes <code>metadata/zenodo_params.json</code> — keep <code>use_sandbox: true</code> for the first run), then trigger the upload with a tag:</p>"
+        + code('git add notebooks/release_payload metadata/zenodo_params.json\ngit commit -m "stage release payload"\ngit push origin main\n\ngit tag zenodo-ul-<span class="hl">myrelease</span>-$(date +%Y%m%d)\ngit push origin --tags')
+        + '<div class="note">Always trigger via a <code>zenodo-ul-*</code> tag, not the Actions form. Test on the Zenodo <em>sandbox</em> first; when the record looks right, set <code>use_sandbox: false</code> and tag again for the production DOI.</div>'
+        + '<p class="get"><strong>You get:</strong> a published, citable results release — linked <em>isDerivedFrom</em> to your input DOI.</p>' },
+    { t: "Done — and the loop continues",
+      n: ["n-zenodo", "n-prep", "n-train", "n-sust", "n-scen", "n-rel"],
+      b: "<p>Your dataset and your results now both live on Zenodo, machine-linked, reproducible with a handful of commands. Checklist:</p>"
+        + "<ul><li>☑︎ Input DOI cited in your paper / deliverable</li>"
+        + "<li>☑︎ Results DOI in the community, license chosen consciously (CC-BY for data)</li>"
+        + "<li>☑︎ <code>metadata/runs/</code> committed — your provenance trail</li>"
+        + "<li>☑︎ Community curator accepted the record</li></ul>"
+        + "<p>Your published results can now be someone else's input. That's the factory working as intended. For questions, <a href='https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype/issues'>open an issue</a> — and if you extend the pipeline, pull requests are welcome.</p>" },
+  ];
+
+  const nodeIds = ["n-zenodo","n-prep","n-train","n-sust","n-scen","n-lit","n-ana","n-ml","n-rel"];
+  let cur = 0;
+  const pills = document.getElementById("pills");
+  steps.forEach((s, i) => {
+    const b = document.createElement("button");
+    b.className = "pill"; b.setAttribute("role", "tab");
+    b.setAttribute("aria-label", "Step " + (i + 1) + ": " + s.t);
+    b.onclick = () => go(i);
+    pills.appendChild(b);
+  });
+  function go(i) {
+    cur = (i + steps.length) % steps.length;
+    const s = steps[cur];
+    document.getElementById("stitle").textContent = s.t;
+    document.getElementById("sbody").innerHTML = s.b;
+    nodeIds.forEach(id => {
+      document.getElementById(id).classList.toggle("dimmed", !!s.n && !s.n.includes(id));
+    });
+    document.querySelectorAll(".pill").forEach((p, j) => p.classList.toggle("on", j === cur));
+    document.querySelectorAll(".copy").forEach(btn => {
+      btn.onclick = () => {
+        const text = btn.nextElementSibling.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = "copied!";
+          setTimeout(() => { btn.textContent = "copy"; }, 1500);
+        });
+      };
+    });
+  }
+  document.getElementById("prev").onclick = () => go(cur - 1);
+  document.getElementById("next").onclick = () => go(cur + 1);
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") go(cur + 1);
+    if (e.key === "ArrowLeft") go(cur - 1);
+  });
+  go(0);
+})();
+</script>
+</body>
+</html>
