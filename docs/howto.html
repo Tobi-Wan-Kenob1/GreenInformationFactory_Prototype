@@ -15,6 +15,13 @@
     --bg: #fafbfa; --card: #ffffff; --line: #e3e8e5; --code-bg: #2e3231;
   }
   * { box-sizing: border-box; }
+  nav.tabs { display: flex; gap: 6px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+  nav.tabs a { text-decoration: none; font-size: 14px; padding: 9px 16px; color: var(--muted);
+    border: 1px solid transparent; border-bottom: none; border-radius: 10px 10px 0 0; }
+  nav.tabs a.active { background: var(--card); border-color: var(--line); color: var(--teal);
+    font-weight: 600; margin-bottom: -1px; }
+  nav.tabs a:hover:not(.active) { color: var(--teal); }
+
   body { margin: 0; background: var(--bg); color: var(--ink);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
   .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 48px; }
@@ -84,6 +91,12 @@
 </head>
 <body>
 <div class="wrap">
+
+<nav class="tabs">
+  <a href="index.html">Guided tour</a>
+  <a href="howto.html" class="active">Researcher how-to</a>
+  <a href="run.html">Try it live · beta</a>
+</nav>
 
 <header>
   <div class="brand">

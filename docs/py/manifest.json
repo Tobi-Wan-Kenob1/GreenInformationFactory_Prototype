@@ -1,0 +1,17 @@
+{
+  "files": [
+    "browser_bridge.py",
+    "gif/__init__.py",
+    "gif/config.py",
+    "gif/data.py",
+    "gif/models.py",
+    "gif/pipeline.py",
+    "gif/plots.py",
+    "gif/scenario.py",
+    "gif/train.py",
+    "helper/__init__.py",
+    "helper/sustainability_metrics.py",
+    "helper/upload_collector.py",
+    "helper/utils.py"
+  ]
+}

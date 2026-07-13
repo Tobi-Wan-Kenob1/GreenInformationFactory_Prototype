@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try it live — run the pipeline in your browser | GreenInformationFactory</title>
+<meta name="description" content="Drop a CSV and run the GreenInformationFactory pipeline entirely in your browser via WebAssembly — your data never leaves your machine.">
+<style>
+  :root {
+    --teal: #0A6B65; --teal-fill: #E4F0EF; --teal-mid: #84B2AF;
+    --mteal: #3D7A75; --mteal-fill: #EDF4F3;
+    --amber: #8A5B14; --amber-fill: #FFF4DE; --amber-mid: #FFBE5C;
+    --ink: #383535; --muted: #5c6662; --faint: #8a938f;
+    --bg: #fafbfa; --card: #ffffff; --line: #e3e8e5; --code-bg: #2e3231;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 48px; }
+
+  nav.tabs { display: flex; gap: 6px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+  nav.tabs a { text-decoration: none; font-size: 14px; padding: 9px 16px; color: var(--muted);
+    border: 1px solid transparent; border-bottom: none; border-radius: 10px 10px 0 0; }
+  nav.tabs a.active { background: var(--card); border-color: var(--line); color: var(--teal);
+    font-weight: 600; margin-bottom: -1px; }
+  nav.tabs a:hover:not(.active) { color: var(--teal); }
+
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 72px; height: 72px; flex: none; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--teal); font-weight: 600; margin-bottom: 4px; }
+  h1 { font-size: clamp(22px, 3.6vw, 30px); margin: 0 0 6px; font-weight: 650; }
+  .sub { font-size: 15.5px; color: var(--muted); max-width: 680px; margin: 0 0 10px; }
+  .privacy { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-fill);
+    color: var(--teal); font-size: 13.5px; padding: 7px 14px; border-radius: 999px; margin-bottom: 24px; }
+
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 20px 24px; margin-bottom: 14px; }
+  .step.locked { opacity: 0.45; pointer-events: none; }
+  .step h2 { margin: 0 0 6px; font-size: 17px; font-weight: 650; display: flex; align-items: center; gap: 10px; }
+  .stepnum { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--teal);
+    color: #fff; font-size: 13.5px; display: flex; align-items: center; justify-content: center; }
+  .step.done .stepnum { background: var(--teal-mid); }
+  .step p { margin: 0 0 10px; font-size: 14.5px; color: var(--muted); max-width: 76ch; }
+  .soon { font-size: 12px; color: var(--faint); border: 1px dashed var(--line);
+    border-radius: 999px; padding: 2px 10px; }
+
+  button { font: inherit; font-size: 14.5px; padding: 9px 18px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; transition: all .15s; }
+  button:hover:not(:disabled) { border-color: var(--teal-mid); color: var(--teal); }
+  button.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+  button.primary:hover:not(:disabled) { background: var(--mteal); }
+  button:disabled { opacity: 0.5; cursor: default; }
+
+  .log { background: var(--code-bg); color: #cfd8d5; border-radius: 10px; padding: 10px 14px;
+    font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; max-height: 150px;
+    overflow-y: auto; margin-top: 10px; display: none; }
+  .log .ok { color: #84e0c3; }
+  .log .err { color: #f0a0a0; }
+
+  .drop { border: 2px dashed var(--teal-mid); border-radius: 14px; padding: 34px 20px;
+    text-align: center; color: var(--muted); font-size: 15px; cursor: pointer; transition: all .15s;
+    background: var(--mteal-fill); }
+  .drop.over { background: var(--teal-fill); border-color: var(--teal); color: var(--teal); }
+  .drop input { display: none; }
+  .droprow { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+  .filemeta { font-size: 13px; color: var(--faint); }
+
+  table.map { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 8px; }
+  table.map th { text-align: left; font-weight: 600; color: var(--muted); font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+  table.map td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  table.map td.mono { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; color: var(--muted); }
+  select { font: inherit; font-size: 13.5px; padding: 5px 8px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .tag.name { background: var(--teal-fill); color: var(--teal); }
+  .tag.guess { background: var(--amber-fill); color: var(--amber); }
+  .warn { background: var(--amber-fill); border: 1px solid var(--amber-mid); border-radius: 10px;
+    padding: 9px 13px; font-size: 13.5px; color: var(--amber); margin-top: 10px; }
+  .okline { color: var(--teal); font-size: 14px; margin-top: 10px; }
+  .summary { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+  footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--faint); }
+  footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="tabs">
+  <a href="index.html">Guided tour</a>
+  <a href="howto.html">Researcher how-to</a>
+  <a href="run.html" class="active">Try it live · beta</a>
+</nav>
+
+<header>
+  <div class="brand">
+    <img src="assets/biofairnet_logo.png" alt="BioFairNet project logo">
+    <div>
+      <div class="eyebrow">BioFairNet · Horizon Europe</div>
+      <h1>Run the factory in your browser</h1>
+    </div>
+  </div>
+  <p class="sub">Drop a CSV with process measurements and run the pipeline right here —
+  powered by Python compiled to WebAssembly, no installation, no account.</p>
+  <div class="privacy">🔒 Your data never leaves your machine — everything runs locally in this tab.</div>
+</header>
+
+<div class="step" id="step1">
+  <h2><span class="stepnum">1</span> Load the analysis engine</h2>
+  <p>Downloads the scientific Python stack (~70&nbsp;MB, one time — your browser caches it)
+  and the pipeline's own modules. Nothing is installed on your computer.</p>
+  <button class="primary" id="loadEngine">Load engine</button>
+  <span class="filemeta" id="engineMeta"></span>
+  <div class="log" id="engineLog"></div>
+</div>
+
+<div class="step locked" id="step2">
+  <h2><span class="stepnum">2</span> Provide your data</h2>
+  <p>A delimited text file (CSV) with numeric process variables and one target column.
+  Semicolons, decimal commas and <code>hh:mm:ss</code> time columns are handled automatically.</p>
+  <label class="drop" id="drop">
+    <input type="file" id="fileInput" accept=".csv,.txt,.tsv,.dat">
+    <strong>Drop your CSV here</strong> — or click to choose a file
+  </label>
+  <div class="droprow">
+    <button id="demoBtn">No data at hand? Try the pilot demo dataset</button>
+    <span class="filemeta" id="fileMeta"></span>
+  </div>
+</div>
+
+<div class="step locked" id="step3">
+  <h2><span class="stepnum">3</span> Confirm what each column means</h2>
+  <p>The factory suggests a role for every column — the same auto-detection the offline
+  pipeline uses. <span class="tag name">matched by name</span> means high confidence;
+  <span class="tag guess">guessed</span> means please check.</p>
+  <div id="mapArea"></div>
+  <div id="mapWarnings"></div>
+  <div class="droprow">
+    <button class="primary" id="confirmMap" disabled>Confirm mapping</button>
+    <span class="summary" id="mapSummary"></span>
+  </div>
+</div>
+
+<div class="step locked" id="step4">
+  <h2><span class="stepnum">4</span> Run the pipeline <span class="soon">coming next — Phase B</span></h2>
+  <p>Prepare → train &amp; compare models → sustainability indicators → scenario sweep,
+  with progress right here and all results downloadable as a zip.</p>
+  <button class="primary" disabled>Run pipeline</button>
+</div>
+
+<footer>
+  <p id="runtimeInfo">Engine not loaded yet.</p>
+  <p>Part of the <a href="index.html">GreenInformationFactory</a> ·
+  <a href="https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype">source on GitHub</a> ·
+  BioFairNet, funded by the European Union's Horizon Europe programme.</p>
+</footer>
+
+</div>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+<script>
+(function () {
+  const MAX_MB = 20;
+  const state = { pyodide: null, engineReady: false, pendingFile: null,
+                  fileName: null, csvText: null, sniff: null,
+                  provenance: { column_mapping: "auto" } };
+
+  const $ = id => document.getElementById(id);
+  function log(msg, cls) {
+    const el = $("engineLog");
+    el.style.display = "block";
+    el.innerHTML += '<div class="' + (cls || "") + '">' + msg + "</div>";
+    el.scrollTop = el.scrollHeight;
+  }
+  function unlock(id) { $(id).classList.remove("locked"); }
+  function markDone(id) { $(id).classList.add("done"); }
+
+  // ---------------- Step 1: engine ----------------
+  async function loadEngine() {
+    const btn = $("loadEngine");
+    btn.disabled = true;
+    btn.textContent = "Loading…";
+    try {
+      log("Starting Pyodide (Python → WebAssembly)…");
+      state.pyodide = await loadPyodide();
+      log("Python ready. Loading numpy, pandas, scikit-learn… (largest part)");
+      await state.pyodide.loadPackage(["numpy", "pandas", "scikit-learn"]);
+      log("Scientific stack loaded.", "ok");
+
+      log("Fetching the pipeline's own modules…");
+      const manifest = await (await fetch("py/manifest.json")).json();
+      state.pyodide.FS.mkdirTree("/pipeline/helper");
+      state.pyodide.FS.mkdirTree("/pipeline/gif");
+      for (const f of manifest.files) {
+        const src = await (await fetch("py/" + f)).text();
+        const dest = f.includes("/") ? "/pipeline/" + f : "/pipeline/" + f;
+        state.pyodide.FS.writeFile(dest, src);
+      }
+      state.pyodide.runPython(
+        "import sys\n" +
+        "sys.path.insert(0, '/pipeline')\n" +
+        "import browser_bridge\n"
+      );
+      const info = JSON.parse(state.pyodide.runPython("browser_bridge.runtime_info()"));
+      $("runtimeInfo").textContent =
+        "Engine: Python " + info.python + " · numpy " + info.numpy +
+        " · pandas " + info.pandas + " · scikit-learn " + info.sklearn +
+        " · gif " + info.gif + " — running locally in your browser.";
+      log("Pipeline modules imported (gif " + info.gif + ").", "ok");
+
+      state.engineReady = true;
+      btn.textContent = "Engine ready ✓";
+      markDone("step1");
+      unlock("step2");
+      $("engineMeta").textContent = "";
+      if (state.pendingFile) { handleText(state.pendingFile.name, state.pendingFile.text); state.pendingFile = null; }
+    } catch (e) {
+      log("Failed: " + e, "err");
+      btn.disabled = false;
+      btn.textContent = "Retry loading engine";
+    }
+  }
+  $("loadEngine").onclick = loadEngine;
+
+  // ---------------- Step 2: data in ----------------
+  function acceptFile(file) {
+    if (file.size > MAX_MB * 1024 * 1024) {
+      $("fileMeta").textContent = "⚠ File is " + (file.size / 1e6).toFixed(1) +
+        " MB — the browser demo is limited to " + MAX_MB + " MB. Use the offline pipeline for large data.";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => handleText(file.name, reader.result);
+    reader.readAsText(file);
+  }
+  function handleText(name, text) {
+    if (!state.engineReady) {
+      state.pendingFile = { name, text };
+      $("engineMeta").textContent = "File queued — load the engine first.";
+      return;
+    }
+    state.fileName = name;
+    state.csvText = text;
+    $("fileMeta").textContent = name + " · " + (text.length / 1024).toFixed(0) + " kB";
+    try {
+      state.pyodide.globals.set("csv_text", text);
+      const res = state.pyodide.runPython("browser_bridge.sniff_and_preview(csv_text)");
+      state.sniff = JSON.parse(res);
+      renderMapping();
+      markDone("step2");
+      unlock("step3");
+      $("step3").scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e) {
+      $("fileMeta").textContent = "⚠ Could not read this file as a table: " + e;
+    }
+  }
+  window.__handleText = handleText;  // test hook
+
+  const drop = $("drop");
+  drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+  drop.addEventListener("drop", e => {
+    e.preventDefault(); drop.classList.remove("over");
+    if (e.dataTransfer.files.length) acceptFile(e.dataTransfer.files[0]);
+  });
+  $("fileInput").addEventListener("change", e => {
+    if (e.target.files.length) acceptFile(e.target.files[0]);
+  });
+  $("demoBtn").onclick = async () => {
+    const text = await (await fetch("assets/demo_data.csv")).text();
+    handleText("demo_data.csv (pilot sample)", text);
+  };
+
+  // ---------------- Step 3: mapping ----------------
+  function renderMapping() {
+    const s = state.sniff;
+    let html = '<div class="summary">Detected: separator <code>' +
+      (s.separator === "\t" ? "TAB" : s.separator) + "</code> · decimal " + s.decimal +
+      " · " + s.n_rows.toLocaleString() + " rows × " + s.n_cols + " columns</div>";
+    html += '<table class="map"><tr><th>Column</th><th>Role</th><th>Detection</th><th>Numeric</th><th>Sample values</th></tr>';
+    for (const c of s.columns) {
+      const opts = ["feature", "target", "time", "ignore"].map(r =>
+        '<option value="' + r + '"' + (r === c.suggested_role ? " selected" : "") + ">" + r + "</option>").join("");
+      const tag = c.matched_by_name
+        ? '<span class="tag name">matched by name</span>'
+        : (c.suggested_role === "ignore" ? "" : '<span class="tag guess">guessed</span>');
+      html += "<tr><td><strong>" + c.name + "</strong></td>" +
+        '<td><select data-col="' + c.name + '">' + opts + "</select></td>" +
+        "<td>" + tag + "</td>" +
+        "<td>" + Math.round(c.numeric_ratio * 100) + "%</td>" +
+        '<td class="mono">' + c.sample.slice(0, 3).join(" · ") + "</td></tr>";
+    }
+    html += "</table>";
+    $("mapArea").innerHTML = html;
+
+    let wh = "";
+    if (s.target_guessed) {
+      wh += '<div class="warn">⚠ No column matched a known target name — the last numeric column was ' +
+        "<strong>guessed</strong> as the target. Please verify before continuing.</div>";
+    }
+    for (const w of s.warnings) wh += '<div class="warn">⚠ ' + w + "</div>";
+    $("mapWarnings").innerHTML = wh;
+
+    $("mapArea").querySelectorAll("select").forEach(sel => {
+      sel.addEventListener("change", () => {
+        state.provenance.column_mapping = "user_edited";
+        validateMapping();
+      });
+    });
+    validateMapping();
+  }
+
+  function currentMapping() {
+    const m = { features: [], target: null, time: null, ignored: [] };
+    $("mapArea").querySelectorAll("select").forEach(sel => {
+      const col = sel.dataset.col, role = sel.value;
+      if (role === "feature") m.features.push(col);
+      else if (role === "target") { if (m.target) m.extraTargets = true; m.target = col; }
+      else if (role === "time") { if (m.time) m.extraTimes = true; m.time = col; }
+      else m.ignored.push(col);
+    });
+    return m;
+  }
+  function validateMapping() {
+    const m = currentMapping();
+    const ok = m.target && !m.extraTargets && !m.extraTimes && m.features.length >= 1;
+    $("confirmMap").disabled = !ok;
+    $("mapSummary").textContent = ok
+      ? m.features.length + " feature(s), target “" + m.target + "”" + (m.time ? ", time “" + m.time + "”" : "")
+      : "Select at least one feature and exactly one target" +
+        (m.extraTargets ? " (multiple targets selected)" : "") +
+        (m.extraTimes ? " (multiple time columns selected)" : "") + ".";
+  }
+  $("confirmMap").onclick = () => {
+    state.mapping = currentMapping();
+    if (state.provenance.column_mapping !== "user_edited") state.provenance.column_mapping = "confirmed_default";
+    markDone("step3");
+    $("mapSummary").innerHTML = '<span class="okline">✓ Mapping confirmed (' +
+      (state.provenance.column_mapping === "user_edited" ? "user-adjusted" : "auto-detected, user-confirmed") +
+      ") — ready for Phase B.</span>";
+  };
+})();
+</script>
+</body>
+</html>
