@@ -81,6 +81,25 @@
   .okline { color: var(--teal); font-size: 14px; margin-top: 10px; }
   .summary { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
 
+  .radio { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; cursor: pointer; }
+  .radio:has(input:checked) { border-color: var(--teal-mid); background: var(--mteal-fill); }
+  .radio strong { color: var(--ink); }
+
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0 4px; }
+  table.cmp th { text-align: left; font-weight: 600; color: var(--muted); font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+  table.cmp td { padding: 7px 10px; border-bottom: 1px solid var(--line);
+    font-variant-numeric: tabular-nums; }
+  table.cmp tr.best td { background: var(--teal-fill); font-weight: 600; }
+  .figgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px; margin: 12px 0; }
+  .figgrid img { width: 100%; height: auto; border: 1px solid var(--line);
+    border-radius: 10px; background: #fff; padding: 4px; }
+  .reshead { font-size: 15px; font-weight: 650; margin: 16px 0 4px; color: var(--ink); }
+  details.figs { margin: 8px 0; }
+  details.figs summary { cursor: pointer; font-size: 13.5px; color: var(--teal); }
+
   footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line);
     font-size: 12.5px; color: var(--faint); }
   footer a { color: var(--teal); text-decoration: none; }
@@ -145,10 +164,30 @@
 </div>
 
 <div class="step locked" id="step4">
-  <h2><span class="stepnum">4</span> Run the pipeline <span class="soon">coming next — Phase B</span></h2>
-  <p>Prepare → train &amp; compare models → sustainability indicators → scenario sweep,
-  with progress right here and all results downloadable as a zip.</p>
-  <button class="primary" disabled>Run pipeline</button>
+  <h2><span class="stepnum">4</span> Run the pipeline</h2>
+  <p>Prepare → train &amp; compare models → sustainability indicators → scenario sweep.
+  Everything computes locally; a laptop handles the demo in seconds.</p>
+  <div class="droprow" style="margin-bottom:10px">
+    <label class="radio"><input type="radio" name="budget" value="fast" checked>
+      <strong>Fast</strong> — linear + random forest, small search (seconds)</label>
+    <label class="radio"><input type="radio" name="budget" value="thorough">
+      <strong>Thorough</strong> — 5 model families, full grids (minutes; tab stays busy)</label>
+  </div>
+  <button class="primary" id="runBtn" disabled>Run pipeline</button>
+  <div class="log" id="runLog"></div>
+</div>
+
+<div class="step locked" id="step5">
+  <h2><span class="stepnum">5</span> Results</h2>
+  <div id="resTrain"></div>
+  <div id="resScenario"></div>
+  <div class="droprow">
+    <button class="primary" id="zipBtn" disabled>⬇ Download all results (zip)</button>
+    <span class="filemeta" id="zipMeta"></span>
+  </div>
+  <p class="summary" style="margin-top:12px">Next station: publish your results on Zenodo —
+  see the <a href="howto.html">researcher how-to</a>, step 6. The zip includes a
+  <code>provenance.json</code> documenting every input, default and engine version.</p>
 </div>
 
 <footer>
@@ -190,13 +229,18 @@
       log("Scientific stack loaded.", "ok");
 
       log("Fetching the pipeline's own modules…");
-      const manifest = await (await fetch("py/manifest.json")).json();
-      state.pyodide.FS.mkdirTree("/pipeline/helper");
-      state.pyodide.FS.mkdirTree("/pipeline/gif");
+      // cache-bust: the module files are tiny and correctness beats caching —
+      // a stale train.py would make the page and the engine disagree.
+      const bust = "?v=" + Date.now();
+      const manifest = await (await fetch("py/manifest.json" + bust)).json();
       for (const f of manifest.files) {
-        const src = await (await fetch("py/" + f)).text();
-        const dest = f.includes("/") ? "/pipeline/" + f : "/pipeline/" + f;
-        state.pyodide.FS.writeFile(dest, src);
+        if (f.includes("/")) {
+          state.pyodide.FS.mkdirTree("/pipeline/" + f.substring(0, f.lastIndexOf("/")));
+        } else {
+          state.pyodide.FS.mkdirTree("/pipeline");
+        }
+        const src = await (await fetch("py/" + f + bust)).text();
+        state.pyodide.FS.writeFile("/pipeline/" + f, src);
       }
       state.pyodide.runPython(
         "import sys\n" +
@@ -339,7 +383,109 @@
     markDone("step3");
     $("mapSummary").innerHTML = '<span class="okline">✓ Mapping confirmed (' +
       (state.provenance.column_mapping === "user_edited" ? "user-adjusted" : "auto-detected, user-confirmed") +
-      ") — ready for Phase B.</span>";
+      ") — run the pipeline below.</span>";
+    unlock("step4");
+    $("runBtn").disabled = false;
+    $("step4").scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // ---------------- Step 4+5: run the pipeline ----------------
+  const tick = () => new Promise(r => setTimeout(r, 40));  // let the UI repaint
+  function rlog(msg, cls) {
+    const el = $("runLog");
+    el.style.display = "block";
+    el.innerHTML += '<div class="' + (cls || "") + '">' + msg + "</div>";
+    el.scrollTop = el.scrollHeight;
+  }
+  function py(expr) { return state.pyodide.runPython(expr); }
+
+  async function runPipeline() {
+    const btn = $("runBtn");
+    btn.disabled = true;
+    btn.textContent = "Running…";
+    const budget = document.querySelector('input[name="budget"]:checked').value;
+    try {
+      rlog("Loading plotting library (first run only)…");
+      await state.pyodide.loadPackage("matplotlib");
+      await tick();
+
+      rlog("1/3 Preparing data (clean, convert, split)…");
+      state.pyodide.globals.set("csv_text", state.csvText);
+      state.pyodide.globals.set("mapping_json", JSON.stringify({
+        features: state.mapping.features, target: state.mapping.target, time: state.mapping.time }));
+      state.pyodide.globals.set("prep_opts", JSON.stringify({
+        separator: state.sniff.separator, file_name: state.fileName,
+        mapping_source: state.provenance.column_mapping }));
+      const prep = JSON.parse(py("browser_bridge.run_prepare(csv_text, mapping_json, prep_opts)"));
+      if (prep.error) throw new Error(prep.error);
+      rlog("   ✓ " + prep.rows_after_clean.toLocaleString() + " rows → splits " +
+        prep.splits.train + " / " + prep.splits.test + " / " + prep.splits.validation +
+        (prep.subsampled ? " (subsampled for the browser demo)" : ""), "ok");
+      await tick();
+
+      rlog("2/3 Training models (" + budget + " mode) — this is the heavy part…");
+      await tick();
+      const t0 = performance.now();
+      state.pyodide.globals.set("train_opts", JSON.stringify({ budget }));
+      const train = JSON.parse(py("browser_bridge.run_train(train_opts)"));
+      rlog("   ✓ best model: " + train.best + " (" + ((performance.now() - t0) / 1000).toFixed(1) + " s)", "ok");
+      renderTrain(train);
+      await tick();
+
+      rlog("3/3 Sustainability indicators + scenario sweep…");
+      await tick();
+      state.pyodide.globals.set("scen_opts", JSON.stringify({ grid_points: 15 }));
+      const scen = JSON.parse(py("browser_bridge.run_scenario_analysis(scen_opts)"));
+      rlog("   ✓ " + scen.rows + " scenario points across: " + scen.variables.join(", "), "ok");
+      renderScenario(scen);
+
+      rlog("Done — results below. 🎉", "ok");
+      markDone("step4");
+      unlock("step5");
+      $("zipBtn").disabled = false;
+      btn.textContent = "Run again";
+      btn.disabled = false;
+      $("step5").scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e) {
+      rlog("Failed: " + e, "err");
+      btn.textContent = "Retry run";
+      btn.disabled = false;
+    }
+  }
+  $("runBtn").onclick = runPipeline;
+
+  function renderTrain(train) {
+    let html = '<div class="reshead">Model comparison (lower RMSE = better)</div>';
+    html += '<table class="cmp"><tr><th>Model</th><th>RMSE (val)</th><th>R² (val)</th>' +
+            "<th>RMSE (test)</th><th>R² (test)</th><th>Fit time</th></tr>";
+    for (const r of train.comparison) {
+      html += '<tr class="' + (r.model === train.best ? "best" : "") + '"><td>' + r.model +
+        "</td><td>" + r.rmse_val + "</td><td>" + r.r2_val + "</td><td>" + r.rmse_test +
+        "</td><td>" + r.r2_test + "</td><td>" + r.fit_seconds + " s</td></tr>";
+    }
+    html += "</table>";
+    html += '<div class="figgrid">' + train.figures.map(f =>
+      '<img src="' + f.data_url + '" alt="' + f.name + '" title="' + f.name + '">').join("") + "</div>";
+    $("resTrain").innerHTML = html;
+  }
+
+  function renderScenario(scen) {
+    let html = '<div class="reshead">Scenario sensitivity &amp; sustainability proxies</div>';
+    html += '<div class="figgrid">' + scen.figures.map(f =>
+      '<img src="' + f.data_url + '" alt="' + f.name + '" title="' + f.name + '">').join("") + "</div>";
+    $("resScenario").innerHTML = html;
+  }
+
+  $("zipBtn").onclick = () => {
+    const b64 = py("browser_bridge.make_results_zip()");
+    const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const blob = new Blob([bytes], { type: "application/zip" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "greeninformationfactory_results.zip";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    $("zipMeta").textContent = (bytes.length / 1024).toFixed(0) + " kB · includes provenance.json";
   };
 })();
 </script>

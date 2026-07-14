@@ -59,8 +59,13 @@ def train_models(
     cv_folds: int = 5,
     n_jobs: int = -1,
     verbose: bool = False,
+    custom_grids: Optional[Dict[str, Dict]] = None,
 ) -> TrainingResult:
     """Train (optionally grid-search) each enabled model and rank by val RMSE.
+
+    ``custom_grids`` replaces the default hyperparameter grids per model name
+    (models without an entry are fitted with their defaults) — used e.g. by
+    the in-browser runtime to trim the search space to a fast subset.
 
     Returns a :class:`TrainingResult` whose ``results`` frame is sorted best
     first (lowest ``rmse_val``, tie-broken by highest ``r2_val``).
@@ -68,6 +73,8 @@ def train_models(
     models, grids = select_models(enabled, random_seed=random_seed)
     if not models:
         raise ValueError(f"No known models selected from enabled={list(enabled or [])}.")
+    if custom_grids is not None:
+        grids = {k: custom_grids.get(k, {}) for k in models}
 
     rows: List[Dict[str, object]] = []
     best_models: Dict[str, object] = {}

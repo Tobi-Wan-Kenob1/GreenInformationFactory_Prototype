@@ -12,6 +12,7 @@
     "helper/__init__.py",
     "helper/sustainability_metrics.py",
     "helper/upload_collector.py",
-    "helper/utils.py"
+    "helper/utils.py",
+    "metadata/sustainability_assumptions_v1.json"
   ]
 }

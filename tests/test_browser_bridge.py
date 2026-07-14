@@ -65,6 +65,56 @@ def test_bom_is_stripped():
     assert names[0] == "time"  # no BOM residue in the column name
 
 
+def test_full_browser_run_on_demo_data(tmp_path, monkeypatch):
+    """Phase B end-to-end: prepare → train(fast) → scenario → results zip."""
+    import matplotlib
+    matplotlib.use("Agg")
+    monkeypatch.setattr(bb, "RESULTS_DIR", tmp_path / "results")
+
+    text = (_REPO / "docs/assets/demo_data.csv").read_text(encoding="utf-8")
+    mapping = {"features": ["Temperature (°C)", "Stiring"],
+               "target": "Pressure (bar)", "time": "Time (min)"}
+
+    prep = json.loads(bb.run_prepare(text, json.dumps(mapping),
+                                     json.dumps({"separator": ";",
+                                                 "file_name": "demo.csv",
+                                                 "mapping_source": "confirmed_default"})))
+    assert "error" not in prep
+    assert prep["rows_after_clean"] == 1200
+    assert prep["features"][0] == "time_s"
+    assert sum(prep["splits"].values()) == 1200
+
+    train = json.loads(bb.run_train(json.dumps({"budget": "fast"})))
+    assert train["best"] in {"linreg", "rf"}
+    assert len(train["comparison"]) == 2
+    assert all(f["data_url"].startswith("data:image/png;base64,") for f in train["figures"])
+
+    scen = json.loads(bb.run_scenario_analysis(json.dumps({"grid_points": 7})))
+    assert "Temperature (°C)" in scen["variables"]  # unit suffix must survive
+    assert scen["rows"] == 7 * len(scen["variables"])
+    assert len(scen["figures"]) == 3 * len(scen["variables"])
+
+    import base64
+    import io
+    import zipfile
+    blob = base64.b64decode(bb.make_results_zip())
+    names = set(zipfile.ZipFile(io.BytesIO(blob)).namelist())
+    assert {"provenance.json", "README.txt", "model_comparison.csv",
+            "scenario_results_oneway.csv"} <= names
+    prov = json.loads(zipfile.ZipFile(io.BytesIO(blob)).read("provenance.json"))
+    assert prov["compute_budget"] == "fast"
+    assert prov["column_mapping_source"] == "confirmed_default"
+    assert prov["random_seed"] == 42
+
+
+def test_run_prepare_reports_unusable_data(tmp_path, monkeypatch):
+    monkeypatch.setattr(bb, "RESULTS_DIR", tmp_path / "results")
+    text = "a;b\nx;y\nfoo;bar\n"  # nothing numeric → target all-NaN
+    r = json.loads(bb.run_prepare(text, json.dumps({"features": ["a"], "target": "b"}),
+                                  json.dumps({"separator": ";"})))
+    assert "error" in r
+
+
 def test_synced_browser_modules_match_sources():
     """docs/py/ copies must be identical to helper/ and src/gif/ sources."""
     manifest = json.loads((_REPO / "docs/py/manifest.json").read_text())

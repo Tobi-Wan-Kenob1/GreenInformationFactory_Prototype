@@ -61,6 +61,19 @@ def test_train_models_picks_best_and_reports(tmp_path):
     assert len(result.predictions["val"]) == len(yva)
 
 
+def test_train_models_custom_grids_override():
+    X, y = _dataset(120)
+    Xtr, Xte, Xva = X.iloc[:80], X.iloc[80:100], X.iloc[100:]
+    ytr, yte, yva = y.iloc[:80], y.iloc[80:100], y.iloc[100:]
+    result = train_models(
+        Xtr, ytr, Xte, yte, Xva, yva,
+        enabled=["rf"], cv_folds=2, n_jobs=1,
+        custom_grids={"rf": {"n_estimators": [50], "max_depth": [3]}},
+    )
+    row = result.results.iloc[0]
+    assert row["best_params"] == {"n_estimators": 50, "max_depth": 3}
+
+
 def test_train_models_empty_selection_raises():
     X, y = _dataset(40)
     with pytest.raises(ValueError):

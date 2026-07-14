@@ -1,21 +1,55 @@
 """Bridge between docs/run.html (JavaScript) and the real pipeline modules.
 
 Runs inside Pyodide. Every function takes/returns JSON strings so the JS side
-stays a thin UI layer; all detection logic reuses the actual ``gif`` /
-``helper`` code so the browser demo behaves exactly like the CLI.
+stays a thin UI layer; all logic reuses the actual ``gif`` / ``helper`` code
+so the browser demo behaves exactly like the CLI.
 
-Phase A scope: format sniffing + column-role suggestion + data preview.
-The pipeline execution entry points arrive in Phase B.
+Phase A: format sniffing + column-role suggestion + data preview.
+Phase B: pipeline execution — ``run_prepare`` → ``run_train`` →
+``run_scenario_analysis`` → ``make_results_zip``. State is kept in module
+globals (one analysis session per page load).
 """
 from __future__ import annotations
 
+import base64
 import io
 import json
+import tempfile
+import zipfile
+from datetime import datetime, timezone
+from pathlib import Path
 
 import pandas as pd
 
-from gif.data import resolve_column
+from gif.data import prepare_data, resolve_column, validate_prepared
+from gif.scenario import detect_scenario_vars, run_scenarios
+from gif.train import train_models
 from helper.sustainability_metrics import normalize_colname
+
+#: Where result files (CSVs, PNGs) accumulate for the download zip. Uses the
+#: platform temp dir so the module works both in Pyodide's in-memory FS and
+#: natively in the test suite.
+RESULTS_DIR = Path(tempfile.gettempdir()) / "gif_browser_results"
+
+#: Row cap for the in-browser demo (single-core WebAssembly); larger uploads
+#: are subsampled with a provenance note.
+MAX_ROWS = 20000
+
+#: Compute budgets: model subset + optional grid override + CV folds.
+BUDGETS = {
+    "fast": {
+        "enabled": ["linreg", "rf"],
+        "custom_grids": {"rf": {"n_estimators": [100], "max_depth": [None, 10]}},
+        "cv_folds": 3,
+    },
+    "thorough": {
+        "enabled": ["linreg", "enet", "rf", "extratrees", "gbr"],
+        "custom_grids": None,  # standard grids (SVR/MLP stay excluded: too slow single-core)
+        "cv_folds": 3,
+    },
+}
+
+_STATE: dict = {}
 
 #: Candidate names for each column role — the same lists the pipeline uses
 #: (gif.pipeline._resolve_feature_target / helper.sustainability_metrics).
@@ -173,3 +207,165 @@ def runtime_info() -> str:
         "sklearn": sklearn.__version__,
         "gif": gif.__version__,
     })
+
+
+# --------------------------------------------------------------------------- #
+# Phase B: pipeline execution
+# --------------------------------------------------------------------------- #
+def _png_data_urls(paths) -> list:
+    out = []
+    for p in paths:
+        p = Path(p)
+        b64 = base64.b64encode(p.read_bytes()).decode("ascii")
+        out.append({"name": p.name, "data_url": "data:image/png;base64," + b64})
+    return out
+
+
+def run_prepare(csv_text: str, mapping_json: str, options_json: str = "{}") -> str:
+    """Clean + split the uploaded data using the confirmed column mapping."""
+    mapping = json.loads(mapping_json)
+    options = json.loads(options_json)
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    for old in RESULTS_DIR.glob("*"):
+        old.unlink()
+
+    csv_text = csv_text.lstrip("﻿")
+    sep = options.get("separator", ";")
+    df = pd.read_csv(io.StringIO(csv_text), sep=sep, dtype=str).fillna("")
+    df.columns = [str(c).strip() for c in df.columns]
+
+    subsampled = False
+    if len(df) > MAX_ROWS:
+        df = df.sample(n=MAX_ROWS, random_state=42).sort_index().reset_index(drop=True)
+        subsampled = True
+
+    try:
+        prepared = prepare_data(
+            df,
+            feature_cols=mapping["features"],
+            target_col=mapping["target"],
+            time_col=mapping.get("time") or None,
+            random_seed=42,
+        )
+    except Exception as exc:
+        # e.g. every row dropped (non-numeric target) → sklearn refuses to
+        # split 0 samples. Surface a readable message instead of a traceback.
+        return json.dumps({"error": f"Could not prepare this data: {exc}"})
+    problems = validate_prepared(prepared)
+    if problems:
+        return json.dumps({"error": "Prepared data is unusable: " + "; ".join(problems)})
+
+    _STATE.clear()
+    _STATE["prepared"] = prepared
+    _STATE["provenance"] = {
+        "created_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "file_name": options.get("file_name", "uploaded.csv"),
+        "column_mapping": mapping,
+        "column_mapping_source": options.get("mapping_source", "auto"),
+        "separator": sep,
+        "random_seed": 42,
+        "subsampled_to": MAX_ROWS if subsampled else None,
+        "engine": json.loads(runtime_info()),
+        "disclaimer": ("In-browser demo run. Results are indicative; defaults were used "
+                       "where no expert input was provided."),
+    }
+
+    prepared.df.describe().to_csv(RESULTS_DIR / "data_summary.csv")
+    return json.dumps({
+        "rows_after_clean": prepared.report["rows_after_clean"],
+        "rows_dropped": prepared.report["rows_dropped"],
+        "features": prepared.features,
+        "target": prepared.target,
+        "splits": prepared.report["splits"],
+        "subsampled": subsampled,
+    })
+
+
+def run_train(options_json: str = "{}") -> str:
+    """Train and compare models on the prepared splits (fast mode default)."""
+    options = json.loads(options_json)
+    budget_name = options.get("budget", "fast")
+    budget = BUDGETS.get(budget_name, BUDGETS["fast"])
+    p = _STATE["prepared"]
+
+    result = train_models(
+        p.X_train, p.y_train, p.X_test, p.y_test, p.X_val, p.y_val,
+        enabled=budget["enabled"],
+        custom_grids=budget["custom_grids"],
+        cv_folds=budget["cv_folds"],
+        n_jobs=1, random_seed=42,
+    )
+    _STATE["trained"] = result
+    _STATE["provenance"]["compute_budget"] = budget_name
+    _STATE["provenance"]["models_evaluated"] = list(result.best_models.keys())
+
+    comp = result.results.copy()
+    comp["best_params"] = comp["best_params"].astype(str)
+    comp.to_csv(RESULTS_DIR / "model_comparison.csv", index=False)
+    result.predictions["val"].to_csv(RESULTS_DIR / "predictions_val.csv", index=False)
+
+    from gif.plots import training_plots
+    figs = training_plots(result.results, result.best_models, p.X_val, p.y_val, RESULTS_DIR)
+
+    return json.dumps({
+        "best": result.best_name,
+        "comparison": comp[["model", "rmse_val", "r2_val", "rmse_test", "r2_test",
+                            "fit_seconds"]].round(4).to_dict(orient="records"),
+        "figures": _png_data_urls(figs),
+    })
+
+
+def run_scenario_analysis(options_json: str = "{}") -> str:
+    """One-way scenario sweep + sustainability proxies with the best model."""
+    options = json.loads(options_json)
+    grid_points = int(options.get("grid_points", 15))
+    p, trained = _STATE["prepared"], _STATE["trained"]
+
+    scenario_vars = detect_scenario_vars(p.X_val.columns)
+    if not scenario_vars:
+        scenario_vars = list(p.X_val.columns)[:2]  # fall back: first features
+
+    assumptions = Path(__file__).parent / "metadata" / "sustainability_assumptions_v1.json"
+    out = run_scenarios(
+        trained.best_model, p.X_val,
+        scenario_vars=scenario_vars,
+        baseline_idx=int(options.get("baseline_idx", 0)),
+        grid_points=grid_points,
+        feature_order=list(p.X_val.columns),
+        assumptions_path=assumptions if assumptions.exists() else None,
+    )
+    out.to_csv(RESULTS_DIR / "scenario_results_oneway.csv", index=False)
+    _STATE["provenance"]["scenario"] = {
+        "variables": scenario_vars, "grid_points": grid_points,
+        "baseline_idx": int(options.get("baseline_idx", 0)),
+        "sustainability_assumptions": "project defaults" if assumptions.exists() else "v1/PCA only",
+    }
+
+    from gif.plots import scenario_plots
+    figs = scenario_plots(out, trained.best_name, RESULTS_DIR, scenario_vars)
+
+    return json.dumps({
+        "variables": scenario_vars,
+        "rows": int(len(out)),
+        "figures": _png_data_urls(figs),
+    })
+
+
+def make_results_zip() -> str:
+    """Bundle every result file + provenance into a zip, returned as base64."""
+    prov = _STATE.get("provenance", {})
+    (RESULTS_DIR / "provenance.json").write_text(
+        json.dumps(prov, indent=2), encoding="utf-8")
+    (RESULTS_DIR / "README.txt").write_text(
+        "GreenInformationFactory — in-browser analysis results\n"
+        "======================================================\n\n"
+        "Generated locally in your browser; no data was transmitted.\n"
+        "See provenance.json for the exact inputs, defaults and engine versions.\n"
+        "Pipeline: https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype\n",
+        encoding="utf-8")
+
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(RESULTS_DIR.glob("*")):
+            z.write(f, arcname=f.name)
+    return base64.b64encode(buf.getvalue()).decode("ascii")

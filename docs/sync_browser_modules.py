@@ -27,6 +27,8 @@ SOURCES = {
     "helper": ["__init__.py", "utils.py", "sustainability_metrics.py", "upload_collector.py"],
     "gif": ["__init__.py", "config.py", "data.py", "models.py", "train.py",
             "scenario.py", "pipeline.py", "plots.py"],
+    # default sustainability assumptions for the assumption-based proxy
+    "metadata": ["sustainability_assumptions_v1.json"],
 }
 
 
