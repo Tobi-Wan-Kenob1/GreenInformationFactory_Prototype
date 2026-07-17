@@ -333,6 +333,18 @@ Two animated, self-contained walkthroughs live at
 A flipbook GIF for project reporting (`docs/assets/biofairnet_tour.gif`) is
 regenerated with `python docs/make_tour_gif.py`.
 
+🧪 **Try it live** ([`docs/run.html`](docs/run.html)) — the third tab runs the
+*actual pipeline in the visitor's browser* via Pyodide (Python→WebAssembly):
+drag-and-drop a CSV (or use the pilot demo), confirm the auto-detected column
+mapping, optionally provide expert inputs (energy-driver weights, emission
+factors, scenario baseline), and get the model comparison, sustainability
+proxies and scenario sweep with downloadable results — **data never leaves the
+visitor's machine**. Every figure produced under default assumptions carries a
+visible high-uncertainty label, and a confidence card summarizes which inputs
+were defaulted. The browser executes the real `helper`/`gif` modules (synced
+into `docs/py/` by `python docs/sync_browser_modules.py`; a CI drift test and
+a parity test guarantee browser and CLI produce identical numbers).
+
 🧪 Tests & CI
 
 A `pytest` suite under `tests/` covers data prep, the model registry, training,

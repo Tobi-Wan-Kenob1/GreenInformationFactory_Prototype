@@ -272,10 +272,22 @@
   function markDone(id) { $(id).classList.add("done"); }
 
   // ---------------- Step 1: engine ----------------
+  if (typeof WebAssembly === "undefined") {
+    $("loadEngine").disabled = true;
+    $("engineMeta").textContent =
+      "⚠ Your browser does not support WebAssembly — please use a current Firefox, Chrome, Edge or Safari.";
+  }
+
   async function loadEngine() {
     const btn = $("loadEngine");
     btn.disabled = true;
     btn.textContent = "Loading…";
+    const t0 = performance.now();
+    const ticker = setInterval(() => {
+      $("engineMeta").textContent =
+        "downloading & compiling… " + Math.round((performance.now() - t0) / 1000) +
+        " s (one time — cached for future visits)";
+    }, 1000);
     try {
       log("Starting Pyodide (Python → WebAssembly)…");
       state.pyodide = await loadPyodide();
@@ -310,13 +322,18 @@
       log("Pipeline modules imported (gif " + info.gif + ").", "ok");
 
       state.engineReady = true;
+      clearInterval(ticker);
       btn.textContent = "Engine ready ✓";
       markDone("step1");
       unlock("step2");
-      $("engineMeta").textContent = "";
+      $("engineMeta").textContent =
+        "ready in " + Math.round((performance.now() - t0) / 1000) + " s";
       if (state.pendingFile) { handleText(state.pendingFile.name, state.pendingFile.text); state.pendingFile = null; }
     } catch (e) {
+      clearInterval(ticker);
       log("Failed: " + e, "err");
+      log("If this happens repeatedly, reload the page and try once more — " +
+          "a half-loaded engine cannot be restarted in place.", "err");
       btn.disabled = false;
       btn.textContent = "Retry loading engine";
     }

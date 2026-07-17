@@ -213,7 +213,7 @@
   const steps = [
     { t: "Before you start: get the factory",
       n: null,
-      b: "<p>Clone the repository and create the environment once. Everything afterwards is driven by the <code>gif</code> command-line tool or the numbered notebooks — whichever you prefer.</p>"
+      b: "<p><em>Just exploring?</em> The <a href='run.html'>Try it live</a> tab runs the whole pipeline in your browser without installing anything — ideal for a first impression before setting up locally.</p><p>Clone the repository and create the environment once. Everything afterwards is driven by the <code>gif</code> command-line tool or the numbered notebooks — whichever you prefer.</p>"
         + code('git clone https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype.git\ncd GreenInformationFactory_Prototype\n\n<span class="c"># option A: conda (includes JupyterLab for the notebooks)</span>\nconda env create -f environment.yml\nconda activate greeninfo\n\n<span class="c"># option B: plain pip</span>\npip install -e ".[dev]"\n\n<span class="c"># sanity check — should list the available models</span>\ngif models')
         + '<p class="get"><strong>You get:</strong> a working installation; <code>gif --help</code> shows every command used below.</p>' },
     { t: "Step 1 · Publish your dataset on Zenodo",
