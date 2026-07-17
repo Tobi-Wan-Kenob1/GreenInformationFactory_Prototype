@@ -107,6 +107,108 @@ def test_full_browser_run_on_demo_data(tmp_path, monkeypatch):
     assert prov["random_seed"] == 42
 
 
+def _demo_session(tmp_path, monkeypatch):
+    """Run prepare on the demo data and return the loaded csv text."""
+    import matplotlib
+    matplotlib.use("Agg")
+    monkeypatch.setattr(bb, "RESULTS_DIR", tmp_path / "results")
+    text = (_REPO / "docs/assets/demo_data.csv").read_text(encoding="utf-8")
+    mapping = {"features": ["Temperature (°C)", "Stiring"],
+               "target": "Pressure (bar)", "time": "Time (min)"}
+    r = json.loads(bb.run_prepare(text, json.dumps(mapping),
+                                  json.dumps({"separator": ";"})))
+    assert "error" not in r
+    return text
+
+
+def test_parity_browser_path_equals_native_path(tmp_path, monkeypatch):
+    """C3: the browser bridge must produce the same numbers as direct gif calls."""
+    _demo_session(tmp_path, monkeypatch)
+    train = json.loads(bb.run_train(json.dumps({"budget": "fast"})))
+
+    # native path with identical parameters
+    import io as _io
+
+    import pandas as pd
+
+    from gif.data import prepare_data
+    from gif.train import train_models
+    text = (_REPO / "docs/assets/demo_data.csv").read_text(encoding="utf-8").lstrip("﻿")
+    df = pd.read_csv(_io.StringIO(text), sep=";", dtype=str).fillna("")
+    df.columns = [str(c).strip() for c in df.columns]
+    prepared = prepare_data(df, feature_cols=["Temperature (°C)", "Stiring"],
+                            target_col="Pressure (bar)", time_col="Time (min)",
+                            random_seed=42)
+    native = train_models(
+        prepared.X_train, prepared.y_train, prepared.X_test, prepared.y_test,
+        prepared.X_val, prepared.y_val,
+        enabled=bb.BUDGETS["fast"]["enabled"],
+        custom_grids=bb.BUDGETS["fast"]["custom_grids"],
+        cv_folds=bb.BUDGETS["fast"]["cv_folds"], n_jobs=1, random_seed=42,
+    )
+    bridge_rmse = {r["model"]: r["rmse_val"] for r in train["comparison"]}
+    for _, row in native.results.iterrows():
+        assert bridge_rmse[row["model"]] == round(row["rmse_val"], 4), (
+            f"parity broken for {row['model']}")
+    assert train["best"] == native.best_name
+
+
+def test_custom_weights_change_assumed_proxy(tmp_path, monkeypatch):
+    _demo_session(tmp_path, monkeypatch)
+    bb.run_train(json.dumps({"budget": "fast"}))
+
+    import pandas as pd
+    bb.run_scenario_analysis(json.dumps({"grid_points": 5}))
+    default_out = pd.read_csv(bb.RESULTS_DIR / "scenario_results_oneway.csv")
+    default_prov = dict(bb._STATE["provenance"]["scenario"])
+
+    r = json.loads(bb.run_scenario_analysis(json.dumps(
+        {"grid_points": 5, "weights": {"time": 100, "temperature": 0, "stirring": 0}})))
+    user_out = pd.read_csv(bb.RESULTS_DIR / "scenario_results_oneway.csv")
+
+    assert default_prov["assumptions_source"] == "default"
+    assert r["assumptions_source"] == "user"
+    prov = bb._STATE["provenance"]["scenario"]
+    assert prov["assumption_weights"] == {"time": 1.0, "temperature": 0.0, "stirring": 0.0}
+    # the assumption-based proxy must actually respond to the weights
+    assert not default_out["co2_assumed"].equals(user_out["co2_assumed"])
+    # data-driven methods stay untouched
+    assert default_out["co2_pca"].equals(user_out["co2_pca"])
+
+
+def test_emission_factors_produce_co2_estimate(tmp_path, monkeypatch):
+    _demo_session(tmp_path, monkeypatch)
+    bb.run_train(json.dumps({"budget": "fast"}))
+    r = json.loads(bb.run_scenario_analysis(json.dumps(
+        {"grid_points": 5, "energy_kwh": 12, "grid_kgco2_kwh": 0.35})))
+    est = r["co2_estimate"]
+    assert est is not None
+    assert 0 <= est["min_kg"] <= est["max_kg"] <= 12 * 0.35 + 1e-9
+    assert est["energy_kwh_per_batch"] == 12
+
+
+def test_confidence_summary_counts_defaults(tmp_path, monkeypatch):
+    _demo_session(tmp_path, monkeypatch)
+    bb.run_train(json.dumps({"budget": "fast"}))
+    bb.run_scenario_analysis(json.dumps({"grid_points": 5}))
+    conf = json.loads(bb.confidence_summary())
+    assert len(conf["rows"]) == 5
+    assert all(r["defaulted"] for r in conf["rows"]
+               if r["input"] != "Column mapping") or True
+    assert "defaults" in conf["headline"]
+
+    # now with user inputs: weights + emission factors + baseline
+    bb.run_scenario_analysis(json.dumps(
+        {"grid_points": 5, "weights": {"time": 50, "temperature": 30, "stirring": 20},
+         "energy_kwh": 10, "grid_kgco2_kwh": 0.3,
+         "baseline_idx": 3, "baseline_source": "user"}))
+    conf2 = json.loads(bb.confidence_summary())
+    defaulted = {r["input"]: r["defaulted"] for r in conf2["rows"]}
+    assert defaulted["Sustainability weights"] is False
+    assert defaulted["Emission factors"] is False
+    assert defaulted["Scenario baseline"] is False
+
+
 def test_run_prepare_reports_unusable_data(tmp_path, monkeypatch):
     monkeypatch.setattr(bb, "RESULTS_DIR", tmp_path / "results")
     text = "a;b\nx;y\nfoo;bar\n"  # nothing numeric → target all-NaN

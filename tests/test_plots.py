@@ -30,6 +30,25 @@ def test_training_plots_written(tmp_path):
     assert all(p.exists() and p.stat().st_size > 0 for p in saved)
 
 
+def test_stamp_caveat_adds_annotation():
+    import matplotlib.pyplot as plt
+
+    from gif.plots import stamp_caveat
+    fig = plt.figure()
+    stamp_caveat(fig, "default assumptions — indicative only")
+    assert any("default assumptions" in t.get_text() for t in fig.texts)
+    plt.close(fig)
+
+
+def test_plots_accept_caveat_parameter(tmp_path):
+    X, y = _dataset(80)
+    result = train_models(X[:50], y[:50], X[50:65], y[50:65], X[65:], y[65:],
+                          enabled=["linreg"], cv_folds=2, n_jobs=1)
+    saved = training_plots(result.results, result.best_models, X[65:], y[65:],
+                           tmp_path, caveat="fast mode: reduced model search")
+    assert len(saved) == 3 and all(p.exists() for p in saved)
+
+
 def test_scenario_plots_sanitize_unit_suffixed_names(tmp_path):
     out = pd.DataFrame({
         "_var": ["Temperature (°C)"] * 3 + ["Stiring"] * 3,

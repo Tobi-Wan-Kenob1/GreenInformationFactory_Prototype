@@ -304,8 +304,12 @@ def run_train(options_json: str = "{}") -> str:
     comp.to_csv(RESULTS_DIR / "model_comparison.csv", index=False)
     result.predictions["val"].to_csv(RESULTS_DIR / "predictions_val.csv", index=False)
 
+    caveat = ("fast mode: reduced model search — indicative ranking"
+              if budget_name == "fast"
+              else "browser mode: SVR/MLP excluded from the comparison")
     from gif.plots import training_plots
-    figs = training_plots(result.results, result.best_models, p.X_val, p.y_val, RESULTS_DIR)
+    figs = training_plots(result.results, result.best_models, p.X_val, p.y_val,
+                          RESULTS_DIR, caveat=caveat)
 
     return json.dumps({
         "best": result.best_name,
@@ -315,40 +319,142 @@ def run_train(options_json: str = "{}") -> str:
     })
 
 
+#: Default driver weights of the assumption-based proxy (project defaults).
+DEFAULT_WEIGHTS = {"time": 0.4, "temperature": 0.4, "stirring": 0.2}
+
+
+def _resolve_assumptions(options: dict) -> tuple:
+    """Return ``(assumptions_path, source, weights)`` for the scenario run.
+
+    When the user supplied custom driver weights, a copy of the default
+    assumptions JSON with those weights (normalized to sum 1) is written and
+    used; otherwise the project defaults apply.
+    """
+    default_path = Path(__file__).parent / "metadata" / "sustainability_assumptions_v1.json"
+    raw = options.get("weights")
+    if not raw:
+        return (default_path if default_path.exists() else None,
+                "default", dict(DEFAULT_WEIGHTS))
+
+    total = sum(float(v) for v in raw.values()) or 1.0
+    weights = {k: round(float(v) / total, 4) for k, v in raw.items()}
+    cfg = json.loads(default_path.read_text(encoding="utf-8"))
+    cfg["energy"]["weights"] = weights
+    custom = RESULTS_DIR / "custom_assumptions.json"
+    custom.write_text(json.dumps(cfg, indent=2, ensure_ascii=False), encoding="utf-8")
+    return custom, "user", weights
+
+
 def run_scenario_analysis(options_json: str = "{}") -> str:
-    """One-way scenario sweep + sustainability proxies with the best model."""
+    """One-way scenario sweep + sustainability proxies with the best model.
+
+    Expert inputs (all optional, defaults tracked in provenance):
+      - ``weights``: driver weights for the assumption-based proxy
+      - ``baseline_idx``: which validation row anchors the sweep
+      - ``energy_kwh`` + ``grid_kgco2_kwh``: emission factors that convert the
+        normalized CO₂ proxy range into an indicative kg-CO₂e range
+    """
     options = json.loads(options_json)
     grid_points = int(options.get("grid_points", 15))
+    baseline_idx = int(options.get("baseline_idx", 0) or 0)
+    baseline_source = "user" if options.get("baseline_source") == "user" else "default"
     p, trained = _STATE["prepared"], _STATE["trained"]
+    baseline_idx = max(0, min(baseline_idx, len(p.X_val) - 1))
 
     scenario_vars = detect_scenario_vars(p.X_val.columns)
     if not scenario_vars:
         scenario_vars = list(p.X_val.columns)[:2]  # fall back: first features
 
-    assumptions = Path(__file__).parent / "metadata" / "sustainability_assumptions_v1.json"
+    assumptions_path, assumptions_source, weights = _resolve_assumptions(options)
     out = run_scenarios(
         trained.best_model, p.X_val,
         scenario_vars=scenario_vars,
-        baseline_idx=int(options.get("baseline_idx", 0)),
+        baseline_idx=baseline_idx,
         grid_points=grid_points,
         feature_order=list(p.X_val.columns),
-        assumptions_path=assumptions if assumptions.exists() else None,
+        assumptions_path=assumptions_path,
     )
     out.to_csv(RESULTS_DIR / "scenario_results_oneway.csv", index=False)
+
+    # optional emission factors → indicative absolute CO2 range
+    co2_estimate = None
+    energy_kwh = options.get("energy_kwh")
+    grid_int = options.get("grid_kgco2_kwh")
+    if energy_kwh and grid_int and "co2_assumed" in out.columns:
+        factor = float(energy_kwh) * float(grid_int)
+        co2_estimate = {
+            "min_kg": round(float(out["co2_assumed"].min()) * factor, 2),
+            "max_kg": round(float(out["co2_assumed"].max()) * factor, 2),
+            "energy_kwh_per_batch": float(energy_kwh),
+            "grid_kgco2_per_kwh": float(grid_int),
+        }
+
     _STATE["provenance"]["scenario"] = {
         "variables": scenario_vars, "grid_points": grid_points,
-        "baseline_idx": int(options.get("baseline_idx", 0)),
-        "sustainability_assumptions": "project defaults" if assumptions.exists() else "v1/PCA only",
+        "baseline_idx": baseline_idx, "baseline_source": baseline_source,
+        "assumptions_source": assumptions_source,
+        "assumption_weights": weights,
+        "emission_factors": co2_estimate,
     }
 
+    caveat = ("⚠ generic default assumptions — indicative only, high uncertainty"
+              if assumptions_source == "default"
+              else "user-provided assumptions — proxy values, not measured emissions")
     from gif.plots import scenario_plots
-    figs = scenario_plots(out, trained.best_name, RESULTS_DIR, scenario_vars)
+    figs = scenario_plots(out, trained.best_name, RESULTS_DIR, scenario_vars,
+                          caveat=caveat)
 
     return json.dumps({
         "variables": scenario_vars,
         "rows": int(len(out)),
         "figures": _png_data_urls(figs),
+        "co2_estimate": co2_estimate,
+        "assumptions_source": assumptions_source,
     })
+
+
+def confidence_summary() -> str:
+    """Per-checkpoint provenance for the confidence card (JSON).
+
+    Lists every user-influenceable input with its value and whether it came
+    from the user or a default, plus a headline count.
+    """
+    prov = _STATE.get("provenance", {})
+    scen = prov.get("scenario", {})
+    ef = scen.get("emission_factors")
+    w = scen.get("assumption_weights", DEFAULT_WEIGHTS)
+
+    rows = [
+        {"input": "Column mapping",
+         "value": ", ".join(prov.get("column_mapping", {}).get("features", [])) +
+                  " → " + str(prov.get("column_mapping", {}).get("target", "?")),
+         "source": prov.get("column_mapping_source", "auto"),
+         "defaulted": prov.get("column_mapping_source", "auto") != "user_edited"},
+        {"input": "Compute budget",
+         "value": prov.get("compute_budget", "fast"),
+         "source": "user" if prov.get("compute_budget") == "thorough" else "default",
+         "defaulted": prov.get("compute_budget", "fast") == "fast"},
+        {"input": "Sustainability weights",
+         "value": " / ".join(f"{k} {v:g}" for k, v in w.items()),
+         "source": scen.get("assumptions_source", "default"),
+         "defaulted": scen.get("assumptions_source", "default") == "default"},
+        {"input": "Emission factors",
+         "value": (f"{ef['energy_kwh_per_batch']:g} kWh × {ef['grid_kgco2_per_kwh']:g} kg CO₂/kWh"
+                   if ef else "not provided — proxies stay in relative units (0–1)"),
+         "source": "user" if ef else "default",
+         "defaulted": ef is None},
+        {"input": "Scenario baseline",
+         "value": f"validation row {scen.get('baseline_idx', 0)}",
+         "source": scen.get("baseline_source", "default"),
+         "defaulted": scen.get("baseline_source", "default") == "default"},
+    ]
+    n_def = sum(1 for r in rows if r["defaulted"])
+    headline = (f"{n_def} of {len(rows)} inputs used defaults — treat results as "
+                "indicative." if n_def
+                else "All inputs were provided or confirmed by you.")
+    prov["confidence"] = {"rows": rows, "headline": headline}
+    return json.dumps({"rows": rows, "headline": headline,
+                       "co2_estimate": ef})
 
 
 def make_results_zip() -> str:
