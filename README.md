@@ -349,11 +349,14 @@ straight from GitHub Pages — no installation, no server:
    matched documents, incl. “bridge topics” present in both corpora.
 4. **Scenarios** — combine policies and grants under selected topics into
    named scenarios (persisted in the browser's localStorage).
-5. **Metrics** — potential funding aggregated from grant budgets, plus an
-   **indicative, assumption-based CO₂ mitigation index** driven by the
-   transparent, editable
+5. **Metrics** — potential funding (25–100 % range of the summed call
+   budgets), **indicative cost savings** (avoided ETS/carbon costs, fines,
+   waste, energy and input costs), and an **assumption-based CO₂ mitigation
+   index** — all driven by the transparent, editable
    [`docs/finder/data/co2_assumptions.json`](docs/finder/data/co2_assumptions.json)
-   (ranges after IPCC AR6 WGIII SPM.7); CSV/JSON export.
+   (ranges after IPCC AR6 WGIII SPM.7). Each scenario gets a
+   data-completeness **confidence rating** and an actionable
+   **“how to proceed” recommendation**; CSV/JSON export.
 
 The offline snapshot is refreshed weekly by the `finder-data` workflow
 (`gif finder-data`, keywords in `docs/finder/data/snapshot_config.json`);

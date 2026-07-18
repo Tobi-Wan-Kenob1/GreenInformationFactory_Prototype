@@ -102,23 +102,34 @@
     return { policyTerms, grantTerms, bridge: prunedBridge };
   }
 
-  /* Horizontal bar chart as inline SVG. items: [{label, value}]. */
+  /* Horizontal bar chart as inline SVG. items: [{label, value, lo?, hi?}].
+   * When lo/hi are given, the bar spans to `value` (the midpoint) and an
+   * uncertainty whisker is drawn from lo to hi. */
   function barChartSVG(items, color, totalDocs) {
     if (!items || !items.length) return '<div class="empty">Nothing to chart.</div>';
-    const W = 460, rowH = 26, labelW = 180, pad = 6;
+    const W = 460, rowH = 26, labelW = 180, pad = 6, plotW = W - labelW - 60;
     const H = items.length * rowH + pad * 2;
-    const maxV = Math.max(...items.map(i => i.value)) || 1;
+    const maxV = Math.max(...items.map(i => (i.hi != null ? i.hi : i.value))) || 1;
+    const px = v => Math.max(2, plotW * (v / maxV));
+    const fmt = v => Number.isInteger(v) ? String(v) : v.toFixed(1);
     const rows = items.map((it, i) => {
       const y = pad + i * rowH;
-      const w = Math.max(2, (W - labelW - 60) * (it.value / maxV));
+      const hasRange = it.lo != null && it.hi != null && it.hi > it.lo;
+      const w = px(it.value);
       const label = it.label.length > 26 ? it.label.slice(0, 25) + '…' : it.label;
-      const val = Number.isInteger(it.value) ? it.value : it.value.toFixed(1);
       const pct = totalDocs ? ' (' + Math.round(100 * it.value / totalDocs) + '%)' : '';
+      const valText = hasRange ? `${fmt(it.lo)}–${fmt(it.hi)}` : `${fmt(it.value)}${pct}`;
+      const mid = y + rowH / 2;
+      const whisker = hasRange ? `
+        <line x1="${labelW + px(it.lo)}" y1="${mid}" x2="${labelW + px(it.hi)}" y2="${mid}" stroke="#383535" stroke-width="1.4" opacity="0.65"></line>
+        <line x1="${labelW + px(it.lo)}" y1="${mid - 4}" x2="${labelW + px(it.lo)}" y2="${mid + 4}" stroke="#383535" stroke-width="1.4" opacity="0.65"></line>
+        <line x1="${labelW + px(it.hi)}" y1="${mid - 4}" x2="${labelW + px(it.hi)}" y2="${mid + 4}" stroke="#383535" stroke-width="1.4" opacity="0.65"></line>` : '';
+      const textX = labelW + (hasRange ? px(it.hi) : w) + 6;
       return `<g>
-        <title>${it.label}: ${val}${pct}</title>
-        <text x="${labelW - 8}" y="${y + rowH / 2 + 4}" text-anchor="end" font-size="12" fill="#5c6662">${label}</text>
-        <rect x="${labelW}" y="${y + 5}" width="${w.toFixed(1)}" height="${rowH - 10}" rx="4" fill="${color}" opacity="0.85"></rect>
-        <text x="${labelW + w + 6}" y="${y + rowH / 2 + 4}" font-size="11.5" fill="#8a938f">${val}${pct}</text>
+        <title>${it.label}: ${valText}</title>
+        <text x="${labelW - 8}" y="${mid + 4}" text-anchor="end" font-size="12" fill="#5c6662">${label}</text>
+        <rect x="${labelW}" y="${y + 5}" width="${w.toFixed(1)}" height="${rowH - 10}" rx="4" fill="${color}" opacity="0.85"></rect>${whisker}
+        <text x="${textX}" y="${mid + 4}" font-size="11.5" fill="#8a938f">${valText}</text>
       </g>`;
     }).join('');
     return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Bar chart">${rows}</svg>`;

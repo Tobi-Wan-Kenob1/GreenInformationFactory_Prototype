@@ -152,10 +152,19 @@ button.action:disabled { opacity: .45; cursor: default; }
 .scenario-card ul li { margin: 2px 0; }
 
 /* metrics stage */
+#metrics-table { overflow-x: auto; }
 .metrics-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 10px; }
 .metrics-table th, .metrics-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .metrics-table th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--faint); }
 .metrics-table td.num { font-variant-numeric: tabular-nums; }
+.conf { font-size: 12px; font-weight: 650; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.conf.high { color: var(--teal); background: var(--teal-fill); border: 1px solid var(--teal-mid); }
+.conf.medium { color: var(--amber); background: var(--amber-fill); border: 1px solid var(--amber-mid); }
+.conf.low { color: var(--danger); background: #faf0ee; border: 1px solid #d9b1aa; }
+.reco { margin-top: 18px; border: 1px solid var(--teal-mid); border-radius: 12px; background: var(--teal-fill); padding: 14px 16px; }
+.reco h3 { margin: 0 0 8px; font-size: 14.5px; color: var(--teal); }
+.reco p { font-size: 13.5px; color: var(--ink); margin: 0 0 8px; max-width: 100ch; }
+.reco .reco-overall { border-bottom: 1px solid var(--teal-mid); padding-bottom: 8px; }
 .assumptions { margin-top: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--amber-fill); padding: 14px 16px; }
 .assumptions h3 { margin: 0 0 6px; font-size: 14px; color: var(--amber); }
 .assumptions p { font-size: 13px; color: var(--muted); margin: 0 0 6px; }

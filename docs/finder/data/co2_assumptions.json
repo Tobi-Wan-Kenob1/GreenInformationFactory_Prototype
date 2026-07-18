@@ -1,7 +1,9 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "method": "The CO₂ mitigation metric is an indicative, assumption-based index — not a measured or attributable emission reduction. Each assumption entry maps a mitigation topic to (a) a relative score (0–20) reflecting the topic's global mitigation potential and how directly a policy/grant portfolio can act on it, and (b) the topic's order-of-magnitude global sectoral mitigation potential for 2030 in GtCO₂e per year, following the ranges reported in IPCC AR6 WGIII SPM.7 (options costing < USD 100/tCO₂e). A scenario matches an entry when any of its match terms appears in the scenario's topics or document texts; the scenario's index is the sum of matched scores, and the GtCO₂e/yr column sums the matched global ranges. Use it to compare scenarios relative to each other, never as a forecast of what the scenario itself would mitigate. Edit this file to change scores, ranges or match terms — the UI reads it directly.",
   "basis_note": "Ranges are rounded order-of-magnitude values based on IPCC AR6 WGIII (2022), Figure SPM.7: net global emission-reduction potential in 2030 at costs below USD 100/tCO₂e. Enabling topics (digitalisation, just transition, monitoring) carry a small score and a 0–0 range: they enable mitigation but have no separable sectoral potential.",
+  "method_cost_savings": "Potential cost savings are an indicative €/year range for one typical industrial or regional actor, not a computed business case. Each driver maps regulatory/operational match terms to an order-of-magnitude annual saving: avoided EU ETS allowance and CBAM costs, avoided enforcement penalties for non-compliance, avoided waste-disposal and material costs, energy-bill savings, avoided input costs, and possible carbon-credit revenue. A scenario matches a driver when any of its match terms appears (whole-word) in the scenario's topics or document texts; the scenario's range sums the matched driver ranges. Real savings depend entirely on the actor's size, sector and baseline — treat these figures as a screening signal for which value pools a scenario touches.",
+  "method_uncertainty": "All Stage-5 figures carry deliberate uncertainty bands. Funding: a Horizon call-topic budget usually funds several projects, so the realisable range for one consortium is shown as 25–100 % of the summed published budgets; grants without budget data add unquantified upside. CO₂ and cost savings: shown as the sum of matched low/high assumption ranges. Confidence rating per scenario: starts at 100 and is reduced for missing grant budget data (up to −40), a small document base (<3 docs −30, <6 docs −15), and a CO₂ match consisting mostly of enabling rather than sectoral topics (−15). ≥70 = High, ≥45 = Medium, else Low. This is a data-completeness indicator, not a statistical confidence interval.",
   "assumptions": [
     {
       "topic": "Solar & wind energy",
@@ -93,6 +95,44 @@
       "score": 2,
       "gtco2e_yr": [0.0, 0.0],
       "basis": "Enabling topic: fairness and acceptance condition the feasibility of all other options (IPCC AR6 WGIII ch. 17)."
+    }
+  ],
+  "cost_saving_assumptions": [
+    {
+      "driver": "Avoided EU ETS / CBAM carbon costs",
+      "match_terms": ["emissions trading", "ets", "carbon price", "carbon border", "cbam", "carbon capture", "decarbonisation"],
+      "save_eur_yr": [500000, 10000000],
+      "basis": "EU allowances traded ~€60–90/tCO₂e in recent years; a mid-size industrial site emitting 10–100 ktCO₂e/yr avoids this per tonne abated, and CBAM extends carbon costs to imports."
+    },
+    {
+      "driver": "Avoided non-compliance fines & enforcement penalties",
+      "match_terms": ["waste water", "packaging", "ecodesign", "pollution", "emission", "reporting", "monitoring", "compliance", "directive"],
+      "save_eur_yr": [10000, 1000000],
+      "basis": "National enforcement of EU environmental law (fines, remediation orders) plus penalty regimes in newer acts (e.g. ESPR, CSRD) that can reach percentages of turnover; EU infringement penalties on Member States cascade into national enforcement pressure."
+    },
+    {
+      "driver": "Energy cost savings (efficiency & own renewables)",
+      "match_terms": ["energy efficiency", "renewable energy", "solar", "wind", "heat pump", "renovation", "bioenergy", "biogas"],
+      "save_eur_yr": [100000, 5000000],
+      "basis": "Efficiency measures and on-site renewables typically cut 10–40 % of an industrial actor's energy bill."
+    },
+    {
+      "driver": "Material & waste-disposal savings from circularity",
+      "match_terms": ["circular economy", "recycling", "reuse", "secondary raw", "material efficiency", "waste", "industrial symbiosis", "valorisation"],
+      "save_eur_yr": [50000, 2000000],
+      "basis": "Avoided landfill/incineration gate fees, lower virgin-material purchasing, revenue from valorised residues."
+    },
+    {
+      "driver": "Avoided agricultural input costs",
+      "match_terms": ["nutrient", "fertiliser", "fertilizer", "soil", "carbon farming", "agroecology"],
+      "save_eur_yr": [20000, 500000],
+      "basis": "Nutrient recovery and improved soil management reduce mineral fertiliser purchases and input losses at farm/regional scale."
+    },
+    {
+      "driver": "Carbon-credit & certification revenue",
+      "match_terms": ["carbon removal", "carbon removals", "carbon storage", "certification", "carbon farming"],
+      "save_eur_yr": [50000, 2000000],
+      "basis": "The EU Carbon Removals Certification Framework (Reg. (EU) 2024/3012) opens certified credit revenue for removals, carbon farming and storage in bio-based products."
     }
   ]
 }
