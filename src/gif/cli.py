@@ -151,6 +151,20 @@ def _cmd_literature_stage_release(args) -> int:
     return 0
 
 
+def _cmd_finder_data(args) -> int:
+    from pathlib import Path
+
+    from .finder_data import build_snapshot
+    keywords = [k.strip() for k in args.keywords.split(",") if k.strip()] if args.keywords else None
+    out_dir = Path(args.out) if args.out else None
+    report = build_snapshot(keywords=keywords, out_dir=out_dir, since=args.since)
+    print(f"✅ finder snapshot: {report['grants']} grants, {report['policies']} policies "
+          f"for keywords: {', '.join(report['keywords'])}")
+    for name, path in report["files"].items():
+        print(f"  - {name}: {path}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="gif", description="GreenInformationFactory pipeline CLI")
     sub = p.add_subparsers(dest="command", required=True)
@@ -214,6 +228,17 @@ def build_parser() -> argparse.ArgumentParser:
     lr.add_argument("--production", action="store_true",
                     help="Write use_sandbox=false (default: sandbox — flip only after review)")
     lr.set_defaults(func=_cmd_literature_stage_release)
+
+    # --- Policy & Grant Finder snapshot (docs/finder) ---
+    fd = sub.add_parser("finder-data",
+                        help="Fetch EU policy/grant snapshots for the Policy & Grant Finder")
+    fd.add_argument("--keywords", default=None,
+                    help="Comma-separated keywords (default: docs/finder/data/snapshot_config.json)")
+    fd.add_argument("--out", default=None,
+                    help="Output directory (default: docs/finder/data)")
+    fd.add_argument("--since", default="2015-01-01",
+                    help="Earliest policy document date (YYYY-MM-DD)")
+    fd.set_defaults(func=_cmd_finder_data)
     return p
 
 
