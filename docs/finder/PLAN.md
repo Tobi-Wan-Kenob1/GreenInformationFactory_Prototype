@@ -72,23 +72,23 @@ follows the repo's existing `gif` package conventions and is unit-testable.
 Each step is a self-contained commit on this branch, testable from the Pages
 URL (or locally by opening the HTML file).
 
-- [ ] **Step 1 — UI skeleton** (`docs/finder/index.html`): keyword input,
+- [x] **Step 1 — UI skeleton** (`docs/finder/index.html`): keyword input,
       five-stage layout (Keywords → Search → Topic analysis → Scenarios →
       Metrics), BioFairNet branding, link from the main tour page + README.
-- [ ] **Step 2 — Search integration**: SEDIA grant search + EUR-Lex SPARQL
+- [x] **Step 2 — Search integration**: SEDIA grant search + EUR-Lex SPARQL
       policy search from the browser, with graceful fallback to bundled
       sample data; result cards with title, type, date, budget, link.
-- [ ] **Step 3 — Snapshot pipeline**: `gif finder-data` fetcher + GitHub
+- [x] **Step 3 — Snapshot pipeline**: `gif finder-data` fetcher + GitHub
       Action (scheduled + manual) writing `docs/finder/data/*.json`; app
       auto-fallback wiring; tests for the fetcher's parsing.
-- [ ] **Step 4 — Topic analytics**: client-side TF-IDF / frequency /
+- [x] **Step 4 — Topic analytics**: client-side TF-IDF / frequency /
       co-occurrence across all matched documents, per-corpus and combined
       top-topic charts.
-- [ ] **Step 5 — Scenario builder**: topic selection, policy+grant bundling,
+- [x] **Step 5 — Scenario builder**: topic selection, policy+grant bundling,
       named scenarios, persistence in `localStorage`.
-- [ ] **Step 6 — Metrics & comparison**: funding aggregation, CO2 assumption
+- [x] **Step 6 — Metrics & comparison**: funding aggregation, CO2 assumption
       file + scoring, scenario comparison view, CSV/JSON export.
-- [ ] **Step 7 — Polish & docs**: README section, how-to entry, accessibility
+- [x] **Step 7 — Polish & docs**: README section, how-to entry, accessibility
       pass, CI green.
 
 ## 4. Risks & mitigations
