@@ -1,0 +1,13 @@
+{
+  "note": "Keywords the finder-data GitHub Action uses when refreshing grants.json / policies.json. Edit this list to change what the offline snapshot covers — the live search in the app is unaffected.",
+  "keywords": [
+    "bioeconomy",
+    "circular economy",
+    "biomass",
+    "just transition",
+    "carbon farming",
+    "renewable energy",
+    "carbon capture",
+    "soil"
+  ]
+}

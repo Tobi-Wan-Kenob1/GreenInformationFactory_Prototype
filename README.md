@@ -333,6 +333,32 @@ Two animated, self-contained walkthroughs live at
 A flipbook GIF for project reporting (`docs/assets/biofairnet_tour.gif`) is
 regenerated with `python docs/make_tour_gif.py`.
 
+🔎 Policy & Grant Finder (GitHub Pages, zero install)
+
+**https://tobi-wan-kenob1.github.io/GreenInformationFactory_Prototype/finder/**
+
+A five-stage, browser-only tool ([`docs/finder/`](docs/finder/)) that runs
+straight from GitHub Pages — no installation, no server:
+
+1. **Keywords** — enter search terms (with BioFairNet suggestions).
+2. **Search** — EU policies via the EUR-Lex/CELLAR SPARQL endpoint and
+   Horizon Europe call topics via the EU Funding & Tenders search API,
+   queried live from the browser with automatic fallback to JSON snapshots
+   under `docs/finder/data/`.
+3. **Topic analysis** — client-side document-frequency analytics across all
+   matched documents, incl. “bridge topics” present in both corpora.
+4. **Scenarios** — combine policies and grants under selected topics into
+   named scenarios (persisted in the browser's localStorage).
+5. **Metrics** — potential funding aggregated from grant budgets, plus an
+   **indicative, assumption-based CO₂ mitigation index** driven by the
+   transparent, editable
+   [`docs/finder/data/co2_assumptions.json`](docs/finder/data/co2_assumptions.json)
+   (ranges after IPCC AR6 WGIII SPM.7); CSV/JSON export.
+
+The offline snapshot is refreshed weekly by the `finder-data` workflow
+(`gif finder-data`, keywords in `docs/finder/data/snapshot_config.json`);
+see [`docs/finder/PLAN.md`](docs/finder/PLAN.md) for the design.
+
 🧪 Tests & CI
 
 A `pytest` suite under `tests/` covers data prep, the model registry, training,

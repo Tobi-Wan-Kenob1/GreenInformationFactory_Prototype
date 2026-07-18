@@ -1,0 +1,172 @@
+{
+  "note": "Bundled sample data for offline/demo use. Real EU acts and communications (metadata summarised by the BioFairNet team, not official abstracts). The live tier queries EUR-Lex/CELLAR directly; the finder-data GitHub Action writes a fresher snapshot to policies.json.",
+  "generated": "2026-07-17",
+  "keywords": ["bioeconomy", "circular economy", "biomass", "climate", "just transition"],
+  "items": [
+    {
+      "id": "p:52019DC0640",
+      "kind": "policy",
+      "title": "The European Green Deal (COM/2019/640 final)",
+      "summary": "Communication setting the EU strategy for climate neutrality by 2050: emission reduction, clean energy, circular economy, biodiversity restoration, farm to fork, zero pollution and a just transition that leaves no region behind.",
+      "date": "2019-12-11",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52019DC0640",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
+      "id": "p:32021R1119",
+      "kind": "policy",
+      "title": "European Climate Law — Regulation (EU) 2021/1119",
+      "summary": "Makes the 2050 climate-neutrality objective legally binding, sets the 2030 target of at least 55 % net greenhouse-gas emission reduction and frames carbon removals, adaptation and just transition monitoring.",
+      "date": "2021-06-30",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32021R1119",
+      "budgetEUR": null,
+      "doctype": "REG",
+      "source": "cache"
+    },
+    {
+      "id": "p:52020DC0098",
+      "kind": "policy",
+      "title": "A new Circular Economy Action Plan for a cleaner and more competitive Europe (COM/2020/98 final)",
+      "summary": "Action plan on circular economy: sustainable product design, waste prevention, recycling, secondary raw materials, packaging, plastics, textiles, construction and the bioeconomy as a driver of resource efficiency and CO2 mitigation.",
+      "date": "2020-03-11",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52020DC0098",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
+      "id": "p:52018DC0673",
+      "kind": "policy",
+      "title": "A sustainable Bioeconomy for Europe: strengthening the connection between economy, society and the environment (COM/2018/673 final)",
+      "summary": "Updated EU Bioeconomy Strategy: scaling bio-based sectors, biomass mobilisation within ecological boundaries, biorefineries, rural and coastal development, and deployment of local bioeconomies across carbon-intensive regions.",
+      "date": "2018-10-11",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52018DC0673",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
+      "id": "p:32018L2001",
+      "kind": "policy",
+      "title": "Renewable Energy Directive (EU) 2018/2001 (RED II)",
+      "summary": "Binding EU renewable energy framework: renewable electricity, heating and transport targets, sustainability and greenhouse-gas criteria for biomass and biofuels, guarantees of origin and support schemes.",
+      "date": "2018-12-11",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018L2001",
+      "budgetEUR": null,
+      "doctype": "DIR",
+      "source": "cache"
+    },
+    {
+      "id": "p:32021R1056",
+      "kind": "policy",
+      "title": "Just Transition Fund — Regulation (EU) 2021/1056",
+      "summary": "Establishes the Just Transition Fund supporting territories most affected by the transition to climate neutrality: diversification of carbon-intensive regions, reskilling of workers, clean energy investment and circular economy projects.",
+      "date": "2021-06-24",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32021R1056",
+      "budgetEUR": 17500000000,
+      "doctype": "REG",
+      "source": "cache"
+    },
+    {
+      "id": "p:52020DC0381",
+      "kind": "policy",
+      "title": "A Farm to Fork Strategy for a fair, healthy and environmentally-friendly food system (COM/2020/381 final)",
+      "summary": "Strategy for sustainable food systems: pesticide and nutrient reduction, organic farming, sustainable livestock, food waste, carbon farming and bio-based fertilisers linking agriculture to climate mitigation.",
+      "date": "2020-05-20",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52020DC0381",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
+      "id": "p:52020DC0380",
+      "kind": "policy",
+      "title": "EU Biodiversity Strategy for 2030 — Bringing nature back into our lives (COM/2020/380 final)",
+      "summary": "Protects and restores ecosystems: protected areas, forest and soil restoration, pollinators, nature-based solutions and biodiversity-friendly bioeconomy value chains.",
+      "date": "2020-05-20",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52020DC0380",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
+      "id": "p:32018L0851",
+      "kind": "policy",
+      "title": "Directive (EU) 2018/851 amending the Waste Framework Directive",
+      "summary": "Strengthens waste hierarchy and recycling targets, extended producer responsibility, separate collection of bio-waste and measures for waste prevention and secondary raw materials in a circular economy.",
+      "date": "2018-05-30",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018L0851",
+      "budgetEUR": null,
+      "doctype": "DIR",
+      "source": "cache"
+    },
+    {
+      "id": "p:52021DC0572",
+      "kind": "policy",
+      "title": "New EU Forest Strategy for 2030 (COM/2021/572 final)",
+      "summary": "Forest protection, restoration and sustainable management: afforestation, carbon sinks, cascading use of woody biomass, forest-based bioeconomy and payments for ecosystem services.",
+      "date": "2021-07-16",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52021DC0572",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
+      "id": "p:32023R0956",
+      "kind": "policy",
+      "title": "Carbon Border Adjustment Mechanism — Regulation (EU) 2023/956",
+      "summary": "Puts a carbon price on imports of carbon-intensive goods (cement, iron and steel, aluminium, fertilisers, electricity, hydrogen) to prevent carbon leakage and support global emission reduction.",
+      "date": "2023-05-10",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0956",
+      "budgetEUR": null,
+      "doctype": "REG",
+      "source": "cache"
+    },
+    {
+      "id": "p:32024R1781",
+      "kind": "policy",
+      "title": "Ecodesign for Sustainable Products Regulation (EU) 2024/1781",
+      "summary": "Framework for sustainable product requirements: durability, reparability, recycled content, carbon and environmental footprints, digital product passports supporting circular economy business models.",
+      "date": "2024-06-13",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781",
+      "budgetEUR": null,
+      "doctype": "REG",
+      "source": "cache"
+    },
+    {
+      "id": "p:32024R3012",
+      "kind": "policy",
+      "title": "Union certification framework for permanent carbon removals, carbon farming and carbon storage in products — Regulation (EU) 2024/3012",
+      "summary": "First EU-wide certification of carbon removals: permanent storage, carbon farming on agricultural soils and forests, and carbon storage in long-lived bio-based products, with monitoring and liability rules.",
+      "date": "2024-11-27",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R3012",
+      "budgetEUR": null,
+      "doctype": "REG",
+      "source": "cache"
+    },
+    {
+      "id": "p:32024R1735",
+      "kind": "policy",
+      "title": "Net-Zero Industry Act — Regulation (EU) 2024/1735",
+      "summary": "Scales EU manufacturing of net-zero technologies: solar, wind, batteries, heat pumps, electrolysers, carbon capture and storage, with permitting acceleration, net-zero valleys and skills academies.",
+      "date": "2024-06-13",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1735",
+      "budgetEUR": null,
+      "doctype": "REG",
+      "source": "cache"
+    },
+    {
+      "id": "p:52023PC0416",
+      "kind": "policy",
+      "title": "Proposal for a Directive on Soil Monitoring and Resilience (COM/2023/416 final)",
+      "summary": "Establishes soil health monitoring across the EU, sustainable soil management principles and remediation of contaminated sites, linking soil carbon to climate mitigation and food security.",
+      "date": "2023-07-05",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52023PC0416",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    }
+  ]
+}

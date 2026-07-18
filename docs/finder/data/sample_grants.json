@@ -1,0 +1,161 @@
+{
+  "note": "Bundled sample data for offline/demo use: representative Horizon Europe call topics (titles and budgets are illustrative of typical Cluster 5/6 and CBE JU calls, not live records). The live tier queries the EU Funding & Tenders search API; the finder-data GitHub Action writes a fresher snapshot to grants.json.",
+  "generated": "2026-07-17",
+  "keywords": ["bioeconomy", "circular economy", "biomass", "climate", "just transition"],
+  "items": [
+    {
+      "id": "g:HORIZON-CL6-2025-CIRCBIO-01-1",
+      "kind": "grant",
+      "title": "Circular solutions for regional bio-based systems (sample topic)",
+      "summary": "Innovation actions deploying circular bioeconomy value chains at regional scale: biomass residue valorisation, biorefinery side streams, industrial symbiosis and circular business models reducing greenhouse-gas emissions in carbon-intensive regions.",
+      "date": "2025-09-15",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=CIRCBIO",
+      "budgetEUR": 12000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL6-2025-CIRCBIO-02-3",
+      "kind": "grant",
+      "title": "Bio-based materials replacing fossil and carbon-intensive products (sample topic)",
+      "summary": "Research and innovation on bio-based polymers, construction materials and packaging with lower carbon footprint, including life-cycle assessment, recyclability and safe-and-sustainable-by-design criteria.",
+      "date": "2025-10-02",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=bio-based",
+      "budgetEUR": 9000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-JU-CBE-2025-IA-04",
+      "kind": "grant",
+      "title": "Circular Bio-based Europe JU: biorefinery demonstration at flagship scale (sample topic)",
+      "summary": "Flagship innovation actions demonstrating integrated biorefineries converting sustainable biomass and biowaste into bio-based chemicals, materials and fuels, with strong circular economy and rural development impact.",
+      "date": "2025-04-22",
+      "url": "https://www.cbe.europa.eu/",
+      "budgetEUR": 20000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL6-2025-CLIMATE-02-2",
+      "kind": "grant",
+      "title": "Carbon farming and soil carbon sequestration in agricultural landscapes (sample topic)",
+      "summary": "Actions improving monitoring, reporting and verification of soil carbon, incentives for carbon farming, agroecology and nutrient management contributing to climate mitigation and biodiversity.",
+      "date": "2025-09-15",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=carbon%20farming",
+      "budgetEUR": 10000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-MISS-2025-SOIL-01-5",
+      "kind": "grant",
+      "title": "EU Soil Mission: living labs for soil health in carbon-intensive regions (sample topic)",
+      "summary": "Living labs and lighthouses restoring soil health on degraded and post-mining land, combining soil monitoring, bioremediation, land-use planning and stakeholder co-creation for a just transition.",
+      "date": "2025-05-08",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=soil%20mission",
+      "budgetEUR": 12000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL5-2025-D3-02-9",
+      "kind": "grant",
+      "title": "Renewable energy valleys coupling wind, solar and bioenergy (sample topic)",
+      "summary": "Demonstration of renewable energy communities integrating wind, photovoltaics, sustainable bioenergy and storage, with digital energy management and measurable CO2 emission reduction.",
+      "date": "2025-01-21",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=renewable%20energy",
+      "budgetEUR": 15000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL5-2025-D1-01-4",
+      "kind": "grant",
+      "title": "Industrial carbon capture, utilisation and storage of biogenic CO2 (sample topic)",
+      "summary": "Piloting capture and utilisation of biogenic carbon dioxide from biorefineries and bioenergy plants (BECCS/BECCU), permanent storage and conversion into carbon-negative products.",
+      "date": "2025-02-18",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=carbon%20capture",
+      "budgetEUR": 18000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL6-2025-ZEROPOLLUTION-01-2",
+      "kind": "grant",
+      "title": "Zero-pollution nutrient recovery from waste water and bio-waste (sample topic)",
+      "summary": "Circular nutrient recovery: recycling nitrogen and phosphorus from waste water, manure and bio-waste into bio-based fertilisers, cutting pollution and fossil fertiliser dependence.",
+      "date": "2025-09-15",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=nutrient%20recovery",
+      "budgetEUR": 8000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL6-2025-COMMUNITIES-02-1",
+      "kind": "grant",
+      "title": "Just transition and citizen engagement in rural bioeconomy communities (sample topic)",
+      "summary": "Research and innovation on fair and inclusive green transitions: stakeholder co-creation, social innovation, skills and governance enabling rural and carbon-intensive communities to benefit from the bioeconomy.",
+      "date": "2025-09-15",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=just%20transition",
+      "budgetEUR": 7000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL4-2025-TWIN-01-6",
+      "kind": "grant",
+      "title": "Digital product passports and data spaces for circular value chains (sample topic)",
+      "summary": "Twin green and digital transition: interoperable data spaces, digital product passports and AI-supported material tracking enabling circular economy decisions across manufacturing value chains.",
+      "date": "2025-04-10",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=digital%20product%20passport",
+      "budgetEUR": 11000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:LIFE-2025-SAP-CLIMA-CCM-02",
+      "kind": "grant",
+      "title": "LIFE Climate Change Mitigation: land use, agriculture and forestry (sample topic)",
+      "summary": "LIFE standard action projects reducing greenhouse-gas emissions in land use and agriculture: peatland rewetting, agroforestry, sustainable forest management and carbon sink enhancement.",
+      "date": "2025-04-24",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=LIFE%20climate",
+      "budgetEUR": 6000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL6-2025-BIODIV-01-9",
+      "kind": "grant",
+      "title": "Nature-based solutions for biodiversity and climate resilience (sample topic)",
+      "summary": "Demonstrating nature-based solutions that restore ecosystems and biodiversity while delivering climate adaptation and mitigation co-benefits in urban and rural landscapes.",
+      "date": "2025-09-15",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=nature-based%20solutions",
+      "budgetEUR": 13000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-WIDERA-2025-ACCESS-03-2",
+      "kind": "grant",
+      "title": "Widening participation: twinning for bioeconomy research capacity (sample topic)",
+      "summary": "Twinning actions strengthening research capacity of widening countries in sustainable bioeconomy, FAIR data infrastructures and open science for sustainability assessment.",
+      "date": "2025-03-06",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=twinning",
+      "budgetEUR": 4500000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:HORIZON-CL5-2025-D2-02-3",
+      "kind": "grant",
+      "title": "Sustainable biofuels and renewable fuels of non-biological origin for transport (sample topic)",
+      "summary": "Advanced biofuels from residual biomass and renewable hydrogen-based fuels for aviation and shipping, with sustainability certification and greenhouse-gas life-cycle accounting.",
+      "date": "2025-02-18",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=biofuels",
+      "budgetEUR": 14000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    }
+  ]
+}
