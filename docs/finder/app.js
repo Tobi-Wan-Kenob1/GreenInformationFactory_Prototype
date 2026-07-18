@@ -248,52 +248,159 @@
     const hasTerm = t => new RegExp('\\b' + t.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(text);
     const matched = (co2.assumptions || []).filter(a => a.match_terms.some(hasTerm));
     const co2Index = matched.reduce((a, m) => a + m.score, 0);
+    const sectoral = matched.filter(m => m.gtco2e_yr[1] > 0);
+    const savers = (co2.cost_saving_assumptions || []).filter(a => a.match_terms.some(hasTerm));
+
+    // Confidence rating (data completeness, not a statistical CI) — the exact
+    // deductions are documented in co2_assumptions.json → method_uncertainty.
+    let conf = 100;
+    const missingShare = grants.length ? (grants.length - known.length) / grants.length : 1;
+    conf -= Math.round(40 * missingShare);
+    if (sc.docs.length < 3) conf -= 30; else if (sc.docs.length < 6) conf -= 15;
+    if (matched.length && sectoral.length / matched.length < 0.5) conf -= 15;
+    conf = Math.max(5, conf);
+
     return {
       name: sc.name,
       nPolicies: sc.docs.filter(d => d.kind === 'policy').length,
       nGrants: grants.length,
       fundingEUR: funding,
+      // a call-topic budget usually funds several projects → 25–100 % band
+      fundingLowEUR: Math.round(funding * 0.25),
+      fundingHighEUR: funding,
       fundingUnknown: grants.length - known.length,
+      saveRangeEUR: [
+        savers.reduce((a, s) => a + s.save_eur_yr[0], 0),
+        savers.reduce((a, s) => a + s.save_eur_yr[1], 0)
+      ],
+      matchedSavers: savers.map(s => s.driver),
       co2Index,
       co2RangeGt: [
         matched.reduce((a, m) => a + m.gtco2e_yr[0], 0),
         matched.reduce((a, m) => a + m.gtco2e_yr[1], 0)
       ],
-      matchedTopics: matched.map(m => m.topic)
+      matchedTopics: matched.map(m => m.topic),
+      sectoralTopics: sectoral.map(m => m.topic),
+      confidence: conf,
+      confidenceLabel: conf >= 70 ? 'High' : conf >= 45 ? 'Medium' : 'Low'
     };
+  }
+
+  const fmtM = eur => (eur / 1e6).toLocaleString('en', { maximumFractionDigits: 1 });
+
+  /* One actionable "how to proceed" sentence block per scenario, plus an
+   * overall pick. Deterministic text built from the computed metrics. */
+  function recommendation(m) {
+    const parts = [];
+    if (m.nGrants > 0) {
+      parts.push(`To realise the funding potential, prepare consortium proposals for the ` +
+        `${m.nGrants} Horizon topic${m.nGrants > 1 ? 's' : ''} in this scenario — realistically ` +
+        `€${fmtM(m.fundingLowEUR)}–${fmtM(m.fundingHighEUR)} M of the published call budgets` +
+        (m.fundingUnknown ? ` (plus ${m.fundingUnknown} topic${m.fundingUnknown > 1 ? 's' : ''} without budget data as upside)` : '') + `.`);
+    } else {
+      parts.push(`This scenario contains no grants yet — add matching Horizon topics before pursuing it.`);
+    }
+    if (m.nPolicies > 0) {
+      parts.push(`Anchor the work explicitly in the ${m.nPolicies} matching ` +
+        `polic${m.nPolicies > 1 ? 'ies' : 'y'} to demonstrate EU policy alignment in the proposal.`);
+    }
+    if (m.sectoralTopics.length) {
+      parts.push(`The CO₂ mitigation potential is carried by ${m.sectoralTopics.slice(0, 3).join(', ')}` +
+        ` — make ${m.sectoralTopics.length > 1 ? 'these' : 'this'} the technical core of the work plan.`);
+    }
+    if (m.matchedSavers.length) {
+      parts.push(`Cost savings would come mainly from ${m.matchedSavers.slice(0, 3).join('; ').toLowerCase()}` +
+        ` (indicative €${fmtM(m.saveRangeEUR[0])}–${fmtM(m.saveRangeEUR[1])} M/yr for a typical actor)` +
+        ` — quantify these with site-specific data before any investment decision.`);
+    }
+    parts.push(`Confidence: ${m.confidenceLabel} (${m.confidence}/100)` +
+      (m.confidenceLabel !== 'High'
+        ? ` — firm up by ${m.fundingUnknown ? 'adding budget data for the open topics' : 'including more matching documents'} and re-running the analysis.`
+        : `.`));
+    return parts.join(' ');
+  }
+
+  function bestScenarioIndex(M) {
+    if (M.length < 2) return 0;
+    // rank-sum over funding mid, CO2 index and savings mid (lower rank = better)
+    const rank = key => {
+      const order = [...M.keys()].sort((a, b) => key(M[b]) - key(M[a]));
+      const r = new Array(M.length);
+      order.forEach((idx, pos) => { r[idx] = pos; });
+      return r;
+    };
+    const rf = rank(m => (m.fundingLowEUR + m.fundingHighEUR) / 2);
+    const rc = rank(m => m.co2Index);
+    const rs = rank(m => (m.saveRangeEUR[0] + m.saveRangeEUR[1]) / 2);
+    let best = 0, bestSum = Infinity;
+    M.forEach((m, i) => {
+      const s = rf[i] + rc[i] + rs[i];
+      if (s < bestSum) { bestSum = s; best = i; }
+    });
+    return best;
   }
 
   function renderMetrics() {
     const M = S.metrics;
     $('metrics-chart').innerHTML =
-      '<div class="charts"><div class="chart"><h3>Potential funding (M€, known budgets)</h3>' +
-      FinderAnalytics.barChartSVG(M.map(m => ({ label: m.name, value: m.fundingEUR / 1e6 })), '#B67F27') +
+      '<div class="charts"><div class="chart"><h3>Potential funding (M€, 25–100 % of call budgets)</h3>' +
+      FinderAnalytics.barChartSVG(M.map(m => ({
+        label: m.name, value: (m.fundingLowEUR + m.fundingHighEUR) / 2e6,
+        lo: m.fundingLowEUR / 1e6, hi: m.fundingHighEUR / 1e6 })), '#B67F27') +
+      '</div><div class="chart"><h3>Potential cost savings (M€/yr, indicative)</h3>' +
+      FinderAnalytics.barChartSVG(M.map(m => ({
+        label: m.name, value: (m.saveRangeEUR[0] + m.saveRangeEUR[1]) / 2e6,
+        lo: m.saveRangeEUR[0] / 1e6, hi: m.saveRangeEUR[1] / 1e6 })), '#3D7A75') +
       '</div><div class="chart"><h3>CO<sub>2</sub> mitigation index (indicative)</h3>' +
       FinderAnalytics.barChartSVG(M.map(m => ({ label: m.name, value: m.co2Index })), '#0A6B65') +
       '</div></div>';
     $('metrics-table').innerHTML = `<table class="metrics-table"><thead><tr>
-      <th>Scenario</th><th>Policies</th><th>Grants</th><th>Funding (known)</th>
-      <th>CO₂ index</th><th>Global sectoral potential*</th><th>Matched assumption topics</th>
+      <th>Scenario</th><th>Policies</th><th>Grants</th><th>Funding potential</th>
+      <th>Cost savings /yr</th><th>CO₂ index</th><th>Global sectoral potential*</th><th>Confidence</th>
       </tr></thead><tbody>` + M.map(m => `<tr>
         <td>${esc(m.name)}</td>
         <td class="num">${m.nPolicies}</td>
         <td class="num">${m.nGrants}</td>
-        <td class="num">${(m.fundingEUR / 1e6).toLocaleString('en', { maximumFractionDigits: 1 })} M€${m.fundingUnknown ? ` <small>(+${m.fundingUnknown} without budget data)</small>` : ''}</td>
+        <td class="num">${fmtM(m.fundingLowEUR)}–${fmtM(m.fundingHighEUR)} M€${m.fundingUnknown ? ` <small>(+${m.fundingUnknown} without budget data)</small>` : ''}</td>
+        <td class="num">${fmtM(m.saveRangeEUR[0])}–${fmtM(m.saveRangeEUR[1])} M€</td>
         <td class="num">${m.co2Index}</td>
         <td class="num">${m.co2RangeGt[0].toFixed(1)}–${m.co2RangeGt[1].toFixed(1)} GtCO₂e/yr</td>
-        <td>${m.matchedTopics.map(esc).join(', ') || '—'}</td>
+        <td><span class="conf ${m.confidenceLabel.toLowerCase()}" title="Data-completeness rating, see assumptions box">${m.confidenceLabel} · ${m.confidence}</span></td>
       </tr>`).join('') + '</tbody></table>';
+    renderRecommendations(M);
+  }
+
+  function renderRecommendations(M) {
+    if (!M.length) { $('recommendations').innerHTML = ''; return; }
+    const best = bestScenarioIndex(M);
+    const overall = M.length > 1
+      ? `<p class="reco-overall"><strong>Where to start:</strong> “${esc(M[best].name)}” ranks best across
+         funding, CO₂ potential and cost savings — pursue it first, and keep the others as fallback
+         options for later calls.</p>` : '';
+    $('recommendations').innerHTML = `<div class="reco">
+      <h3>How to proceed</h3>${overall}
+      ${M.map((m, i) => `<p><strong>${esc(m.name)}${i === best && M.length > 1 ? ' ★' : ''}:</strong>
+        ${esc(recommendation(m))}</p>`).join('')}
+    </div>`;
   }
 
   function renderAssumptions(co2) {
-    $('assumptions-box').innerHTML = `<h3>How the CO₂ metric is computed — read this first</h3>
-      <p>${esc(co2.method || '')}</p>
-      <details><summary>Show all assumption entries (${(co2.assumptions || []).length}) — edit
+    $('assumptions-box').innerHTML = `<h3>How these figures are computed — read this first</h3>
+      <p><strong>Uncertainty.</strong> ${esc(co2.method_uncertainty || '')}</p>
+      <p><strong>CO₂ index.</strong> ${esc(co2.method || '')}</p>
+      <p><strong>Cost savings.</strong> ${esc(co2.method_cost_savings || '')}</p>
+      <details><summary>Show CO₂ assumption entries (${(co2.assumptions || []).length}) — edit
       <code>docs/finder/data/co2_assumptions.json</code> to change them</summary>
       <table><thead><tr><th>Topic</th><th>Match terms</th><th>Score</th><th>GtCO₂e/yr (global, 2030)</th><th>Basis</th></tr></thead>
       <tbody>${(co2.assumptions || []).map(a => `<tr>
         <td>${esc(a.topic)}</td><td>${a.match_terms.map(esc).join(', ')}</td>
         <td>${a.score}</td><td>${a.gtco2e_yr[0]}–${a.gtco2e_yr[1]}</td><td>${esc(a.basis)}</td>
+      </tr>`).join('')}</tbody></table></details>
+      <details><summary>Show cost-saving drivers (${(co2.cost_saving_assumptions || []).length})</summary>
+      <table><thead><tr><th>Driver</th><th>Match terms</th><th>€/yr (typical actor)</th><th>Basis</th></tr></thead>
+      <tbody>${(co2.cost_saving_assumptions || []).map(a => `<tr>
+        <td>${esc(a.driver)}</td><td>${a.match_terms.map(esc).join(', ')}</td>
+        <td>${fmtM(a.save_eur_yr[0])}–${fmtM(a.save_eur_yr[1])} M</td><td>${esc(a.basis)}</td>
       </tr>`).join('')}</tbody></table></details>`;
   }
 
@@ -325,11 +432,16 @@
       JSON.stringify({ generated: new Date().toISOString(), keywords: S.keywords,
                        scenarios: S.scenarios, metrics: S.metrics }, null, 2)));
   $('export-csv').addEventListener('click', () => {
-    const head = 'scenario,policies,grants,funding_eur_known,grants_without_budget,co2_index,co2_gt_low,co2_gt_high,matched_topics';
+    const head = 'scenario,policies,grants,funding_eur_low,funding_eur_high,grants_without_budget,' +
+      'cost_saving_eur_yr_low,cost_saving_eur_yr_high,co2_index,co2_gt_low,co2_gt_high,' +
+      'confidence,confidence_label,matched_topics,matched_saving_drivers';
     const rows = S.metrics.map(m => [
-      '"' + m.name.replace(/"/g, '""') + '"', m.nPolicies, m.nGrants, m.fundingEUR,
-      m.fundingUnknown, m.co2Index, m.co2RangeGt[0], m.co2RangeGt[1],
-      '"' + m.matchedTopics.join('; ') + '"'
+      '"' + m.name.replace(/"/g, '""') + '"', m.nPolicies, m.nGrants,
+      m.fundingLowEUR, m.fundingHighEUR, m.fundingUnknown,
+      m.saveRangeEUR[0], m.saveRangeEUR[1], m.co2Index, m.co2RangeGt[0], m.co2RangeGt[1],
+      m.confidence, m.confidenceLabel,
+      '"' + m.matchedTopics.join('; ') + '"',
+      '"' + m.matchedSavers.join('; ') + '"'
     ].join(','));
     download('finder_metrics.csv', 'text/csv', [head].concat(rows).join('\n'));
   });
