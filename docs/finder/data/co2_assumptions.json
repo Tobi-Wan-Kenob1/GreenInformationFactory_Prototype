@@ -1,0 +1,98 @@
+{
+  "version": "1.0",
+  "method": "The CO₂ mitigation metric is an indicative, assumption-based index — not a measured or attributable emission reduction. Each assumption entry maps a mitigation topic to (a) a relative score (0–20) reflecting the topic's global mitigation potential and how directly a policy/grant portfolio can act on it, and (b) the topic's order-of-magnitude global sectoral mitigation potential for 2030 in GtCO₂e per year, following the ranges reported in IPCC AR6 WGIII SPM.7 (options costing < USD 100/tCO₂e). A scenario matches an entry when any of its match terms appears in the scenario's topics or document texts; the scenario's index is the sum of matched scores, and the GtCO₂e/yr column sums the matched global ranges. Use it to compare scenarios relative to each other, never as a forecast of what the scenario itself would mitigate. Edit this file to change scores, ranges or match terms — the UI reads it directly.",
+  "basis_note": "Ranges are rounded order-of-magnitude values based on IPCC AR6 WGIII (2022), Figure SPM.7: net global emission-reduction potential in 2030 at costs below USD 100/tCO₂e. Enabling topics (digitalisation, just transition, monitoring) carry a small score and a 0–0 range: they enable mitigation but have no separable sectoral potential.",
+  "assumptions": [
+    {
+      "topic": "Solar & wind energy",
+      "match_terms": ["solar", "photovoltaic", "wind energy", "wind", "renewable energy", "renewables"],
+      "score": 20,
+      "gtco2e_yr": [4.0, 11.0],
+      "basis": "IPCC AR6 SPM.7: solar ~2–7, wind ~2.1–5.6 GtCO₂e/yr combined range, rounded."
+    },
+    {
+      "topic": "Bioenergy & biofuels",
+      "match_terms": ["bioenergy", "biofuel", "biofuels", "biogas", "biomass energy"],
+      "score": 8,
+      "gtco2e_yr": [0.5, 2.0],
+      "basis": "IPCC AR6 SPM.7 bioelectricity and biofuels, sustainability-constrained."
+    },
+    {
+      "topic": "Forests & land restoration",
+      "match_terms": ["forest", "forestry", "afforestation", "reforestation", "deforestation", "ecosystem restoration", "nature-based"],
+      "score": 16,
+      "gtco2e_yr": [3.0, 7.0],
+      "basis": "IPCC AR6 SPM.7: reduced conversion + restoration of forests and other ecosystems."
+    },
+    {
+      "topic": "Agriculture & soil carbon",
+      "match_terms": ["soil", "carbon farming", "agriculture", "agroecology", "agroforestry", "nutrient", "peatland"],
+      "score": 14,
+      "gtco2e_yr": [1.8, 4.1],
+      "basis": "IPCC AR6 SPM.7: soil carbon sequestration in croplands/grasslands, agroforestry, nutrient and rice management."
+    },
+    {
+      "topic": "Circular economy & material efficiency",
+      "match_terms": ["circular economy", "circular", "recycling", "recyclability", "material efficiency", "reuse", "secondary raw"],
+      "score": 10,
+      "gtco2e_yr": [0.5, 1.6],
+      "basis": "IPCC AR6 SPM.7 industry: material efficiency, enhanced recycling and circular material flows."
+    },
+    {
+      "topic": "Bio-based products replacing fossil materials",
+      "match_terms": ["bio-based", "biorefinery", "bioeconomy", "biomass", "bioplastic"],
+      "score": 8,
+      "gtco2e_yr": [0.3, 1.0],
+      "basis": "Substitution of fossil/carbon-intensive products and carbon storage in long-lived bio-based products; conservative literature-based range."
+    },
+    {
+      "topic": "Carbon capture, removal & storage",
+      "match_terms": ["carbon capture", "ccus", "ccs", "beccs", "carbon removal", "carbon removals", "direct air capture", "carbon storage"],
+      "score": 8,
+      "gtco2e_yr": [0.3, 2.0],
+      "basis": "IPCC AR6 SPM.7: CCS/BECCS/DACCS deployment potentials for 2030 are modest but scale later."
+    },
+    {
+      "topic": "Energy & buildings efficiency",
+      "match_terms": ["energy efficiency", "efficient", "buildings", "renovation", "heat pump"],
+      "score": 12,
+      "gtco2e_yr": [1.5, 4.0],
+      "basis": "IPCC AR6 SPM.7: demand-side efficiency in buildings and industry."
+    },
+    {
+      "topic": "Low-carbon transport & fuels",
+      "match_terms": ["transport", "mobility", "electric vehicle", "aviation", "shipping", "fuel"],
+      "score": 10,
+      "gtco2e_yr": [1.0, 3.7],
+      "basis": "IPCC AR6 SPM.7: fuel-efficient and electric vehicles, shift of transport modes, low-emission fuels."
+    },
+    {
+      "topic": "Waste & methane reduction",
+      "match_terms": ["waste", "bio-waste", "landfill", "methane", "waste water"],
+      "score": 6,
+      "gtco2e_yr": [0.3, 1.0],
+      "basis": "IPCC AR6 SPM.7: reduced landfill methane, waste prevention and valorisation."
+    },
+    {
+      "topic": "Hydrogen & industrial decarbonisation",
+      "match_terms": ["hydrogen", "electrolyser", "steel", "cement", "industrial decarbonisation"],
+      "score": 6,
+      "gtco2e_yr": [0.2, 1.0],
+      "basis": "IPCC AR6 SPM.7: fuel switching and hydrogen in industry, modest by 2030."
+    },
+    {
+      "topic": "Enablers: digitalisation, data & monitoring",
+      "match_terms": ["digital", "data space", "monitoring", "artificial intelligence", "fair data"],
+      "score": 2,
+      "gtco2e_yr": [0.0, 0.0],
+      "basis": "Enabling topic: supports mitigation decisions (MRV, product passports) without separable sectoral potential."
+    },
+    {
+      "topic": "Enablers: just transition & social innovation",
+      "match_terms": ["just transition", "reskilling", "citizen engagement", "stakeholder", "social innovation"],
+      "score": 2,
+      "gtco2e_yr": [0.0, 0.0],
+      "basis": "Enabling topic: fairness and acceptance condition the feasibility of all other options (IPCC AR6 WGIII ch. 17)."
+    }
+  ]
+}

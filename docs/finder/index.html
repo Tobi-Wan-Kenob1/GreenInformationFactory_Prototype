@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Policy &amp; Grant Finder | GreenInformationFactory · BioFairNet</title>
+<meta name="description" content="Keyword-driven finder for EU policies (EUR-Lex) and Horizon Europe grants: search, topic analysis, scenario building and indicative CO2/funding metrics. Runs entirely in the browser — no installation.">
+<link rel="stylesheet" href="finder.css">
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <img src="../assets/biofairnet_logo.png" alt="BioFairNet project logo">
+    <div>
+      <div class="eyebrow">BioFairNet · Horizon Europe · GreenInformationFactory</div>
+      <h1>Policy &amp; Grant Finder</h1>
+    </div>
+  </div>
+  <p class="sub">Enter keywords, find matching EU policies and Horizon Europe funding, see which
+  topics dominate across all documents, and combine policies with grants into scenarios with
+  indicative funding and CO<sub>2</sub>-mitigation metrics. Everything runs in your browser.</p>
+  <div class="badges">
+    <a class="badge" href="../index.html"><strong>←</strong> Guided tour</a>
+    <a class="badge" href="https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype"><strong>GitHub</strong> source</a>
+    <a class="badge" href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home"><strong>Data</strong> EU Funding &amp; Tenders</a>
+    <a class="badge" href="https://eur-lex.europa.eu/"><strong>Data</strong> EUR-Lex</a>
+  </div>
+</header>
+
+<nav class="stepper" aria-label="Workflow stages">
+  <button class="step on" data-stage="1"><span class="n">1</span> Keywords</button>
+  <button class="step" data-stage="2"><span class="n">2</span> Search</button>
+  <button class="step" data-stage="3"><span class="n">3</span> Topic analysis</button>
+  <button class="step" data-stage="4"><span class="n">4</span> Scenarios</button>
+  <button class="step" data-stage="5"><span class="n">5</span> Metrics</button>
+</nav>
+
+<!-- ─────────── Stage 1 · Keywords ─────────── -->
+<section class="stage-panel" id="stage-1">
+  <h2>1 · Enter keywords</h2>
+  <p class="lead">Add one keyword or phrase at a time (press <kbd>Enter</kbd>). The search looks for
+  each keyword in EU policy documents and Horizon Europe call topics.</p>
+  <div class="kwrow">
+    <input id="kw-input" type="text" placeholder="e.g. circular economy, biomass, just transition …"
+           autocomplete="off" aria-label="Keyword input">
+    <button class="action" id="kw-add">Add keyword</button>
+  </div>
+  <div class="chips" id="kw-chips" aria-live="polite"></div>
+  <div class="suggest">
+    <div class="lbl">Suggestions from the BioFairNet context</div>
+    <div class="opts" id="kw-suggest"></div>
+  </div>
+  <div class="actions">
+    <button class="action primary" id="go-search" disabled>Search policies &amp; grants →</button>
+  </div>
+</section>
+
+<!-- ─────────── Stage 2 · Search ─────────── -->
+<section class="stage-panel hidden" id="stage-2">
+  <h2>2 · Matching policies &amp; grants</h2>
+  <p class="lead">Live results come straight from the EUR-Lex/CELLAR SPARQL endpoint and the EU
+  Funding &amp; Tenders search API. If a live source is unreachable from your browser, the finder
+  automatically falls back to the bundled snapshot data.</p>
+  <div class="srcstatus" id="src-status"></div>
+  <div class="cols">
+    <div class="col">
+      <h3><span class="tag policy">Policy</span> EU policies (EUR-Lex) <span class="cnt" id="cnt-policies">0</span></h3>
+      <div class="doclist" id="list-policies"><div class="empty">No search yet.</div></div>
+    </div>
+    <div class="col">
+      <h3><span class="tag grant">Grant</span> Horizon Europe grants <span class="cnt" id="cnt-grants">0</span></h3>
+      <div class="doclist" id="list-grants"><div class="empty">No search yet.</div></div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="action" id="back-1">← Keywords</button>
+    <button class="action" id="sel-all">Select all</button>
+    <button class="action" id="sel-none">Select none</button>
+    <button class="action primary" id="go-topics" disabled>Analyse topics →</button>
+  </div>
+</section>
+
+<!-- ─────────── Stage 3 · Topic analysis ─────────── -->
+<section class="stage-panel hidden" id="stage-3">
+  <h2>3 · Which topics dominate the documents?</h2>
+  <p class="lead">All selected documents are tokenised in your browser. Bars show in how many
+  documents each term appears (document frequency) — separately for the policy corpus and the
+  grant corpus. “Bridge topics” appear in both corpora and are the best candidates for combining
+  policies with funding.</p>
+  <div class="charts">
+    <div class="chart">
+      <h3><span class="tag policy">Policy</span> Top terms in policies</h3>
+      <p class="note" id="note-policies"></p>
+      <div id="chart-policies"></div>
+    </div>
+    <div class="chart">
+      <h3><span class="tag grant">Grant</span> Top terms in grants</h3>
+      <p class="note" id="note-grants"></p>
+      <div id="chart-grants"></div>
+    </div>
+  </div>
+  <div class="bridge">
+    <h3>Bridge topics — select topics for scenario building</h3>
+    <p class="lead">Ranked by presence in <em>both</em> corpora. Click to select the topics you want
+    to build scenarios around.</p>
+    <div class="topicchips" id="topic-chips"><div class="empty">Run the analysis first.</div></div>
+  </div>
+  <div class="actions">
+    <button class="action" id="back-2">← Search results</button>
+    <button class="action primary" id="go-scenarios" disabled>Build scenarios →</button>
+  </div>
+</section>
+
+<!-- ─────────── Stage 4 · Scenarios ─────────── -->
+<section class="stage-panel hidden" id="stage-4">
+  <h2>4 · Combine policies and grants into scenarios</h2>
+  <p class="lead">For your selected topics, the finder bundles the policies and grants that mention
+  them. Tick the documents you want, name the scenario, and save it. Scenarios are kept in your
+  browser (localStorage) — nothing is uploaded.</p>
+  <div id="bundle-area"></div>
+  <div class="scenario-form">
+    <input id="scenario-name" type="text" placeholder="Scenario name, e.g. “Circular biomass region”" aria-label="Scenario name">
+    <button class="action primary" id="save-scenario">Save scenario</button>
+  </div>
+  <div id="scenario-list"></div>
+  <div class="actions">
+    <button class="action" id="back-3">← Topic analysis</button>
+    <button class="action primary" id="go-metrics" disabled>Compare metrics →</button>
+  </div>
+</section>
+
+<!-- ─────────── Stage 5 · Metrics ─────────── -->
+<section class="stage-panel hidden" id="stage-5">
+  <h2>5 · Scenario metrics: funding &amp; CO<sub>2</sub> mitigation potential</h2>
+  <p class="lead">Potential funding is aggregated from the budget information of the grants in each
+  scenario. The CO<sub>2</sub> mitigation potential is an <strong>indicative, assumption-based
+  index</strong> — see the assumptions box below.</p>
+  <div id="metrics-chart"></div>
+  <div id="metrics-table"></div>
+  <div class="assumptions" id="assumptions-box"></div>
+  <div class="actions">
+    <button class="action" id="back-4">← Scenarios</button>
+    <button class="action" id="export-csv">Export CSV</button>
+    <button class="action" id="export-json">Export JSON</button>
+  </div>
+</section>
+
+<footer>
+  <div class="eu">
+    <div class="eu-flag" role="img" aria-label="EU flag"></div>
+    <p>Developed within <strong>BioFairNet</strong> (Horizon Europe). Policy metadata © European
+    Union, via <a href="https://eur-lex.europa.eu/">EUR-Lex</a> / the Publications Office SPARQL
+    endpoint; funding data via the <a href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/">EU
+    Funding &amp; Tenders Portal</a> search API. This tool is a research prototype: results are
+    keyword matches, not legal or financial advice, and the CO<sub>2</sub> metric is an indicative
+    heuristic, not a measured value.</p>
+  </div>
+  <p><a href="../index.html">Guided tour</a> · <a href="../howto.html">Researcher how-to</a> ·
+     <a href="https://github.com/Tobi-Wan-Kenob1/GreenInformationFactory_Prototype">Source on GitHub</a> · MIT license</p>
+</footer>
+
+</div>
+<script src="api.js"></script>
+<script src="analytics.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
