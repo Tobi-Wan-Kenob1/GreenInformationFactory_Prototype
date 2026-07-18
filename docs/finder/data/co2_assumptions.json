@@ -1,100 +1,163 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "method": "The CO₂ mitigation metric is an indicative, assumption-based index — not a measured or attributable emission reduction. Each assumption entry maps a mitigation topic to (a) a relative score (0–20) reflecting the topic's global mitigation potential and how directly a policy/grant portfolio can act on it, and (b) the topic's order-of-magnitude global sectoral mitigation potential for 2030 in GtCO₂e per year, following the ranges reported in IPCC AR6 WGIII SPM.7 (options costing < USD 100/tCO₂e). A scenario matches an entry when any of its match terms appears in the scenario's topics or document texts; the scenario's index is the sum of matched scores, and the GtCO₂e/yr column sums the matched global ranges. Use it to compare scenarios relative to each other, never as a forecast of what the scenario itself would mitigate. Edit this file to change scores, ranges or match terms — the UI reads it directly.",
   "basis_note": "Ranges are rounded order-of-magnitude values based on IPCC AR6 WGIII (2022), Figure SPM.7: net global emission-reduction potential in 2030 at costs below USD 100/tCO₂e. Enabling topics (digitalisation, just transition, monitoring) carry a small score and a 0–0 range: they enable mitigation but have no separable sectoral potential.",
   "method_cost_savings": "Potential cost savings are an indicative €/year range for one typical industrial or regional actor, not a computed business case. Each driver maps regulatory/operational match terms to an order-of-magnitude annual saving: avoided EU ETS allowance and CBAM costs, avoided enforcement penalties for non-compliance, avoided waste-disposal and material costs, energy-bill savings, avoided input costs, and possible carbon-credit revenue. A scenario matches a driver when any of its match terms appears (whole-word) in the scenario's topics or document texts; the scenario's range sums the matched driver ranges. Real savings depend entirely on the actor's size, sector and baseline — treat these figures as a screening signal for which value pools a scenario touches.",
-  "method_uncertainty": "All Stage-5 figures carry deliberate uncertainty bands. Funding: a Horizon call-topic budget usually funds several projects, so the realisable range for one consortium is shown as 25–100 % of the summed published budgets; grants without budget data add unquantified upside. CO₂ and cost savings: shown as the sum of matched low/high assumption ranges. Confidence rating per scenario: starts at 100 and is reduced for missing grant budget data (up to −40), a small document base (<3 docs −30, <6 docs −15), and a CO₂ match consisting mostly of enabling rather than sectoral topics (−15). ≥70 = High, ≥45 = Medium, else Low. This is a data-completeness indicator, not a statistical confidence interval.",
+  "method_uncertainty": "All Stage-5 figures carry deliberate uncertainty bands. Funding: a Horizon call-topic budget usually funds several projects, so the realisable range for one consortium is shown as 25–100 % of the summed published budgets; grants without budget data add unquantified upside. CO₂ and cost savings: shown as the sum of matched low/high assumption ranges. Confidence rating per scenario: because every metric here rests on keyword matching and generic assumptions, the rating is capped at 75/100 — full certainty is not attainable at this screening level, and a perfect score would be misleading. Each scenario starts at 75 and is reduced for missing grant budget data (up to −40), a small document base (fewer than 3 documents −25, fewer than 6 −10), a CO₂ match consisting mostly of enabling rather than sectoral topics (−10), and documents that came from cached snapshot/sample data instead of the live EU endpoints (−5, possible staleness). ≥60 = High (meaning: as reliable as a keyword screening can be), ≥40 = Medium, below = Low. This is a data-completeness indicator, not a statistical confidence interval — for decisions, always verify against the linked source documents.",
   "assumptions": [
     {
       "topic": "Solar & wind energy",
       "match_terms": ["solar", "photovoltaic", "wind energy", "wind", "renewable energy", "renewables"],
       "score": 20,
       "gtco2e_yr": [4.0, 11.0],
-      "basis": "IPCC AR6 SPM.7: solar ~2–7, wind ~2.1–5.6 GtCO₂e/yr combined range, rounded."
+      "basis": "IPCC AR6 SPM.7: solar ~2–7, wind ~2.1–5.6 GtCO₂e/yr combined range, rounded.",
+      "example_tasks": [
+        "commission a site solar/wind yield assessment with a grid-connection pre-study",
+        "tender a rooftop-PV or wind feasibility study including permitting screening",
+        "negotiate a power purchase agreement (PPA) or set up an energy community"
+      ]
     },
     {
       "topic": "Bioenergy & biofuels",
       "match_terms": ["bioenergy", "biofuel", "biofuels", "biogas", "biomass energy"],
       "score": 8,
       "gtco2e_yr": [0.5, 2.0],
-      "basis": "IPCC AR6 SPM.7 bioelectricity and biofuels, sustainability-constrained."
+      "basis": "IPCC AR6 SPM.7 bioelectricity and biofuels, sustainability-constrained.",
+      "example_tasks": [
+        "inventory available residue and feedstock streams (quantities, seasonality, moisture)",
+        "run a pre-feasibility study for a biogas/bioenergy unit including heat off-take mapping",
+        "secure feedstock letters of intent with local suppliers"
+      ]
     },
     {
       "topic": "Forests & land restoration",
       "match_terms": ["forest", "forestry", "afforestation", "reforestation", "deforestation", "ecosystem restoration", "nature-based"],
       "score": 16,
       "gtco2e_yr": [3.0, 7.0],
-      "basis": "IPCC AR6 SPM.7: reduced conversion + restoration of forests and other ecosystems."
+      "basis": "IPCC AR6 SPM.7: reduced conversion + restoration of forests and other ecosystems.",
+      "example_tasks": [
+        "map degraded parcels and agree restoration targets with land owners",
+        "establish a carbon-sink monitoring baseline (field plots + remote sensing)",
+        "pursue sustainable forest-management certification (e.g. FSC/PEFC)"
+      ]
     },
     {
       "topic": "Agriculture & soil carbon",
       "match_terms": ["soil", "carbon farming", "agriculture", "agroecology", "agroforestry", "nutrient", "peatland"],
       "score": 14,
       "gtco2e_yr": [1.8, 4.1],
-      "basis": "IPCC AR6 SPM.7: soil carbon sequestration in croplands/grasslands, agroforestry, nutrient and rice management."
+      "basis": "IPCC AR6 SPM.7: soil carbon sequestration in croplands/grasslands, agroforestry, nutrient and rice management.",
+      "example_tasks": [
+        "run a soil-carbon baseline measurement on representative parcels",
+        "pilot carbon-farming practices (cover crops, reduced tillage) on selected fields",
+        "set up monitoring/reporting (MRV) and register with a carbon-farming certification scheme"
+      ]
     },
     {
       "topic": "Circular economy & material efficiency",
       "match_terms": ["circular economy", "circular", "recycling", "recyclability", "material efficiency", "reuse", "secondary raw"],
       "score": 10,
       "gtco2e_yr": [0.5, 1.6],
-      "basis": "IPCC AR6 SPM.7 industry: material efficiency, enhanced recycling and circular material flows."
+      "basis": "IPCC AR6 SPM.7 industry: material efficiency, enhanced recycling and circular material flows.",
+      "example_tasks": [
+        "map waste and by-product streams including volumes and gate fees",
+        "hold an industrial-symbiosis matchmaking workshop with neighbouring plants",
+        "pilot one recycled/secondary-material substitution in production"
+      ]
     },
     {
       "topic": "Bio-based products replacing fossil materials",
       "match_terms": ["bio-based", "biorefinery", "bioeconomy", "biomass", "bioplastic"],
       "score": 8,
       "gtco2e_yr": [0.3, 1.0],
-      "basis": "Substitution of fossil/carbon-intensive products and carbon storage in long-lived bio-based products; conservative literature-based range."
+      "basis": "Substitution of fossil/carbon-intensive products and carbon storage in long-lived bio-based products; conservative literature-based range.",
+      "example_tasks": [
+        "screen your product portfolio for fossil components replaceable by bio-based alternatives",
+        "run lab/pilot trials with bio-based material suppliers",
+        "commission a life-cycle assessment (LCA) to document the footprint advantage"
+      ]
     },
     {
       "topic": "Carbon capture, removal & storage",
       "match_terms": ["carbon capture", "ccus", "ccs", "beccs", "carbon removal", "carbon removals", "direct air capture", "carbon storage"],
       "score": 8,
       "gtco2e_yr": [0.3, 2.0],
-      "basis": "IPCC AR6 SPM.7: CCS/BECCS/DACCS deployment potentials for 2030 are modest but scale later."
+      "basis": "IPCC AR6 SPM.7: CCS/BECCS/DACCS deployment potentials for 2030 are modest but scale later.",
+      "example_tasks": [
+        "screen on-site CO₂ point sources (volume, concentration, purity)",
+        "identify storage or utilisation partners and feasible transport routes",
+        "commission a pre-FEED study for a capture pilot"
+      ]
     },
     {
       "topic": "Energy & buildings efficiency",
       "match_terms": ["energy efficiency", "efficient", "buildings", "renovation", "heat pump"],
       "score": 12,
       "gtco2e_yr": [1.5, 4.0],
-      "basis": "IPCC AR6 SPM.7: demand-side efficiency in buildings and industry."
+      "basis": "IPCC AR6 SPM.7: demand-side efficiency in buildings and industry.",
+      "example_tasks": [
+        "commission an energy audit (EN 16247) of buildings and processes",
+        "implement quick-win measures (heat recovery, insulation, controls)",
+        "prepare a renovation investment plan with financing options"
+      ]
     },
     {
       "topic": "Low-carbon transport & fuels",
       "match_terms": ["transport", "mobility", "electric vehicle", "aviation", "shipping", "fuel"],
       "score": 10,
       "gtco2e_yr": [1.0, 3.7],
-      "basis": "IPCC AR6 SPM.7: fuel-efficient and electric vehicles, shift of transport modes, low-emission fuels."
+      "basis": "IPCC AR6 SPM.7: fuel-efficient and electric vehicles, shift of transport modes, low-emission fuels.",
+      "example_tasks": [
+        "establish a fleet and logistics emissions baseline",
+        "pilot electric or low-emission vehicles on selected routes",
+        "assess renewable-fuel supply options for heavy transport"
+      ]
     },
     {
       "topic": "Waste & methane reduction",
       "match_terms": ["waste", "bio-waste", "landfill", "methane", "waste water"],
       "score": 6,
       "gtco2e_yr": [0.3, 1.0],
-      "basis": "IPCC AR6 SPM.7: reduced landfill methane, waste prevention and valorisation."
+      "basis": "IPCC AR6 SPM.7: reduced landfill methane, waste prevention and valorisation.",
+      "example_tasks": [
+        "audit waste streams and landfill-diversion options",
+        "pilot separate collection and valorisation of biowaste",
+        "assess biogas capture from residual organic streams"
+      ]
     },
     {
       "topic": "Hydrogen & industrial decarbonisation",
       "match_terms": ["hydrogen", "electrolyser", "steel", "cement", "industrial decarbonisation"],
       "score": 6,
       "gtco2e_yr": [0.2, 1.0],
-      "basis": "IPCC AR6 SPM.7: fuel switching and hydrogen in industry, modest by 2030."
+      "basis": "IPCC AR6 SPM.7: fuel switching and hydrogen in industry, modest by 2030.",
+      "example_tasks": [
+        "assess on-site hydrogen demand and supply options",
+        "join or initiate a regional hydrogen-valley partnership",
+        "pre-study electrolyser integration with renewable supply"
+      ]
     },
     {
       "topic": "Enablers: digitalisation, data & monitoring",
       "match_terms": ["digital", "data space", "monitoring", "artificial intelligence", "fair data"],
       "score": 2,
       "gtco2e_yr": [0.0, 0.0],
-      "basis": "Enabling topic: supports mitigation decisions (MRV, product passports) without separable sectoral potential."
+      "basis": "Enabling topic: supports mitigation decisions (MRV, product passports) without separable sectoral potential.",
+      "example_tasks": [
+        "set up FAIR data infrastructure for material and emission tracking",
+        "pilot a digital product passport for one product line"
+      ]
     },
     {
       "topic": "Enablers: just transition & social innovation",
       "match_terms": ["just transition", "reskilling", "citizen engagement", "stakeholder", "social innovation"],
       "score": 2,
       "gtco2e_yr": [0.0, 0.0],
-      "basis": "Enabling topic: fairness and acceptance condition the feasibility of all other options (IPCC AR6 WGIII ch. 17)."
+      "basis": "Enabling topic: fairness and acceptance condition the feasibility of all other options (IPCC AR6 WGIII ch. 17).",
+      "example_tasks": [
+        "map affected stakeholders and set up a co-creation forum",
+        "design reskilling paths with regional training providers"
+      ]
     }
   ],
   "cost_saving_assumptions": [

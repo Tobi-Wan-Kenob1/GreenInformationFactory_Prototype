@@ -223,7 +223,7 @@
     // Embed a slim copy of each doc so saved scenarios survive page reloads.
     const docs = [...ids].map(id => byId.get(id)).filter(Boolean).map(d => ({
       id: d.id, kind: d.kind, title: d.title, url: d.url,
-      budgetEUR: d.budgetEUR, text: docText(d)
+      budgetEUR: d.budgetEUR, src: d.source, text: docText(d)
     }));
     S.scenarios.push({ name, created: new Date().toISOString(), topics: [...S.selectedTopics], docs });
     saveScenarios();
@@ -251,14 +251,17 @@
     const sectoral = matched.filter(m => m.gtco2e_yr[1] > 0);
     const savers = (co2.cost_saving_assumptions || []).filter(a => a.match_terms.some(hasTerm));
 
-    // Confidence rating (data completeness, not a statistical CI) — the exact
-    // deductions are documented in co2_assumptions.json → method_uncertainty.
-    let conf = 100;
+    // Confidence rating (data completeness, not a statistical CI) — capped at
+    // 75/100 because keyword screening on generic assumptions can never be
+    // fully certain. Deductions documented in co2_assumptions.json →
+    // method_uncertainty.
+    let conf = 75;
     const missingShare = grants.length ? (grants.length - known.length) / grants.length : 1;
     conf -= Math.round(40 * missingShare);
-    if (sc.docs.length < 3) conf -= 30; else if (sc.docs.length < 6) conf -= 15;
-    if (matched.length && sectoral.length / matched.length < 0.5) conf -= 15;
-    conf = Math.max(5, conf);
+    if (sc.docs.length < 3) conf -= 25; else if (sc.docs.length < 6) conf -= 10;
+    if (matched.length && sectoral.length / matched.length < 0.5) conf -= 10;
+    if (sc.docs.some(d => d.src !== 'live')) conf -= 5;   // snapshot/sample data may be stale
+    conf = Math.min(75, Math.max(5, conf));
 
     return {
       name: sc.name,
@@ -281,8 +284,13 @@
       ],
       matchedTopics: matched.map(m => m.topic),
       sectoralTopics: sectoral.map(m => m.topic),
+      exampleTasks: sectoral
+        .filter(m => m.example_tasks && m.example_tasks.length)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 2)
+        .map(m => ({ topic: m.topic, tasks: m.example_tasks.slice(0, 2) })),
       confidence: conf,
-      confidenceLabel: conf >= 70 ? 'High' : conf >= 45 ? 'Medium' : 'Low'
+      confidenceLabel: conf >= 60 ? 'High' : conf >= 40 ? 'Medium' : 'Low'
     };
   }
 
@@ -308,15 +316,19 @@
       parts.push(`The CO₂ mitigation potential is carried by ${m.sectoralTopics.slice(0, 3).join(', ')}` +
         ` — make ${m.sectoralTopics.length > 1 ? 'these' : 'this'} the technical core of the work plan.`);
     }
+    for (const et of m.exampleTasks) {
+      parts.push(`Exemplary first operational steps for ${et.topic.toLowerCase()}: ` +
+        `(1) ${et.tasks[0]}${et.tasks[1] ? `; (2) ${et.tasks[1]}` : ''}.`);
+    }
     if (m.matchedSavers.length) {
       parts.push(`Cost savings would come mainly from ${m.matchedSavers.slice(0, 3).join('; ').toLowerCase()}` +
         ` (indicative €${fmtM(m.saveRangeEUR[0])}–${fmtM(m.saveRangeEUR[1])} M/yr for a typical actor)` +
         ` — quantify these with site-specific data before any investment decision.`);
     }
-    parts.push(`Confidence: ${m.confidenceLabel} (${m.confidence}/100)` +
-      (m.confidenceLabel !== 'High'
-        ? ` — firm up by ${m.fundingUnknown ? 'adding budget data for the open topics' : 'including more matching documents'} and re-running the analysis.`
-        : `.`));
+    parts.push(`Confidence: ${m.confidenceLabel} (${m.confidence}/75 — capped, this is a keyword screening)` +
+      (m.confidence < 60
+        ? ` — firm up by ${m.fundingUnknown ? 'adding budget data for the open topics' : 'including more matching documents'} and by verifying the linked source documents.`
+        : `; verify against the linked source documents before committing resources.`));
     return parts.join(' ');
   }
 
@@ -365,7 +377,7 @@
         <td class="num">${fmtM(m.saveRangeEUR[0])}–${fmtM(m.saveRangeEUR[1])} M€</td>
         <td class="num">${m.co2Index}</td>
         <td class="num">${m.co2RangeGt[0].toFixed(1)}–${m.co2RangeGt[1].toFixed(1)} GtCO₂e/yr</td>
-        <td><span class="conf ${m.confidenceLabel.toLowerCase()}" title="Data-completeness rating, see assumptions box">${m.confidenceLabel} · ${m.confidence}</span></td>
+        <td><span class="conf ${m.confidenceLabel.toLowerCase()}" title="Data-completeness rating, capped at 75/100 — see assumptions box">${m.confidenceLabel} · ${m.confidence}/75</span></td>
       </tr>`).join('') + '</tbody></table>';
     renderRecommendations(M);
   }
