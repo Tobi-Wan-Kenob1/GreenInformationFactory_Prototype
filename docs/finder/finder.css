@@ -184,11 +184,4 @@ footer p { margin: 0 0 8px; max-width: 90ch; }
 footer a { color: var(--teal); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 .eu { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
-.eu-flag {
-  flex: none; width: 42px; height: 28px; border-radius: 3px; background: #003399;
-  position: relative; margin-top: 2px;
-}
-.eu-flag::after {
-  content: "★"; position: absolute; inset: 0; display: flex; align-items: center;
-  justify-content: center; color: #FFCC00; font-size: 13px;
-}
+.eu-flag { flex: none; width: 42px; height: 28px; border-radius: 3px; margin-top: 2px; display: block; }
