@@ -36,10 +36,12 @@ jobs:
       # A failure of one source must not lose the other: the fetcher writes
       # whatever succeeded and exits non-zero, we commit that, and only then
       # fail the job.
+      # --since reaches back further than the app's default window so the
+      # offline snapshot can also serve historical (benchmark) queries.
       - name: Fetch snapshot
         id: fetch
         continue-on-error: true
-        run: gif finder-data
+        run: gif finder-data --since 2000-01-01
 
       - name: Commit updated snapshot
         run: |
