@@ -151,9 +151,13 @@ SPM.7). Design notes: `docs/finder/PLAN.md`.
 `docs/finder/data/snapshot_config.json`. Note two properties of the upstream
 sources:
 
-- *EUR-Lex/CELLAR* is matched on the English **title** only, so a policy is
-  found when a keyword appears in its title. Cached policies reach back to
-  2000, so historical windows work offline.
+- *EUR-Lex/CELLAR* exposes no abstract, so each act's **EuroVoc descriptors**
+  (`cdm:work_is_about_concept_eurovoc`) are pulled in as its summary — that is
+  what the topic analytics run on, and what a keyword is matched against
+  besides the title. Keywords are expanded into orthographic variants
+  (`bioeconomy` also matches `bio-economy` / `bio economy`), since CELLAR
+  matching is a raw substring test. Cached policies reach back to 2000, so
+  historical windows work offline.
 - *EU Funding & Tenders (SEDIA)* caps a query's result set at 100 MB, so the
   fetcher queries **one keyword per request** rather than a combined `OR`, and
   filters out support FAQs and tenders that the API returns despite the type

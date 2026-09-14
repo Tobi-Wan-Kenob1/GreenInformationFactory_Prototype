@@ -20,7 +20,12 @@
     'communication,proposal,amending,final,com,annex,article,shall,member,states,state,horizon,' +
     'call,topic,topics,action,actions,activities,project,projects,proposal,proposals,programme,' +
     'work,new,including,well,also,related,relevant,based,use,used,using,support,supporting,' +
-    'ensure,ensuring,measures,framework,strategy,plan,sample').split(','));
+    'ensure,ensuring,measures,framework,strategy,plan,sample,' +
+    // EUR-Lex title boilerplate: "(Text with EEA relevance)", "notified under
+    // document C(2022) 1244", "laying down rules", "implementing/delegated".
+    'text,relevance,eea,notified,document,documents,corrigendum,laying,down,repealing,' +
+    'implementing,delegated,establishing,concerning,pursuant,annexes,official,journal,' +
+    'adoption,adopting,rules,provisions,certain,respect,view,means,within,accordance').split(','));
 
   function tokenize(text) {
     const words = String(text || '').toLowerCase()
