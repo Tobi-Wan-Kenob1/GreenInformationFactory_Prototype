@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-14T11:49:22Z",
+ "generated": "2026-09-14T11:52:26Z",
  "keywords": [
   "bioeconomy",
   "circular economy",
@@ -251,6 +251,105 @@
    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32015D2099",
    "budgetEUR": null,
    "doctype": "DEC",
+   "source": "cache"
+  },
+  {
+   "id": "p:32013D0005",
+   "kind": "policy",
+   "title": "2013/5/EU: Council Decision of 17 December 2012 on the accession of the European Union to the Protocol for the Protection of the Mediterranean Sea against pollution resulting from exploration and exploitation of the continental shelf and the seabed and its subsoil",
+   "summary": "",
+   "date": "2012-12-17",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32013D0005",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "source": "cache"
+  },
+  {
+   "id": "p:32010D0670",
+   "kind": "policy",
+   "title": "2010/670/EU: Commission Decision of 3 November 2010 laying down criteria and measures for the financing of commercial demonstration projects that aim at the environmentally safe capture and geological storage of CO 2 as well as demonstration projects of innovative renewable energy technologies under the scheme for greenhouse gas emission allowance trading within the Community established by Directive 2003/87/EC of the European Parliament and of the Council (notified under document C(2010) 7499)",
+   "summary": "",
+   "date": "2010-11-03",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32010D0670",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "source": "cache"
+  },
+  {
+   "id": "p:32010D0385",
+   "kind": "policy",
+   "title": "2010/385/: Council Decision of 24 June 2010 on the conclusion of the Statute of the International Renewable Energy Agency (IRENA) by the European Union",
+   "summary": "",
+   "date": "2010-06-24",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32010D0385",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "source": "cache"
+  },
+  {
+   "id": "p:32009D0806",
+   "kind": "policy",
+   "title": "2009/806/EC: Council Decision of 19 October 2009 on the signing of the Statute of the International Renewable Energy Agency (IRENA) by the European Community",
+   "summary": "",
+   "date": "2009-10-19",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32009D0806",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "source": "cache"
+  },
+  {
+   "id": "p:32009R0397",
+   "kind": "policy",
+   "title": "Regulation (EC) No 397/2009 of the European Parliament and of the Council of 6 May 2009 amending Regulation (EC) No 1080/2006 on the European Regional Development Fund as regards the eligibility of energy efficiency and renewable energy investments in housing",
+   "summary": "",
+   "date": "2009-05-06",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32009R0397",
+   "budgetEUR": null,
+   "doctype": "REG",
+   "source": "cache"
+  },
+  {
+   "id": "p:32006D0516",
+   "kind": "policy",
+   "title": "2006/516/EC: Council Decision of 27 June 2006 on the conclusion, on behalf of the European Community, of the Protocol on Soil Protection, the Protocol on Energy and the Protocol on Tourism to the Alpine Convention - Declarations",
+   "summary": "",
+   "date": "2006-06-27",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32006D0516",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "source": "cache"
+  },
+  {
+   "id": "p:32006R0181",
+   "kind": "policy",
+   "title": "Commission Regulation (EC) No 181/2006 of 1 February 2006 implementing Regulation (EC) No 1774/2002 as regards organic fertilisers and soil improvers other than manure and amending that Regulation (Text with EEA relevance)",
+   "summary": "",
+   "date": "2006-02-01",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32006R0181",
+   "budgetEUR": null,
+   "doctype": "REG",
+   "source": "cache"
+  },
+  {
+   "id": "p:32005D0923",
+   "kind": "policy",
+   "title": "2005/923/EC: Council Decision of 2 December 2005 on the signing on behalf of the European Community of the Protocol on Soil Protection, the Protocol on Energy and the Protocol on Tourism to the Alpine Convention",
+   "summary": "",
+   "date": "2005-12-02",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005D0923",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "source": "cache"
+  },
+  {
+   "id": "p:32001L0077",
+   "kind": "policy",
+   "title": "Directive 2001/77/EC of the European Parliament and of the Council of 27 September 2001 on the promotion of electricity produced from renewable energy sources in the internal electricity market",
+   "summary": "",
+   "date": "2001-09-27",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32001L0077",
+   "budgetEUR": null,
+   "doctype": "DIR",
    "source": "cache"
   }
  ]
