@@ -200,8 +200,10 @@ GreenInformationFactory_Prototype/
 pytest -q
 ```
 
-GitHub Actions (`.github/workflows/ci.yml`) runs the suite on Python
-3.10–3.12 for every push and pull request.
+GitHub Actions (`.github/workflows/ci.yml`) runs the suite on Python 3.10 for
+every push and pull request. The package itself declares
+`requires-python = ">=3.10"`; widen the CI matrix in `ci.yml` if you want
+newer versions covered again.
 
 ## License & acknowledgements
 
