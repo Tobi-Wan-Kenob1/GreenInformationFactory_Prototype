@@ -437,10 +437,9 @@ def normalize_policy(binding: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
-                   until: Optional[str] = None,
-                   limit: int = 150) -> List[Dict[str, Any]]:
-    """Query CELLAR for EU acts whose English title matches any keyword."""
+def _cellar_query(keywords: Iterable[str], since: str, until: Optional[str],
+                  limit: int) -> List[Dict[str, Any]]:
+    """One CELLAR request → normalised policy documents."""
     resp = requests.get(
         CELLAR_URL,
         params={"query": sparql_query(keywords, since=since, until=until, limit=limit),
@@ -450,13 +449,61 @@ def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
     )
     resp.raise_for_status()
     bindings = (resp.json().get("results") or {}).get("bindings") or []
+    return [normalize_policy(b) for b in bindings]
+
+
+def date_buckets(since: str, until: Optional[str],
+                 span_years: int = 5) -> List[tuple]:
+    """Split a window into (since, until) slices of at most ``span_years``."""
+    start = int(str(since)[:4])
+    end = int(str(until)[:4]) if until else date.today().year
+    if end < start:
+        end = start
+    out = []
+    year = start
+    while year <= end:
+        last = min(year + span_years - 1, end)
+        out.append((f"{year}-01-01", f"{last}-12-31"))
+        year = last + 1
+    return out
+
+
+def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
+                   until: Optional[str] = None,
+                   limit: int = 150,
+                   span_years: int = 5) -> List[Dict[str, Any]]:
+    """Query CELLAR for EU acts whose English title matches any keyword.
+
+    The query is ``ORDER BY DESC(date) LIMIT n``, so for a broad keyword set a
+    single request returns only the most recent slice — a snapshot covering
+    2000-today came back starting in 2022, silently removing the historical
+    depth the benchmark window needs. Query one slice of the window at a time
+    instead, so every period gets its own share of the budget.
+    """
+    keywords = list(keywords)
+    buckets = date_buckets(since, until, span_years)
+    per_bucket = max(20, limit // max(len(buckets), 1))
+
     docs: List[Dict[str, Any]] = []
     seen: set = set()
-    for b in bindings:
-        doc = normalize_policy(b)
-        if doc["id"] not in seen:
-            seen.add(doc["id"])
-            docs.append(doc)
+    failures: List[str] = []
+    for b_since, b_until in buckets:
+        try:
+            found = _cellar_query(keywords, b_since, b_until, per_bucket)
+        except Exception as exc:                  # noqa: BLE001 - collected below
+            failures.append(f"{b_since[:4]}-{b_until[:4]}: {exc}")
+            continue
+        for doc in found:
+            if doc["id"] not in seen:
+                seen.add(doc["id"])
+                docs.append(doc)
+
+    if failures and not docs:
+        raise RuntimeError("every CELLAR slice failed — " + "; ".join(failures))
+    if failures:
+        print(f"  warning: {len(failures)}/{len(buckets)} CELLAR slices failed: "
+              + "; ".join(failures))
+    docs.sort(key=lambda d: d.get("date") or "", reverse=True)
     return docs
 
 
