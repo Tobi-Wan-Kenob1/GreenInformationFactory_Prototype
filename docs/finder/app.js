@@ -352,6 +352,9 @@
     const grants = sc.docs.filter(d => d.kind === 'grant');
     const known = grants.filter(g => g.budgetEUR);
     const funding = known.reduce((a, g) => a + g.budgetEUR, 0);
+    // a call-topic budget usually funds several projects → 25–100 % band
+    const fundingLow = Math.round(funding * 0.25);
+    const fundingHigh = funding;
     const text = sc.docs.map(d => d.text).join(' ') + ' ' + sc.topics.join(' ').toLowerCase();
     // whole-word matching, so "fuel" does not fire on "biofuels"
     const hasTerm = t => new RegExp('\\b' + t.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(text);
@@ -373,6 +376,32 @@
     if (sc.docs.some(d => d.src !== 'live')) conf -= 5;   // snapshot/sample data may be stale
     conf = Math.min(75, Math.max(5, conf));
 
+    // ---- scenario-scaled abatement -------------------------------------
+    // The global sectoral potentials are the same whatever the portfolio, so
+    // they cannot rank scenarios. Scale the funding by typical abatement costs
+    // instead: tCO2e = (funding x deployment factor) / (EUR/tCO2e).
+    const priced = sectoral.filter(m => m.abatement_cost_eur_t);
+    const weight = priced.reduce((a, m) => a + m.score, 0);
+    const costLow = weight ? priced.reduce((a, m) => a + m.score * m.abatement_cost_eur_t[0], 0) / weight : null;
+    const costHigh = weight ? priced.reduce((a, m) => a + m.score * m.abatement_cost_eur_t[1], 0) / weight : null;
+    const df = co2.deployment_factor || [0.1, 1.0];
+    const canScale = !!(costLow && costHigh && funding > 0);
+    // low end: least funding, least deployment, dearest abatement — and vice versa
+    const abatementT = canScale
+      ? [fundingLow * df[0] / costHigh, fundingHigh * df[1] / costLow]
+      : null;
+    // The band multiplies three uncertain factors, so its endpoints sit two
+    // orders apart. The geometric mean is the right centre for a multiplicative
+    // chain and gives the comparison a single number to rank on.
+    const abatementMidT = abatementT ? Math.sqrt(abatementT[0] * abatementT[1]) : null;
+
+    // one-way sensitivity: what share of the index does each topic contribute?
+    const contributions = matched
+      .map(m => ({ topic: m.topic, score: m.score,
+                   share: co2Index ? m.score / co2Index : 0,
+                   sectoral: m.gtco2e_yr[1] > 0 }))
+      .sort((a, b) => b.score - a.score);
+
     const nPolicies = sc.docs.filter(d => d.kind === 'policy').length;
     return {
       name: sc.name,
@@ -381,9 +410,13 @@
       composition: grants.length && nPolicies ? 'mixed'
                  : grants.length ? 'grant-only' : 'policy-only',
       fundingEUR: funding,
-      // a call-topic budget usually funds several projects → 25–100 % band
-      fundingLowEUR: Math.round(funding * 0.25),
-      fundingHighEUR: funding,
+      fundingLowEUR: fundingLow,
+      fundingHighEUR: fundingHigh,
+      abatementT: abatementT,
+      abatementMidT: abatementMidT,
+      abatementCostEURt: canScale ? [costLow, costHigh] : null,
+      deploymentFactor: df,
+      contributions: contributions,
       fundingUnknown: grants.length - known.length,
       saveRangeEUR: [
         savers.reduce((a, s) => a + s.save_eur_yr[0], 0),
@@ -409,6 +442,18 @@
 
   const fmtM = eur => (eur / 1e6).toLocaleString('en', { maximumFractionDigits: 1 });
 
+  /* tCO2e → a readable magnitude (kt or Mt), since the ranges span decades.
+   * `mid` (geometric mean) leads, with the band in brackets behind it. */
+  function fmtAbatement(range, mid) {
+    if (!range) return null;
+    const unit = range[1] >= 1e6 ? ['Mt', 1e6] : ['kt', 1e3];
+    const n = v => (v / unit[1]).toLocaleString('en', {
+      maximumFractionDigits: v / unit[1] < 10 ? 1 : 0 });
+    const band = `${n(range[0])}–${n(range[1])}`;
+    return mid ? `≈ ${n(mid)} ${unit[0]}CO₂e <small>(${band})</small>`
+               : `${band} ${unit[0]}CO₂e`;
+  }
+
   /* One actionable "how to proceed" sentence block per scenario, plus an
    * overall pick. Deterministic text built from the computed metrics. */
   function recommendation(m) {
@@ -433,6 +478,14 @@
     if (m.sectoralTopics.length) {
       parts.push(`The CO₂ mitigation potential is carried by ${m.sectoralTopics.slice(0, 3).join(', ')}` +
         ` — make ${m.sectoralTopics.length > 1 ? 'these' : 'this'} the technical core of the work plan.`);
+    }
+    if (m.abatementT) {
+      const mid = fmtAbatement(m.abatementT, m.abatementMidT).replace(/<\/?small>/g, '');
+      parts.push(`At typical European abatement costs ` +
+        `(${Math.round(m.abatementCostEURt[0])}–${Math.round(m.abatementCostEURt[1])} €/tCO₂e for this topic mix), ` +
+        `a budget of this size corresponds to ${mid} of lifetime abatement if the results are ` +
+        `deployed — a scale for framing impact claims, not a projection; the band is wide because ` +
+        `funding share, deployment rate and abatement cost are each uncertain.`);
     }
     for (const et of m.exampleTasks) {
       parts.push(`Exemplary first operational steps for ${et.topic.toLowerCase()}: ` +
@@ -481,12 +534,16 @@
       FinderAnalytics.barChartSVG(M.map(m => ({
         label: m.name, value: (m.saveRangeEUR[0] + m.saveRangeEUR[1]) / 2e6,
         lo: m.saveRangeEUR[0] / 1e6, hi: m.saveRangeEUR[1] / 1e6 })), '#3D7A75') +
-      '</div><div class="chart"><h3>CO<sub>2</sub> mitigation index (indicative)</h3>' +
-      FinderAnalytics.barChartSVG(M.map(m => ({ label: m.name, value: m.co2Index })), '#0A6B65') +
+      '</div><div class="chart"><h3>Indicative abatement (ktCO<sub>2</sub>e, lifetime)</h3>' +
+      (M.some(m => m.abatementT)
+        ? FinderAnalytics.barChartSVG(M.filter(m => m.abatementT).map(m => ({
+            label: m.name, value: m.abatementMidT / 1e3,
+            lo: m.abatementT[0] / 1e3, hi: m.abatementT[1] / 1e3 })), '#0A6B65')
+        : '<div class="empty">No scenario has both funding and a priced mitigation topic.</div>') +
       '</div></div>';
     $('metrics-table').innerHTML = `<table class="metrics-table"><thead><tr>
       <th>Scenario</th><th>Policies</th><th>Grants</th><th>Funding potential</th>
-      <th>Cost savings /yr</th><th>CO₂ index</th><th>Global sectoral potential*</th><th>Confidence</th>
+      <th>Cost savings /yr</th><th>CO₂ index</th><th>Indicative abatement</th><th>Confidence</th>
       </tr></thead><tbody>` + M.map(m => `<tr>
         <td>${esc(m.name)}</td>
         <td class="num">${m.nPolicies}</td>
@@ -496,10 +553,44 @@
           : `${fmtM(m.fundingLowEUR)}–${fmtM(m.fundingHighEUR)} M€${m.fundingUnknown ? ` <small>(+${m.fundingUnknown} without budget data)</small>` : ''}`}</td>
         <td class="num">${fmtM(m.saveRangeEUR[0])}–${fmtM(m.saveRangeEUR[1])} M€</td>
         <td class="num">${m.co2Index}</td>
-        <td class="num">${m.co2RangeGt[0].toFixed(1)}–${m.co2RangeGt[1].toFixed(1)} GtCO₂e/yr</td>
+        <td class="num">${m.abatementT
+          ? `${fmtAbatement(m.abatementT, m.abatementMidT)}<small> lifetime</small>`
+          : `<small>n/a — ${m.nGrants ? 'no priced topic matched' : 'no funding in scenario'}</small>`}</td>
         <td><span class="conf ${m.confidenceLabel.toLowerCase()}" title="Data-completeness rating, capped at 75/100 — see assumptions box">${m.confidenceLabel} · ${m.confidence}/75</span></td>
       </tr>`).join('') + '</tbody></table>';
+    renderSensitivity(M);
     renderRecommendations(M);
+  }
+
+  /* One-way sensitivity: which assumptions actually drive each scenario, and
+   * how far the result swings across the input bands. Mirrors the philosophy
+   * of notebook 05 (scenario & sensitivity analysis) at screening level. */
+  function renderSensitivity(M) {
+    $('sensitivity').innerHTML = `<details class="sens">
+      <summary>What drives these numbers? (one-way sensitivity per scenario)</summary>
+      ${M.map(m => {
+        const bars = m.contributions.slice(0, 6).map(c => `
+          <div class="sensrow">
+            <span class="sl">${esc(c.topic)}${c.sectoral ? '' : ' <em>(enabling)</em>'}</span>
+            <span class="sb"><i style="width:${(c.share * 100).toFixed(0)}%"></i></span>
+            <span class="sv">${Math.round(c.share * 100)}%</span>
+          </div>`).join('') || '<div class="empty">No assumption matched.</div>';
+        const swing = m.abatementT && m.abatementT[0] > 0
+          ? `Abatement swings ×${(m.abatementT[1] / m.abatementT[0]).toFixed(0)} across the bands —
+             funding (×${(m.fundingHighEUR / Math.max(m.fundingLowEUR, 1)).toFixed(0)}),
+             deployment factor (×${(m.deploymentFactor[1] / m.deploymentFactor[0]).toFixed(0)}) and
+             abatement cost (×${(m.abatementCostEURt[1] / m.abatementCostEURt[0]).toFixed(1)},
+             blended ${Math.round(m.abatementCostEURt[0])}–${Math.round(m.abatementCostEURt[1])} €/tCO₂e).
+             Narrow the deployment factor in the assumptions file if you know the call type.`
+          : 'No abatement figure: the scenario has no funding or no priced mitigation topic.';
+        return `<div class="sensblock">
+          <h4>${esc(m.name)}</h4>
+          <p class="note">Share of the CO₂ index contributed by each matched assumption:</p>
+          ${bars}
+          <p class="note swing">${swing}</p>
+        </div>`;
+      }).join('')}
+    </details>`;
   }
 
   function renderRecommendations(M) {
@@ -522,15 +613,24 @@
   function renderAssumptions(co2) {
     $('assumptions-box').innerHTML = `<h3>How these figures are computed — read this first</h3>
       <p><strong>Uncertainty.</strong> ${esc(co2.method_uncertainty || '')}</p>
+      <p><strong>Indicative abatement.</strong> ${esc(co2.method_co2_scaled || '')}</p>
       <p><strong>CO₂ index.</strong> ${esc(co2.method || '')}</p>
       <p><strong>Cost savings.</strong> ${esc(co2.method_cost_savings || '')}</p>
       <details><summary>Show CO₂ assumption entries (${(co2.assumptions || []).length}) — edit
       <code>docs/finder/data/co2_assumptions.json</code> to change them</summary>
-      <table><thead><tr><th>Topic</th><th>Match terms</th><th>Score</th><th>GtCO₂e/yr (global, 2030)</th><th>Basis</th></tr></thead>
+      <table><thead><tr><th>Topic</th><th>Match terms</th><th>Score</th>
+      <th>€/tCO₂e</th><th>GtCO₂e/yr (global, 2030)</th><th>Basis</th></tr></thead>
       <tbody>${(co2.assumptions || []).map(a => `<tr>
         <td>${esc(a.topic)}</td><td>${a.match_terms.map(esc).join(', ')}</td>
-        <td>${a.score}</td><td>${a.gtco2e_yr[0]}–${a.gtco2e_yr[1]}</td><td>${esc(a.basis)}</td>
-      </tr>`).join('')}</tbody></table></details>
+        <td>${a.score}</td>
+        <td>${a.abatement_cost_eur_t
+              ? a.abatement_cost_eur_t[0] + '–' + a.abatement_cost_eur_t[1]
+              : '<small>enabling</small>'}</td>
+        <td>${a.gtco2e_yr[0]}–${a.gtco2e_yr[1]}</td><td>${esc(a.basis)}</td>
+      </tr>`).join('')}</tbody></table>
+      <p><small>Deployment factor applied to funding before dividing by cost:
+      ${(co2.deployment_factor || []).join('–')}. The global GtCO₂e/yr column is context for the
+      topic, not a scenario result — it does not change with your portfolio.</small></p></details>
       <details><summary>Show cost-saving drivers (${(co2.cost_saving_assumptions || []).length})</summary>
       <table><thead><tr><th>Driver</th><th>Match terms</th><th>€/yr (typical actor)</th><th>Basis</th></tr></thead>
       <tbody>${(co2.cost_saving_assumptions || []).map(a => `<tr>
@@ -576,13 +676,21 @@
   $('export-csv').addEventListener('click', () => {
     const head = 'scenario,composition,window_from,window_to,policies,grants,' +
       'funding_eur_low,funding_eur_high,grants_without_budget,' +
-      'cost_saving_eur_yr_low,cost_saving_eur_yr_high,co2_index,co2_gt_low,co2_gt_high,' +
-      'confidence,confidence_label,matched_topics,matched_saving_drivers';
+      'cost_saving_eur_yr_low,cost_saving_eur_yr_high,co2_index,' +
+      'abatement_tco2e_low,abatement_tco2e_mid,abatement_tco2e_high,' +
+      'abatement_cost_eur_t_low,abatement_cost_eur_t_high,' +
+      'co2_gt_low,co2_gt_high,confidence,confidence_label,matched_topics,matched_saving_drivers';
     const rows = S.metrics.map(m => [
       '"' + m.name.replace(/"/g, '""') + '"', m.composition,
       S.filters.from, S.filters.to, m.nPolicies, m.nGrants,
       m.fundingLowEUR, m.fundingHighEUR, m.fundingUnknown,
-      m.saveRangeEUR[0], m.saveRangeEUR[1], m.co2Index, m.co2RangeGt[0], m.co2RangeGt[1],
+      m.saveRangeEUR[0], m.saveRangeEUR[1], m.co2Index,
+      m.abatementT ? Math.round(m.abatementT[0]) : '',
+      m.abatementMidT ? Math.round(m.abatementMidT) : '',
+      m.abatementT ? Math.round(m.abatementT[1]) : '',
+      m.abatementCostEURt ? Math.round(m.abatementCostEURt[0]) : '',
+      m.abatementCostEURt ? Math.round(m.abatementCostEURt[1]) : '',
+      m.co2RangeGt[0], m.co2RangeGt[1],
       m.confidence, m.confidenceLabel,
       '"' + m.matchedTopics.join('; ') + '"',
       '"' + m.matchedSavers.join('; ') + '"'
