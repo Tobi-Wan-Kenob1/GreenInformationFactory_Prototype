@@ -1,0 +1,103 @@
+name: Finder API probe (diagnostic)
+
+# TEMPORARY DIAGNOSTIC. The scheduled finder-data snapshot has been failing
+# with "400 Client Error" from the EU Funding & Tenders (SEDIA) search API.
+# This workflow tries several request shapes against both EU endpoints and
+# prints status + response body, so we can see which shape the APIs accept.
+# Delete this workflow once the fetcher is fixed.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Probe SEDIA + CELLAR
+        run: |
+          python - <<'PY'
+          import json
+          import requests
+
+          SEDIA = "https://api.tech.ec.europa.eu/search-api/prod/rest/search"
+          QUERY = {"bool": {"must": [
+              {"terms": {"type": ["1"]}},
+              {"terms": {"status": ["31094501", "31094502", "31094503"]}},
+          ]}}
+          KW_TEXT = '"bioeconomy" OR "circular economy" OR "biomass"'
+          FIELDS = {
+              "query": json.dumps(QUERY),
+              "languages": json.dumps(["en"]),
+              "sort": json.dumps({"field": "sortStatus", "order": "DESC"}),
+          }
+          multipart = {k: (None, v) for k, v in FIELDS.items()}
+
+          def show(label, resp):
+              body = resp.text[:400].replace("\n", " ")
+              n = ""
+              try:
+                  j = resp.json()
+                  n = f" totalResults={j.get('totalResults')} results={len(j.get('results') or [])}"
+              except Exception:
+                  pass
+              print(f"\n=== {label}\n    HTTP {resp.status_code}{n}\n    {body}")
+
+          def sedia(label, *, text, page_size, use_multipart, extra_params=None):
+              params = {"apiKey": "SEDIA", "text": text,
+                        "pageSize": str(page_size), "pageNumber": "1"}
+              if extra_params:
+                  params.update(extra_params)
+              kwargs = {"files": multipart} if use_multipart else {"data": FIELDS}
+              try:
+                  show(label, requests.post(SEDIA, params=params, timeout=60, **kwargs))
+              except Exception as exc:
+                  print(f"\n=== {label}\n    EXCEPTION {exc!r}")
+
+          # A: exactly what the failing fetcher sends today (urlencoded, pageSize 100)
+          sedia("A urlencoded  pageSize=100  keyword-OR text", text=KW_TEXT, page_size=100, use_multipart=False)
+          # B: same but smaller page
+          sedia("B urlencoded  pageSize=50   keyword-OR text", text=KW_TEXT, page_size=50, use_multipart=False)
+          # C: multipart (what the browser FormData path sends)
+          sedia("C multipart    pageSize=50   keyword-OR text", text=KW_TEXT, page_size=50, use_multipart=True)
+          # D: multipart, match-all text token
+          sedia("D multipart    pageSize=50   text='***'", text="***", page_size=50, use_multipart=True)
+          # E: multipart, single bare keyword (no quotes/operators)
+          sedia("E multipart    pageSize=50   text=bioeconomy", text="bioeconomy", page_size=50, use_multipart=True)
+          # F: multipart, larger page
+          sedia("F multipart    pageSize=100  text='***'", text="***", page_size=100, use_multipart=True)
+
+          # --- CELLAR SPARQL (never reached before: the job died on SEDIA first) ---
+          CELLAR = "https://publications.europa.eu/webapi/rdf/sparql"
+          sparql = """
+          PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+          PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+          SELECT DISTINCT ?work ?title ?date ?celex WHERE {
+            ?work cdm:work_date_document ?date .
+            OPTIONAL { ?work cdm:resource_legal_id_celex ?celex . }
+            ?exp cdm:expression_belongs_to_work ?work .
+            ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
+            ?exp cdm:expression_title ?title .
+            FILTER(CONTAINS(LCASE(STR(?title)), "bioeconomy"))
+            FILTER(?date >= "2015-01-01"^^xsd:date)
+          } LIMIT 5"""
+          try:
+              r = requests.get(CELLAR,
+                               params={"query": sparql,
+                                       "format": "application/sparql-results+json"},
+                               headers={"Accept": "application/sparql-results+json"},
+                               timeout=120)
+              show("G CELLAR SPARQL minimal", r)
+          except Exception as exc:
+              print(f"\n=== G CELLAR SPARQL minimal\n    EXCEPTION {exc!r}")
+          PY
