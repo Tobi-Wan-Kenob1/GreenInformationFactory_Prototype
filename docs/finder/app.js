@@ -127,8 +127,13 @@
     for (const kind of ['policy', 'grant']) {
       const docs = S.docs.filter(d => d.kind === kind);
       const el = $(kind === 'policy' ? 'list-policies' : 'list-grants');
+      const f = S.filters;
+      const narrowed = f.from > 2015 || f.to < new Date().getFullYear();
       el.innerHTML = docs.length ? docs.map(docCard).join('')
-        : '<div class="empty">No matches for these keywords.</div>';
+        : `<div class="empty">No matches for these keywords${narrowed
+            ? ` in ${f.from}–${f.to}. Cached data may not reach that far back — widen
+               the window, or re-run when the live sources are reachable`
+            : ''}.</div>`;
       $(kind === 'policy' ? 'cnt-policies' : 'cnt-grants').textContent = String(docs.length);
     }
     document.querySelectorAll('.doclist input[type=checkbox]').forEach(cb =>
