@@ -1,0 +1,102 @@
+name: Finder API probe (diagnostic)
+
+# TEMPORARY DIAGNOSTIC for P1 (search quality). Policies are currently matched
+# on the English title only and carry an empty summary, so the Stage-3 topic
+# analytics for the policy corpus runs on ~10 words per document.
+# This probe checks what else CELLAR can give us per work:
+#   - EuroVoc subject descriptors (cdm:work_is_about) + their English labels
+#   - any abstract / summary-ish property
+# Delete once the enrichment is settled.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Probe CELLAR for EuroVoc + abstracts
+        run: |
+          python - <<'PY'
+          import json
+          import requests
+
+          CELLAR = "https://publications.europa.eu/webapi/rdf/sparql"
+
+          def run(label, query, limit_chars=2500):
+              try:
+                  r = requests.get(CELLAR,
+                                   params={"query": query,
+                                           "format": "application/sparql-results+json"},
+                                   headers={"Accept": "application/sparql-results+json"},
+                                   timeout=180)
+              except Exception as exc:
+                  print(f"\n=== {label}\n    EXCEPTION {exc!r}")
+                  return None
+              print(f"\n=== {label}\n    HTTP {r.status_code}")
+              if r.status_code != 200:
+                  print("   ", r.text[:400].replace("\n", " "))
+                  return None
+              try:
+                  rows = r.json()["results"]["bindings"]
+              except Exception:
+                  print("   ", r.text[:400].replace("\n", " "))
+                  return None
+              print(f"    {len(rows)} rows")
+              out = json.dumps(rows[:6], ensure_ascii=False, indent=1)
+              print(out[:limit_chars])
+              return rows
+
+          # 1. What properties does a known work actually have? (Climate Law)
+          run("A properties of CELEX:32021R1119", """
+          PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+          SELECT DISTINCT ?p (SAMPLE(?o) AS ?example) WHERE {
+            ?work cdm:resource_legal_id_celex "32021R1119"^^<http://www.w3.org/2001/XMLSchema#string> .
+            ?work ?p ?o .
+          } GROUP BY ?p LIMIT 60""")
+
+          # 2. EuroVoc concepts attached to that work, with English labels
+          run("B EuroVoc descriptors + labels", """
+          PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+          PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+          SELECT ?concept ?label WHERE {
+            ?work cdm:resource_legal_id_celex "32021R1119"^^<http://www.w3.org/2001/XMLSchema#string> .
+            ?work cdm:work_is_about ?concept .
+            OPTIONAL { ?concept skos:prefLabel ?label . FILTER(LANG(?label) = "en") }
+          } LIMIT 30""")
+
+          # 3. Can we search BY a EuroVoc concept instead of a title substring?
+          run("C search by EuroVoc concept label", """
+          PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+          PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+          PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+          SELECT ?celex ?title ?date ?label WHERE {
+            ?concept skos:prefLabel ?label .
+            FILTER(LANG(?label) = "en" && LCASE(STR(?label)) = "biomass")
+            ?work cdm:work_is_about ?concept .
+            ?work cdm:resource_legal_id_celex ?celex .
+            ?work cdm:work_date_document ?date .
+            FILTER(?date >= "2015-01-01"^^xsd:date)
+            ?exp cdm:expression_belongs_to_work ?work .
+            ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
+            ?exp cdm:expression_title ?title .
+          } LIMIT 10""")
+
+          # 4. Is there any abstract-like text per expression?
+          run("D abstract-ish properties on the English expression", """
+          PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+          SELECT DISTINCT ?p (SAMPLE(?o) AS ?example) WHERE {
+            ?work cdm:resource_legal_id_celex "32021R1119"^^<http://www.w3.org/2001/XMLSchema#string> .
+            ?exp cdm:expression_belongs_to_work ?work .
+            ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
+            ?exp ?p ?o .
+          } GROUP BY ?p LIMIT 40""")
+          PY
