@@ -48,6 +48,27 @@ def test_code_frequencies_top_per_dimension():
     assert len(freq) == 2
 
 
+def test_code_frequencies_top_keeps_the_most_frequent_code_per_dimension():
+    """`top` limits per dimension, not globally, and keeps all three columns.
+
+    Regression: the old groupby().apply(head) dropped the grouping column on
+    pandas 3, which raised KeyError('dimension') downstream.
+    """
+    freq = code_frequencies(_codes(), top=1)
+    assert list(freq.columns) == ["dimension", "code", "papers"]
+    barriers = freq[freq["dimension"] == "barriers"]
+    drivers = freq[freq["dimension"] == "drivers"]
+    assert len(barriers) == 1 and len(drivers) == 1
+    assert barriers["code"].iloc[0] == "cost"      # 2 papers, beats "policy" (1)
+    assert drivers["code"].iloc[0] == "demand"     # 2 papers, beats "tech" (1)
+
+
+def test_code_frequencies_top_larger_than_available_is_safe():
+    freq = code_frequencies(_codes(), top=99)
+    assert set(freq["dimension"]) == {"barriers", "drivers"}
+    assert len(freq) == 4                          # cost, policy, demand, tech
+
+
 def test_code_frequencies_by_sector_pivot():
     piv = code_frequencies_by_sector(_codes(), _papers(), "barriers")
     row = piv[piv["code"] == "cost"].iloc[0]

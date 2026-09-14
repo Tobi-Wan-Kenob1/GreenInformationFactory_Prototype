@@ -55,8 +55,10 @@ def code_frequencies(
            .sort_values(["dimension", "papers"], ascending=[True, False])
            .reset_index(drop=True))
     if top is not None:
-        out = (out.groupby("dimension", group_keys=False)
-               .apply(lambda g: g.head(top)).reset_index(drop=True))
+        # Rank within each dimension. `groupby(...).apply(head)` would drop the
+        # "dimension" column in pandas 3, which excludes the grouping columns
+        # from the applied result; cumcount avoids that and is faster.
+        out = out[out.groupby("dimension").cumcount() < top].reset_index(drop=True)
     return out
 
 
