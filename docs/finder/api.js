@@ -18,7 +18,7 @@
 
   // The search API answers 400 ("Result size limit 100mb has been reached")
   // above this page size, and 500 for multipart bodies — send form-urlencoded.
-  const MAX_PAGE_SIZE = 50;
+  const PAGE_SIZE = 25;
   const STATUS = { forthcoming: '31094501', open: '31094502', closed: '31094503' };
 
   // Default window: everything from 2015 to today, closed calls included.
@@ -112,13 +112,10 @@
 
   /* ---------- live: Horizon grants via SEDIA search API ---------- */
 
-  async function liveGrants(keywords, flt) {
-    const text = keywords.map(k => '"' + k + '"').join(' OR ');
-    const statuses = [STATUS.forthcoming, STATUS.open];
-    if (flt.includeClosed) statuses.push(STATUS.closed);
-
-    // type 1 = grant call topics. The body must be form-urlencoded: a
-    // multipart FormData body makes the API answer 500.
+  // One request per keyword: the API caps the whole matched result set at
+  // 100 MB, and a broad "a OR b OR c…" query exceeds it (HTTP 400) whatever
+  // the page size. The body must be form-urlencoded — multipart returns 500.
+  async function sediaSearch(keyword, statuses) {
     const body = new URLSearchParams({
       query: JSON.stringify({
         bool: { must: [{ terms: { type: ['1'] } }, { terms: { status: statuses } }] }
@@ -126,14 +123,38 @@
       languages: JSON.stringify(['en']),
       sort: JSON.stringify({ field: 'sortStatus', order: 'DESC' })
     });
-    const url = SEDIA_URL + '?apiKey=SEDIA&pageNumber=1&pageSize=' + MAX_PAGE_SIZE +
-                '&text=' + encodeURIComponent(text);
+    const url = SEDIA_URL + '?apiKey=SEDIA&pageNumber=1&pageSize=' + PAGE_SIZE +
+                '&text=' + encodeURIComponent('"' + keyword + '"');
     const resp = await timeoutFetch(url, { method: 'POST', body: body });
     if (!resp.ok) throw new Error('SEDIA HTTP ' + resp.status);
-    const json = await resp.json();
-    return (json.results || [])
-      .map(r => normalizeGrant(r, 'live'))
-      .filter(d => inWindow(d, flt));
+    return (await resp.json()).results || [];
+  }
+
+  async function liveGrants(keywords, flt) {
+    const statuses = [STATUS.forthcoming, STATUS.open];
+    if (flt.includeClosed) statuses.push(STATUS.closed);
+
+    const settled = await Promise.all(keywords.map(k =>
+      sediaSearch(k, statuses).then(
+        results => ({ k: k, results: results }),
+        err => ({ k: k, err: err }))));
+
+    const failed = settled.filter(s => s.err);
+    if (failed.length === settled.length) {
+      throw new Error(failed[0].err.message);      // every keyword failed
+    }
+    const seen = new Set();
+    const out = [];
+    for (const s of settled) {
+      for (const r of s.results || []) {
+        const d = normalizeGrant(r, 'live');
+        if (seen.has(d.id) || !inWindow(d, flt)) continue;
+        seen.add(d.id);
+        d.matchedKeyword = s.k;
+        out.push(d);
+      }
+    }
+    return out;
   }
 
   /* ---------- live: EU policies via CELLAR SPARQL ---------- */

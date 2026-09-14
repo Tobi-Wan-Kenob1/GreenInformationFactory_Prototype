@@ -58,52 +58,95 @@ def test_normalize_grant_full():
     assert "topic-details/horizon-cl6-2025-circbio-01-1" in doc["url"]
 
 
-def test_fetch_grants_caps_page_size_and_posts_form_encoded(monkeypatch):
-    """The API 400s above pageSize=50 and 500s on multipart bodies."""
-    seen = {}
+class FakeResp:
+    """Minimal stand-in for a requests.Response."""
 
-    class FakeResp:
-        status_code = 200
+    def __init__(self, results=(), status_code=200, text=""):
+        self.status_code = status_code
+        self.text = text
+        self._results = list(results)
 
-        def raise_for_status(self):
-            pass
+    def json(self):
+        return {"results": self._results}
 
-        def json(self):
-            return {"results": []}
+
+def _record_posts(monkeypatch, responder):
+    """Capture every SEDIA request; `responder(text)` supplies the response."""
+    calls = []
 
     def fake_post(url, params=None, data=None, files=None, timeout=None):
-        seen.update(params=params, data=data, files=files)
-        return FakeResp()
+        calls.append({"params": params, "data": data, "files": files})
+        return responder(params["text"])
 
     monkeypatch.setattr(fd.requests, "post", fake_post)
-    fd.fetch_grants(["biomass"], page_size=100)
+    return calls
 
-    assert int(seen["params"]["pageSize"]) <= fd.MAX_PAGE_SIZE
-    assert seen["files"] is None            # multipart → 500 from the API
-    assert "query" in seen["data"]          # form-urlencoded payload
+
+def test_fetch_grants_queries_one_keyword_at_a_time(monkeypatch):
+    """A combined OR query blows the API's 100mb result-set limit."""
+    calls = _record_posts(monkeypatch, lambda text: FakeResp())
+    fd.fetch_grants(["biomass", "soil", "carbon capture"])
+
+    assert len(calls) == 3
+    texts = [c["params"]["text"] for c in calls]
+    assert texts == ['"biomass"', '"soil"', '"carbon capture"']
+    assert not any(" OR " in t for t in texts)
+
+
+def test_fetch_grants_caps_page_size_and_posts_form_encoded(monkeypatch):
+    calls = _record_posts(monkeypatch, lambda text: FakeResp())
+    fd.fetch_grants(["biomass"], page_size=500)
+
+    assert int(calls[0]["params"]["pageSize"]) <= fd.MAX_PAGE_SIZE
+    assert calls[0]["files"] is None        # multipart → 500 from the API
+    assert "query" in calls[0]["data"]      # form-urlencoded payload
+
+
+def test_fetch_grants_keeps_other_keywords_when_one_fails(monkeypatch):
+    def responder(text):
+        if "soil" in text:
+            return FakeResp(status_code=400, text="Result size limit 100mb has been reached")
+        return FakeResp([{"metadata": {"identifier": ["T-" + text.strip('"')]}}])
+
+    _record_posts(monkeypatch, responder)
+    docs = fd.fetch_grants(["biomass", "soil", "carbon capture"])
+
+    ids = {d["id"] for d in docs}
+    assert ids == {"g:T-biomass", "g:T-carbon capture"}
+    assert all(d["matchedKeyword"] in ("biomass", "carbon capture") for d in docs)
+
+
+def test_fetch_grants_raises_only_when_every_keyword_fails(monkeypatch):
+    _record_posts(monkeypatch,
+                  lambda text: FakeResp(status_code=400, text="Result size limit 100mb"))
+    with pytest.raises(RuntimeError, match="every keyword query failed"):
+        fd.fetch_grants(["biomass", "soil"])
+
+
+def test_fetch_grants_error_surfaces_api_message(monkeypatch):
+    _record_posts(monkeypatch,
+                  lambda text: FakeResp(status_code=400, text="Result size limit 100mb"))
+    with pytest.raises(RuntimeError, match="Result size limit 100mb"):
+        fd.fetch_grants(["biomass"])
+
+
+def test_fetch_grants_deduplicates_across_keywords(monkeypatch):
+    same = [{"metadata": {"identifier": ["SHARED-1"]}}]
+    _record_posts(monkeypatch, lambda text: FakeResp(same))
+    docs = fd.fetch_grants(["biomass", "soil"])
+    assert len(docs) == 1
+    assert docs[0]["matchedKeyword"] == "biomass"     # first keyword wins
 
 
 def test_fetch_grants_can_exclude_closed_calls(monkeypatch):
-    seen = {}
-
-    class FakeResp:
-        def raise_for_status(self):
-            pass
-
-        def json(self):
-            return {"results": []}
-
-    monkeypatch.setattr(
-        fd.requests, "post",
-        lambda url, params=None, data=None, files=None, timeout=None:
-            (seen.update(data=data), FakeResp())[1])
+    calls = _record_posts(monkeypatch, lambda text: FakeResp())
 
     fd.fetch_grants(["biomass"], include_closed=False)
-    assert fd.STATUS_CLOSED not in seen["data"]["query"]
-    assert fd.STATUS_OPEN in seen["data"]["query"]
+    assert fd.STATUS_CLOSED not in calls[-1]["data"]["query"]
+    assert fd.STATUS_OPEN in calls[-1]["data"]["query"]
 
     fd.fetch_grants(["biomass"], include_closed=True)
-    assert fd.STATUS_CLOSED in seen["data"]["query"]
+    assert fd.STATUS_CLOSED in calls[-1]["data"]["query"]
 
 
 def test_normalize_grant_sparse_is_safe():

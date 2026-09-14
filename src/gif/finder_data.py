@@ -32,8 +32,11 @@ CELLAR_URL = "https://publications.europa.eu/webapi/rdf/sparql"
 TIMEOUT = 60
 
 #: Largest page the SEDIA search API will serve. Anything above this comes
-#: back as ``400 … Result size limit 100mb has been reached``.
+#: back as ``400 … Result size limit 100mb has been reached``. The limit is on
+#: the whole matched result set, not just the page, so broad multi-keyword
+#: queries trip it even at this size — hence one request per keyword below.
 MAX_PAGE_SIZE = 50
+DEFAULT_PAGE_SIZE = 25
 
 #: SEDIA status codes for call topics.
 STATUS_FORTHCOMING, STATUS_OPEN, STATUS_CLOSED = "31094501", "31094502", "31094503"
@@ -106,45 +109,73 @@ def normalize_grant(result: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def fetch_grants(keywords: Iterable[str], page_size: int = MAX_PAGE_SIZE,
-                 pages: int = 2, include_closed: bool = True) -> List[Dict[str, Any]]:
-    """Query SEDIA for grant call topics matching any of the keywords.
+def _sedia_search(text: str, page_size: int, page: int,
+                  statuses: List[str]) -> List[Dict[str, Any]]:
+    """One SEDIA search request. Raises with the API's own message on error.
 
-    ``page_size`` is capped at :data:`MAX_PAGE_SIZE`: the API rejects larger
-    pages with ``400 … Result size limit 100mb has been reached``.
-    The payload must be form-urlencoded — multipart bodies make the API
-    answer ``500 An internal error occurred``.
+    The payload must be form-urlencoded — multipart bodies make the API answer
+    ``500 An internal error occurred``.
     """
-    page_size = min(page_size, MAX_PAGE_SIZE)
-    text = " OR ".join(f'"{k}"' for k in keywords)
-    statuses = [STATUS_FORTHCOMING, STATUS_OPEN]
-    if include_closed:
-        statuses.append(STATUS_CLOSED)
     query = {"bool": {"must": [
         {"terms": {"type": ["1"]}},
         {"terms": {"status": statuses}},
     ]}}
+    resp = requests.post(
+        SEDIA_URL,
+        params={"apiKey": "SEDIA", "text": text,
+                "pageSize": str(page_size), "pageNumber": str(page)},
+        data={"query": json.dumps(query),
+              "languages": json.dumps(["en"]),
+              "sort": json.dumps({"field": "sortStatus", "order": "DESC"})},
+        timeout=TIMEOUT,
+    )
+    if resp.status_code >= 400:
+        # Surface the API's explanation, not just the status code.
+        raise RuntimeError(f"SEDIA HTTP {resp.status_code}: {resp.text[:200]}")
+    return resp.json().get("results") or []
+
+
+def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
+                 pages: int = 1, include_closed: bool = True) -> List[Dict[str, Any]]:
+    """Query SEDIA for grant call topics matching the keywords.
+
+    One request **per keyword** rather than a single ``OR`` query: the API
+    enforces a 100 MB limit on the whole matched result set, and a broad
+    multi-keyword query exceeds it (``400 … Result size limit 100mb has been
+    reached``) regardless of page size. Per-keyword queries stay well inside
+    the limit and let one bad keyword fail without losing the rest.
+    """
+    page_size = min(page_size, MAX_PAGE_SIZE)
+    statuses = [STATUS_FORTHCOMING, STATUS_OPEN]
+    if include_closed:
+        statuses.append(STATUS_CLOSED)
+
     docs: List[Dict[str, Any]] = []
     seen: set = set()
-    for page in range(1, pages + 1):
-        resp = requests.post(
-            SEDIA_URL,
-            params={"apiKey": "SEDIA", "text": text,
-                    "pageSize": str(page_size), "pageNumber": str(page)},
-            data={"query": json.dumps(query),
-                  "languages": json.dumps(["en"]),
-                  "sort": json.dumps({"field": "sortStatus", "order": "DESC"})},
-            timeout=TIMEOUT,
-        )
-        resp.raise_for_status()
-        results = resp.json().get("results") or []
-        for r in results:
-            doc = normalize_grant(r)
-            if doc["id"] not in seen:
-                seen.add(doc["id"])
-                docs.append(doc)
-        if len(results) < page_size:
-            break
+    failures: List[str] = []
+    keywords = list(keywords)
+
+    for keyword in keywords:
+        for page in range(1, pages + 1):
+            try:
+                results = _sedia_search(f'"{keyword}"', page_size, page, statuses)
+            except Exception as exc:                  # noqa: BLE001 - collected below
+                failures.append(f"{keyword}: {exc}")
+                break
+            for r in results:
+                doc = normalize_grant(r)
+                if doc["id"] not in seen:
+                    seen.add(doc["id"])
+                    doc["matchedKeyword"] = keyword
+                    docs.append(doc)
+            if len(results) < page_size:
+                break
+
+    if failures and not docs:
+        raise RuntimeError("every keyword query failed — " + "; ".join(failures))
+    if failures:
+        print(f"  warning: {len(failures)}/{len(keywords)} keyword queries failed: "
+              + "; ".join(failures))
     return docs
 
 
