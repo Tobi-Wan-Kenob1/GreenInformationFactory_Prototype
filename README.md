@@ -136,11 +136,15 @@ GitHub Pages:
    localStorage, tagged with the time window they were built from).
 5. **Metrics** — potential funding (25–100 % of summed call budgets),
    indicative cost savings (avoided ETS/carbon costs, fines, waste, energy and
-   input costs), and an assumption-based CO₂ mitigation index, each with
-   uncertainty ranges. Every scenario gets a data-completeness confidence
-   rating (capped at 75/100 — it is a keyword screening, not a verified
-   analysis) and a "how to proceed" recommendation with exemplary operational
-   first steps per sector. CSV/JSON export.
+   input costs), a relative CO₂ mitigation index, and **indicative
+   abatement**: the scenario's own funding scaled by typical European
+   abatement costs (€/tCO₂e) and a deployment factor, so the figure changes
+   with the portfolio instead of restating a global sectoral total. A one-way
+   **sensitivity** panel shows which assumptions drive each result and how far
+   it swings across the input bands. Every scenario gets a data-completeness
+   confidence rating (capped at 75/100 — it is a keyword screening, not a
+   verified analysis) and a "how to proceed" recommendation with exemplary
+   operational first steps per sector. CSV/JSON export.
 
 All assumptions are transparent and editable in
 `docs/finder/data/co2_assumptions.json` (CO₂ ranges after IPCC AR6 WGIII
