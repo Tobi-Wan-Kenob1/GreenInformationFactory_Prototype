@@ -38,12 +38,11 @@
     return !y || (y >= flt.from && y <= flt.to);
   }
 
-  /* ---------- keyword expansion ----------
+  /* ---------- keyword expansion (orthographic) ----------
    * EUR-Lex matching is a raw substring test, so "bioeconomy" alone misses
-   * "bio-economy" and "bio economy". Expand each keyword into the spellings
-   * EU documents actually use. Deliberately conservative: orthographic
-   * variants and a naive plural, never semantic synonyms — those would widen
-   * recall in ways the user did not ask for. */
+   * "bio-economy" and "bio economy". This layer handles spelling only —
+   * hyphenation, compounding and plurals. Meaning-level expansion lives in the
+   * thesaurus below, so the two can be reasoned about (and switched) apart. */
   const COMPOUND_PREFIXES = ['bio', 'agro', 'eco', 'geo', 'micro', 'nano', 'multi'];
 
   function expandKeyword(keyword) {
@@ -69,13 +68,59 @@
       }
     }
     if (/[^aeiours]s$/.test(base)) add(base.slice(0, -1));   // biofuels → biofuel
+    else if (/[^aeiou]y$/.test(base)) add(base.slice(0, -1) + 'ies');  // slurry → slurries
     else if (!/s$/.test(base)) add(base + 's');
     return out;
   }
 
-  function expandAll(keywords) {
+  /* ---------- plain-language ↔ jargon thesaurus ----------
+   * EU acts and call topics are written in a register nobody searches in: the
+   * practitioner types "muck", the document says "organic fertiliser". The
+   * thesaurus groups terms that should return the same documents, and the
+   * expansion is bidirectional (typing the jargon also finds the plain word,
+   * since grant abstracts are often plainer than legal titles). */
+  let THESAURUS = null;          // {normalised term -> group terms}
+  let thesaurusMeta = null;
+
+  function normTerm(t) {
+    return String(t || '').toLowerCase().replace(/[\s\-_]+/g, ' ').trim();
+  }
+
+  function loadThesaurus(json) {
+    const index = {};
+    for (const group of (json && json.groups) || []) {
+      const terms = group.terms || [];
+      for (const t of terms) index[normTerm(t)] = terms;
+    }
+    THESAURUS = index;
+    thesaurusMeta = json || null;
+    return Object.keys(index).length;
+  }
+
+  /* Synonyms of a keyword (excluding itself), [] when expansion is off or the
+   * keyword is not in the thesaurus. */
+  function synonymsFor(keyword) {
+    if (!THESAURUS) return [];
+    const group = THESAURUS[normTerm(keyword)];
+    if (!group) return [];
+    const self = normTerm(keyword);
+    return group.filter(t => normTerm(t) !== self);
+  }
+
+  /* Full expansion of one keyword: synonyms (if enabled) then orthographic
+   * variants of each. */
+  function expandFully(keyword, useSynonyms) {
+    const bases = [keyword].concat(useSynonyms === false ? [] : synonymsFor(keyword));
     const out = [];
-    (keywords || []).forEach(k => expandKeyword(k).forEach(v => {
+    bases.forEach(b => expandKeyword(b).forEach(v => {
+      if (out.indexOf(v) === -1) out.push(v);
+    }));
+    return out;
+  }
+
+  function expandAll(keywords, useSynonyms) {
+    const out = [];
+    (keywords || []).forEach(k => expandFully(k, useSynonyms).forEach(v => {
       if (out.indexOf(v) === -1) out.push(v);
     }));
     return out;
@@ -86,15 +131,20 @@
    * which is not relevance to *these* keywords. Score client-side: a title hit
    * outweighs a body hit, matching several keywords outweighs matching one,
    * and recency only breaks ties. */
-  function scoreDoc(doc, keywords) {
+  function scoreDoc(doc, keywords, useSynonyms) {
     const title = String(doc.title || '').toLowerCase();
     const body = (title + ' ' + String(doc.summary || '')).toLowerCase();
     const matched = [];
     let score = 0;
     for (const k of keywords || []) {
-      const variants = expandKeyword(k);
-      if (variants.some(v => title.indexOf(v) !== -1)) { score += 3; matched.push(k); }
-      else if (variants.some(v => body.indexOf(v) !== -1)) { score += 1; matched.push(k); }
+      // A hit on the keyword itself outranks a hit on one of its synonyms.
+      const own = expandKeyword(k);
+      const syn = useSynonyms === false ? []
+        : synonymsFor(k).reduce((a, s) => a.concat(expandKeyword(s)), []);
+      if (anyTermIn(own, title)) { score += 3; matched.push(k); }
+      else if (anyTermIn(own, body)) { score += 1.5; matched.push(k); }
+      else if (anyTermIn(syn, title)) { score += 1.5; matched.push(k + '~'); }
+      else if (anyTermIn(syn, body)) { score += 0.75; matched.push(k + '~'); }
     }
     if (matched.length > 1) score += 2;
     const year = parseInt(String(doc.date || '').slice(0, 4), 10);
@@ -102,9 +152,9 @@
     return { score: score, matched: matched };
   }
 
-  function rankDocs(docs, keywords) {
+  function rankDocs(docs, keywords, useSynonyms) {
     docs.forEach(d => {
-      const r = scoreDoc(d, keywords);
+      const r = scoreDoc(d, keywords, useSynonyms);
       d.relevance = r.score;
       d.matchedKeywords = r.matched;
     });
@@ -266,11 +316,21 @@
     return (await resp.json()).results || [];
   }
 
-  async function liveGrants(keywords, flt) {
+  async function liveGrants(keywords, flt, useSynonyms) {
     const statuses = [STATUS.forthcoming, STATUS.open];
     if (flt.includeClosed) statuses.push(STATUS.closed);
 
-    const settled = await Promise.all(keywords.map(k =>
+    // One request per term would be dozens once synonyms are on, so query the
+    // keyword plus its two strongest synonyms — SEDIA's own engine handles the
+    // rest of the variation through tokenisation.
+    const queryTerms = [];
+    for (const k of keywords) {
+      for (const t of [k].concat(useSynonyms === false ? [] : synonymsFor(k).slice(0, 2))) {
+        if (queryTerms.indexOf(t) === -1) queryTerms.push(t);
+      }
+    }
+
+    const settled = await Promise.all(queryTerms.map(k =>
       sediaSearch(k, statuses).then(
         results => ({ k: k, results: results }),
         err => ({ k: k, err: err }))));
@@ -296,10 +356,16 @@
 
   /* ---------- live: EU policies via CELLAR SPARQL ---------- */
 
-  function sparqlQuery(keywords, flt) {
+  // Every CONTAINS is a scan, so an over-expanded query can exceed the browser
+  // timeout on CELLAR. Cap the filter; the full expansion is still used for
+  // cached matching and ranking, which are local and cheap.
+  const MAX_SPARQL_TERMS = 40;
+
+  function sparqlQuery(keywords, flt, useSynonyms) {
     flt = normFilters(flt);
     // Substring match, so feed it every spelling variant of each keyword.
-    const filters = expandAll(keywords)
+    const filters = expandAll(keywords, useSynonyms)
+      .slice(0, MAX_SPARQL_TERMS)
       .map(v => 'CONTAINS(LCASE(STR(?title)), "' + v.replace(/["\\]/g, '') + '")')
       .join(' || ');
     // EuroVoc descriptors are the only per-act subject text CELLAR exposes
@@ -334,8 +400,8 @@ SELECT ?work ?title ?date ?type ?celex ?force
 ORDER BY DESC(?date) LIMIT 75`;
   }
 
-  async function livePolicies(keywords, flt) {
-    const url = CELLAR_URL + '?query=' + encodeURIComponent(sparqlQuery(keywords, flt)) +
+  async function livePolicies(keywords, flt, useSynonyms) {
+    const url = CELLAR_URL + '?query=' + encodeURIComponent(sparqlQuery(keywords, flt, useSynonyms)) +
                 '&format=' + encodeURIComponent('application/sparql-results+json');
     const resp = await timeoutFetch(url, { headers: { Accept: 'application/sparql-results+json' } });
     if (!resp.ok) throw new Error('CELLAR HTTP ' + resp.status);
@@ -358,12 +424,32 @@ ORDER BY DESC(?date) LIMIT 75`;
     return resp.json();
   }
 
-  function matchesKeywords(doc, keywords) {
-    const hay = (doc.title + ' ' + doc.summary).toLowerCase();
-    return expandAll(keywords).some(v => hay.indexOf(v) !== -1);
+  /* Whole-word matching. Once the thesaurus pulls in short generic words
+   * ("ground", "earth", "tip"), a substring test starts firing on
+   * "background" and "earthworks" — so match on word boundaries instead.
+   * Regexes are cached; the same terms are tested against every document. */
+  const RE_CACHE = {};
+
+  function termRe(term) {
+    let re = RE_CACHE[term];
+    if (!re) {
+      const escaped = String(term).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
+      re = RE_CACHE[term] = new RegExp('\\b' + escaped, 'i');
+    }
+    return re;
   }
 
-  async function cachedDocs(kind, keywords, flt) {
+  function anyTermIn(terms, text) {
+    for (const t of terms) if (termRe(t).test(text)) return true;
+    return false;
+  }
+
+  function matchesKeywords(doc, keywords, useSynonyms) {
+    const hay = (doc.title + ' ' + doc.summary).toLowerCase();
+    return anyTermIn(expandAll(keywords, useSynonyms), hay);
+  }
+
+  async function cachedDocs(kind, keywords, flt, useSynonyms) {
     // Snapshot written by the GitHub Action first, bundled demo sample last.
     const paths = kind === 'grant'
       ? ['data/grants.json', 'data/sample_grants.json']
@@ -374,7 +460,8 @@ ORDER BY DESC(?date) LIMIT 75`;
         const isSample = p.indexOf('sample_') !== -1;
         const items = rankDocs((json.items || [])
           .map(d => Object.assign({}, d, { source: isSample ? 'sample' : 'cache' }))
-          .filter(d => matchesKeywords(d, keywords) && inWindow(d, flt)), keywords);
+          .filter(d => matchesKeywords(d, keywords, useSynonyms) && inWindow(d, flt)),
+          keywords, useSynonyms);
         return { items, snapshot: p, isSample, generated: json.generated || null };
       } catch (e) { /* try next path */ }
     }
@@ -383,24 +470,24 @@ ORDER BY DESC(?date) LIMIT 75`;
 
   /* ---------- public API: live with cache fallback ---------- */
 
-  async function search(kind, keywords, filters) {
+  async function search(kind, keywords, filters, useSynonyms) {
     const flt = normFilters(filters);
     const liveFn = kind === 'grant' ? liveGrants : livePolicies;
     const window_ = flt.from + '–' + flt.to;
     try {
-      const items = rankDocs(await liveFn(keywords, flt), keywords);
+      const items = rankDocs(await liveFn(keywords, flt, useSynonyms), keywords, useSynonyms);
       if (items.length > 0) {
         return { items, tier: 'live', detail: 'live API, ' + window_ };
       }
       // Live worked but returned nothing — offer cached matches as a hint.
-      const c = await cachedDocs(kind, keywords, flt);
+      const c = await cachedDocs(kind, keywords, flt, useSynonyms);
       return c.items.length
         ? { items: c.items, tier: c.isSample ? 'sample' : 'cache',
             detail: 'live returned 0 for ' + window_ + ', showing ' +
                     (c.isSample ? 'bundled demo data' : 'snapshot') + ' (' + c.snapshot + ')' }
         : { items: [], tier: 'live', detail: 'live API, no matches in ' + window_ };
     } catch (err) {
-      const c = await cachedDocs(kind, keywords, flt);
+      const c = await cachedDocs(kind, keywords, flt, useSynonyms);
       return {
         items: c.items,
         tier: c.snapshot ? (c.isSample ? 'sample' : 'cache') : 'err',
@@ -418,8 +505,11 @@ ORDER BY DESC(?date) LIMIT 75`;
     loadJson,
     normFilters,
     expandKeyword,
+    loadThesaurus,
+    synonymsFor,
+    expandFully,
     _internal: { extractBudgetEUR, normalizeGrant, normalizePolicyBinding, sparqlQuery,
                  matchesKeywords, inWindow, isCallTopic, budgetYearTotals,
-                 expandAll, scoreDoc, rankDocs }
+                 expandAll, scoreDoc, rankDocs, normTerm }
   };
 })();

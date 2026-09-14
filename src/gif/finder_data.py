@@ -305,24 +305,76 @@ def expand_keyword(keyword: str) -> List[str]:
             add(prefix + " " + base[len(prefix):])
     if re.search(r"[^aeiours]s$", base):
         add(base[:-1])                      # biofuels → biofuel
+    elif re.search(r"[^aeiou]y$", base):
+        add(base[:-1] + "ies")              # slurry → slurries
     elif not base.endswith("s"):
         add(base + "s")
     return out
 
 
-def expand_keywords(keywords: Iterable[str]) -> List[str]:
-    """Flatten expand_keyword over several keywords, preserving order."""
+def load_thesaurus(path: Optional[Path] = None) -> Dict[str, List[str]]:
+    """Index ``keyword_thesaurus.json`` as normalised term → group terms.
+
+    Mirrors ``loadThesaurus`` in ``docs/finder/api.js``. Missing file → empty
+    index, i.e. spelling-only expansion.
+    """
+    root = find_repo_root()
+    path = path or (root / "docs" / "finder" / "data" / "keyword_thesaurus.json")
+    if not Path(path).exists():
+        return {}
+    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    index: Dict[str, List[str]] = {}
+    for group in payload.get("groups", []):
+        terms = group.get("terms") or []
+        for term in terms:
+            index[_norm_term(term)] = terms
+    return index
+
+
+def _norm_term(term: str) -> str:
+    return re.sub(r"[\s\-_]+", " ", str(term or "").lower()).strip()
+
+
+def synonyms_for(keyword: str, thesaurus: Optional[Dict[str, List[str]]] = None) -> List[str]:
+    """Thesaurus group of a keyword, excluding the keyword itself."""
+    thesaurus = thesaurus if thesaurus is not None else load_thesaurus()
+    group = thesaurus.get(_norm_term(keyword))
+    if not group:
+        return []
+    return [t for t in group if _norm_term(t) != _norm_term(keyword)]
+
+
+def expand_keywords(keywords: Iterable[str],
+                    thesaurus: Optional[Dict[str, List[str]]] = None,
+                    use_synonyms: bool = False) -> List[str]:
+    """Flatten expand_keyword over several keywords, preserving order.
+
+    With ``use_synonyms`` the thesaurus groups are folded in first, so plain
+    wording reaches the jargon EU titles actually use.
+    """
     out: List[str] = []
     for keyword in keywords:
-        for variant in expand_keyword(keyword):
-            if variant not in out:
-                out.append(variant)
+        bases = [keyword]
+        if use_synonyms:
+            bases += synonyms_for(keyword, thesaurus)
+        for base in bases:
+            for variant in expand_keyword(base):
+                if variant not in out:
+                    out.append(variant)
     return out
 
 
+#: Each CONTAINS is a scan, so an over-expanded query can time the endpoint out.
+MAX_SPARQL_TERMS = 40
+
+
 def sparql_query(keywords: Iterable[str], since: str = "2015-01-01",
-                 until: Optional[str] = None, limit: int = 150) -> str:
-    variants = expand_keywords(re.sub(r'["\\\\]', "", k) for k in keywords)
+                 until: Optional[str] = None, limit: int = 150,
+                 use_synonyms: bool = False,
+                 thesaurus: Optional[Dict[str, List[str]]] = None) -> str:
+    variants = expand_keywords((re.sub(r'["\\\\]', "", k) for k in keywords),
+                               thesaurus=thesaurus,
+                               use_synonyms=use_synonyms)[:MAX_SPARQL_TERMS]
     filters = " || ".join(
         f'CONTAINS(LCASE(STR(?title)), "{v}")' for v in variants
     )

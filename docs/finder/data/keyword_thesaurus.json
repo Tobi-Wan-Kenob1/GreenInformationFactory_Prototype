@@ -1,0 +1,662 @@
+{
+  "version": "1.1",
+  "note": "Plain-language ↔ EU/academic vocabulary for the Policy & Grant Finder. EU legal acts and Horizon call topics are written in a register almost nobody searches in: a practitioner types 'muck' or 'global warming', the document says 'organic fertiliser' or 'greenhouse gas emissions'. Each group lists terms treated as interchangeable for search. Expansion is bidirectional — typing the jargon also finds the plain word, which matters because grant abstracts are often plainer than legal titles.",
+  "method": "A user keyword is normalised (lowercased, hyphens and spaces collapsed) and looked up against every term in every group. On a hit, all of that group's terms are added to the query, each then also expanded orthographically (bio-economy / bioeconomy / bio economy). Groups are kept semantically tight: they hold terms that would sensibly return the same documents, not loosely related concepts. Over-expansion costs precision, so the UI shows exactly what a keyword expanded into and lets the user switch expansion off.",
+  "scope": "agriculture and mining, EU sustainability policy and funding",
+  "groups": [
+    {
+      "label": "climate change",
+      "terms": [
+        "climate change",
+        "global warming",
+        "climate crisis",
+        "greenhouse gas emissions",
+        "ghg emissions",
+        "climate action",
+        "climate neutrality"
+      ]
+    },
+    {
+      "label": "carbon footprint",
+      "terms": [
+        "carbon footprint",
+        "emissions footprint",
+        "life-cycle assessment",
+        "lca",
+        "carbon accounting",
+        "environmental footprint"
+      ]
+    },
+    {
+      "label": "farmer",
+      "terms": [
+        "farmer",
+        "farmers",
+        "grower",
+        "agricultural holding",
+        "agricultural producer",
+        "farm holding",
+        "smallholder",
+        "small-scale farmer"
+      ]
+    },
+    {
+      "label": "farming",
+      "terms": [
+        "farming",
+        "agriculture",
+        "agricultural production",
+        "cultivation",
+        "crop production",
+        "arable farming"
+      ]
+    },
+    {
+      "label": "livestock",
+      "terms": [
+        "livestock",
+        "cattle",
+        "animals",
+        "animal husbandry",
+        "livestock farming",
+        "grazing",
+        "herd",
+        "cow",
+        "cows",
+        "pigs",
+        "sheep",
+        "poultry",
+        "dairy"
+      ]
+    },
+    {
+      "label": "manure",
+      "terms": [
+        "manure",
+        "muck",
+        "slurry",
+        "animal waste",
+        "organic fertiliser",
+        "organic fertilizer",
+        "digestate",
+        "organic amendment"
+      ]
+    },
+    {
+      "label": "fertiliser",
+      "terms": [
+        "fertiliser",
+        "fertilizer",
+        "plant nutrient",
+        "nutrient input",
+        "mineral fertiliser",
+        "nutrient management",
+        "nitrogen input"
+      ]
+    },
+    {
+      "label": "pesticide",
+      "terms": [
+        "pesticide",
+        "weedkiller",
+        "herbicide",
+        "plant protection product",
+        "crop protection",
+        "biocide"
+      ]
+    },
+    {
+      "label": "soil health",
+      "terms": [
+        "soil",
+        "soil health",
+        "soil quality",
+        "soil fertility",
+        "soil organic carbon",
+        "soil degradation",
+        "soil protection",
+        "healthy soil",
+        "dirt",
+        "earth",
+        "ground",
+        "topsoil",
+        "land quality"
+      ]
+    },
+    {
+      "label": "soil carbon storage",
+      "terms": [
+        "carbon farming",
+        "soil carbon",
+        "carbon sequestration",
+        "carbon sink",
+        "carbon removal",
+        "carbon storage in soil"
+      ]
+    },
+    {
+      "label": "crop residues",
+      "terms": [
+        "crop residues",
+        "straw",
+        "agricultural residues",
+        "leftovers",
+        "harvest residues",
+        "agricultural by-products",
+        "residual biomass",
+        "stubble",
+        "chaff",
+        "husks"
+      ]
+    },
+    {
+      "label": "food waste",
+      "terms": [
+        "food waste",
+        "food loss",
+        "leftover food",
+        "bio-waste",
+        "biowaste",
+        "organic waste"
+      ]
+    },
+    {
+      "label": "waste",
+      "terms": [
+        "waste",
+        "rubbish",
+        "trash",
+        "refuse",
+        "waste stream",
+        "residual waste",
+        "dump",
+        "landfill",
+        "disposal"
+      ]
+    },
+    {
+      "label": "recycling",
+      "terms": [
+        "recycling",
+        "recycle",
+        "reuse",
+        "material recovery",
+        "secondary raw materials",
+        "closed-loop",
+        "recovery of materials"
+      ]
+    },
+    {
+      "label": "circular economy",
+      "terms": [
+        "circular economy",
+        "circularity",
+        "resource efficiency",
+        "material efficiency",
+        "industrial symbiosis"
+      ]
+    },
+    {
+      "label": "bioeconomy",
+      "terms": [
+        "bioeconomy",
+        "bio-based economy",
+        "bio-based industry",
+        "biobased",
+        "bio-based products"
+      ]
+    },
+    {
+      "label": "biogas",
+      "terms": [
+        "biogas",
+        "biomethane",
+        "anaerobic digestion",
+        "digester",
+        "biogas plant"
+      ]
+    },
+    {
+      "label": "biorefinery",
+      "terms": [
+        "biorefinery",
+        "biomass processing",
+        "bio-based processing",
+        "biomass valorisation",
+        "valorisation"
+      ]
+    },
+    {
+      "label": "biochar",
+      "terms": [
+        "biochar",
+        "pyrolysis",
+        "charcoal",
+        "carbonised biomass"
+      ]
+    },
+    {
+      "label": "mining",
+      "terms": [
+        "mining",
+        "extractive industry",
+        "extractive industries",
+        "mineral extraction",
+        "quarry",
+        "quarrying",
+        "pit",
+        "mine",
+        "digging",
+        "excavation",
+        "earthworks",
+        "open pit",
+        "opencast"
+      ]
+    },
+    {
+      "label": "raw materials",
+      "terms": [
+        "raw materials",
+        "critical raw materials",
+        "mineral resources",
+        "metals",
+        "ores",
+        "minerals"
+      ]
+    },
+    {
+      "label": "mine waste",
+      "terms": [
+        "mine waste",
+        "tailings",
+        "spoil heap",
+        "overburden",
+        "extractive waste",
+        "mining residues"
+      ]
+    },
+    {
+      "label": "mine closure",
+      "terms": [
+        "mine closure",
+        "land rehabilitation",
+        "site remediation",
+        "post-mining",
+        "reclamation",
+        "restoration of mining sites",
+        "brownfield",
+        "clean up",
+        "clean-up",
+        "cleanup",
+        "contaminated land"
+      ]
+    },
+    {
+      "label": "coal region",
+      "terms": [
+        "coal region",
+        "carbon-intensive region",
+        "coal mining region",
+        "lignite",
+        "coal phase-out",
+        "transition region"
+      ]
+    },
+    {
+      "label": "just transition",
+      "terms": [
+        "just transition",
+        "fair transition",
+        "social fairness",
+        "leaving no one behind",
+        "affected workers",
+        "transition support"
+      ]
+    },
+    {
+      "label": "jobs and skills",
+      "terms": [
+        "jobs",
+        "employment",
+        "workers",
+        "retraining",
+        "reskilling",
+        "upskilling",
+        "vocational training",
+        "skills development",
+        "training",
+        "apprenticeship",
+        "job losses",
+        "layoffs"
+      ]
+    },
+    {
+      "label": "funding",
+      "terms": [
+        "funding",
+        "money",
+        "grants",
+        "financial support",
+        "financing",
+        "financial instrument",
+        "subsidy",
+        "subsidies",
+        "co-financing",
+        "cash",
+        "budget",
+        "call for proposals",
+        "tender"
+      ]
+    },
+    {
+      "label": "common agricultural policy",
+      "terms": [
+        "common agricultural policy",
+        "cap",
+        "direct payments",
+        "farm subsidies",
+        "rural development programme",
+        "eco-scheme"
+      ]
+    },
+    {
+      "label": "rules and law",
+      "terms": [
+        "rules",
+        "law",
+        "legislation",
+        "regulatory framework",
+        "legal requirements",
+        "compliance",
+        "obligations"
+      ]
+    },
+    {
+      "label": "red tape",
+      "terms": [
+        "red tape",
+        "bureaucracy",
+        "administrative burden",
+        "simplification",
+        "permitting procedure",
+        "authorisation procedure"
+      ]
+    },
+    {
+      "label": "permit",
+      "terms": [
+        "permit",
+        "licence",
+        "license",
+        "authorisation",
+        "consent",
+        "permitting"
+      ]
+    },
+    {
+      "label": "monitoring and reporting",
+      "terms": [
+        "monitoring",
+        "reporting",
+        "measurement",
+        "mrv",
+        "verification",
+        "monitoring and reporting",
+        "data collection"
+      ]
+    },
+    {
+      "label": "certification",
+      "terms": [
+        "certification",
+        "labelling",
+        "eco-label",
+        "standard",
+        "traceability",
+        "chain of custody",
+        "accreditation"
+      ]
+    },
+    {
+      "label": "water",
+      "terms": [
+        "water",
+        "irrigation",
+        "water use",
+        "water abstraction",
+        "water resources",
+        "freshwater",
+        "sewage",
+        "waste water",
+        "wastewater",
+        "effluent"
+      ]
+    },
+    {
+      "label": "water scarcity",
+      "terms": [
+        "drought",
+        "water scarcity",
+        "water stress",
+        "dry spell",
+        "aridity"
+      ]
+    },
+    {
+      "label": "flooding",
+      "terms": [
+        "flood",
+        "flooding",
+        "inundation",
+        "water retention",
+        "flood risk"
+      ]
+    },
+    {
+      "label": "pollution",
+      "terms": [
+        "pollution",
+        "contamination",
+        "pollutant",
+        "emissions to air",
+        "zero pollution",
+        "dust",
+        "particulate matter",
+        "dirty air",
+        "smog",
+        "toxic",
+        "heavy metals"
+      ]
+    },
+    {
+      "label": "biodiversity",
+      "terms": [
+        "biodiversity",
+        "wildlife",
+        "nature",
+        "ecosystem",
+        "habitat",
+        "species",
+        "nature restoration",
+        "ecosystem services",
+        "bees",
+        "pollinators",
+        "insects",
+        "birds"
+      ]
+    },
+    {
+      "label": "trees and forests",
+      "terms": [
+        "trees",
+        "tree planting",
+        "forest",
+        "forestry",
+        "afforestation",
+        "reforestation",
+        "woodland",
+        "hedgerow",
+        "agroforestry"
+      ]
+    },
+    {
+      "label": "rewilding",
+      "terms": [
+        "rewilding",
+        "renaturation",
+        "ecological restoration",
+        "nature-based solutions",
+        "green infrastructure"
+      ]
+    },
+    {
+      "label": "land use",
+      "terms": [
+        "land use",
+        "land management",
+        "spatial planning",
+        "land take",
+        "land cover",
+        "territorial planning"
+      ]
+    },
+    {
+      "label": "land ownership",
+      "terms": [
+        "land ownership",
+        "land tenure",
+        "land grab",
+        "land consolidation",
+        "access to land",
+        "property rights"
+      ]
+    },
+    {
+      "label": "renewable energy",
+      "terms": [
+        "renewable energy",
+        "renewables",
+        "clean energy",
+        "green energy",
+        "renewable energy sources"
+      ]
+    },
+    {
+      "label": "solar power",
+      "terms": [
+        "solar",
+        "solar panels",
+        "photovoltaic",
+        "pv",
+        "agrivoltaics",
+        "solar installation"
+      ]
+    },
+    {
+      "label": "wind power",
+      "terms": [
+        "wind power",
+        "wind energy",
+        "windmill",
+        "wind turbine",
+        "wind farm"
+      ]
+    },
+    {
+      "label": "energy efficiency",
+      "terms": [
+        "energy efficiency",
+        "energy saving",
+        "energy use",
+        "energy performance",
+        "energy consumption"
+      ]
+    },
+    {
+      "label": "carbon price",
+      "terms": [
+        "carbon price",
+        "carbon pricing",
+        "emissions trading",
+        "ets",
+        "carbon border",
+        "cbam",
+        "carbon tax",
+        "carbon cost"
+      ]
+    },
+    {
+      "label": "supply chain",
+      "terms": [
+        "supply chain",
+        "value chain",
+        "sourcing",
+        "procurement",
+        "supply chains",
+        "short supply chain"
+      ]
+    },
+    {
+      "label": "cooperative",
+      "terms": [
+        "cooperative",
+        "co-op",
+        "producer organisation",
+        "producer group",
+        "collective action",
+        "farmer organisation"
+      ]
+    },
+    {
+      "label": "local community",
+      "terms": [
+        "local community",
+        "local communities",
+        "citizens",
+        "residents",
+        "public participation",
+        "citizen engagement",
+        "stakeholder involvement"
+      ]
+    },
+    {
+      "label": "rural area",
+      "terms": [
+        "rural area",
+        "rural areas",
+        "countryside",
+        "rural development",
+        "remote area",
+        "rural region",
+        "village",
+        "villages",
+        "small town"
+      ]
+    },
+    {
+      "label": "digital tools",
+      "terms": [
+        "digital",
+        "digitalisation",
+        "digitisation",
+        "data space",
+        "artificial intelligence",
+        "precision farming",
+        "smart farming",
+        "digital tools"
+      ]
+    },
+    {
+      "label": "research and innovation",
+      "terms": [
+        "research",
+        "innovation",
+        "r&d",
+        "demonstration",
+        "pilot project",
+        "living lab",
+        "knowledge transfer"
+      ]
+    }
+  ]
+}

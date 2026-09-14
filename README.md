@@ -125,9 +125,15 @@ levels can slot in beside the EU ones. Other sectors are out of scope.
 A five-stage, browser-only tool (`docs/finder/`) that runs straight from
 GitHub Pages:
 
-1. **Keywords** — enter search terms, and optionally a **time window**: restrict
-   the search to a past period (presets for the Horizon 2020 and FP7 eras) to
-   benchmark an earlier setting against current research and market insights.
+1. **Keywords** — enter search terms. Search is **inclusive by default**: a
+   thesaurus (`docs/finder/data/keyword_thesaurus.json`, 53 groups) bridges
+   everyday and EU/academic wording in both directions, so “muck” finds
+   *organic fertiliser* and *digestate*, “global warming” finds *greenhouse gas
+   emissions*, “digging” finds *extractive industries*. The page shows exactly
+   what each keyword expanded into, and the expansion can be switched off.
+   Optionally set a **time window**: restrict the search to a past period
+   (presets for the Horizon 2020 and FP7 eras) to benchmark an earlier setting
+   against current research and market insights.
 2. **Search** — EU policies via the EUR-Lex/CELLAR SPARQL endpoint and Horizon
    Europe call topics via the EU Funding & Tenders search API, queried live
    from the browser with automatic fallback to JSON snapshots. The source pills
@@ -167,10 +173,14 @@ sources:
 - *EUR-Lex/CELLAR* exposes no abstract, so each act's **EuroVoc descriptors**
   (`cdm:work_is_about_concept_eurovoc`) are pulled in as its summary — that is
   what the topic analytics run on, and what a keyword is matched against
-  besides the title. Keywords are expanded into orthographic variants
-  (`bioeconomy` also matches `bio-economy` / `bio economy`), since CELLAR
-  matching is a raw substring test. Cached policies reach back to 2000, so
-  historical windows work offline.
+  besides the title. Keywords are expanded in two separate layers —
+  orthographic (`bioeconomy` also matches `bio-economy` / `bio economy`, since
+  CELLAR matching is a raw substring test) and the plain-language thesaurus —
+  so the two can be reasoned about and switched independently. Local matching
+  and ranking use whole-word boundaries, so a short thesaurus term like
+  `ground` does not fire on `background`. The SPARQL filter is capped at 40
+  terms, since every `CONTAINS` is a scan. Cached policies reach back to 2000,
+  so historical windows work offline.
 - *EU Funding & Tenders (SEDIA)* caps a query's result set at 100 MB, so the
   fetcher queries **one keyword per request** rather than a combined `OR`, and
   filters out support FAQs and tenders that the API returns despite the type
