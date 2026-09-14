@@ -53,10 +53,14 @@
 
   function first(v) { return Array.isArray(v) ? v[0] : v; }
 
-  // The API ignores the type filter we send, so support FAQs (type 3) and
-  // tenders (type 2) arrive mixed in and have to be dropped here.
+  // The API ignores the type filter we send, so support FAQs and tenders
+  // arrive mixed in. Type 1 alone is not enough — some FAQs are indexed as
+  // type 1 too; real call topics always carry a topic identifier.
   function isCallTopic(r) {
-    return String(first((r.metadata || {}).type) || '') === '1';
+    const meta = r.metadata || {};
+    return String(first(meta.type) || '') === '1' &&
+           !!first(meta.identifier) &&
+           !first(meta.esST_question);
   }
 
   // SEDIA nests the money as budgetOverview.budgetTopicActionMap.<id>[].
