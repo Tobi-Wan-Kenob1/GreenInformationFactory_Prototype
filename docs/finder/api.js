@@ -222,11 +222,16 @@
   function normalizePolicyBinding(b, source) {
     const uri = b.work ? b.work.value : '';
     const celex = b.celex ? b.celex.value : null;
+    const subjects = stripTags(b.subjects ? b.subjects.value : '');
+    const force = String((b.force && b.force.value) || '').toLowerCase();
     return {
       id: 'p:' + (celex || uri || Math.random().toString(36).slice(2)),
       kind: 'policy',
       title: stripTags(b.title ? b.title.value : uri),
-      summary: '',
+      // CELLAR has no abstract; the EuroVoc descriptors are the subject text.
+      summary: subjects,
+      subjects: subjects ? subjects.split(',').map(s => s.trim()).filter(Boolean) : [],
+      inForce: force === 'true' ? true : force === 'false' ? false : null,
       date: b.date ? String(b.date.value).slice(0, 10) : null,
       url: celex
         ? 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:' + encodeURIComponent(celex)
@@ -293,10 +298,14 @@
     const filters = expandAll(keywords)
       .map(v => 'CONTAINS(LCASE(STR(?title)), "' + v.replace(/["\\]/g, '') + '")')
       .join(' || ');
+    // EuroVoc descriptors are the only per-act subject text CELLAR exposes
+    // (there is no abstract), so they become the document summary.
     return `
 PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
+SELECT ?work ?title ?date ?type ?celex ?force
+       (GROUP_CONCAT(DISTINCT ?subject; separator=", ") AS ?subjects) WHERE {
   ?work cdm:work_date_document ?date .
   ?work cdm:work_has_resource-type ?type .
   FILTER(?type IN (
@@ -305,13 +314,20 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
     <http://publications.europa.eu/resource/authority/resource-type/DEC>,
     <http://publications.europa.eu/resource/authority/resource-type/COM>))
   OPTIONAL { ?work cdm:resource_legal_id_celex ?celex . }
+  OPTIONAL { ?work cdm:resource_legal_in-force ?force . }
+  OPTIONAL {
+    ?work cdm:work_is_about_concept_eurovoc ?concept .
+    ?concept skos:prefLabel ?subject .
+    FILTER(LANG(?subject) = "en")
+  }
   ?exp cdm:expression_belongs_to_work ?work .
   ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
   ?exp cdm:expression_title ?title .
   FILTER(${filters})
   FILTER(?date >= "${flt.from}-01-01"^^xsd:date)
   FILTER(?date <= "${flt.to}-12-31"^^xsd:date)
-} ORDER BY DESC(?date) LIMIT 75`;
+} GROUP BY ?work ?title ?date ?type ?celex ?force
+ORDER BY DESC(?date) LIMIT 75`;
   }
 
   async function livePolicies(keywords, flt) {

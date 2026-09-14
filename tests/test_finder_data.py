@@ -244,7 +244,42 @@ def _binding(celex="32021R1119"):
         "date": {"value": "2021-06-30"},
         "type": {"value": "http://publications.europa.eu/resource/authority/resource-type/REG"},
         "celex": {"value": celex},
+        "subjects": {"value": "climate change, greenhouse gas, reduction of gas emissions"},
+        "force": {"value": "true"},
     }
+
+
+def test_normalize_policy_uses_eurovoc_subjects_as_summary():
+    """CELLAR has no abstract, so the EuroVoc descriptors carry the topic signal."""
+    doc = fd.normalize_policy(_binding())
+    assert "climate change" in doc["summary"]
+    assert doc["subjects"] == ["climate change", "greenhouse gas",
+                               "reduction of gas emissions"]
+    assert doc["inForce"] is True
+
+
+def test_normalize_policy_without_subjects_or_force():
+    b = _binding()
+    del b["subjects"]
+    del b["force"]
+    doc = fd.normalize_policy(b)
+    assert doc["summary"] == ""
+    assert doc["subjects"] == []
+    assert doc["inForce"] is None
+
+
+def test_normalize_policy_marks_repealed_acts():
+    b = _binding()
+    b["force"] = {"value": "false"}
+    assert fd.normalize_policy(b)["inForce"] is False
+
+
+def test_sparql_query_requests_eurovoc_subjects():
+    q = fd.sparql_query(["biomass"])
+    assert "work_is_about_concept_eurovoc" in q
+    assert "GROUP_CONCAT" in q
+    assert "GROUP BY" in q
+    assert "skos:prefLabel" in q
 
 
 def test_normalize_policy_with_celex():
@@ -272,6 +307,40 @@ def test_sparql_query_contains_keywords_and_guards():
     assert "LIMIT 42" in q
     assert "resource-type/REG" in q
     assert "?date <=" not in q            # no upper bound unless asked for
+
+
+def test_expand_keyword_covers_eu_spelling_variants():
+    bio = fd.expand_keyword("bioeconomy")
+    assert "bioeconomy" in bio
+    assert "bio-economy" in bio          # the spelling EUR-Lex titles often use
+    assert "bio economy" in bio
+
+    ce = fd.expand_keyword("circular economy")
+    assert "circular-economy" in ce
+    assert "circulareconomy" in ce
+
+    assert "biofuel" in fd.expand_keyword("biofuels")     # plural → singular
+    assert "biomasss" not in fd.expand_keyword("biomass")  # no bogus plural
+
+
+def test_expand_keyword_is_conservative():
+    """Spelling variants only — no semantic widening."""
+    assert "renewables" not in fd.expand_keyword("solar")
+    assert "energy" not in fd.expand_keyword("renewable energy")
+    assert fd.expand_keyword("") == []
+
+
+def test_expand_keywords_dedupes_and_preserves_order():
+    out = fd.expand_keywords(["biomass", "biomass", "soil"])
+    assert out[0] == "biomass"
+    assert len(out) == len(set(out))
+    assert "soil" in out
+
+
+def test_sparql_query_includes_keyword_variants():
+    q = fd.sparql_query(["bioeconomy"])
+    assert '"bioeconomy"' in q
+    assert '"bio-economy"' in q
 
 
 def test_sparql_query_windows_a_past_period():
