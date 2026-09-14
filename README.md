@@ -144,9 +144,25 @@ GitHub Pages:
 
 All assumptions are transparent and editable in
 `docs/finder/data/co2_assumptions.json` (CO₂ ranges after IPCC AR6 WGIII
-SPM.7). The offline snapshot is refreshed weekly by the `finder-data`
-workflow; keywords live in `docs/finder/data/snapshot_config.json`. Design
-notes: `docs/finder/PLAN.md`.
+SPM.7). Design notes: `docs/finder/PLAN.md`.
+
+**Data sources and coverage.** The offline snapshot is refreshed weekly by the
+`finder-data` workflow (`gif finder-data`); keywords live in
+`docs/finder/data/snapshot_config.json`. Note two properties of the upstream
+sources:
+
+- *EUR-Lex/CELLAR* is matched on the English **title** only, so a policy is
+  found when a keyword appears in its title. Cached policies reach back to
+  2000, so historical windows work offline.
+- *EU Funding & Tenders (SEDIA)* caps a query's result set at 100 MB, so the
+  fetcher queries **one keyword per request** rather than a combined `OR`, and
+  filters out support FAQs and tenders that the API returns despite the type
+  filter. The portal indexes Horizon 2020 onwards, so grant results do not
+  reach back into FP7; historical grant benchmarking is limited by the source,
+  not by the tool.
+
+Generate a snapshot for a specific past period with
+`gif finder-data --since 2007-01-01 --until 2013-12-31 --out <dir>`.
 
 ## Zenodo integration (FAIR releases)
 
