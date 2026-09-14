@@ -140,13 +140,19 @@ def extract_budget_eur(meta: Dict[str, Any]) -> Optional[int]:
 
 
 def is_call_topic(result: Dict[str, Any]) -> bool:
-    """True for grant call topics (type 1).
+    """True for grant call topics.
 
     The API ignores the ``type`` filter we send in the query body, so support
-    FAQs (type 3) and tenders (type 2) arrive mixed into the results and have
-    to be dropped here.
+    FAQs and tenders arrive mixed into the results. Type 1 alone is not enough:
+    some FAQ entries are indexed as type 1 too. Real call topics always carry a
+    topic ``identifier`` (e.g. ``BBI-2016-S04``) and never an FAQ question.
     """
-    return str(_first((result.get("metadata") or {}).get("type")) or "") == "1"
+    meta = result.get("metadata") or {}
+    if str(_first(meta.get("type")) or "") != "1":
+        return False
+    if not _first(meta.get("identifier")):
+        return False
+    return not _first(meta.get("esST_question"))
 
 
 def normalize_grant(result: Dict[str, Any]) -> Dict[str, Any]:

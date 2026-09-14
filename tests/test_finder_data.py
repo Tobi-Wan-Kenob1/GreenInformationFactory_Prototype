@@ -50,10 +50,22 @@ def test_extract_budget_from_indicative_free_text():
 
 
 def test_is_call_topic_filters_faqs_and_tenders():
-    assert fd.is_call_topic({"metadata": {"type": ["1"]}}) is True
-    assert fd.is_call_topic({"metadata": {"type": ["3"]}}) is False   # support FAQ
-    assert fd.is_call_topic({"metadata": {"type": ["2"]}}) is False   # tender
+    topic = {"metadata": {"type": ["1"], "identifier": ["BBI-2016-S04"]}}
+    assert fd.is_call_topic(topic) is True
+    assert fd.is_call_topic({"metadata": {"type": ["3"], "identifier": ["x"]}}) is False
+    assert fd.is_call_topic({"metadata": {"type": ["2"], "identifier": ["x"]}}) is False
     assert fd.is_call_topic({"metadata": {}}) is False
+
+
+def test_is_call_topic_rejects_faqs_indexed_as_type_1():
+    """Some FAQ entries carry type 1; they have no topic identifier."""
+    faq = {"metadata": {"type": ["1"], "esST_nid": ["11815"],
+                        "esST_question": ["Can the proposal use biomass plus plastic?"]}}
+    assert fd.is_call_topic(faq) is False
+    # even with an identifier, an FAQ question disqualifies it
+    faq_with_id = dict(faq)
+    faq_with_id["metadata"] = dict(faq["metadata"], identifier=["11815"])
+    assert fd.is_call_topic(faq_with_id) is False
 
 
 def test_fetch_grants_drops_non_topic_results(monkeypatch):
