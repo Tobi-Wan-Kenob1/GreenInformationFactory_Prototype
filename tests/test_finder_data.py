@@ -425,6 +425,57 @@ def test_load_snapshot_keywords_defaults_without_config(tmp_path):
     assert fd.load_snapshot_keywords(tmp_path) == list(fd.DEFAULT_KEYWORDS)
 
 
+def test_date_buckets_split_the_window():
+    buckets = fd.date_buckets("2000-01-01", "2014-12-31", span_years=5)
+    assert buckets == [("2000-01-01", "2004-12-31"),
+                       ("2005-01-01", "2009-12-31"),
+                       ("2010-01-01", "2014-12-31")]
+
+
+def test_date_buckets_handle_short_and_inverted_windows():
+    assert fd.date_buckets("2020-01-01", "2020-12-31", 5) == [("2020-01-01", "2020-12-31")]
+    # an inverted window must not loop forever or return nothing
+    assert len(fd.date_buckets("2020-01-01", "2010-12-31", 5)) == 1
+
+
+def test_fetch_policies_samples_every_period(monkeypatch):
+    """ORDER BY DESC + LIMIT returns only the newest slice for broad keywords,
+    so each period is queried separately or historical depth is lost."""
+    asked = []
+
+    def fake_query(keywords, since, until, limit):
+        asked.append((since[:4], until[:4]))
+        year = since[:4]
+        return [{"id": f"p:{year}", "kind": "policy", "date": f"{year}-06-01"}]
+
+    monkeypatch.setattr(fd, "_cellar_query", fake_query)
+    docs = fd.fetch_policies(["mining"], since="2000-01-01", until="2019-12-31",
+                             span_years=5)
+
+    assert [a[0] for a in asked] == ["2000", "2005", "2010", "2015"]
+    assert {d["id"] for d in docs} == {"p:2000", "p:2005", "p:2010", "p:2015"}
+    assert [d["date"] for d in docs] == sorted((d["date"] for d in docs), reverse=True)
+
+
+def test_fetch_policies_survives_one_failing_slice(monkeypatch):
+    def fake_query(keywords, since, until, limit):
+        if since.startswith("2005"):
+            raise RuntimeError("CELLAR timeout")
+        return [{"id": f"p:{since[:4]}", "kind": "policy", "date": f"{since[:4]}-06-01"}]
+
+    monkeypatch.setattr(fd, "_cellar_query", fake_query)
+    docs = fd.fetch_policies(["mining"], since="2000-01-01", until="2014-12-31",
+                             span_years=5)
+    assert {d["id"] for d in docs} == {"p:2000", "p:2010"}
+
+
+def test_fetch_policies_raises_when_every_slice_fails(monkeypatch):
+    monkeypatch.setattr(fd, "_cellar_query",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("down")))
+    with pytest.raises(RuntimeError, match="every CELLAR slice failed"):
+        fd.fetch_policies(["mining"], since="2000-01-01", until="2009-12-31")
+
+
 def _patch_sources(monkeypatch, tmp_path, grants=None, policies=None,
                    grants_exc=None, policies_exc=None):
     """Point build_snapshot at a temp repo with stubbed fetchers."""
