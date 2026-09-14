@@ -51,6 +51,15 @@
     <button class="action" id="kw-add">Add keyword</button>
   </div>
   <div class="chips" id="kw-chips" aria-live="polite"></div>
+
+  <label class="checkline synline">
+    <input id="kw-synonyms" type="checkbox" checked>
+    Also search related and plain-language wording
+    <small>(“muck” finds <em>manure, organic fertiliser</em>; “global warming” finds
+    <em>climate change, greenhouse gas emissions</em>)</small>
+  </label>
+  <div id="kw-expansion" class="expansion" aria-live="polite"></div>
+
   <div class="suggest">
     <div class="lbl">Suggestions from the BioFairNet context</div>
     <div class="opts" id="kw-suggest"></div>

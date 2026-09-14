@@ -1,13 +1,16 @@
 {
-  "note": "Keywords the finder-data GitHub Action uses when refreshing grants.json / policies.json. Edit this list to change what the offline snapshot covers — the live search in the app is unaffected.",
+  "note": "Keywords the finder-data GitHub Action uses when refreshing grants.json / policies.json. Scoped to the project's sectors — agriculture and mining at EU level. Edit this list to change what the offline snapshot covers; the live search in the app is driven by whatever the user types.",
+  "scope": "agriculture and mining (BioFairNet WP1/D1.2 sectors)",
   "keywords": [
+    "agriculture",
+    "mining",
     "bioeconomy",
-    "circular economy",
     "biomass",
-    "just transition",
+    "soil",
+    "circular economy",
     "carbon farming",
-    "renewable energy",
-    "carbon capture",
-    "soil"
+    "raw materials",
+    "land use",
+    "just transition"
   ]
 }

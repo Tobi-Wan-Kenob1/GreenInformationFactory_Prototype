@@ -9,6 +9,7 @@
 
   const S = {
     keywords: [],
+    useSynonyms: true,        // inclusive by default: plain wording finds jargon
     filters: { from: 2015, to: new Date().getFullYear(), includeClosed: true },
     docs: [],                 // normalised docs from the last search
     selected: new Set(),      // doc ids included in the analysis
@@ -50,6 +51,27 @@
     'mining', 'raw materials', 'land use', 'circular economy', 'biorefinery',
     'just transition', 'recycling'];
 
+  /* Show what each keyword actually expanded into. Inclusive search only earns
+   * trust if the user can see — and switch off — what was added for them. */
+  function renderExpansion() {
+    const el = $('kw-expansion');
+    if (!S.keywords.length) { el.innerHTML = ''; return; }
+    if (!S.useSynonyms) {
+      el.innerHTML = '<div class="exnote">Related wording off — searching your keywords ' +
+                     'and their spelling variants only.</div>';
+      return;
+    }
+    const rows = S.keywords.map(k => {
+      const syn = FinderAPI.synonymsFor(k);
+      return syn.length
+        ? `<div class="exrow"><span class="exk">${esc(k)}</span>
+             <span class="exs">${syn.map(s => `<em>${esc(s)}</em>`).join(' · ')}</span></div>`
+        : `<div class="exrow"><span class="exk">${esc(k)}</span>
+             <span class="exs none">no related wording known — spelling variants only</span></div>`;
+    }).join('');
+    el.innerHTML = `<div class="exnote">Also searching for:</div>${rows}`;
+  }
+
   function renderKeywords() {
     $('kw-chips').innerHTML = S.keywords.map((k, i) =>
       `<span class="chip">${esc(k)}<button aria-label="Remove ${esc(k)}" data-i="${i}">×</button></span>`).join('') ||
@@ -61,6 +83,7 @@
     $('kw-suggest').querySelectorAll('.opt').forEach(b =>
       b.addEventListener('click', () => addKeyword(b.textContent)));
     $('go-search').disabled = S.keywords.length === 0;
+    renderExpansion();
   }
 
   function addKeyword(raw) {
@@ -69,6 +92,11 @@
     $('kw-input').value = '';
     renderKeywords();
   }
+
+  $('kw-synonyms').addEventListener('change', () => {
+    S.useSynonyms = $('kw-synonyms').checked;
+    renderExpansion();
+  });
 
   $('kw-add').addEventListener('click', () => addKeyword($('kw-input').value));
   $('kw-input').addEventListener('keydown', e => {
@@ -172,8 +200,8 @@
     $('src-status').innerHTML = '<span class="srcpill"><span class="spin"></span> querying EUR-Lex and the Funding &amp; Tenders API …</span>';
     $('list-policies').innerHTML = $('list-grants').innerHTML = '<div class="empty">Searching…</div>';
     const [pol, gra] = await Promise.all([
-      FinderAPI.search('policy', S.keywords, flt),
-      FinderAPI.search('grant', S.keywords, flt)
+      FinderAPI.search('policy', S.keywords, flt, S.useSynonyms),
+      FinderAPI.search('grant', S.keywords, flt, S.useSynonyms)
     ]);
     S.docs = pol.items.concat(gra.items);
     S.selected = new Set(S.docs.map(d => d.id));   // everything included by default
@@ -769,4 +797,17 @@
   loadScenarios();
   renderKeywords();
   renderScenarios();
+
+  // The thesaurus must be in place before the first search; if it cannot be
+  // loaded the app still works, just without meaning-level expansion.
+  FinderAPI.loadJson('data/keyword_thesaurus.json').then(json => {
+    FinderAPI.loadThesaurus(json);
+    renderExpansion();
+  }).catch(() => {
+    $('kw-synonyms').checked = false;
+    $('kw-synonyms').disabled = true;
+    S.useSynonyms = false;
+    $('kw-expansion').innerHTML =
+      '<div class="exnote">Related wording unavailable (thesaurus failed to load).</div>';
+  });
 })();

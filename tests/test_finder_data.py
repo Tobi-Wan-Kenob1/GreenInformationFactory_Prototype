@@ -337,6 +337,54 @@ def test_expand_keywords_dedupes_and_preserves_order():
     assert "soil" in out
 
 
+THESAURUS = {
+    "muck": ["manure", "muck", "slurry", "organic fertiliser"],
+    "manure": ["manure", "muck", "slurry", "organic fertiliser"],
+    "slurry": ["manure", "muck", "slurry", "organic fertiliser"],
+    "organic fertiliser": ["manure", "muck", "slurry", "organic fertiliser"],
+}
+
+
+def test_synonyms_map_plain_language_to_jargon():
+    """A practitioner types 'muck'; the act says 'organic fertiliser'."""
+    syn = fd.synonyms_for("muck", THESAURUS)
+    assert "manure" in syn and "organic fertiliser" in syn
+    assert "muck" not in syn                       # never itself
+
+
+def test_synonyms_are_bidirectional():
+    """Typing the jargon must also find the plain word — grant abstracts are plainer."""
+    assert "muck" in fd.synonyms_for("organic fertiliser", THESAURUS)
+
+
+def test_synonyms_ignore_case_and_spacing():
+    assert fd.synonyms_for("Organic-Fertiliser", THESAURUS)
+    assert fd.synonyms_for("unknown term", THESAURUS) == []
+
+
+def test_expand_keywords_folds_in_synonyms_only_when_asked():
+    plain = fd.expand_keywords(["muck"], THESAURUS, use_synonyms=False)
+    rich = fd.expand_keywords(["muck"], THESAURUS, use_synonyms=True)
+    assert "manure" not in plain
+    assert "manure" in rich
+    assert "organic fertiliser" in rich
+    assert "organic-fertiliser" in rich             # orthographic variants too
+
+
+def test_plural_of_consonant_y_words():
+    assert "slurries" in fd.expand_keyword("slurry")
+    assert "slurrys" not in fd.expand_keyword("slurry")
+
+
+def test_sparql_query_uses_synonyms_and_caps_term_count():
+    q = fd.sparql_query(["muck"], use_synonyms=True, thesaurus=THESAURUS)
+    assert '"manure"' in q and '"organic fertiliser"' in q
+    # the cap protects the endpoint from an over-expanded filter
+    many = [f"kw{i}" for i in range(60)]
+    capped = fd.sparql_query(many)
+    assert capped.count("CONTAINS(") <= fd.MAX_SPARQL_TERMS
+
+
 def test_sparql_query_includes_keyword_variants():
     q = fd.sparql_query(["bioeconomy"])
     assert '"bioeconomy"' in q
