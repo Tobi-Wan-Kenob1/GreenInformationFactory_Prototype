@@ -147,6 +147,8 @@ button.action:disabled { opacity: .45; cursor: default; }
 .tag.policy { color: var(--teal); background: var(--teal-fill); }
 .tag.grant { color: var(--amber); background: var(--amber-fill); }
 .tag.budget { color: var(--amber); background: var(--amber-fill); text-transform: none; }
+.tag.due { color: var(--teal); background: var(--teal-fill); text-transform: none; }
+.tag.past { color: var(--faint); background: var(--bg); text-transform: none; }
 
 /* topics stage */
 .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 6px; }

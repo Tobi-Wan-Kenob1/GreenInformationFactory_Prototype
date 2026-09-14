@@ -109,11 +109,15 @@
     const checked = S.selected.has(d.id) ? 'checked' : '';
     const budget = d.budgetEUR
       ? `<span class="tag budget">≈ ${(d.budgetEUR / 1e6).toLocaleString('en', { maximumFractionDigits: 1 })} M€</span>` : '';
+    // For a grant the submission deadline is the decisive fact — show it.
+    const deadline = d.deadline
+      ? `<span class="tag ${new Date(d.deadline) < new Date() ? 'past' : 'due'}">deadline ${esc(d.deadline)}</span>`
+      : '';
     return `<label class="doc ${d.kind}">
       <input type="checkbox" data-id="${esc(d.id)}" ${checked}>
       <span>
         <span class="t"><a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.title)}</a></span>
-        <span class="m">${esc(d.doctype || '')}${d.date ? ' · ' + esc(d.date) : ''} ${budget}</span>
+        <span class="m">${esc(d.doctype || '')}${d.date ? ' · ' + esc(d.date) : ''} ${deadline} ${budget}</span>
         ${d.summary ? `<span class="s">${esc(d.summary)}</span>` : ''}
       </span>
     </label>`;

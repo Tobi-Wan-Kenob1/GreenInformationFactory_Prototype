@@ -66,17 +66,51 @@ def _first(value: Any) -> Any:
 # ---------------------------------------------------------------------------
 
 _NUM_RE = re.compile(r'"(?:budget|totalBudget|plannedOpeningBudget)"\s*:\s*"?([\d.,\s]+)"?')
+#: "Indicative budget: 188.65 Million Euros" in the free-text additionalInfos.
+_INDICATIVE_RE = re.compile(
+    r"budget[^0-9]{0,40}([\d]+(?:[.,][\d]+)?)\s*(million|m\b|bn|billion)?", re.I)
+
+
+def _budget_year_totals(node: Any) -> List[float]:
+    """Collect one total per ``budgetYearMap`` found anywhere in the structure.
+
+    SEDIA nests the money as ``budgetOverview.budgetTopicActionMap.<id>[].
+    budgetYearMap = {"2016": 188650000}``. Each map is summed over its years;
+    the caller takes the largest rather than the sum of all maps, since the
+    same call budget is repeated per action and would otherwise double-count.
+    """
+    totals: List[float] = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key == "budgetYearMap" and isinstance(value, dict):
+                years = [v for v in value.values() if isinstance(v, (int, float))]
+                if years:
+                    totals.append(float(sum(years)))
+            else:
+                totals.extend(_budget_year_totals(value))
+    elif isinstance(node, list):
+        for item in node:
+            totals.extend(_budget_year_totals(item))
+    return totals
 
 
 def extract_budget_eur(meta: Dict[str, Any]) -> Optional[int]:
     """Best-effort numeric EUR budget from SEDIA's assorted metadata fields."""
+    overview = _first(meta.get("budgetOverview")) or _first(meta.get("budgetOverviewJSONItem"))
+    if isinstance(overview, str) and "{" in overview:
+        try:
+            totals = _budget_year_totals(json.loads(overview))
+        except (ValueError, TypeError):
+            totals = []
+        if totals:
+            return int(round(max(totals)))
+
     candidates: List[Any] = []
     for key in ("budget", "cftEstimatedTotalProcedureValue"):
         v = _first(meta.get(key))
         if v is not None:
             candidates.append(v)
-    overview = _first(meta.get("budgetOverview")) or _first(meta.get("budgetOverviewJSONItem"))
-    if isinstance(overview, str) and "{" in overview:
+    if isinstance(overview, str):
         candidates.extend(_NUM_RE.findall(overview))
     for cand in candidates:
         digits = re.sub(r"[^\d.]", "", str(cand))
@@ -86,25 +120,66 @@ def extract_budget_eur(meta: Dict[str, Any]) -> Optional[int]:
             continue
         if value > 1000:
             return int(round(value))
+
+    # Last resort: the free-text "Indicative budget: 188.65 Million Euros".
+    infos = _clean(_first(meta.get("additionalInfos")) or "")
+    match = _INDICATIVE_RE.search(infos)
+    if match:
+        try:
+            amount = float(match.group(1).replace(",", "."))
+        except ValueError:
+            return None
+        unit = (match.group(2) or "").lower()
+        if unit.startswith(("m",)):
+            amount *= 1e6
+        elif unit.startswith(("b", "bn")):
+            amount *= 1e9
+        if amount > 1000:
+            return int(round(amount))
     return None
+
+
+def is_call_topic(result: Dict[str, Any]) -> bool:
+    """True for grant call topics (type 1).
+
+    The API ignores the ``type`` filter we send in the query body, so support
+    FAQs (type 3) and tenders (type 2) arrive mixed into the results and have
+    to be dropped here.
+    """
+    return str(_first((result.get("metadata") or {}).get("type")) or "") == "1"
 
 
 def normalize_grant(result: Dict[str, Any]) -> Dict[str, Any]:
     """SEDIA search result → finder document."""
     meta = result.get("metadata") or {}
     identifier = _first(meta.get("identifier")) or result.get("reference") or result.get("url") or ""
-    date_raw = str(_first(meta.get("startDate")) or _first(meta.get("publicationDateLong")) or "")
+    date_raw = str(_first(meta.get("startDate"))
+                   or _first(meta.get("es_SortDate"))
+                   or _first(meta.get("publicationDateLong")) or "")
+    deadline_raw = str(_first(meta.get("deadlineDate")) or "")
+
+    # The description is HTML in descriptionByte; the curated keywords/tags are
+    # short and topical, so they materially improve the topic analytics.
+    description = _clean(_first(meta.get("description"))
+                         or _first(meta.get("descriptionByte"))
+                         or result.get("summary") or result.get("content") or "")
+    terms = [str(t) for t in (meta.get("keywords") or []) + (meta.get("tags") or [])]
+    summary = (description[:600] + (" · " + ", ".join(dict.fromkeys(terms)) if terms else "")).strip()
+
     return {
         "id": f"g:{identifier}",
         "kind": "grant",
         "title": _clean(_first(meta.get("title")) or result.get("title") or identifier),
-        "summary": _clean(_first(meta.get("description")) or result.get("summary")
-                          or result.get("content") or "")[:600],
+        "summary": summary,
         "date": date_raw[:10] or None,
+        "deadline": deadline_raw[:10] or None,
+        "status": str(_first(meta.get("status")) or "") or None,
+        "callId": _clean(_first(meta.get("callIdentifier")) or "") or None,
+        "programmePeriod": _clean(_first(meta.get("programmePeriod")) or "") or None,
         "url": ("https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/"
                 f"opportunities/topic-details/{str(identifier).lower()}"),
         "budgetEUR": extract_budget_eur(meta),
-        "doctype": "Tender" if _first(meta.get("type")) == "2" else "Call topic",
+        "doctype": "Call topic",
         "source": "cache",
     }
 
@@ -163,6 +238,8 @@ def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
                 failures.append(f"{keyword}: {exc}")
                 break
             for r in results:
+                if not is_call_topic(r):          # drop FAQs / tenders
+                    continue
                 doc = normalize_grant(r)
                 if doc["id"] not in seen:
                     seen.add(doc["id"])

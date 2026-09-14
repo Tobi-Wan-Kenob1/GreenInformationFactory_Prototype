@@ -26,6 +26,45 @@ def test_extract_budget_from_overview_json():
     assert fd.extract_budget_eur({"budgetOverviewJSONItem": [overview]}) == 9000000
 
 
+def test_extract_budget_from_budget_year_map():
+    """The real shape: money lives under budgetTopicActionMap.*.budgetYearMap."""
+    overview = json.dumps({"budgetTopicActionMap": {"3203666": [
+        {"action": "BBI-RIA", "budgetYearMap": {"2016": 188650000}},
+    ]}})
+    assert fd.extract_budget_eur({"budgetOverview": [overview]}) == 188650000
+
+
+def test_budget_year_map_spans_years_but_not_duplicated_actions():
+    overview = json.dumps({"budgetTopicActionMap": {"1": [
+        {"action": "RIA", "budgetYearMap": {"2024": 10000000, "2025": 5000000}},
+        {"action": "IA", "budgetYearMap": {"2024": 10000000, "2025": 5000000}},
+    ]}})
+    # years summed within a map (15M), identical actions not double-counted
+    assert fd.extract_budget_eur({"budgetOverview": [overview]}) == 15000000
+
+
+def test_extract_budget_from_indicative_free_text():
+    meta = {"additionalInfos": [
+        '{"additionalInfo":"<p>Indicative budget: 188.65 Million Euros</p>"}']}
+    assert fd.extract_budget_eur(meta) == 188650000
+
+
+def test_is_call_topic_filters_faqs_and_tenders():
+    assert fd.is_call_topic({"metadata": {"type": ["1"]}}) is True
+    assert fd.is_call_topic({"metadata": {"type": ["3"]}}) is False   # support FAQ
+    assert fd.is_call_topic({"metadata": {"type": ["2"]}}) is False   # tender
+    assert fd.is_call_topic({"metadata": {}}) is False
+
+
+def test_fetch_grants_drops_non_topic_results(monkeypatch):
+    faq = {"metadata": {"type": ["3"], "esST_nid": ["51816"]}}
+    topic = {"metadata": {"type": ["1"], "identifier": ["BBI-2016-S04"],
+                          "title": ["Clustering and networking"]}}
+    _record_posts(monkeypatch, lambda text: FakeResp([faq, topic]))
+    docs = fd.fetch_grants(["bioeconomy"])
+    assert [d["id"] for d in docs] == ["g:BBI-2016-S04"]
+
+
 def test_extract_budget_missing_or_tiny():
     assert fd.extract_budget_eur({}) is None
     # numbers ≤ 1000 are treated as codes/counts, not EUR budgets
@@ -44,6 +83,12 @@ def test_normalize_grant_full():
             "title": ["<b>Circular</b>  solutions"],
             "description": ["Bio-based   value chains."],
             "startDate": ["2025-09-15T00:00:00.000+0200"],
+            "deadlineDate": ["2026-02-18T00:00:00.000+0000"],
+            "callIdentifier": ["HORIZON-CL6-2025-02"],
+            "programmePeriod": ["2021 - 2027"],
+            "status": ["31094502"],
+            "keywords": ["Circular economy", "biomass"],
+            "tags": ["biomass", "valorisation"],
             "type": ["1"],
             "budget": ["12000000"],
         },
@@ -51,11 +96,31 @@ def test_normalize_grant_full():
     assert doc["id"] == "g:HORIZON-CL6-2025-CIRCBIO-01-1"
     assert doc["kind"] == "grant"
     assert doc["title"] == "Circular solutions"          # tags stripped, ws collapsed
-    assert doc["summary"] == "Bio-based value chains."
+    assert doc["summary"].startswith("Bio-based value chains.")
     assert doc["date"] == "2025-09-15"
+    assert doc["deadline"] == "2026-02-18"
+    assert doc["callId"] == "HORIZON-CL6-2025-02"
+    assert doc["programmePeriod"] == "2021 - 2027"
     assert doc["budgetEUR"] == 12000000
     assert doc["doctype"] == "Call topic"
     assert "topic-details/horizon-cl6-2025-circbio-01-1" in doc["url"]
+    # curated keywords/tags are appended once each for the topic analytics
+    assert "Circular economy" in doc["summary"]
+    assert doc["summary"].count("valorisation") == 1
+    assert doc["summary"].count("biomass") == 1
+
+
+def test_normalize_grant_falls_back_to_sort_date_and_description_byte():
+    doc = fd.normalize_grant({"metadata": {
+        "identifier": ["BBI-2016-S04"],
+        "title": ["Clustering and networking for new value chains"],
+        "descriptionByte": ["<SPAN class='x'>Specific Challenge</SPAN>:<p>Effectively…</p>"],
+        "es_SortDate": ["2016-04-19T00:00:00.000+0000"],
+        "type": ["1"],
+    }})
+    assert doc["date"] == "2016-04-19"
+    assert doc["summary"].startswith("Specific Challenge")
+    assert "<" not in doc["summary"]
 
 
 class FakeResp:
@@ -106,7 +171,7 @@ def test_fetch_grants_keeps_other_keywords_when_one_fails(monkeypatch):
     def responder(text):
         if "soil" in text:
             return FakeResp(status_code=400, text="Result size limit 100mb has been reached")
-        return FakeResp([{"metadata": {"identifier": ["T-" + text.strip('"')]}}])
+        return FakeResp([{"metadata": {"type": ["1"], "identifier": ["T-" + text.strip('"')]}}])
 
     _record_posts(monkeypatch, responder)
     docs = fd.fetch_grants(["biomass", "soil", "carbon capture"])
@@ -131,7 +196,7 @@ def test_fetch_grants_error_surfaces_api_message(monkeypatch):
 
 
 def test_fetch_grants_deduplicates_across_keywords(monkeypatch):
-    same = [{"metadata": {"identifier": ["SHARED-1"]}}]
+    same = [{"metadata": {"type": ["1"], "identifier": ["SHARED-1"]}}]
     _record_posts(monkeypatch, lambda text: FakeResp(same))
     docs = fd.fetch_grants(["biomass", "soil"])
     assert len(docs) == 1
