@@ -147,6 +147,39 @@
       "source": "cache"
     },
     {
+      "id": "g:H2020-BBI-2016-F01",
+      "kind": "grant",
+      "title": "BBI JU flagship: first-of-a-kind lignocellulosic biorefinery (sample topic, Horizon 2020 era)",
+      "summary": "Bio-Based Industries Joint Undertaking flagship action demonstrating a lignocellulosic biorefinery converting agricultural and forestry biomass residues into bio-based chemicals and materials at commercial scale.",
+      "date": "2016-04-19",
+      "url": "https://www.cbe.europa.eu/",
+      "budgetEUR": 21000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:H2020-LCE-2018-RES-CCS",
+      "kind": "grant",
+      "title": "Horizon 2020 Low-Carbon Energy: CO2 capture pilots in energy-intensive industry (sample topic)",
+      "summary": "Pilot demonstration of post-combustion carbon capture in cement and steel, including transport and storage chain assessment and life-cycle greenhouse gas accounting.",
+      "date": "2018-09-04",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals?keywords=carbon%20capture",
+      "budgetEUR": 16000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
+      "id": "g:FP7-KBBE-2011-5",
+      "kind": "grant",
+      "title": "FP7 Knowledge-Based Bio-Economy: sustainable biomass supply chains (sample topic, FP7 era)",
+      "summary": "Collaborative research on sustainable biomass mobilisation for the knowledge-based bioeconomy: agricultural residues, soil impacts, logistics, and life-cycle assessment of bioenergy chains.",
+      "date": "2011-07-20",
+      "url": "https://cordis.europa.eu/programme/id/FP7-KBBE",
+      "budgetEUR": 6000000,
+      "doctype": "Call topic",
+      "source": "cache"
+    },
+    {
       "id": "g:HORIZON-CL5-2025-D2-02-3",
       "kind": "grant",
       "title": "Sustainable biofuels and renewable fuels of non-biological origin for transport (sample topic)",

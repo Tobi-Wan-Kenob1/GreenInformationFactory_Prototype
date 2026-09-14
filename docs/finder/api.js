@@ -12,11 +12,31 @@
 (function () {
   'use strict';
 
-  const SEDIA_URL =
-    'https://api.tech.ec.europa.eu/search-api/prod/rest/search' +
-    '?apiKey=SEDIA&pageSize=50&pageNumber=1&text=';
+  const SEDIA_URL = 'https://api.tech.ec.europa.eu/search-api/prod/rest/search';
   const CELLAR_URL = 'https://publications.europa.eu/webapi/rdf/sparql';
   const FETCH_TIMEOUT_MS = 12000;
+
+  // The search API answers 400 ("Result size limit 100mb has been reached")
+  // above this page size, and 500 for multipart bodies — send form-urlencoded.
+  const MAX_PAGE_SIZE = 50;
+  const STATUS = { forthcoming: '31094501', open: '31094502', closed: '31094503' };
+
+  // Default window: everything from 2015 to today, closed calls included.
+  function normFilters(f) {
+    const now = new Date().getFullYear();
+    f = f || {};
+    return {
+      from: Math.min(Math.max(parseInt(f.from, 10) || 2015, 1958), now),
+      to: Math.min(Math.max(parseInt(f.to, 10) || now, 1958), now),
+      includeClosed: f.includeClosed !== false
+    };
+  }
+
+  function inWindow(doc, flt) {
+    if (!doc.date) return true;                 // undated records are never hidden
+    const y = parseInt(String(doc.date).slice(0, 4), 10);
+    return !y || (y >= flt.from && y <= flt.to);
+  }
 
   function timeoutFetch(url, opts) {
     const ctrl = new AbortController();
@@ -92,26 +112,34 @@
 
   /* ---------- live: Horizon grants via SEDIA search API ---------- */
 
-  async function liveGrants(keywords) {
+  async function liveGrants(keywords, flt) {
     const text = keywords.map(k => '"' + k + '"').join(' OR ');
-    const fd = new FormData();
-    // type 1 = grant call topics; status: forthcoming / open / closed
-    fd.append('query', JSON.stringify({
-      bool: { must: [{ terms: { type: ['1'] } },
-                     { terms: { status: ['31094501', '31094502', '31094503'] } }] }
-    }));
-    fd.append('languages', JSON.stringify(['en']));
-    fd.append('sort', JSON.stringify({ field: 'sortStatus', order: 'DESC' }));
-    const resp = await timeoutFetch(SEDIA_URL + encodeURIComponent(text), { method: 'POST', body: fd });
+    const statuses = [STATUS.forthcoming, STATUS.open];
+    if (flt.includeClosed) statuses.push(STATUS.closed);
+
+    // type 1 = grant call topics. The body must be form-urlencoded: a
+    // multipart FormData body makes the API answer 500.
+    const body = new URLSearchParams({
+      query: JSON.stringify({
+        bool: { must: [{ terms: { type: ['1'] } }, { terms: { status: statuses } }] }
+      }),
+      languages: JSON.stringify(['en']),
+      sort: JSON.stringify({ field: 'sortStatus', order: 'DESC' })
+    });
+    const url = SEDIA_URL + '?apiKey=SEDIA&pageNumber=1&pageSize=' + MAX_PAGE_SIZE +
+                '&text=' + encodeURIComponent(text);
+    const resp = await timeoutFetch(url, { method: 'POST', body: body });
     if (!resp.ok) throw new Error('SEDIA HTTP ' + resp.status);
     const json = await resp.json();
-    const results = json.results || [];
-    return results.map(r => normalizeGrant(r, 'live'));
+    return (json.results || [])
+      .map(r => normalizeGrant(r, 'live'))
+      .filter(d => inWindow(d, flt));
   }
 
   /* ---------- live: EU policies via CELLAR SPARQL ---------- */
 
-  function sparqlQuery(keywords) {
+  function sparqlQuery(keywords, flt) {
+    flt = normFilters(flt);
     const filters = keywords
       .map(k => 'CONTAINS(LCASE(STR(?title)), "' + k.toLowerCase().replace(/["\\]/g, '') + '")')
       .join(' || ');
@@ -131,12 +159,13 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
   ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
   ?exp cdm:expression_title ?title .
   FILTER(${filters})
-  FILTER(?date >= "2015-01-01"^^xsd:date)
+  FILTER(?date >= "${flt.from}-01-01"^^xsd:date)
+  FILTER(?date <= "${flt.to}-12-31"^^xsd:date)
 } ORDER BY DESC(?date) LIMIT 75`;
   }
 
-  async function livePolicies(keywords) {
-    const url = CELLAR_URL + '?query=' + encodeURIComponent(sparqlQuery(keywords)) +
+  async function livePolicies(keywords, flt) {
+    const url = CELLAR_URL + '?query=' + encodeURIComponent(sparqlQuery(keywords, flt)) +
                 '&format=' + encodeURIComponent('application/sparql-results+json');
     const resp = await timeoutFetch(url, { headers: { Accept: 'application/sparql-results+json' } });
     if (!resp.ok) throw new Error('CELLAR HTTP ' + resp.status);
@@ -164,46 +193,52 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
     return keywords.some(k => hay.indexOf(k.toLowerCase()) !== -1);
   }
 
-  async function cachedDocs(kind, keywords) {
-    // Snapshot written by the GitHub Action first, bundled sample as last resort.
+  async function cachedDocs(kind, keywords, flt) {
+    // Snapshot written by the GitHub Action first, bundled demo sample last.
     const paths = kind === 'grant'
       ? ['data/grants.json', 'data/sample_grants.json']
       : ['data/policies.json', 'data/sample_policies.json'];
     for (const p of paths) {
       try {
         const json = await loadJson(p);
-        const items = (json.items || []).map(d => Object.assign({}, d, { source: 'cache' }));
-        return {
-          items: items.filter(d => matchesKeywords(d, keywords)),
-          snapshot: p,
-          generated: json.generated || null
-        };
+        const isSample = p.indexOf('sample_') !== -1;
+        const items = (json.items || [])
+          .map(d => Object.assign({}, d, { source: isSample ? 'sample' : 'cache' }))
+          .filter(d => matchesKeywords(d, keywords) && inWindow(d, flt));
+        return { items, snapshot: p, isSample, generated: json.generated || null };
       } catch (e) { /* try next path */ }
     }
-    return { items: [], snapshot: null, generated: null };
+    return { items: [], snapshot: null, isSample: false, generated: null };
   }
 
   /* ---------- public API: live with cache fallback ---------- */
 
-  async function search(kind, keywords) {
+  async function search(kind, keywords, filters) {
+    const flt = normFilters(filters);
     const liveFn = kind === 'grant' ? liveGrants : livePolicies;
+    const window_ = flt.from + '–' + flt.to;
     try {
-      const items = await liveFn(keywords);
-      if (items.length > 0) return { items, tier: 'live', detail: 'live API' };
-      // Live worked but empty — still offer cached matches as a hint.
-      const c = await cachedDocs(kind, keywords);
+      const items = await liveFn(keywords, flt);
+      if (items.length > 0) {
+        return { items, tier: 'live', detail: 'live API, ' + window_ };
+      }
+      // Live worked but returned nothing — offer cached matches as a hint.
+      const c = await cachedDocs(kind, keywords, flt);
       return c.items.length
-        ? { items: c.items, tier: 'cache', detail: 'live returned 0, showing snapshot (' + c.snapshot + ')' }
-        : { items: [], tier: 'live', detail: 'live API (no matches)' };
+        ? { items: c.items, tier: c.isSample ? 'sample' : 'cache',
+            detail: 'live returned 0 for ' + window_ + ', showing ' +
+                    (c.isSample ? 'bundled demo data' : 'snapshot') + ' (' + c.snapshot + ')' }
+        : { items: [], tier: 'live', detail: 'live API, no matches in ' + window_ };
     } catch (err) {
-      const c = await cachedDocs(kind, keywords);
+      const c = await cachedDocs(kind, keywords, flt);
       return {
         items: c.items,
-        tier: c.snapshot ? 'cache' : 'err',
+        tier: c.snapshot ? (c.isSample ? 'sample' : 'cache') : 'err',
         detail: c.snapshot
-          ? 'live unreachable (' + err.message + '), snapshot ' + c.snapshot +
-            (c.generated ? ' from ' + String(c.generated).slice(0, 10) : '')
-          : 'live unreachable and no snapshot found (' + err.message + ')'
+          ? 'live unreachable (' + err.message + ') — ' +
+            (c.isSample ? 'bundled DEMO data, not real EU records' : 'snapshot ' + c.snapshot) +
+            (c.generated ? ', ' + String(c.generated).slice(0, 10) : '') + ', ' + window_
+          : 'live unreachable and no cached data (' + err.message + ')'
       };
     }
   }
@@ -211,6 +246,8 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
   window.FinderAPI = {
     search,
     loadJson,
-    _internal: { extractBudgetEUR, normalizeGrant, normalizePolicyBinding, sparqlQuery, matchesKeywords }
+    normFilters,
+    _internal: { extractBudgetEUR, normalizeGrant, normalizePolicyBinding, sparqlQuery,
+                 matchesKeywords, inWindow }
   };
 })();

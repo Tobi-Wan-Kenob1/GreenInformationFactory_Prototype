@@ -120,14 +120,20 @@ for decision-making and policy insights.
 A five-stage, browser-only tool (`docs/finder/`) that runs straight from
 GitHub Pages:
 
-1. **Keywords** — enter search terms.
+1. **Keywords** — enter search terms, and optionally a **time window**: restrict
+   the search to a past period (presets for the Horizon 2020 and FP7 eras) to
+   benchmark an earlier setting against current research and market insights.
 2. **Search** — EU policies via the EUR-Lex/CELLAR SPARQL endpoint and Horizon
    Europe call topics via the EU Funding & Tenders search API, queried live
-   from the browser with automatic fallback to JSON snapshots.
-3. **Topic analysis** — client-side document-frequency analytics, including
-   "bridge topics" present in both corpora.
-4. **Scenarios** — combine policies and grants under selected topics
-   (persisted in the browser's localStorage).
+   from the browser with automatic fallback to JSON snapshots. The source pills
+   state plainly whether results are live, a cached snapshot, or bundled demo
+   data.
+3. **Topic analysis** — client-side document-frequency analytics. Topics can be
+   drawn from both corpora ("bridge topics"), or from the policy or grant
+   corpus alone.
+4. **Scenarios** — combine policies and grants under selected topics, or build
+   **policy-only / grant-only** scenarios (persisted in the browser's
+   localStorage, tagged with the time window they were built from).
 5. **Metrics** — potential funding (25–100 % of summed call budgets),
    indicative cost savings (avoided ETS/carbon costs, fines, waste, energy and
    input costs), and an assumption-based CO₂ mitigation index, each with
