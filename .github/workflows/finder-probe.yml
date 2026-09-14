@@ -1,10 +1,8 @@
 name: Finder API probe (diagnostic)
 
-# TEMPORARY DIAGNOSTIC. The scheduled finder-data snapshot has been failing
-# with "400 Client Error" from the EU Funding & Tenders (SEDIA) search API.
-# This workflow tries several request shapes against both EU endpoints and
-# prints status + response body, so we can see which shape the APIs accept.
-# Delete this workflow once the fetcher is fixed.
+# TEMPORARY DIAGNOSTIC. Dumps the raw shape of SEDIA search results so the
+# normaliser in src/gif/finder_data.py can map title / date / budget fields
+# correctly. Delete once the mapping is settled.
 
 on:
   workflow_dispatch:
@@ -13,9 +11,6 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -24,80 +19,51 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Probe SEDIA + CELLAR
+      - name: Dump raw SEDIA records
         run: |
           python - <<'PY'
           import json
+          import collections
           import requests
 
-          SEDIA = "https://api.tech.ec.europa.eu/search-api/prod/rest/search"
-          QUERY = {"bool": {"must": [
-              {"terms": {"type": ["1"]}},
-              {"terms": {"status": ["31094501", "31094502", "31094503"]}},
-          ]}}
-          KW_TEXT = '"bioeconomy" OR "circular economy" OR "biomass"'
-          FIELDS = {
-              "query": json.dumps(QUERY),
-              "languages": json.dumps(["en"]),
-              "sort": json.dumps({"field": "sortStatus", "order": "DESC"}),
-          }
-          multipart = {k: (None, v) for k, v in FIELDS.items()}
+          resp = requests.post(
+              "https://api.tech.ec.europa.eu/search-api/prod/rest/search",
+              params={"apiKey": "SEDIA", "text": '"bioeconomy"',
+                      "pageSize": "25", "pageNumber": "1"},
+              data={"query": json.dumps({"bool": {"must": [
+                        {"terms": {"type": ["1"]}},
+                        {"terms": {"status": ["31094501", "31094502", "31094503"]}}]}}),
+                    "languages": json.dumps(["en"]),
+                    "sort": json.dumps({"field": "sortStatus", "order": "DESC"})},
+              timeout=60)
+          resp.raise_for_status()
+          results = resp.json()["results"]
+          print(f"### {len(results)} results\n")
 
-          def show(label, resp):
-              body = resp.text[:400].replace("\n", " ")
-              n = ""
-              try:
-                  j = resp.json()
-                  n = f" totalResults={j.get('totalResults')} results={len(j.get('results') or [])}"
-              except Exception:
-                  pass
-              print(f"\n=== {label}\n    HTTP {resp.status_code}{n}\n    {body}")
+          # Which metadata keys exist, and how often?
+          keys = collections.Counter()
+          for r in results:
+              keys.update((r.get("metadata") or {}).keys())
+          print("### metadata key frequency (out of %d)" % len(results))
+          for k, n in keys.most_common():
+              print(f"  {n:3d}  {k}")
 
-          def sedia(label, *, text, page_size, use_multipart, extra_params=None):
-              params = {"apiKey": "SEDIA", "text": text,
-                        "pageSize": str(page_size), "pageNumber": "1"}
-              if extra_params:
-                  params.update(extra_params)
-              kwargs = {"files": multipart} if use_multipart else {"data": FIELDS}
-              try:
-                  show(label, requests.post(SEDIA, params=params, timeout=60, **kwargs))
-              except Exception as exc:
-                  print(f"\n=== {label}\n    EXCEPTION {exc!r}")
+          # Full dump of two records, with long values trimmed.
+          def trim(v, n=300):
+              s = json.dumps(v, ensure_ascii=False)
+              return s if len(s) <= n else s[:n] + f"…(+{len(s) - n} chars)"
 
-          # A: exactly what the failing fetcher sends today (urlencoded, pageSize 100)
-          sedia("A urlencoded  pageSize=100  keyword-OR text", text=KW_TEXT, page_size=100, use_multipart=False)
-          # B: same but smaller page
-          sedia("B urlencoded  pageSize=50   keyword-OR text", text=KW_TEXT, page_size=50, use_multipart=False)
-          # C: multipart (what the browser FormData path sends)
-          sedia("C multipart    pageSize=50   keyword-OR text", text=KW_TEXT, page_size=50, use_multipart=True)
-          # D: multipart, match-all text token
-          sedia("D multipart    pageSize=50   text='***'", text="***", page_size=50, use_multipart=True)
-          # E: multipart, single bare keyword (no quotes/operators)
-          sedia("E multipart    pageSize=50   text=bioeconomy", text="bioeconomy", page_size=50, use_multipart=True)
-          # F: multipart, larger page
-          sedia("F multipart    pageSize=100  text='***'", text="***", page_size=100, use_multipart=True)
+          for idx in (0, 1):
+              r = results[idx]
+              print(f"\n### record {idx} — top-level keys: {sorted(r.keys())}")
+              for k, v in sorted((r.get('metadata') or {}).items()):
+                  print(f"  {k}: {trim(v)}")
 
-          # --- CELLAR SPARQL (never reached before: the job died on SEDIA first) ---
-          CELLAR = "https://publications.europa.eu/webapi/rdf/sparql"
-          sparql = """
-          PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
-          PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-          SELECT DISTINCT ?work ?title ?date ?celex WHERE {
-            ?work cdm:work_date_document ?date .
-            OPTIONAL { ?work cdm:resource_legal_id_celex ?celex . }
-            ?exp cdm:expression_belongs_to_work ?work .
-            ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
-            ?exp cdm:expression_title ?title .
-            FILTER(CONTAINS(LCASE(STR(?title)), "bioeconomy"))
-            FILTER(?date >= "2015-01-01"^^xsd:date)
-          } LIMIT 5"""
-          try:
-              r = requests.get(CELLAR,
-                               params={"query": sparql,
-                                       "format": "application/sparql-results+json"},
-                               headers={"Accept": "application/sparql-results+json"},
-                               timeout=120)
-              show("G CELLAR SPARQL minimal", r)
-          except Exception as exc:
-              print(f"\n=== G CELLAR SPARQL minimal\n    EXCEPTION {exc!r}")
+          # Any key that looks budget-ish or date-ish, across all records
+          print("\n### budget/date-ish values across all records")
+          for r in results[:8]:
+              md = r.get("metadata") or {}
+              picked = {k: md[k] for k in md
+                        if any(w in k.lower() for w in ("budget", "date", "deadline", "title"))}
+              print("  -", trim(picked, 500))
           PY
