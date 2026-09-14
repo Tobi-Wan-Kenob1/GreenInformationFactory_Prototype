@@ -147,6 +147,10 @@ button.action:disabled { opacity: .45; cursor: default; }
 .tag.policy { color: var(--teal); background: var(--teal-fill); }
 .tag.grant { color: var(--amber); background: var(--amber-fill); }
 .tag.budget { color: var(--amber); background: var(--amber-fill); text-transform: none; }
+.hits {
+  font-size: 11px; color: var(--teal); background: var(--teal-fill);
+  border-radius: 4px; padding: 1px 6px; margin-left: 2px;
+}
 .tag.due { color: var(--teal); background: var(--teal-fill); text-transform: none; }
 .tag.past { color: var(--faint); background: var(--bg); text-transform: none; }
 

@@ -113,11 +113,15 @@
     const deadline = d.deadline
       ? `<span class="tag ${new Date(d.deadline) < new Date() ? 'past' : 'due'}">deadline ${esc(d.deadline)}</span>`
       : '';
+    // Show which keywords put this document in the list — results are ranked,
+    // so the reason for the order should be visible.
+    const hits = (d.matchedKeywords || []).length
+      ? `<span class="hits">${d.matchedKeywords.map(k => esc(k)).join(' · ')}</span>` : '';
     return `<label class="doc ${d.kind}">
       <input type="checkbox" data-id="${esc(d.id)}" ${checked}>
       <span>
         <span class="t"><a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.title)}</a></span>
-        <span class="m">${esc(d.doctype || '')}${d.date ? ' · ' + esc(d.date) : ''} ${deadline} ${budget}</span>
+        <span class="m">${esc(d.doctype || '')}${d.date ? ' · ' + esc(d.date) : ''} ${deadline} ${budget} ${hits}</span>
         ${d.summary ? `<span class="s">${esc(d.summary)}</span>` : ''}
       </span>
     </label>`;

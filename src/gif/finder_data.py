@@ -266,17 +266,72 @@ def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
 # Policies (EUR-Lex via CELLAR SPARQL)
 # ---------------------------------------------------------------------------
 
+#: Prefixes that EU documents write solid, hyphenated or split interchangeably.
+COMPOUND_PREFIXES = ("bio", "agro", "eco", "geo", "micro", "nano", "multi")
+
+
+def expand_keyword(keyword: str) -> List[str]:
+    """Orthographic variants of a keyword, in the spellings EU texts use.
+
+    EUR-Lex matching is a raw substring test, so "bioeconomy" alone misses
+    "bio-economy" and "bio economy". Deliberately conservative: spelling
+    variants and a naive plural only, never semantic synonyms — those would
+    widen recall in ways the user did not ask for.
+
+    Kept in sync with ``expandKeyword`` in ``docs/finder/api.js``.
+    """
+    base = str(keyword or "").strip().lower()
+    if not base:
+        return []
+    out: List[str] = [base]
+
+    def add(variant: str) -> None:
+        if variant and variant not in out:
+            out.append(variant)
+
+    if "-" in base:
+        add(base.replace("-", " "))
+        add(base.replace("-", ""))
+    if " " in base:
+        add(base.replace(" ", "-"))
+        add(base.replace(" ", ""))
+    for prefix in COMPOUND_PREFIXES:
+        if base.startswith(prefix) and len(base) > len(prefix) + 3:
+            add(prefix + "-" + base[len(prefix):])
+            add(prefix + " " + base[len(prefix):])
+    if re.search(r"[^aeiours]s$", base):
+        add(base[:-1])                      # biofuels → biofuel
+    elif not base.endswith("s"):
+        add(base + "s")
+    return out
+
+
+def expand_keywords(keywords: Iterable[str]) -> List[str]:
+    """Flatten expand_keyword over several keywords, preserving order."""
+    out: List[str] = []
+    for keyword in keywords:
+        for variant in expand_keyword(keyword):
+            if variant not in out:
+                out.append(variant)
+    return out
+
+
 def sparql_query(keywords: Iterable[str], since: str = "2015-01-01",
                  until: Optional[str] = None, limit: int = 150) -> str:
+    variants = expand_keywords(re.sub(r'["\\\\]', "", k) for k in keywords)
     filters = " || ".join(
-        f'CONTAINS(LCASE(STR(?title)), "{k.lower()}")'
-        for k in (re.sub(r'["\\\\]', "", k) for k in keywords)
+        f'CONTAINS(LCASE(STR(?title)), "{v}")' for v in variants
     )
     until_filter = f'\n  FILTER(?date <= "{until}"^^xsd:date)' if until else ""
+    # EuroVoc descriptors are the only per-act subject text CELLAR exposes —
+    # there is no abstract — so they become the document's summary and feed the
+    # topic analytics, which would otherwise run on the title alone.
     return f"""
 PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {{
+SELECT ?work ?title ?date ?type ?celex ?force
+       (GROUP_CONCAT(DISTINCT ?subject; separator=", ") AS ?subjects) WHERE {{
   ?work cdm:work_date_document ?date .
   ?work cdm:work_has_resource-type ?type .
   FILTER(?type IN (
@@ -285,12 +340,19 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {{
     <http://publications.europa.eu/resource/authority/resource-type/DEC>,
     <http://publications.europa.eu/resource/authority/resource-type/COM>))
   OPTIONAL {{ ?work cdm:resource_legal_id_celex ?celex . }}
+  OPTIONAL {{ ?work cdm:resource_legal_in-force ?force . }}
+  OPTIONAL {{
+    ?work cdm:work_is_about_concept_eurovoc ?concept .
+    ?concept skos:prefLabel ?subject .
+    FILTER(LANG(?subject) = "en")
+  }}
   ?exp cdm:expression_belongs_to_work ?work .
   ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
   ?exp cdm:expression_title ?title .
   FILTER({filters})
   FILTER(?date >= "{since}"^^xsd:date){until_filter}
-}} ORDER BY DESC(?date) LIMIT {limit}"""
+}} GROUP BY ?work ?title ?date ?type ?celex ?force
+ORDER BY DESC(?date) LIMIT {limit}"""
 
 
 def normalize_policy(binding: Dict[str, Any]) -> Dict[str, Any]:
@@ -299,11 +361,16 @@ def normalize_policy(binding: Dict[str, Any]) -> Dict[str, Any]:
     celex = (binding.get("celex") or {}).get("value")
     rtype = (binding.get("type") or {}).get("value", "")
     date_raw = str((binding.get("date") or {}).get("value", ""))
+    subjects = _clean((binding.get("subjects") or {}).get("value") or "")
+    force = str((binding.get("force") or {}).get("value") or "").lower()
     return {
         "id": f"p:{celex or uri}",
         "kind": "policy",
         "title": _clean((binding.get("title") or {}).get("value") or uri),
-        "summary": "",
+        # CELLAR has no abstract; the EuroVoc descriptors are the subject text.
+        "summary": subjects,
+        "subjects": [s for s in (x.strip() for x in subjects.split(",")) if s],
+        "inForce": True if force == "true" else False if force == "false" else None,
         "date": date_raw[:10] or None,
         "url": (f"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:{celex}"
                 if celex else uri),
