@@ -186,6 +186,10 @@ def normalize_grant(result: Dict[str, Any]) -> Dict[str, Any]:
                 f"opportunities/topic-details/{str(identifier).lower()}"),
         "budgetEUR": extract_budget_eur(meta),
         "doctype": "Call topic",
+        # Governance level of the instrument. Only EU-level sources are wired
+        # up today; national and regional sources will set "national"/"regional"
+        # so the UI can group and compare across levels.
+        "level": "EU",
         "source": "cache",
     }
 
@@ -376,6 +380,7 @@ def normalize_policy(binding: Dict[str, Any]) -> Dict[str, Any]:
                 if celex else uri),
         "budgetEUR": None,
         "doctype": rtype.rsplit("/", 1)[-1] or "Act",
+        "level": "EU",
         "source": "cache",
     }
 

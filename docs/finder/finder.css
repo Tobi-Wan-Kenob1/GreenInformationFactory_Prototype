@@ -1,6 +1,7 @@
 /* Policy & Grant Finder — BioFairNet visual identity (shared with docs/index.html) */
 :root {
   --teal: #0A6B65; --teal-fill: #E4F0EF; --teal-mid: #84B2AF;
+  --mteal: #3D7A75; --mteal-fill: #EDF4F3; --mteal-mid: #84B2AF;
   --amber: #8A5B14; --amber-fill: #FFF4DE; --amber-mid: #FFBE5C; --amber-sub: #B67F27;
   --ink: #383535; --muted: #5c6662; --faint: #8a938f;
   --bg: #fafbfa; --card: #ffffff; --line: #e3e8e5;
@@ -21,6 +22,12 @@ header .eyebrow {
 }
 h1 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 8px; font-weight: 650; letter-spacing: -0.01em; }
 .sub { font-size: 16px; color: var(--muted); max-width: 700px; margin: 0 0 14px; }
+.scopenote {
+  font-size: 13.5px; color: var(--muted); max-width: 700px; margin: 0 0 14px;
+  padding: 8px 12px; border-left: 3px solid var(--mteal-mid); background: var(--mteal-fill);
+  border-radius: 0 8px 8px 0;
+}
+.scopenote strong { color: var(--mteal); }
 .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
 .badge {
   font-size: 12.5px; text-decoration: none; padding: 5px 12px; border-radius: 999px;
@@ -89,6 +96,25 @@ h1 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 8px; font-weight: 650; lette
 .checkline { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; color: var(--muted); }
 .checkline input { accent-color: var(--teal); }
 .checkline small { color: var(--faint); }
+
+/* WP1 codebook coverage */
+.codebook { margin-top: 18px; border: 1px solid var(--mteal-mid); border-radius: 12px; background: var(--mteal-fill); padding: 14px 16px; }
+.codebook > summary { cursor: pointer; font-size: 14.5px; font-weight: 650; color: var(--mteal); }
+.codebook .cbsum { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 6px; }
+.codebook .lead { font-size: 13.5px; margin: 10px 0 12px; }
+.codebook .note { font-size: 11.5px; color: var(--faint); margin: 10px 0 0; }
+.cbgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.cbblock h4 { margin: 0 0 6px; font-size: 13.5px; }
+.cbblock h4 small { font-weight: 400; color: var(--faint); margin-left: 6px; }
+.cbtable { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--card); border-radius: 8px; overflow: hidden; }
+.cbtable th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); padding: 5px 7px; border-bottom: 1px solid var(--line); }
+.cbtable td { padding: 4px 7px; border-bottom: 1px solid var(--line); }
+.cbtable td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.cbtable .cbmark { text-align: right; letter-spacing: -1px; }
+.cbtable tr.cb-both .cbmark { color: var(--teal); }
+.cbtable tr.cb-part .cbmark { color: var(--amber-sub); }
+.cbtable tr.cb-gap { color: var(--faint); }
+.cbtable tr.cb-gap .cbmark { color: var(--line); }
 
 /* topic scope selector */
 .scope { display: flex; gap: 7px; flex-wrap: wrap; margin: 12px 0 4px; }
