@@ -38,6 +38,80 @@
     return !y || (y >= flt.from && y <= flt.to);
   }
 
+  /* ---------- keyword expansion ----------
+   * EUR-Lex matching is a raw substring test, so "bioeconomy" alone misses
+   * "bio-economy" and "bio economy". Expand each keyword into the spellings
+   * EU documents actually use. Deliberately conservative: orthographic
+   * variants and a naive plural, never semantic synonyms — those would widen
+   * recall in ways the user did not ask for. */
+  const COMPOUND_PREFIXES = ['bio', 'agro', 'eco', 'geo', 'micro', 'nano', 'multi'];
+
+  function expandKeyword(keyword) {
+    const base = String(keyword || '').toLowerCase().trim();
+    if (!base) return [];
+    const out = [base];
+    const add = v => { if (v && out.indexOf(v) === -1) out.push(v); };
+
+    if (base.indexOf('-') !== -1) {
+      add(base.replace(/-/g, ' '));
+      add(base.replace(/-/g, ''));
+    }
+    if (base.indexOf(' ') !== -1) {
+      add(base.replace(/ /g, '-'));
+      add(base.replace(/ /g, ''));
+    }
+    // a solid compound is often written split or hyphenated: bioeconomy →
+    // bio-economy / bio economy
+    for (const p of COMPOUND_PREFIXES) {
+      if (base.indexOf(p) === 0 && base.length > p.length + 3) {
+        add(p + '-' + base.slice(p.length));
+        add(p + ' ' + base.slice(p.length));
+      }
+    }
+    if (/[^aeiours]s$/.test(base)) add(base.slice(0, -1));   // biofuels → biofuel
+    else if (!/s$/.test(base)) add(base + 's');
+    return out;
+  }
+
+  function expandAll(keywords) {
+    const out = [];
+    (keywords || []).forEach(k => expandKeyword(k).forEach(v => {
+      if (out.indexOf(v) === -1) out.push(v);
+    }));
+    return out;
+  }
+
+  /* ---------- relevance ----------
+   * Results arrive in the API's own order (SEDIA by status, CELLAR by date),
+   * which is not relevance to *these* keywords. Score client-side: a title hit
+   * outweighs a body hit, matching several keywords outweighs matching one,
+   * and recency only breaks ties. */
+  function scoreDoc(doc, keywords) {
+    const title = String(doc.title || '').toLowerCase();
+    const body = (title + ' ' + String(doc.summary || '')).toLowerCase();
+    const matched = [];
+    let score = 0;
+    for (const k of keywords || []) {
+      const variants = expandKeyword(k);
+      if (variants.some(v => title.indexOf(v) !== -1)) { score += 3; matched.push(k); }
+      else if (variants.some(v => body.indexOf(v) !== -1)) { score += 1; matched.push(k); }
+    }
+    if (matched.length > 1) score += 2;
+    const year = parseInt(String(doc.date || '').slice(0, 4), 10);
+    if (year) score += Math.max(0, Math.min(1, (year - 2000) / 30));
+    return { score: score, matched: matched };
+  }
+
+  function rankDocs(docs, keywords) {
+    docs.forEach(d => {
+      const r = scoreDoc(d, keywords);
+      d.relevance = r.score;
+      d.matchedKeywords = r.matched;
+    });
+    return docs.sort((a, b) => b.relevance - a.relevance ||
+                               String(b.date || '').localeCompare(String(a.date || '')));
+  }
+
   function timeoutFetch(url, opts) {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
@@ -215,8 +289,9 @@
 
   function sparqlQuery(keywords, flt) {
     flt = normFilters(flt);
-    const filters = keywords
-      .map(k => 'CONTAINS(LCASE(STR(?title)), "' + k.toLowerCase().replace(/["\\]/g, '') + '")')
+    // Substring match, so feed it every spelling variant of each keyword.
+    const filters = expandAll(keywords)
+      .map(v => 'CONTAINS(LCASE(STR(?title)), "' + v.replace(/["\\]/g, '') + '")')
       .join(' || ');
     return `
 PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
@@ -265,7 +340,7 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
 
   function matchesKeywords(doc, keywords) {
     const hay = (doc.title + ' ' + doc.summary).toLowerCase();
-    return keywords.some(k => hay.indexOf(k.toLowerCase()) !== -1);
+    return expandAll(keywords).some(v => hay.indexOf(v) !== -1);
   }
 
   async function cachedDocs(kind, keywords, flt) {
@@ -277,9 +352,9 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
       try {
         const json = await loadJson(p);
         const isSample = p.indexOf('sample_') !== -1;
-        const items = (json.items || [])
+        const items = rankDocs((json.items || [])
           .map(d => Object.assign({}, d, { source: isSample ? 'sample' : 'cache' }))
-          .filter(d => matchesKeywords(d, keywords) && inWindow(d, flt));
+          .filter(d => matchesKeywords(d, keywords) && inWindow(d, flt)), keywords);
         return { items, snapshot: p, isSample, generated: json.generated || null };
       } catch (e) { /* try next path */ }
     }
@@ -293,7 +368,7 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
     const liveFn = kind === 'grant' ? liveGrants : livePolicies;
     const window_ = flt.from + '–' + flt.to;
     try {
-      const items = await liveFn(keywords, flt);
+      const items = rankDocs(await liveFn(keywords, flt), keywords);
       if (items.length > 0) {
         return { items, tier: 'live', detail: 'live API, ' + window_ };
       }
@@ -322,7 +397,9 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
     search,
     loadJson,
     normFilters,
+    expandKeyword,
     _internal: { extractBudgetEUR, normalizeGrant, normalizePolicyBinding, sparqlQuery,
-                 matchesKeywords, inWindow, isCallTopic, budgetYearTotals }
+                 matchesKeywords, inWindow, isCallTopic, budgetYearTotals,
+                 expandAll, scoreDoc, rankDocs }
   };
 })();
