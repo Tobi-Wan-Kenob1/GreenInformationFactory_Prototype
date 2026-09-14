@@ -31,6 +31,13 @@ SEDIA_URL = "https://api.tech.ec.europa.eu/search-api/prod/rest/search"
 CELLAR_URL = "https://publications.europa.eu/webapi/rdf/sparql"
 TIMEOUT = 60
 
+#: Largest page the SEDIA search API will serve. Anything above this comes
+#: back as ``400 … Result size limit 100mb has been reached``.
+MAX_PAGE_SIZE = 50
+
+#: SEDIA status codes for call topics.
+STATUS_FORTHCOMING, STATUS_OPEN, STATUS_CLOSED = "31094501", "31094502", "31094503"
+
 DEFAULT_KEYWORDS = [
     "bioeconomy", "circular economy", "biomass", "just transition",
     "carbon farming", "renewable energy", "carbon capture", "soil",
@@ -99,12 +106,23 @@ def normalize_grant(result: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def fetch_grants(keywords: Iterable[str], page_size: int = 100, pages: int = 2) -> List[Dict[str, Any]]:
-    """Query SEDIA for grant call topics matching any of the keywords."""
+def fetch_grants(keywords: Iterable[str], page_size: int = MAX_PAGE_SIZE,
+                 pages: int = 2, include_closed: bool = True) -> List[Dict[str, Any]]:
+    """Query SEDIA for grant call topics matching any of the keywords.
+
+    ``page_size`` is capped at :data:`MAX_PAGE_SIZE`: the API rejects larger
+    pages with ``400 … Result size limit 100mb has been reached``.
+    The payload must be form-urlencoded — multipart bodies make the API
+    answer ``500 An internal error occurred``.
+    """
+    page_size = min(page_size, MAX_PAGE_SIZE)
     text = " OR ".join(f'"{k}"' for k in keywords)
+    statuses = [STATUS_FORTHCOMING, STATUS_OPEN]
+    if include_closed:
+        statuses.append(STATUS_CLOSED)
     query = {"bool": {"must": [
         {"terms": {"type": ["1"]}},
-        {"terms": {"status": ["31094501", "31094502", "31094503"]}},
+        {"terms": {"status": statuses}},
     ]}}
     docs: List[Dict[str, Any]] = []
     seen: set = set()
@@ -134,11 +152,13 @@ def fetch_grants(keywords: Iterable[str], page_size: int = 100, pages: int = 2) 
 # Policies (EUR-Lex via CELLAR SPARQL)
 # ---------------------------------------------------------------------------
 
-def sparql_query(keywords: Iterable[str], since: str = "2015-01-01", limit: int = 150) -> str:
+def sparql_query(keywords: Iterable[str], since: str = "2015-01-01",
+                 until: Optional[str] = None, limit: int = 150) -> str:
     filters = " || ".join(
         f'CONTAINS(LCASE(STR(?title)), "{k.lower()}")'
         for k in (re.sub(r'["\\\\]', "", k) for k in keywords)
     )
+    until_filter = f'\n  FILTER(?date <= "{until}"^^xsd:date)' if until else ""
     return f"""
 PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -155,7 +175,7 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {{
   ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
   ?exp cdm:expression_title ?title .
   FILTER({filters})
-  FILTER(?date >= "{since}"^^xsd:date)
+  FILTER(?date >= "{since}"^^xsd:date){until_filter}
 }} ORDER BY DESC(?date) LIMIT {limit}"""
 
 
@@ -180,11 +200,12 @@ def normalize_policy(binding: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
+                   until: Optional[str] = None,
                    limit: int = 150) -> List[Dict[str, Any]]:
     """Query CELLAR for EU acts whose English title matches any keyword."""
     resp = requests.get(
         CELLAR_URL,
-        params={"query": sparql_query(keywords, since=since, limit=limit),
+        params={"query": sparql_query(keywords, since=since, until=until, limit=limit),
                 "format": "application/sparql-results+json"},
         headers={"Accept": "application/sparql-results+json"},
         timeout=TIMEOUT,
@@ -218,12 +239,20 @@ def load_snapshot_keywords(repo_root: Optional[Path] = None) -> List[str]:
 
 def write_snapshot(out_dir: Path, keywords: List[str],
                    grants: List[Dict[str, Any]],
-                   policies: List[Dict[str, Any]]) -> Dict[str, Path]:
-    """Write grants.json / policies.json in the shape the web app expects."""
+                   policies: List[Dict[str, Any]],
+                   skip: Optional[Iterable[str]] = None) -> Dict[str, Path]:
+    """Write grants.json / policies.json in the shape the web app expects.
+
+    Names listed in ``skip`` are left untouched, so a failed fetch cannot
+    replace an existing good snapshot with an empty file.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    skip = set(skip or ())
     written: Dict[str, Path] = {}
     for name, items in (("grants", grants), ("policies", policies)):
+        if name in skip:
+            continue
         path = out_dir / f"{name}.json"
         payload = {"generated": stamp, "keywords": keywords, "items": items}
         path.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n",
@@ -234,18 +263,39 @@ def write_snapshot(out_dir: Path, keywords: List[str],
 
 def build_snapshot(keywords: Optional[List[str]] = None,
                    out_dir: Optional[Path] = None,
-                   since: str = "2015-01-01") -> Dict[str, Any]:
-    """Fetch both sources and write the snapshot files. Returns a report."""
+                   since: str = "2015-01-01",
+                   until: Optional[str] = None) -> Dict[str, Any]:
+    """Fetch both sources and write the snapshot files. Returns a report.
+
+    Each source is fetched independently: if one endpoint fails, the other is
+    still written and the failure is reported in ``errors`` rather than
+    aborting the run (a single 400 used to lose the whole snapshot).
+    """
     root = find_repo_root()
     keywords = keywords or load_snapshot_keywords(root)
     out = out_dir or (root / "docs" / "finder" / "data")
-    grants = fetch_grants(keywords)
-    policies = fetch_policies(keywords, since=since)
-    written = write_snapshot(out, keywords, grants, policies)
+
+    errors: Dict[str, str] = {}
+    try:
+        grants = fetch_grants(keywords)
+    except Exception as exc:                      # noqa: BLE001 - reported, not raised
+        grants, errors["grants"] = [], f"{type(exc).__name__}: {exc}"
+    try:
+        policies = fetch_policies(keywords, since=since, until=until)
+    except Exception as exc:                      # noqa: BLE001 - reported, not raised
+        policies, errors["policies"] = [], f"{type(exc).__name__}: {exc}"
+
+    # Never overwrite a good snapshot with an empty one from a failed fetch.
+    skipped = [name for name, items in (("grants", grants), ("policies", policies))
+               if name in errors and (out / f"{name}.json").exists()]
+    written = write_snapshot(out, keywords, grants, policies, skip=skipped)
+
     return {
         "keywords": keywords,
         "grants": len(grants),
         "policies": len(policies),
+        "errors": errors,
+        "skipped": skipped,
         "files": {k: str(v) for k, v in written.items()},
         "generated": date.today().isoformat(),
     }

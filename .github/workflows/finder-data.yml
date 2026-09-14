@@ -33,17 +33,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
 
+      # A failure of one source must not lose the other: the fetcher writes
+      # whatever succeeded and exits non-zero, we commit that, and only then
+      # fail the job.
       - name: Fetch snapshot
+        id: fetch
+        continue-on-error: true
         run: gif finder-data
 
       - name: Commit updated snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/finder/data/grants.json docs/finder/data/policies.json
+          git add docs/finder/data/grants.json docs/finder/data/policies.json || true
           if git diff --cached --quiet; then
             echo "Snapshot unchanged — nothing to commit."
           else
             git commit -m "chore: refresh finder data snapshot ($(date -u +%F))"
             git push
           fi
+
+      - name: Report fetch failures
+        if: steps.fetch.outcome == 'failure'
+        run: |
+          echo "::error::At least one EU source failed; see the Fetch snapshot step."
+          exit 1

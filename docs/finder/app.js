@@ -9,9 +9,12 @@
 
   const S = {
     keywords: [],
+    filters: { from: 2015, to: new Date().getFullYear(), includeClosed: true },
     docs: [],                 // normalised docs from the last search
     selected: new Set(),      // doc ids included in the analysis
-    topics: [],               // bridge topics from analytics
+    analysis: null,           // last FinderAnalytics.analyze() result
+    topicScope: 'bridge',     // 'bridge' | 'policy' | 'grant'
+    topics: [],               // topics currently offered for selection
     selectedTopics: new Set(),
     scenarios: [],            // [{name, created, topics:[], docs:[{id,kind,title,url,budgetEUR,text}]}]
     co2: null,                // co2_assumptions.json content
@@ -68,6 +71,38 @@
     if (e.key === 'Enter') { e.preventDefault(); addKeyword($('kw-input').value); }
   });
 
+  /* time window — restrict the search to a past period for benchmarking */
+
+  function readFilters() {
+    S.filters = FinderAPI.normFilters({
+      from: $('win-from').value,
+      to: $('win-to').value,
+      includeClosed: $('win-closed').checked
+    });
+    if (S.filters.from > S.filters.to) {          // keep the range sane
+      S.filters.from = S.filters.to;
+      $('win-from').value = S.filters.from;
+    }
+    return S.filters;
+  }
+
+  (function initWindow() {
+    const now = new Date().getFullYear();
+    $('win-to').value = now;
+    $('win-to').max = $('win-from').max = now;
+    ['win-from', 'win-to', 'win-closed'].forEach(id =>
+      $(id).addEventListener('change', readFilters));
+    $('win-presets').querySelectorAll('.opt').forEach(b =>
+      b.addEventListener('click', () => {
+        $('win-from').value = b.dataset.from;
+        $('win-to').value = b.dataset.to || now;
+        // A historical window is meaningless without the calls that have closed.
+        if ((b.dataset.to || now) < now) $('win-closed').checked = true;
+        readFilters();
+      }));
+    readFilters();
+  })();
+
   /* ─────────── stage 2: search ─────────── */
 
   function docCard(d) {
@@ -100,24 +135,39 @@
     $('go-topics').disabled = S.selected.size === 0;
   }
 
+  const TIERS = {
+    live:   { cls: 'live',   word: 'live' },
+    cache:  { cls: 'cache',  word: 'snapshot' },
+    sample: { cls: 'err',    word: 'DEMO SAMPLE' },   // not real EU records
+    err:    { cls: 'err',    word: 'unavailable' }
+  };
+
   function srcPill(kind, res) {
     const label = kind === 'policy' ? 'EUR-Lex' : 'Funding & Tenders';
-    const cls = res.tier === 'live' ? 'live' : res.tier === 'cache' ? 'cache' : 'err';
-    const word = res.tier === 'live' ? 'live' : res.tier === 'cache' ? 'snapshot' : 'unavailable';
-    return `<span class="srcpill ${cls}" title="${esc(res.detail)}">${label}: ${word} · ${res.items.length} docs</span>`;
+    const t = TIERS[res.tier] || TIERS.err;
+    return `<span class="srcpill ${t.cls}" title="${esc(res.detail)}">` +
+           `${label}: ${t.word} · ${res.items.length} docs</span>`;
   }
 
   async function runSearch() {
     goto(2);
+    const flt = readFilters();
     $('src-status').innerHTML = '<span class="srcpill"><span class="spin"></span> querying EUR-Lex and the Funding &amp; Tenders API …</span>';
     $('list-policies').innerHTML = $('list-grants').innerHTML = '<div class="empty">Searching…</div>';
     const [pol, gra] = await Promise.all([
-      FinderAPI.search('policy', S.keywords),
-      FinderAPI.search('grant', S.keywords)
+      FinderAPI.search('policy', S.keywords, flt),
+      FinderAPI.search('grant', S.keywords, flt)
     ]);
     S.docs = pol.items.concat(gra.items);
     S.selected = new Set(S.docs.map(d => d.id));   // everything included by default
-    $('src-status').innerHTML = srcPill('policy', pol) + srcPill('grant', gra);
+    S.sourceTiers = { policies: pol.tier, grants: gra.tier };   // provenance for exports
+    const win = `<span class="srcpill">window ${flt.from}–${flt.to}` +
+                `${flt.includeClosed ? ', incl. closed calls' : ', open calls only'}</span>`;
+    $('src-status').innerHTML = win + srcPill('policy', pol) + srcPill('grant', gra);
+    if (pol.tier === 'sample' || gra.tier === 'sample') {
+      $('src-status').innerHTML +=
+        '<span class="srcpill err">⚠ demo data — results are illustrative, not live EU records</span>';
+    }
     renderDocs();
   }
 
@@ -130,34 +180,70 @@
 
   function selectedDocs() { return S.docs.filter(d => S.selected.has(d.id)); }
 
+  function topicsForScope(scope) {
+    const a = S.analysis;
+    if (!a) return [];
+    return scope === 'policy' ? a.policyTopics
+         : scope === 'grant' ? a.grantTopics
+         : a.bridge;
+  }
+
+  const EMPTY_SCOPE_MSG = {
+    bridge: 'No term appears in <em>both</em> corpora. Switch to “Policy topics” or ' +
+            '“Grant topics” above to build a scenario from one source type.',
+    policy: 'No policy documents in the current selection — go back and include some, ' +
+            'or switch scope.',
+    grant: 'No grant documents in the current selection — go back and include some, ' +
+           'or switch scope.'
+  };
+
   function renderTopicChips() {
     const el = $('topic-chips');
+    S.topics = topicsForScope(S.topicScope);
     el.innerHTML = S.topics.length ? S.topics.map(t =>
       `<button class="tchip ${S.selectedTopics.has(t.term) ? 'sel' : ''}" data-t="${esc(t.term)}">
          ${esc(t.term)}<small>${t.dfPolicy}p · ${t.dfGrant}g</small></button>`).join('')
-      : '<div class="empty">No terms appear in both corpora — select more documents.</div>';
+      : `<div class="empty">${EMPTY_SCOPE_MSG[S.topicScope]}</div>`;
     el.querySelectorAll('.tchip').forEach(b => b.addEventListener('click', () => {
       const t = b.dataset.t;
       S.selectedTopics.has(t) ? S.selectedTopics.delete(t) : S.selectedTopics.add(t);
       renderTopicChips();
-      $('go-scenarios').disabled = S.selectedTopics.size === 0;
     }));
+    document.querySelectorAll('#topic-scope .scopebtn').forEach(b =>
+      b.classList.toggle('on', b.dataset.scope === S.topicScope));
     $('go-scenarios').disabled = S.selectedTopics.size === 0;
   }
+
+  document.querySelectorAll('#topic-scope .scopebtn').forEach(b =>
+    b.addEventListener('click', () => { S.topicScope = b.dataset.scope; renderTopicChips(); }));
 
   function runAnalysis() {
     goto(3);
     const docs = selectedDocs();
     const res = FinderAnalytics.analyze(docs, S.keywords);
-    S.topics = res.bridge;
-    for (const t of S.selectedTopics)              // drop stale selections
-      if (!S.topics.some(x => x.term === t)) S.selectedTopics.delete(t);
+    S.analysis = res;
+
     const nP = docs.filter(d => d.kind === 'policy').length;
     const nG = docs.filter(d => d.kind === 'grant').length;
     $('note-policies').textContent = `Share of the ${nP} selected policy documents containing the term.`;
     $('note-grants').textContent = `Share of the ${nG} selected grant documents containing the term.`;
     $('chart-policies').innerHTML = FinderAnalytics.barChartSVG(res.policyTerms, '#0A6B65', nP);
     $('chart-grants').innerHTML = FinderAnalytics.barChartSVG(res.grantTerms, '#B67F27', nG);
+
+    $('sc-bridge').textContent = res.bridge.length;
+    $('sc-policy').textContent = res.policyTopics.length;
+    $('sc-grant').textContent = res.grantTopics.length;
+
+    // Land on a scope that actually has topics: a policy-only or grant-only
+    // selection has no bridge terms at all.
+    if (!topicsForScope(S.topicScope).length) {
+      S.topicScope = res.bridge.length ? 'bridge'
+                   : res.policyTopics.length ? 'policy'
+                   : res.grantTopics.length ? 'grant' : S.topicScope;
+    }
+    const offered = new Set(topicsForScope(S.topicScope).map(t => t.term));
+    for (const t of [...S.selectedTopics])         // drop stale selections
+      if (!offered.has(t)) S.selectedTopics.delete(t);
     renderTopicChips();
   }
 
@@ -200,9 +286,12 @@
     $('scenario-list').innerHTML = S.scenarios.map((sc, i) => {
       const nP = sc.docs.filter(d => d.kind === 'policy').length;
       const nG = sc.docs.filter(d => d.kind === 'grant').length;
+      const comp = nP && nG ? 'mixed' : nG ? 'grant-only' : 'policy-only';
+      const win = sc.window ? ` · window ${sc.window.from}–${sc.window.to}` : '';
       return `<div class="scenario-card">
         <h3>${esc(sc.name)} <button data-i="${i}" title="Delete scenario">✕ delete</button></h3>
-        <p class="meta">Topics: ${sc.topics.map(esc).join(', ')} · ${nP} policies · ${nG} grants · saved ${esc(String(sc.created).slice(0, 10))}</p>
+        <p class="meta">Topics: ${sc.topics.map(esc).join(', ')} · ${nP} policies · ${nG} grants
+        · <strong>${comp}</strong>${win} · saved ${esc(String(sc.created).slice(0, 10))}</p>
         <ul>${sc.docs.slice(0, 6).map(d => `<li>${esc(d.title)}</li>`).join('')}
             ${sc.docs.length > 6 ? `<li>… and ${sc.docs.length - 6} more</li>` : ''}</ul>
       </div>`;
@@ -225,7 +314,14 @@
       id: d.id, kind: d.kind, title: d.title, url: d.url,
       budgetEUR: d.budgetEUR, src: d.source, text: docText(d)
     }));
-    S.scenarios.push({ name, created: new Date().toISOString(), topics: [...S.selectedTopics], docs });
+    S.scenarios.push({
+      name,
+      created: new Date().toISOString(),
+      topics: [...S.selectedTopics],
+      scope: S.topicScope,
+      window: { from: S.filters.from, to: S.filters.to, includeClosed: S.filters.includeClosed },
+      docs
+    });
     saveScenarios();
     $('scenario-name').value = '';
     renderScenarios();
@@ -256,17 +352,21 @@
     // fully certain. Deductions documented in co2_assumptions.json →
     // method_uncertainty.
     let conf = 75;
-    const missingShare = grants.length ? (grants.length - known.length) / grants.length : 1;
-    conf -= Math.round(40 * missingShare);
+    // Only penalise *missing* budget data. A deliberate policy-only scenario
+    // makes no funding claim, so there is nothing missing to penalise.
+    if (grants.length) conf -= Math.round(40 * (grants.length - known.length) / grants.length);
     if (sc.docs.length < 3) conf -= 25; else if (sc.docs.length < 6) conf -= 10;
     if (matched.length && sectoral.length / matched.length < 0.5) conf -= 10;
     if (sc.docs.some(d => d.src !== 'live')) conf -= 5;   // snapshot/sample data may be stale
     conf = Math.min(75, Math.max(5, conf));
 
+    const nPolicies = sc.docs.filter(d => d.kind === 'policy').length;
     return {
       name: sc.name,
-      nPolicies: sc.docs.filter(d => d.kind === 'policy').length,
+      nPolicies: nPolicies,
       nGrants: grants.length,
+      composition: grants.length && nPolicies ? 'mixed'
+                 : grants.length ? 'grant-only' : 'policy-only',
       fundingEUR: funding,
       // a call-topic budget usually funds several projects → 25–100 % band
       fundingLowEUR: Math.round(funding * 0.25),
@@ -306,11 +406,16 @@
         `€${fmtM(m.fundingLowEUR)}–${fmtM(m.fundingHighEUR)} M of the published call budgets` +
         (m.fundingUnknown ? ` (plus ${m.fundingUnknown} topic${m.fundingUnknown > 1 ? 's' : ''} without budget data as upside)` : '') + `.`);
     } else {
-      parts.push(`This scenario contains no grants yet — add matching Horizon topics before pursuing it.`);
+      parts.push(`Policy-only scenario: it makes no funding claim. Use it to establish the ` +
+        `regulatory baseline — which obligations, deadlines and reporting duties apply — and ` +
+        `pair it with grant topics when you want a funding route.`);
     }
     if (m.nPolicies > 0) {
       parts.push(`Anchor the work explicitly in the ${m.nPolicies} matching ` +
         `polic${m.nPolicies > 1 ? 'ies' : 'y'} to demonstrate EU policy alignment in the proposal.`);
+    } else {
+      parts.push(`Grant-only scenario: no policy anchor included. Add the matching policies ` +
+        `before writing a proposal — reviewers expect the regulatory rationale to be explicit.`);
     }
     if (m.sectoralTopics.length) {
       parts.push(`The CO₂ mitigation potential is carried by ${m.sectoralTopics.slice(0, 3).join(', ')}` +
@@ -373,7 +478,9 @@
         <td>${esc(m.name)}</td>
         <td class="num">${m.nPolicies}</td>
         <td class="num">${m.nGrants}</td>
-        <td class="num">${fmtM(m.fundingLowEUR)}–${fmtM(m.fundingHighEUR)} M€${m.fundingUnknown ? ` <small>(+${m.fundingUnknown} without budget data)</small>` : ''}</td>
+        <td class="num">${m.nGrants === 0
+          ? '<small>n/a — policy-only</small>'
+          : `${fmtM(m.fundingLowEUR)}–${fmtM(m.fundingHighEUR)} M€${m.fundingUnknown ? ` <small>(+${m.fundingUnknown} without budget data)</small>` : ''}`}</td>
         <td class="num">${fmtM(m.saveRangeEUR[0])}–${fmtM(m.saveRangeEUR[1])} M€</td>
         <td class="num">${m.co2Index}</td>
         <td class="num">${m.co2RangeGt[0].toFixed(1)}–${m.co2RangeGt[1].toFixed(1)} GtCO₂e/yr</td>
@@ -385,10 +492,13 @@
   function renderRecommendations(M) {
     if (!M.length) { $('recommendations').innerHTML = ''; return; }
     const best = bestScenarioIndex(M);
+    const mixedKinds = new Set(M.map(m => m.composition)).size > 1;
     const overall = M.length > 1
       ? `<p class="reco-overall"><strong>Where to start:</strong> “${esc(M[best].name)}” ranks best across
          funding, CO₂ potential and cost savings — pursue it first, and keep the others as fallback
-         options for later calls.</p>` : '';
+         options for later calls.${mixedKinds
+           ? ' Note that these scenarios differ in composition (policy-only, grant-only, mixed), so the funding comparison only applies to those containing grants.'
+           : ''}</p>` : '';
     $('recommendations').innerHTML = `<div class="reco">
       <h3>How to proceed</h3>${overall}
       ${M.map((m, i) => `<p><strong>${esc(m.name)}${i === best && M.length > 1 ? ' ★' : ''}:</strong>
@@ -441,14 +551,23 @@
   }
   $('export-json').addEventListener('click', () =>
     download('finder_scenarios.json', 'application/json',
-      JSON.stringify({ generated: new Date().toISOString(), keywords: S.keywords,
-                       scenarios: S.scenarios, metrics: S.metrics }, null, 2)));
+      JSON.stringify({
+        generated: new Date().toISOString(),
+        keywords: S.keywords,
+        window: S.filters,
+        sources: S.sourceTiers || null,
+        assumptionsVersion: S.co2 ? S.co2.version : null,
+        scenarios: S.scenarios,
+        metrics: S.metrics
+      }, null, 2)));
   $('export-csv').addEventListener('click', () => {
-    const head = 'scenario,policies,grants,funding_eur_low,funding_eur_high,grants_without_budget,' +
+    const head = 'scenario,composition,window_from,window_to,policies,grants,' +
+      'funding_eur_low,funding_eur_high,grants_without_budget,' +
       'cost_saving_eur_yr_low,cost_saving_eur_yr_high,co2_index,co2_gt_low,co2_gt_high,' +
       'confidence,confidence_label,matched_topics,matched_saving_drivers';
     const rows = S.metrics.map(m => [
-      '"' + m.name.replace(/"/g, '""') + '"', m.nPolicies, m.nGrants,
+      '"' + m.name.replace(/"/g, '""') + '"', m.composition,
+      S.filters.from, S.filters.to, m.nPolicies, m.nGrants,
       m.fundingLowEUR, m.fundingHighEUR, m.fundingUnknown,
       m.saveRangeEUR[0], m.saveRangeEUR[1], m.co2Index, m.co2RangeGt[0], m.co2RangeGt[1],
       m.confidence, m.confidenceLabel,

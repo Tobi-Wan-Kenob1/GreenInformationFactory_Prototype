@@ -70,8 +70,13 @@
     return pruneSubterms(items).slice(0, n);
   }
 
-  /* analyze(docs, keywords) →
-   *   { policyTerms:[{label,value}], grantTerms:[...], bridge:[{term,dfPolicy,dfGrant,score}] } */
+  /* analyze(docs, keywords) → {
+   *   policyTerms:[{label,value}], grantTerms:[...],        // for the charts
+   *   policyTopics:[{term,dfPolicy,dfGrant}], grantTopics:[...],  // single-corpus
+   *   bridge:[{term,dfPolicy,dfGrant,score}]                      // both corpora
+   * }
+   * policyTopics / grantTopics let a scenario be built from one source type
+   * alone; bridge only ever contains terms present in both. */
   function analyze(docs, keywords) {
     const pols = docs.filter(d => d.kind === 'policy');
     const gras = docs.filter(d => d.kind === 'grant');
@@ -79,8 +84,19 @@
     const dfG = docFreq(gras);
     const minDf = docs.length > 12 ? 2 : 1;
 
-    const policyTerms = topTerms(dfP, 15, minDf).map(x => ({ label: x.term, value: x.value }));
-    const grantTerms = topTerms(dfG, 15, minDf).map(x => ({ label: x.term, value: x.value }));
+    const topP = topTerms(dfP, 15, minDf);
+    const topG = topTerms(dfG, 15, minDf);
+    const policyTerms = topP.map(x => ({ label: x.term, value: x.value }));
+    const grantTerms = topG.map(x => ({ label: x.term, value: x.value }));
+
+    // Same terms, annotated with both document frequencies, so the UI can offer
+    // policy-only / grant-only topic lists next to the bridge list.
+    const policyTopics = topP.map(x => ({
+      term: x.term, dfPolicy: x.value, dfGrant: dfG.get(x.term) || 0
+    }));
+    const grantTopics = topG.map(x => ({
+      term: x.term, dfPolicy: dfP.get(x.term) || 0, dfGrant: x.value
+    }));
 
     const bridge = [];
     for (const [term, vP] of dfP.entries()) {
@@ -99,7 +115,7 @@
         prunedBridge.push({ term: k, dfPolicy: dfP.get(k), dfGrant: dfG.get(k), score: 0 });
       }
     }
-    return { policyTerms, grantTerms, bridge: prunedBridge };
+    return { policyTerms, grantTerms, policyTopics, grantTopics, bridge: prunedBridge };
   }
 
   /* Horizontal bar chart as inline SVG. items: [{label, value, lo?, hi?}].

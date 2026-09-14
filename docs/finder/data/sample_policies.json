@@ -158,6 +158,50 @@
       "source": "cache"
     },
     {
+      "id": "p:32009L0028",
+      "kind": "policy",
+      "title": "Renewable Energy Directive 2009/28/EC (RED I)",
+      "summary": "First binding EU renewable energy framework: 20 % renewable energy by 2020, 10 % in transport, sustainability criteria for biofuels and bioliquids, national renewable energy action plans.",
+      "date": "2009-04-23",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32009L0028",
+      "budgetEUR": null,
+      "doctype": "DIR",
+      "source": "cache"
+    },
+    {
+      "id": "p:52012DC0060",
+      "kind": "policy",
+      "title": "Innovating for Sustainable Growth: A Bioeconomy for Europe (COM/2012/60 final)",
+      "summary": "The first EU Bioeconomy Strategy: sustainable production of renewable biological resources, biorefineries, biomass for food, feed, bio-based products and bioenergy, and rural development.",
+      "date": "2012-02-13",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52012DC0060",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
+      "id": "p:32003L0087",
+      "kind": "policy",
+      "title": "Directive 2003/87/EC establishing a scheme for greenhouse gas emission allowance trading (EU ETS)",
+      "summary": "Creates the EU Emissions Trading System: allowance allocation, monitoring and reporting of greenhouse gas emissions, penalties for non-compliance, and the carbon price signal for industry.",
+      "date": "2003-10-13",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32003L0087",
+      "budgetEUR": null,
+      "doctype": "DIR",
+      "source": "cache"
+    },
+    {
+      "id": "p:52011DC0571",
+      "kind": "policy",
+      "title": "Roadmap to a Resource Efficient Europe (COM/2011/571 final)",
+      "summary": "Early circular economy roadmap: resource efficiency milestones to 2050, waste as a resource, sustainable consumption and production, biomass cascading use and ecosystem services.",
+      "date": "2011-09-20",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52011DC0571",
+      "budgetEUR": null,
+      "doctype": "COM",
+      "source": "cache"
+    },
+    {
       "id": "p:52023PC0416",
       "kind": "policy",
       "title": "Proposal for a Directive on Soil Monitoring and Resilience (COM/2023/416 final)",

@@ -52,6 +52,27 @@
     <div class="lbl">Suggestions from the BioFairNet context</div>
     <div class="opts" id="kw-suggest"></div>
   </div>
+
+  <div class="window">
+    <div class="lbl">Time window — restrict to a past period to benchmark an earlier
+      setting against today's research and market insights</div>
+    <div class="winrow">
+      <label for="win-from">From</label>
+      <input id="win-from" type="number" min="1958" max="2100" step="1" value="2015" aria-label="Earliest document year">
+      <label for="win-to">to</label>
+      <input id="win-to" type="number" min="1958" max="2100" step="1" aria-label="Latest document year">
+      <span class="winsep"></span>
+      <label class="checkline"><input id="win-closed" type="checkbox" checked>
+        Include closed calls <small>(required for historical windows)</small></label>
+    </div>
+    <div class="opts" id="win-presets">
+      <button class="opt" data-from="2021" data-to="">Current period (2021–today)</button>
+      <button class="opt" data-from="2014" data-to="2020">Horizon 2020 era (2014–2020)</button>
+      <button class="opt" data-from="2007" data-to="2013">FP7 era (2007–2013)</button>
+      <button class="opt" data-from="1990" data-to="">Everything since 1990</button>
+    </div>
+  </div>
+
   <div class="actions">
     <button class="action primary" id="go-search" disabled>Search policies &amp; grants →</button>
   </div>
@@ -102,9 +123,15 @@
     </div>
   </div>
   <div class="bridge">
-    <h3>Bridge topics — select topics for scenario building</h3>
-    <p class="lead">Ranked by presence in <em>both</em> corpora. Click to select the topics you want
-    to build scenarios around.</p>
+    <h3>Select topics for scenario building</h3>
+    <p class="lead">Choose which corpus the topics come from. <strong>Bridge topics</strong> appear in
+    both and suit combined policy + grant scenarios; the policy-only and grant-only lists let you
+    build a scenario from a single source type.</p>
+    <div class="scope" id="topic-scope" role="group" aria-label="Topic scope">
+      <button class="scopebtn on" data-scope="bridge">Bridge topics <small id="sc-bridge">0</small></button>
+      <button class="scopebtn" data-scope="policy">Policy topics <small id="sc-policy">0</small></button>
+      <button class="scopebtn" data-scope="grant">Grant topics <small id="sc-grant">0</small></button>
+    </div>
     <div class="topicchips" id="topic-chips"><div class="empty">Run the analysis first.</div></div>
   </div>
   <div class="actions">

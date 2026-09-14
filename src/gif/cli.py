@@ -157,11 +157,18 @@ def _cmd_finder_data(args) -> int:
     from .finder_data import build_snapshot
     keywords = [k.strip() for k in args.keywords.split(",") if k.strip()] if args.keywords else None
     out_dir = Path(args.out) if args.out else None
-    report = build_snapshot(keywords=keywords, out_dir=out_dir, since=args.since)
-    print(f"✅ finder snapshot: {report['grants']} grants, {report['policies']} policies "
+    report = build_snapshot(keywords=keywords, out_dir=out_dir,
+                            since=args.since, until=args.until)
+    print(f"finder snapshot: {report['grants']} grants, {report['policies']} policies "
           f"for keywords: {', '.join(report['keywords'])}")
     for name, path in report["files"].items():
-        print(f"  - {name}: {path}")
+        print(f"  - wrote {name}: {path}")
+    for name in report["skipped"]:
+        print(f"  - kept existing {name}.json (fetch failed, not overwritten)")
+    if report["errors"]:
+        for name, err in report["errors"].items():
+            print(f"  ! {name} fetch failed: {err}")
+        return 1
     return 0
 
 
@@ -238,6 +245,9 @@ def build_parser() -> argparse.ArgumentParser:
                     help="Output directory (default: docs/finder/data)")
     fd.add_argument("--since", default="2015-01-01",
                     help="Earliest policy document date (YYYY-MM-DD)")
+    fd.add_argument("--until", default=None,
+                    help="Latest policy document date (YYYY-MM-DD) — set both to "
+                         "snapshot a past period for benchmarking")
     fd.set_defaults(func=_cmd_finder_data)
     return p
 
