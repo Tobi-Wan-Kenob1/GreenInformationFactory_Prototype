@@ -172,6 +172,27 @@ def _cmd_finder_data(args) -> int:
     return 0
 
 
+def _cmd_finder_codebook(args) -> int:
+    from pathlib import Path
+
+    from .finder_codebook import write_codebook
+    path = write_codebook(
+        out_dir=Path(args.out) if args.out else None,
+        lit_dir=Path(args.lit_dir) if args.lit_dir else None,
+        min_papers=args.min_papers,
+        top_per_dimension=args.top,
+    )
+    import json
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    total = sum(len(v) for v in payload["dimensions"].values())
+    print(f"wrote {path} — {total} codes across "
+          f"{len(payload['dimensions'])} dimensions")
+    for dim, entries in payload["dimensions"].items():
+        top = ", ".join(e["code"] for e in entries[:6])
+        print(f"  - {dim}: {len(entries)} codes ({top} …)")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="gif", description="GreenInformationFactory pipeline CLI")
     sub = p.add_subparsers(dest="command", required=True)
@@ -249,6 +270,16 @@ def build_parser() -> argparse.ArgumentParser:
                     help="Latest policy document date (YYYY-MM-DD) — set both to "
                          "snapshot a past period for benchmarking")
     fd.set_defaults(func=_cmd_finder_data)
+
+    fc = sub.add_parser("finder-codebook",
+                        help="Derive the WP1/D1.2 code vocabulary the finder matches against")
+    fc.add_argument("--lit-dir", default=None,
+                    help="Literature CSV directory (default: data/processed/literature)")
+    fc.add_argument("--out", default=None, help="Output directory (default: docs/finder/data)")
+    fc.add_argument("--min-papers", type=int, default=2,
+                    help="Drop codes found in fewer papers than this")
+    fc.add_argument("--top", type=int, default=40, help="Codes kept per dimension")
+    fc.set_defaults(func=_cmd_finder_codebook)
     return p
 
 

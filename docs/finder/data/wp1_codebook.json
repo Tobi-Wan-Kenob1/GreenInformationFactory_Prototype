@@ -1,0 +1,668 @@
+{
+ "generated": "2026-09-14T17:55:30Z",
+ "source": "BioFairNet WP1/D1.2 literature codebook (doi:10.5281/zenodo.20744025), via data/processed/literature/codes_long.csv",
+ "scope": "366 coded papers on agriculture and mining sectors",
+ "method": "Lexical match only: a document is tagged with a code when one of the code's recorded spellings occurs in its title or summary. No model, no inference — every hit is verifiable in the source text. Codes found in fewer than the configured minimum number of papers, and codes too generic to carry signal, are excluded.",
+ "dimension_labels": {
+  "barriers": "Barriers",
+  "drivers": "Drivers",
+  "stakeholders": "Stakeholders",
+  "ce": "Circular economy",
+  "bio": "Bioeconomy"
+ },
+ "dimensions": {
+  "barriers": [
+   {
+    "code": "land",
+    "terms": [
+     "land",
+     "lands"
+    ],
+    "papers": 99
+   },
+   {
+    "code": "water",
+    "terms": [
+     "water",
+     "waters"
+    ],
+    "papers": 90
+   },
+   {
+    "code": "landscape",
+    "terms": [
+     "landscape",
+     "landscapes"
+    ],
+    "papers": 40
+   },
+   {
+    "code": "database",
+    "terms": [
+     "database",
+     "databases"
+    ],
+    "papers": 29
+   },
+   {
+    "code": "dataset",
+    "terms": [
+     "dataset",
+     "datasets"
+    ],
+    "papers": 24
+   },
+   {
+    "code": "standard",
+    "terms": [
+     "standard",
+     "standards"
+    ],
+    "papers": 17
+   },
+   {
+    "code": "transport",
+    "terms": [
+     "transport",
+     "transports"
+    ],
+    "papers": 17
+   },
+   {
+    "code": "infrastructure",
+    "terms": [
+     "infrastructure",
+     "infrastructures"
+    ],
+    "papers": 15
+   },
+   {
+    "code": "storage",
+    "terms": [
+     "storage"
+    ],
+    "papers": 15
+   },
+   {
+    "code": "transportation",
+    "terms": [
+     "transportation"
+    ],
+    "papers": 14
+   },
+   {
+    "code": "regulation",
+    "terms": [
+     "regulation",
+     "regulations"
+    ],
+    "papers": 13
+   },
+   {
+    "code": "collection",
+    "terms": [
+     "collection"
+    ],
+    "papers": 12
+   },
+   {
+    "code": "feedstock",
+    "terms": [
+     "feedstock",
+     "feedstocks"
+    ],
+    "papers": 12
+   },
+   {
+    "code": "investment",
+    "terms": [
+     "investment",
+     "investments"
+    ],
+    "papers": 8
+   },
+   {
+    "code": "seasonality",
+    "terms": [
+     "seasonality"
+    ],
+    "papers": 6
+   },
+   {
+    "code": "landfills",
+    "terms": [
+     "landfills",
+     "landfill"
+    ],
+    "papers": 5
+   },
+   {
+    "code": "landsat",
+    "terms": [
+     "landsat"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "watercourse",
+    "terms": [
+     "watercourse",
+     "watercourses"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "climate change",
+    "terms": [
+     "climate change"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "waterbodies",
+    "terms": [
+     "waterbodies"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "watershed",
+    "terms": [
+     "watershed",
+     "watersheds"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "agriculture",
+    "terms": [
+     "agriculture"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "few studies",
+    "terms": [
+     "few studies"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "funding",
+    "terms": [
+     "funding"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "land use",
+    "terms": [
+     "land use"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "land use conflict",
+    "terms": [
+     "land use conflict",
+     "land use conflicts"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "landform",
+    "terms": [
+     "landform",
+     "landforms"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "landslides",
+    "terms": [
+     "landslides",
+     "landslide"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "logistics",
+    "terms": [
+     "logistics"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "loss of biodiversity",
+    "terms": [
+     "loss of biodiversity"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "standardization",
+    "terms": [
+     "standardization"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "urbanisation",
+    "terms": [
+     "urbanisation"
+    ],
+    "papers": 2
+   }
+  ],
+  "drivers": [
+   {
+    "code": "demand",
+    "terms": [
+     "demand",
+     "demands"
+    ],
+    "papers": 43
+   },
+   {
+    "code": "efficiency",
+    "terms": [
+     "efficiency"
+    ],
+    "papers": 24
+   },
+   {
+    "code": "technology",
+    "terms": [
+     "technology"
+    ],
+    "papers": 24
+   },
+   {
+    "code": "incentives",
+    "terms": [
+     "incentives",
+     "incentive"
+    ],
+    "papers": 8
+   },
+   {
+    "code": "investment",
+    "terms": [
+     "investment",
+     "investments"
+    ],
+    "papers": 7
+   },
+   {
+    "code": "collaboration",
+    "terms": [
+     "collaboration",
+     "collaborations"
+    ],
+    "papers": 6
+   },
+   {
+    "code": "lca",
+    "terms": [
+     "lca"
+    ],
+    "papers": 6
+   },
+   {
+    "code": "regulations",
+    "terms": [
+     "regulations",
+     "regulation"
+    ],
+    "papers": 5
+   },
+   {
+    "code": "funds",
+    "terms": [
+     "funds"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "monitoring",
+    "terms": [
+     "monitoring"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "spatial analysis",
+    "terms": [
+     "spatial analysis"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "partnership",
+    "terms": [
+     "partnership",
+     "partnerships"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "behaviours",
+    "terms": [
+     "behaviours"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "funding",
+    "terms": [
+     "funding"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "innovations",
+    "terms": [
+     "innovations"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "machine learning",
+    "terms": [
+     "machine learning"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "revegetation",
+    "terms": [
+     "revegetation"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "risk assessment",
+    "terms": [
+     "risk assessment"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "satellite data",
+    "terms": [
+     "satellite data"
+    ],
+    "papers": 2
+   }
+  ],
+  "stakeholders": [
+   {
+    "code": "policymakers",
+    "terms": [
+     "policymakers",
+     "policy makers",
+     "policy-makers"
+    ],
+    "papers": 34
+   },
+   {
+    "code": "farmers",
+    "terms": [
+     "farmers",
+     "farmer"
+    ],
+    "papers": 29
+   },
+   {
+    "code": "consumers",
+    "terms": [
+     "consumers",
+     "consumer"
+    ],
+    "papers": 14
+   },
+   {
+    "code": "producers",
+    "terms": [
+     "producers",
+     "producer"
+    ],
+    "papers": 12
+   },
+   {
+    "code": "scholars",
+    "terms": [
+     "scholars"
+    ],
+    "papers": 10
+   },
+   {
+    "code": "regulatory",
+    "terms": [
+     "regulatory"
+    ],
+    "papers": 5
+   },
+   {
+    "code": "government",
+    "terms": [
+     "government",
+     "governments"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "local communities",
+    "terms": [
+     "local communities"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "agency",
+    "terms": [
+     "agency"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "bank",
+    "terms": [
+     "bank"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "municipality",
+    "terms": [
+     "municipality"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "retailer",
+    "terms": [
+     "retailer",
+     "retailers"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "university",
+    "terms": [
+     "university"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "user",
+    "terms": [
+     "user",
+     "users"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "communities",
+    "terms": [
+     "communities"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "manufacturer",
+    "terms": [
+     "manufacturer",
+     "manufacturers"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "municipalities",
+    "terms": [
+     "municipalities"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "suppliers",
+    "terms": [
+     "suppliers"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "urban planners",
+    "terms": [
+     "urban planners"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "utility",
+    "terms": [
+     "utility"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "workers",
+    "terms": [
+     "workers"
+    ],
+    "papers": 2
+   }
+  ],
+  "ce": [
+   {
+    "code": "recycling",
+    "terms": [
+     "recycling"
+    ],
+    "papers": 9
+   },
+   {
+    "code": "recyclable",
+    "terms": [
+     "recyclable",
+     "recyclables"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "reuse",
+    "terms": [
+     "reuse"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "waste management",
+    "terms": [
+     "waste management"
+    ],
+    "papers": 2
+   }
+  ],
+  "bio": [
+   {
+    "code": "biogas",
+    "terms": [
+     "biogas"
+    ],
+    "papers": 13
+   },
+   {
+    "code": "biochar",
+    "terms": [
+     "biochar",
+     "biochars"
+    ],
+    "papers": 6
+   },
+   {
+    "code": "biomethane",
+    "terms": [
+     "biomethane"
+    ],
+    "papers": 6
+   },
+   {
+    "code": "anaerobic digestion",
+    "terms": [
+     "anaerobic digestion"
+    ],
+    "papers": 5
+   },
+   {
+    "code": "bioenergy",
+    "terms": [
+     "bioenergy"
+    ],
+    "papers": 5
+   },
+   {
+    "code": "digestate",
+    "terms": [
+     "digestate"
+    ],
+    "papers": 4
+   },
+   {
+    "code": "bioethanol",
+    "terms": [
+     "bioethanol"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "lignocellulosic",
+    "terms": [
+     "lignocellulosic"
+    ],
+    "papers": 3
+   },
+   {
+    "code": "biorefinery",
+    "terms": [
+     "biorefinery"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "composting",
+    "terms": [
+     "composting"
+    ],
+    "papers": 2
+   },
+   {
+    "code": "pyrolysis",
+    "terms": [
+     "pyrolysis"
+    ],
+    "papers": 2
+   }
+  ]
+ }
+}

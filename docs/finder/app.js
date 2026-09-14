@@ -13,6 +13,8 @@
     docs: [],                 // normalised docs from the last search
     selected: new Set(),      // doc ids included in the analysis
     analysis: null,           // last FinderAnalytics.analyze() result
+    codebook: undefined,      // wp1_codebook.json (null once a load has failed)
+    coverage: null,           // codebook coverage of the current selection
     topicScope: 'bridge',     // 'bridge' | 'policy' | 'grant'
     topics: [],               // topics currently offered for selection
     selectedTopics: new Set(),
@@ -42,9 +44,11 @@
 
   /* ─────────── stage 1: keywords ─────────── */
 
-  const SUGGESTIONS = ['bioeconomy', 'circular economy', 'biomass', 'just transition',
-    'carbon farming', 'soil', 'renewable energy', 'carbon capture', 'biorefinery',
-    'nature-based solutions', 'recycling', 'climate neutrality'];
+  // Agriculture and mining are the project's sectors of interest (the WP1/D1.2
+  // literature review covers exactly those), so the suggestions lead with them.
+  const SUGGESTIONS = ['bioeconomy', 'agriculture', 'soil', 'biomass', 'carbon farming',
+    'mining', 'raw materials', 'land use', 'circular economy', 'biorefinery',
+    'just transition', 'recycling'];
 
   function renderKeywords() {
     $('kw-chips').innerHTML = S.keywords.map((k, i) =>
@@ -230,6 +234,67 @@
   document.querySelectorAll('#topic-scope .scopebtn').forEach(b =>
     b.addEventListener('click', () => { S.topicScope = b.dataset.scope; renderTopicChips(); }));
 
+  /* ---- WP1/D1.2 codebook coverage ----
+   * Which barriers/drivers from the BioFairNet literature review are addressed
+   * by the policies and grants found here — and which are blind spots. */
+
+  async function loadCodebook() {
+    if (S.codebook !== undefined) return S.codebook;
+    try { S.codebook = await FinderAPI.loadJson('data/wp1_codebook.json'); }
+    catch (e) { S.codebook = null; }
+    return S.codebook;
+  }
+
+  function codebookRow(c) {
+    const cls = c.status === 'both' ? 'cb-both' : c.status === 'partial' ? 'cb-part' : 'cb-gap';
+    const mark = c.status === 'both' ? '●●' : c.status === 'partial' ? '●○' : '○○';
+    return `<tr class="${cls}">
+      <td>${esc(c.code)}</td>
+      <td class="num">${c.papers}</td>
+      <td class="num">${c.nPolicy || '–'}</td>
+      <td class="num">${c.nGrant || '–'}</td>
+      <td class="cbmark" title="${c.status === 'both' ? 'addressed by both policy and funding'
+        : c.status === 'partial' ? 'addressed on one side only' : 'not addressed in this corpus'}">${mark}</td>
+    </tr>`;
+  }
+
+  function renderCodebook(docs) {
+    const el = $('codebook-panel');
+    const cb = S.codebook;
+    if (!cb) { el.innerHTML = ''; return; }
+    const cov = FinderAnalytics.matchCodebook(docs, cb);
+    S.coverage = cov;
+    if (!cov) { el.innerHTML = ''; return; }
+
+    const labels = cb.dimension_labels || {};
+    const blocks = Object.keys(cov.dimensions).map(dim => {
+      const rows = cov.dimensions[dim];
+      if (!rows.length) return '';
+      const gaps = rows.filter(r => r.status === 'gap');
+      return `<div class="cbblock">
+        <h4>${esc(labels[dim] || dim)}
+          <small>${rows.length - gaps.length}/${rows.length} addressed</small></h4>
+        <table class="cbtable"><thead><tr>
+          <th>Code</th><th title="papers in the WP1 review">lit.</th>
+          <th>pol.</th><th>grants</th><th></th></tr></thead>
+        <tbody>${rows.slice(0, 12).map(codebookRow).join('')}</tbody></table>
+      </div>`;
+    }).join('');
+
+    el.innerHTML = `<details class="codebook" open>
+      <summary>BioFairNet literature codebook — what does this corpus actually address?
+        <span class="cbsum">${cov.covered} of ${cov.total} codes on both sides ·
+        ${cov.gaps} not addressed</span></summary>
+      <p class="lead">Codes from the WP1/D1.2 review of ${esc(cb.scope || '')} matched
+      literally against the ${cov.nPolicies} policies and ${cov.nGrants} grants you selected.
+      A code with hits on both sides is covered by policy <em>and</em> funding; one with
+      neither is a blind spot in this corpus — often the more interesting finding.
+      Every hit is a term occurrence you can verify in the linked document.</p>
+      <div class="cbgrid">${blocks}</div>
+      <p class="note">Source: ${esc(cb.source || '')}</p>
+    </details>`;
+  }
+
   function runAnalysis() {
     goto(3);
     const docs = selectedDocs();
@@ -242,6 +307,8 @@
     $('note-grants').textContent = `Share of the ${nG} selected grant documents containing the term.`;
     $('chart-policies').innerHTML = FinderAnalytics.barChartSVG(res.policyTerms, '#0A6B65', nP);
     $('chart-grants').innerHTML = FinderAnalytics.barChartSVG(res.grantTerms, '#B67F27', nG);
+
+    renderCodebook(docs);
 
     $('sc-bridge').textContent = res.bridge.length;
     $('sc-policy').textContent = res.policyTopics.length;
@@ -260,7 +327,7 @@
     renderTopicChips();
   }
 
-  $('go-topics').addEventListener('click', runAnalysis);
+  $('go-topics').addEventListener('click', async () => { await loadCodebook(); runAnalysis(); });
   $('back-2').addEventListener('click', () => goto(2));
 
   /* ─────────── stage 4: scenarios ─────────── */

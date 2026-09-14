@@ -215,6 +215,9 @@
            encodeURIComponent(String(id).toLowerCase()),
       budgetEUR: extractBudgetEUR(meta),
       doctype: 'Call topic',
+      // Governance level: EU-level sources only today; national and regional
+      // sources will set their own level so the UI can compare across levels.
+      level: 'EU',
       source: source
     };
   }
@@ -238,6 +241,7 @@
         : uri,
       budgetEUR: null,
       doctype: b.type ? String(b.type.value).split('/').pop() : 'Act',
+      level: 'EU',
       source: source
     };
   }

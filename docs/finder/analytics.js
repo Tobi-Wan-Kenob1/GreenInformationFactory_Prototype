@@ -156,5 +156,50 @@
     return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Bar chart">${rows}</svg>`;
   }
 
-  window.FinderAnalytics = { tokenize, analyze, barChartSVG, _internal: { docFreq, topTerms, STOP } };
+  /* ---------- WP1/D1.2 codebook coverage ----------
+   * Match the BioFairNet literature codes (agri + mining) against the found
+   * policies and grants — a literal term match, so every hit is verifiable in
+   * the source document. Answers: which barriers and drivers from the
+   * literature does current EU policy and funding actually address, and which
+   * are blind spots? */
+
+  function termRegex(term) {
+    const escaped = String(term).toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp('\\b' + escaped.replace(/\s+/g, '\\s+') + '(?:s|es)?\\b', 'i');
+  }
+
+  function matchCodebook(docs, codebook) {
+    if (!codebook || !codebook.dimensions) return null;
+    const texts = docs.map(d => ({
+      kind: d.kind, id: d.id,
+      text: (String(d.title || '') + ' ' + String(d.summary || '')).toLowerCase()
+    }));
+    const nPolicies = texts.filter(t => t.kind === 'policy').length;
+    const nGrants = texts.filter(t => t.kind === 'grant').length;
+
+    const out = { dimensions: {}, nPolicies, nGrants, covered: 0, gaps: 0, total: 0 };
+    for (const dim of Object.keys(codebook.dimensions)) {
+      out.dimensions[dim] = codebook.dimensions[dim].map(entry => {
+        const res = entry.terms.map(termRegex);
+        const hits = texts.filter(t => res.some(re => re.test(t.text)));
+        const pol = hits.filter(h => h.kind === 'policy').length;
+        const gra = hits.filter(h => h.kind === 'grant').length;
+        out.total += 1;
+        if (pol && gra) out.covered += 1;
+        else if (!pol && !gra) out.gaps += 1;
+        return {
+          code: entry.code, papers: entry.papers,
+          nPolicy: pol, nGrant: gra,
+          docIds: hits.map(h => h.id),
+          status: pol && gra ? 'both' : (pol || gra) ? 'partial' : 'gap'
+        };
+      });
+    }
+    return out;
+  }
+
+  window.FinderAnalytics = {
+    tokenize, analyze, barChartSVG, matchCodebook,
+    _internal: { docFreq, topTerms, STOP, termRegex }
+  };
 })();

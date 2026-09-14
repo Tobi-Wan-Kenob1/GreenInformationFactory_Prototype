@@ -117,6 +117,11 @@ for decision-making and policy insights.
 
 **https://tobi-wan-kenob1.github.io/GreenInformationFactory_Prototype/finder/**
 
+**Scope:** the **agriculture and mining** sectors at **EU level**, matching the
+BioFairNet WP1/D1.2 literature review. National and regional instruments are a
+planned extension — every document already carries a `level` field so the other
+levels can slot in beside the EU ones. Other sectors are out of scope.
+
 A five-stage, browser-only tool (`docs/finder/`) that runs straight from
 GitHub Pages:
 
@@ -130,7 +135,11 @@ GitHub Pages:
    data.
 3. **Topic analysis** — client-side document-frequency analytics. Topics can be
    drawn from both corpora ("bridge topics"), or from the policy or grant
-   corpus alone.
+   corpus alone. A **WP1 codebook coverage** panel matches the literature
+   review's own barrier/driver/stakeholder codes against the found documents,
+   showing which codes are addressed by policy *and* funding and which are
+   blind spots — a purely lexical match, so every hit is verifiable in the
+   source text. Regenerate the vocabulary with `gif finder-codebook`.
 4. **Scenarios** — combine policies and grants under selected topics, or build
    **policy-only / grant-only** scenarios (persisted in the browser's
    localStorage, tagged with the time window they were built from).
@@ -206,8 +215,10 @@ gif literature stage-release  # stage the derived FAIR release payload
 ```
 
 Cross-validated macro-F1 on the current corpus: sector ≈ 0.93, region ≈ 1.0,
-top barrier codes ≈ 0.80, relevance ≈ 0.57 (screening aid, not a replacement
-for manual coding). The staged release links `isDerivedFrom` to both source
+top barrier codes ≈ 0.80–0.89, relevance ≈ 0.64 (screening aid, not a
+replacement for manual coding). The bundle must be retrained whenever
+scikit-learn moves a major version — a pickle written by an older version
+cannot be loaded and `predict_codes` fails with an incompatible-dtype error. The staged release links `isDerivedFrom` to both source
 DOIs and is CC-BY-4.0 (required, as the payload derives from CC-BY data).
 
 ## Repository structure
