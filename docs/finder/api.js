@@ -53,24 +53,63 @@
 
   function first(v) { return Array.isArray(v) ? v[0] : v; }
 
-  // Try hard to find a numeric EUR budget in SEDIA's assorted metadata fields.
+  // The API ignores the type filter we send, so support FAQs (type 3) and
+  // tenders (type 2) arrive mixed in and have to be dropped here.
+  function isCallTopic(r) {
+    return String(first((r.metadata || {}).type) || '') === '1';
+  }
+
+  // SEDIA nests the money as budgetOverview.budgetTopicActionMap.<id>[].
+  // budgetYearMap = {"2016": 188650000}. Sum years within a map, then take the
+  // largest map — the same call budget repeats per action and would otherwise
+  // be double-counted.
+  function budgetYearTotals(node, out) {
+    out = out || [];
+    if (Array.isArray(node)) {
+      node.forEach(n => budgetYearTotals(n, out));
+    } else if (node && typeof node === 'object') {
+      for (const k of Object.keys(node)) {
+        const v = node[k];
+        if (k === 'budgetYearMap' && v && typeof v === 'object') {
+          const years = Object.values(v).filter(x => typeof x === 'number');
+          if (years.length) out.push(years.reduce((a, b) => a + b, 0));
+        } else {
+          budgetYearTotals(v, out);
+        }
+      }
+    }
+    return out;
+  }
+
   function extractBudgetEUR(meta) {
     if (!meta) return null;
-    const direct = first(meta.budget) || first(meta.cftEstimatedTotalProcedureValue);
-    const cands = [];
-    if (direct != null) cands.push(direct);
     const bo = first(meta.budgetOverview) || first(meta.budgetOverviewJSONItem);
     if (typeof bo === 'string' && bo.indexOf('{') !== -1) {
       try {
-        const parsed = JSON.parse(bo);
-        const items = parsed.budgetTopicActionMap || parsed;
-        JSON.stringify(items).replace(/"(?:budget|totalBudget|plannedOpeningBudget)"\s*:\s*"?([\d.,\s]+)"?/g,
-          (_, n) => { cands.push(n); return _; });
+        const totals = budgetYearTotals(JSON.parse(bo));
+        if (totals.length) return Math.round(Math.max.apply(null, totals));
       } catch (e) { /* not JSON after all */ }
+    }
+    const cands = [];
+    const direct = first(meta.budget) || first(meta.cftEstimatedTotalProcedureValue);
+    if (direct != null) cands.push(direct);
+    if (typeof bo === 'string') {
+      bo.replace(/"(?:budget|totalBudget|plannedOpeningBudget)"\s*:\s*"?([\d.,\s]+)"?/g,
+        (_, n) => { cands.push(n); return _; });
     }
     for (const c of cands) {
       const n = parseFloat(String(c).replace(/[^\d.]/g, ''));
       if (isFinite(n) && n > 1000) return Math.round(n);
+    }
+    // Last resort: free-text "Indicative budget: 188.65 Million Euros".
+    const infos = stripTags(first(meta.additionalInfos) || '');
+    const m = /budget[^0-9]{0,40}([\d]+(?:[.,][\d]+)?)\s*(million|m\b|bn|billion)?/i.exec(infos);
+    if (m) {
+      let amount = parseFloat(m[1].replace(',', '.'));
+      const unit = (m[2] || '').toLowerCase();
+      if (unit.charAt(0) === 'm') amount *= 1e6;
+      else if (unit.charAt(0) === 'b') amount *= 1e9;
+      if (isFinite(amount) && amount > 1000) return Math.round(amount);
     }
     return null;
   }
@@ -78,16 +117,26 @@
   function normalizeGrant(r, source) {
     const meta = r.metadata || {};
     const id = first(meta.identifier) || r.reference || r.url || Math.random().toString(36).slice(2);
+    const description = stripTags(first(meta.description) || first(meta.descriptionByte) ||
+                                  r.summary || r.content || '');
+    const terms = [].concat(meta.keywords || [], meta.tags || []).map(String);
+    const uniqTerms = terms.filter((t, i) => terms.indexOf(t) === i);
     return {
       id: 'g:' + id,
       kind: 'grant',
       title: stripTags(first(meta.title) || r.title || id),
-      summary: stripTags(first(meta.description) || first(meta.descriptionByte) || r.summary || r.content || ''),
-      date: String(first(meta.startDate) || first(meta.publicationDateLong) || '').slice(0, 10) || null,
+      summary: (description.slice(0, 600) +
+                (uniqTerms.length ? ' · ' + uniqTerms.join(', ') : '')).trim(),
+      date: String(first(meta.startDate) || first(meta.es_SortDate) ||
+                   first(meta.publicationDateLong) || '').slice(0, 10) || null,
+      deadline: String(first(meta.deadlineDate) || '').slice(0, 10) || null,
+      status: String(first(meta.status) || '') || null,
+      callId: stripTags(first(meta.callIdentifier) || '') || null,
+      programmePeriod: stripTags(first(meta.programmePeriod) || '') || null,
       url: 'https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/' +
            encodeURIComponent(String(id).toLowerCase()),
       budgetEUR: extractBudgetEUR(meta),
-      doctype: first(meta.type) === '2' ? 'Tender' : 'Call topic',
+      doctype: 'Call topic',
       source: source
     };
   }
@@ -147,6 +196,7 @@
     const out = [];
     for (const s of settled) {
       for (const r of s.results || []) {
+        if (!isCallTopic(r)) continue;            // drop FAQs / tenders
         const d = normalizeGrant(r, 'live');
         if (seen.has(d.id) || !inWindow(d, flt)) continue;
         seen.add(d.id);
@@ -269,6 +319,6 @@ SELECT DISTINCT ?work ?title ?date ?type ?celex WHERE {
     loadJson,
     normFilters,
     _internal: { extractBudgetEUR, normalizeGrant, normalizePolicyBinding, sparqlQuery,
-                 matchesKeywords, inWindow }
+                 matchesKeywords, inWindow, isCallTopic, budgetYearTotals }
   };
 })();
