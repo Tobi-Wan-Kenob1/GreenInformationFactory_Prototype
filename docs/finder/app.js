@@ -538,10 +538,13 @@
   const fmtM = eur => (eur / 1e6).toLocaleString('en', { maximumFractionDigits: 1 });
 
   /* tCO2e → a readable magnitude (kt or Mt), since the ranges span decades.
-   * `mid` (geometric mean) leads, with the band in brackets behind it. */
+   * `mid` (geometric mean) leads, with the band in brackets behind it. The
+   * unit follows the central estimate rather than the top of the band: scaling
+   * to the band's high end rounded distinct scenarios to the same "0.1 Mt". */
   function fmtAbatement(range, mid) {
     if (!range) return null;
-    const unit = range[1] >= 1e6 ? ['Mt', 1e6] : ['kt', 1e3];
+    const scale = mid || range[1];
+    const unit = scale >= 1e6 ? ['Mt', 1e6] : ['kt', 1e3];
     const n = v => (v / unit[1]).toLocaleString('en', {
       maximumFractionDigits: v / unit[1] < 10 ? 1 : 0 });
     const band = `${n(range[0])}–${n(range[1])}`;

@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "note": "Plain-language ↔ EU/academic vocabulary for the Policy & Grant Finder. EU legal acts and Horizon call topics are written in a register almost nobody searches in: a practitioner types 'muck' or 'global warming', the document says 'organic fertiliser' or 'greenhouse gas emissions'. Each group lists terms treated as interchangeable for search. Expansion is bidirectional — typing the jargon also finds the plain word, which matters because grant abstracts are often plainer than legal titles.",
   "method": "A user keyword is normalised (lowercased, hyphens and spaces collapsed) and looked up against every term in every group. On a hit, all of that group's terms are added to the query, each then also expanded orthographically (bio-economy / bioeconomy / bio economy). Groups are kept semantically tight: they hold terms that would sensibly return the same documents, not loosely related concepts. Over-expansion costs precision, so the UI shows exactly what a keyword expanded into and lets the user switch expansion off.",
   "scope": "agriculture and mining, EU sustainability policy and funding",
@@ -117,8 +117,6 @@
         "soil protection",
         "healthy soil",
         "dirt",
-        "earth",
-        "ground",
         "topsoil",
         "land quality"
       ]
