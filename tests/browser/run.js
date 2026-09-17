@@ -79,6 +79,19 @@ async function main() {
   for (const spec of specs) {
     const started = Date.now();
     const context = await browser.newContext({ viewport: { width: 1280, height: 1400 } });
+
+    // Hermetic: nothing leaves the machine. The finder tries its live tier
+    // first (EUR-Lex and the Funding & Tenders API) and falls back to the
+    // snapshot, so on a runner with real internet it would answer with live EU
+    // data and no fixture assertion would hold. Blocking outbound requests
+    // pins the suite to the fallback path — which is also the path real
+    // browsers take for policies, since CELLAR sends no CORS headers.
+    await context.route('**/*', route => {
+      const url = route.request().url();
+      if (url.startsWith(server.baseUrl)) return route.continue();
+      return route.abort();
+    });
+
     const page = await context.newPage();
 
     // A page error is a failure even if every assertion passes.
