@@ -37,9 +37,12 @@ module.exports = {
     const pills = (await page.locator('#src-status .srcpill').allInnerTexts()).join(' | ');
     check.match(pills, /window 2004–2026/, 'the active window should be shown');
     check.match(pills, /EUR-Lex: snapshot/,
-      'fixture data is served at the snapshot path, so it must be labelled snapshot');
+      'with the live tier unreachable the app must fall back to the snapshot and say so');
     check.notMatch(pills, /DEMO SAMPLE/,
       'real snapshot data must not be labelled as bundled demo data');
+    const detail = await page.locator('#src-status .srcpill').nth(1).getAttribute('title');
+    check.match(detail, /live unreachable|snapshot/,
+      'the pill tooltip should explain where the results came from');
 
     // --- ranking: a title hit outranks a summary-only hit ----------------
     const policyTitles = await page.locator('#list-policies .doc .t').allInnerTexts();

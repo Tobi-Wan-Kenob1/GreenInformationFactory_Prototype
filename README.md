@@ -180,13 +180,16 @@ sources:
   and ranking use whole-word boundaries, so a short thesaurus term like
   `ground` does not fire on `background`. The SPARQL filter is capped at 40
   terms, since every `CONTAINS` is a scan. Cached policies reach back to 2000,
-  so historical windows work offline.
+  so historical windows work offline. **CELLAR sends no CORS headers**, so a
+  browser cannot call it directly: in practice policies always come from the
+  snapshot, and the live tier only ever contributes grants.
 - *EU Funding & Tenders (SEDIA)* caps a query's result set at 100 MB, so the
   fetcher queries **one keyword per request** rather than a combined `OR`, and
   filters out support FAQs and tenders that the API returns despite the type
   filter. The portal indexes Horizon 2020 onwards, so grant results do not
   reach back into FP7; historical grant benchmarking is limited by the source,
-  not by the tool.
+  not by the tool. Unlike CELLAR it does send CORS headers, so the browser's
+  live tier does reach it.
 
 Generate a snapshot for a specific past period with
 `gif finder-data --since 2007-01-01 --until 2013-12-31 --out <dir>`.
