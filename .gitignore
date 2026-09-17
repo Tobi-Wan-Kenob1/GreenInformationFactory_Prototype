@@ -46,3 +46,6 @@ models/*.joblib
 
 # Raw Zenodo downloads (re-fetch via: gif zenodo pull / gif literature fetch)
 data/external/
+
+# Node dependencies for the browser test suite (tests/browser)
+node_modules/

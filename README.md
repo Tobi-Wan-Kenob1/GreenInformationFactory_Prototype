@@ -248,13 +248,28 @@ GreenInformationFactory_Prototype/
 ## Tests & CI
 
 ```bash
-pytest -q
+pytest -q                      # Python: gif package, helpers, finder fetchers
+node tests/browser/run.js      # browser: the Policy & Grant Finder UI
 ```
 
-GitHub Actions (`.github/workflows/ci.yml`) runs the suite on Python
-3.10–3.12 for every push and pull request. The span matters: 3.10 resolves to
-pandas 2.x and 3.11+ to pandas 3.x, so the matrix catches incompatibilities
-between the two major pandas lines.
+The finder is ~1,300 lines of browser JavaScript with no Python behind it, so
+it has its own suite (`tests/browser/`) driving a real headless Chromium —
+ranking, localStorage scenarios and the SVG charts only exist once a page has
+run. Four specs cover search and the time window, the plain-language
+thesaurus, topic analytics with WP1 codebook coverage, and the Stage-5
+metrics. Run one with `node tests/browser/run.js synonyms`.
+
+The suite serves `docs/` with **frozen fixtures** in place of
+`docs/finder/data/{policies,grants}.json`: those are refreshed weekly by the
+`finder-data` workflow, so asserting against them would fail CI every time the
+EU corpus moved. Every assertion is therefore about the app's behaviour rather
+than the state of the EU. First run needs `cd tests/browser && npm install`;
+set `FINDER_TEST_CHROMIUM` to use a specific browser binary.
+
+GitHub Actions (`.github/workflows/ci.yml`) runs the Python suite on Python
+3.10–3.12 and the browser suite on every push and pull request. The Python
+span matters: 3.10 resolves to pandas 2.x and 3.11+ to pandas 3.x, so the
+matrix catches incompatibilities between the two major pandas lines.
 
 ## License & acknowledgements
 
