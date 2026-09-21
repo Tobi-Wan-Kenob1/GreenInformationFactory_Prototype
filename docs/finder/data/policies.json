@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-14T18:49:08Z",
+ "generated": "2026-09-21T10:44:24Z",
  "keywords": [
   "agriculture",
   "mining",
@@ -13,6 +13,31 @@
   "just transition"
  ],
  "items": [
+  {
+   "id": "p:32026D2103",
+   "kind": "policy",
+   "title": "Council Decision (CFSP) 2026/2103 of 15 September 2026 amending Decision 2014/145/CFSP concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
+   "summary": "EU restrictive measure, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, international sanctions, legal person, natural person, territorial dispute, territorial law",
+   "subjects": [
+    "EU restrictive measure",
+    "Russia",
+    "Russo-Ukrainian issue",
+    "Ukraine",
+    "economic sanctions",
+    "international sanctions",
+    "legal person",
+    "natural person",
+    "territorial dispute",
+    "territorial law"
+   ],
+   "inForce": null,
+   "date": "2026-09-15",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2103",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "level": "EU",
+   "source": "cache"
+  },
   {
    "id": "p:32026D1939",
    "kind": "policy",
@@ -601,30 +626,6 @@
    "inForce": null,
    "date": "2026-03-16",
    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D0711",
-   "budgetEUR": null,
-   "doctype": "DEC",
-   "level": "EU",
-   "source": "cache"
-  },
-  {
-   "id": "p:32026D0614",
-   "kind": "policy",
-   "title": "Council Decision (CFSP) 2026/614 of 16 March 2026 amending Decision 2014/145/CFSP concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
-   "summary": "EU restrictive measure, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, international sanctions, natural person, territorial dispute, territorial law",
-   "subjects": [
-    "EU restrictive measure",
-    "Russia",
-    "Russo-Ukrainian issue",
-    "Ukraine",
-    "economic sanctions",
-    "international sanctions",
-    "natural person",
-    "territorial dispute",
-    "territorial law"
-   ],
-   "inForce": null,
-   "date": "2026-03-16",
-   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D0614",
    "budgetEUR": null,
    "doctype": "DEC",
    "level": "EU",

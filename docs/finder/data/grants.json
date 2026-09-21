@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-14T18:49:08Z",
+ "generated": "2026-09-21T10:44:24Z",
  "keywords": [
   "agriculture",
   "mining",
@@ -490,6 +490,23 @@
    "matchedKeyword": "biomass"
   },
   {
+   "id": "g:HORIZON-CL6-2026-01-CIRCBIO-05",
+   "kind": "grant",
+   "title": "Understanding biomass flows in Europe",
+   "summary": "Expected Outcome: Project results are expected to contribute to all the following expected outcomes: enhanced understanding of the environmental, social and economic potential of the supply of different biomass types (from local to international perspectives), as well as its sustainability implications, including biodiversity and (air, water and soil) pollution, synergies and tensions; enhanced capacity of private and public stakeholders to increase resource efficiency in utilising primary and secondary biomass as well as biomass processing and use, including through digital tools which may in · HORIZON-CL6-2026-01-CIRCBIO-05, HORIZON-CL6-2026-01, Bioeconomy, Blue Economy, bio-economies, bio-economy, bioeconomies, bioeconomy, biological, biomass, circular, flows, hub, materials, region, renewable, resource, resources, sustainability, sustainable",
+   "date": "2026-04-17",
+   "deadline": "2026-09-23",
+   "status": "31094502",
+   "callId": "HORIZON-CL6-2026-01",
+   "programmePeriod": "2021 - 2027",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-cl6-2026-01-circbio-05",
+   "budgetEUR": null,
+   "doctype": "Call topic",
+   "level": "EU",
+   "source": "cache",
+   "matchedKeyword": "biomass"
+  },
+  {
    "id": "g:SC5-14-2019",
    "kind": "grant",
    "title": "Visionary and integrated solutions to improve well-being and health in cities",
@@ -660,23 +677,6 @@
    "matchedKeyword": "soil"
   },
   {
-   "id": "g:LIFE-2025-SAP-ENV-ENVIRONMENT",
-   "kind": "grant",
-   "title": "Circular Economy and Zero Pollution",
-   "summary": "Expected Impact: Applicants are expected to define, calculate, explain and achieve the expected impacts as described in the Award criterion ‘Impact’ (see Call document section 2 and 9 ). Objective: The aim is to facilitate the transition toward a sustainable, circular, energy-efficient and climate-resilient economy, a toxic-free environment and at protecting, restoring and improving the quality of the environment in line with the European Green Deal and recent policy developments. The specific objective is to cover one or more of the following topics as fully defined in section 2 of the Call d · LIFE-2025-SAP-ENV-ENVIRONMENT, LIFE-2025-SAP-ENV",
-   "date": "2025-04-24",
-   "deadline": "2025-09-23",
-   "status": "31094503",
-   "callId": "LIFE-2025-SAP-ENV",
-   "programmePeriod": "2021 - 2027",
-   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/life-2025-sap-env-environment",
-   "budgetEUR": null,
-   "doctype": "Call topic",
-   "level": "EU",
-   "source": "cache",
-   "matchedKeyword": "circular economy"
-  },
-  {
    "id": "g:HORIZON-MISS-2023-SOIL-01-09",
    "kind": "grant",
    "title": "Carbon farming in living labs",
@@ -687,23 +687,6 @@
    "callId": "HORIZON-MISS-2023-SOIL-01",
    "programmePeriod": "2021 - 2027",
    "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-miss-2023-soil-01-09",
-   "budgetEUR": null,
-   "doctype": "Call topic",
-   "level": "EU",
-   "source": "cache",
-   "matchedKeyword": "carbon farming"
-  },
-  {
-   "id": "g:HORIZON-CL6-2027-02-CLIMATE-03",
-   "kind": "grant",
-   "title": "Carbon farming innovation and scale-up",
-   "summary": "Expected Outcome: Project results are expected to contribute to all of the following expected outcomes: models, methods and data needed for the quantification of carbon farming activities and results are available for integration in a single monitoring, reporting and verification (MRV) system, so that the costs and burden associated to carbon farming MRV are reduced to a minimum; use of carbon-removal and emission-reduction certification is facilitated at scale, and the EU Carbon Removals and Carbon Farming (CRCF) Regulation [1] becomes the basis for cost-effective certification of carbon farm · HORIZON-CL6-2027-02-CLIMATE-03, HORIZON-CL6-2027-02, Agriculture, Carbon capture and sequestration, Certification schemes, Climate change mitigation, Earth Observation / Services and applications, Forestry, CRCF certification and registry, Carbon Removals and Carbon Farming (CRCF) Regulation, carbon farming, carbon farming innovation, certification, greenhouse gas inventories, models, methods and data, monitoring, reporting and verification (MRV) system, quantification, scale-up",
-   "date": "2027-04-20",
-   "deadline": "2027-09-23",
-   "status": "31094501",
-   "callId": "HORIZON-CL6-2027-02",
-   "programmePeriod": "2021 - 2027",
-   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-cl6-2027-02-climate-03",
    "budgetEUR": null,
    "doctype": "Call topic",
    "level": "EU",
