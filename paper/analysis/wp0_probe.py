@@ -22,11 +22,14 @@ from __future__ import annotations
 import csv
 import io
 import json
+import re
 import sys
 import zipfile
 from typing import Any, Dict, Iterable, List, Optional
 
 import requests
+
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}")
 
 TIMEOUT = 120
 UA = {"User-Agent": "GreenInformationFactory-WP0-probe/1.0 (research; +github.com/Tobi-Wan-Kenob1)"}
@@ -77,17 +80,30 @@ def report_fill(label: str, header: List[str], rows: List[List[str]],
     turn that rule into a guess.
     """
     idx = {c.lower(): i for i, c in enumerate(header)}
-    print(f"    {label}: fill rate over {len(rows)} rows")
+    width = len(header)
+    # Round 3 printed date "ranges" like "FP7-PEOPLE … the study", which is a
+    # mis-split row showing through, not a date. Ragged rows are counted and
+    # excluded so the percentages mean what they say, and date fields are
+    # reported only on values that are actually ISO dates.
+    clean = [r for r in rows if len(r) == width]
+    ragged = len(rows) - len(clean)
+    print(f"    {label}: fill rate over {len(clean)} well-formed rows"
+          + (f" ({ragged} ragged rows excluded)" if ragged else ""))
     for field in fields:
         i = idx.get(field.lower())
         if i is None:
             print(f"      —    {field} (absent)")
             continue
-        vals = [r[i].strip() for r in rows if len(r) > i and r[i].strip()]
-        pct = 100.0 * len(vals) / len(rows) if rows else 0.0
+        vals = [r[i].strip() for r in clean if r[i].strip()]
+        pct = 100.0 * len(vals) / len(clean) if clean else 0.0
         extra = ""
-        if vals and "date" in field.lower():
-            extra = f", range {min(vals)[:10]} … {max(vals)[:10]}"
+        if "date" in field.lower():
+            dates = [v for v in vals if DATE_RE.match(v)]
+            if dates:
+                extra = (f", {len(dates)} parse as dates, "
+                         f"range {min(dates)[:10]} … {max(dates)[:10]}")
+            elif vals:
+                extra = f", none parse as a date (e.g. {vals[0][:30]!r})"
         print(f"      {pct:5.1f}%  {field}{extra}")
 
 
@@ -276,14 +292,25 @@ def probe_eurostat() -> None:
          "sbs_na_ind_r2",
          {"format": "JSON", "lang": "EN", "geo": "DE", "nace_r2": "B08",
           "indic_sb": "V11110", "time": "2009"}),
+        # How far back and forward does the historical series actually run?
+        # Without a time filter the envelope lists every period it holds.
+        ("SBS historical, full time span (sbs_na_sca_r2, B08)", "sbs_na_sca_r2",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "nace_r2": "B08",
+          "indic_sb": "V11110"}),
         ("SBS historical, regional (sbs_r_nuts06_r2, 2009)", "sbs_r_nuts06_r2",
          {"format": "JSON", "lang": "EN", "geo": "DE2", "nace_r2": "B",
           "indic_sb": "V11110", "time": "2009"}),
+        # Zero-value answers echo only the codes that were asked for, so one
+        # query without code filters is needed to see what the regional series
+        # really offers.
+        ("SBS regional, codes offered (sbs_r_nuts06_r2, DE2)", "sbs_r_nuts06_r2",
+         {"format": "JSON", "lang": "EN", "geo": "DE2", "lastTimePeriod": "1"}),
         # Agriculture is outside SBS entirely (NACE A is excluded), so the
         # agricultural half of the sector scope needs its own series.
+        # Round 3 rejected itm_newa for this dataset, so ask with the dimensions
+        # that are certainly valid and let the envelope name the rest.
         ("Agriculture: economic accounts (aact_eaa01, 2009)", "aact_eaa01",
-         {"format": "JSON", "lang": "EN", "geo": "DE", "time": "2009",
-          "indic_ag": "01000", "itm_newa": "01000"}),
+         {"format": "JSON", "lang": "EN", "geo": "DE", "time": "2009"}),
         ("Agriculture: farm labour force (aact_ali01, 2009)", "aact_ali01",
          {"format": "JSON", "lang": "EN", "geo": "DE", "time": "2009"}),
     ]
@@ -303,11 +330,12 @@ def probe_eurostat() -> None:
         values = payload.get("value") or {}
         print(f"      JSON-stat OK: {len(values)} value(s), "
               f"dimensions: {', '.join(dims.keys())}")
-        if not values:
-            # A zero-value envelope still carries the category lists, which say
-            # what the dataset would accept. Print them so the filter can be
-            # fixed rather than guessed at again.
-            print("      zero values — the dataset's own categories are:")
+        if not values or len(values) < 500:
+            # The envelope carries the category lists, which say what the
+            # dataset actually accepts. Print them so a filter can be fixed
+            # from evidence rather than guessed at again.
+            print("      zero values — the dataset's own categories are:"
+                  if not values else "      categories in this answer:")
             for name, dim in dims.items():
                 cats = list(((dim.get("category") or {}).get("index") or {}).keys())
                 if cats:
@@ -402,7 +430,28 @@ def probe_ets() -> None:
         if url.startswith("("):
             print("    no webdav distribution was advertised this time")
             break
-        head(url)
+        h = head(url)
+        # Round 3: HTTP 200 but text/html and zero length — the access_url is a
+        # webdav *directory*, not the data file. Fetch it and list what is in it.
+        if h is not None and "html" in (h.headers.get("content-type") or ""):
+            print("      that is a directory listing, not a file — enumerating it")
+            r = get(url)
+            if r is None or r.status_code != 200:
+                continue
+            hrefs = re.findall(r'href="([^"]+)"', r.text)
+            files = [h2 for h2 in hrefs
+                     if not h2.startswith("?") and not h2.endswith("/")
+                     and h2 not in ("..", ".")]
+            print(f"      {len(files)} entry(ies):")
+            for name in files[:25]:
+                print(f"        {name}")
+            # Fetch the most promising tabular file to confirm it is really data.
+            pick = next((f for f in files
+                         if f.lower().endswith((".csv", ".zip", ".xlsx", ".parquet"))), None)
+            if pick:
+                child = url.rstrip("/") + "/" + pick.lstrip("/")
+                print(f"      confirming {pick}")
+                head(child)
     for label, url in [
         # The datahub item id used in round 1 is dead; these are the entry
         # points that do not depend on a UUID staying valid.
