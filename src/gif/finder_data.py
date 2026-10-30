@@ -246,7 +246,8 @@ def in_window(doc: Dict[str, Any], since: Optional[str] = None,
 def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
                  pages: int = 1, include_closed: bool = True,
                  since: Optional[str] = None,
-                 until: Optional[str] = None) -> List[Dict[str, Any]]:
+                 until: Optional[str] = None,
+                 failures_out: Optional[List[str]] = None) -> List[Dict[str, Any]]:
     """Query SEDIA for grant call topics matching the keywords.
 
     One request **per keyword** rather than a single ``OR`` query: the API
@@ -293,6 +294,8 @@ def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
             if len(results) < page_size:
                 break
 
+    if failures_out is not None:
+        failures_out.extend(failures)
     if failures and not docs:
         raise RuntimeError("every keyword query failed — " + "; ".join(failures))
     if failures:
@@ -509,7 +512,8 @@ def date_buckets(since: str, until: Optional[str],
 def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
                    until: Optional[str] = None,
                    limit: int = 150,
-                   span_years: int = 5) -> List[Dict[str, Any]]:
+                   span_years: int = 5,
+                   failures_out: Optional[List[str]] = None) -> List[Dict[str, Any]]:
     """Query CELLAR for EU acts whose English title matches any keyword.
 
     The query is ``ORDER BY DESC(date) LIMIT n``, so for a broad keyword set a
@@ -536,6 +540,8 @@ def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
                 seen.add(doc["id"])
                 docs.append(doc)
 
+    if failures_out is not None:
+        failures_out.extend(failures)
     if failures and not docs:
         raise RuntimeError("every CELLAR slice failed — " + "; ".join(failures))
     if failures:
@@ -614,12 +620,20 @@ def build_snapshot(keywords: Optional[List[str]] = None,
     out = out_dir or (root / "docs" / "finder" / "data")
 
     errors: Dict[str, str] = {}
+    # Partial failures — some keywords or some date slices — used to be printed
+    # and then forgotten, so a snapshot missing whole slices looked complete.
+    # That is how two runs four minutes apart produced 148 and 111 policies with
+    # no error recorded either time. They are collected and returned now, so a
+    # corpus can state how complete it is rather than implying completeness.
+    partial: Dict[str, List[str]] = {"grants": [], "policies": []}
     try:
-        grants = fetch_grants(keywords, since=since, until=until)
+        grants = fetch_grants(keywords, since=since, until=until,
+                              failures_out=partial["grants"])
     except Exception as exc:                      # noqa: BLE001 - reported, not raised
         grants, errors["grants"] = [], f"{type(exc).__name__}: {exc}"
     try:
-        policies = fetch_policies(keywords, since=since, until=until)
+        policies = fetch_policies(keywords, since=since, until=until,
+                                  failures_out=partial["policies"])
     except Exception as exc:                      # noqa: BLE001 - reported, not raised
         policies, errors["policies"] = [], f"{type(exc).__name__}: {exc}"
 
@@ -635,6 +649,7 @@ def build_snapshot(keywords: Optional[List[str]] = None,
         "grants": len(grants),
         "policies": len(policies),
         "errors": errors,
+        "partial": {k: v for k, v in partial.items() if v},
         "skipped": skipped,
         "files": {k: str(v) for k, v in written.items()},
         "generated": date.today().isoformat(),

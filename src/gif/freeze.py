@@ -192,12 +192,26 @@ def freeze(out_dir: Path,
            keywords: Optional[List[str]] = None,
            programmes: Optional[Iterable[str]] = None,
            label: Optional[str] = None,
-           skip_projects: bool = False) -> Dict[str, Any]:
+           skip_projects: bool = False,
+           allow_partial: bool = False) -> Dict[str, Any]:
     """Fetch every source into ``out_dir`` and write the manifest.
 
-    Raises if the corpus breaches its own window: a frozen corpus containing
-    documents from after its cut-off is not a usable record of a past date, and
-    failing loudly is the only way that gets noticed before it is relied on.
+    Raises in two cases, both of which produce a corpus that cannot carry the
+    meaning its label claims:
+
+    * **The window is breached.** A corpus containing documents from after its
+      cut-off is not a record of a past date.
+    * **A source failed partially.** Some keywords, or some date slices, came
+      back as errors while others succeeded. The corpus is then an unknown
+      fraction of the period and its size says nothing — two runs minutes apart
+      returned 148 and 111 policies for the same window, and without this check
+      both would have been recorded as complete. ``allow_partial`` keeps the
+      corpus anyway and leaves the failures in the manifest, which is the right
+      choice only when a source is known to be permanently degraded and the
+      incompleteness is going to be reported.
+
+    The manifest is written before either check, so a rejected corpus can be
+    inspected rather than merely described by an exception.
     """
     from .cordis import DEFAULT_PROGRAMMES, build_projects
     from .finder_data import build_snapshot, load_snapshot_keywords
@@ -212,6 +226,7 @@ def freeze(out_dir: Path,
     snapshot = build_snapshot(keywords=list(keywords), out_dir=out_dir,
                               since=since or "1990-01-01", until=until)
     errors.update(snapshot.get("errors") or {})
+    partial: Dict[str, List[str]] = dict(snapshot.get("partial") or {})
 
     projects: Dict[str, Any] = {}
     if not skip_projects:
@@ -224,6 +239,8 @@ def freeze(out_dir: Path,
     manifest = build_manifest(out_dir, list(keywords), since, until,
                               programmes=programmes, label=label, repo_root=root)
     manifest["errors"] = errors
+    manifest["partial_failures"] = partial
+    manifest["complete"] = not partial and not errors
     path = write_manifest(out_dir, manifest)
 
     if manifest["window_violations"]:
@@ -233,6 +250,14 @@ def freeze(out_dir: Path,
             f"the corpus is not a record of that period. First few: "
             + "; ".join(f"{b['file']}:{b['id']}@{b['date']}" for b in breaches[:5]))
 
+    if partial and not allow_partial:
+        detail = "; ".join(f"{src}: {len(items)} failure(s) — {items[0]}"
+                           for src, items in partial.items())
+        raise RuntimeError(
+            "a source failed partially, so this corpus is an unknown fraction of "
+            f"the period and its size means nothing: {detail}. Re-run, or pass "
+            "allow_partial to keep it and report the incompleteness.")
+
     return {
         "label": label,
         "dir": str(out_dir),
@@ -240,6 +265,8 @@ def freeze(out_dir: Path,
         "documents": manifest["documents"],
         "files": manifest["files"],
         "undated": len(manifest["undated"]),
+        "complete": manifest["complete"],
+        "partial_failures": partial,
         "errors": errors,
         "projects": projects.get("projects") if projects else None,
         "generated": date.today().isoformat(),

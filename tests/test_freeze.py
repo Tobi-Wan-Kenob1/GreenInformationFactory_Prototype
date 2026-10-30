@@ -157,6 +157,61 @@ def test_freeze_writes_manifest_and_counts(tmp_path, monkeypatch):
     assert manifest["keywords"] == ["mining"]
 
 
+def test_freeze_refuses_a_partially_fetched_corpus(tmp_path, monkeypatch):
+    """Two runs minutes apart gave 148 and 111 policies, both recorded clean.
+
+    Partial failures — some keywords or some date slices erroring while others
+    succeed — used to be printed and forgotten, so a corpus missing whole
+    slices looked complete. A corpus like that is an unknown fraction of its
+    period and its size means nothing, so freezing it has to fail.
+    """
+    monkeypatch.setattr(fz, "find_repo_root", lambda: tmp_path)
+    out = tmp_path / "frozen"
+    import gif.cordis as cd
+    import gif.finder_data as fd
+
+    def fake_snapshot(keywords=None, out_dir=None, since=None, until=None):
+        _write_corpus(out_dir, policies=[_doc("p:1", "2005-01-01")])
+        return {"errors": {}, "partial": {"policies": ["2000-2004: HTTP 500"]}}
+
+    monkeypatch.setattr(fd, "build_snapshot", fake_snapshot)
+    monkeypatch.setattr(fd, "load_snapshot_keywords", lambda root=None: ["mining"])
+    monkeypatch.setattr(cd, "build_projects", lambda **kw: {"projects": 0})
+
+    with pytest.raises(RuntimeError, match="unknown fraction"):
+        fz.freeze(out, until="2009-12-31", label="A1")
+
+    # Written anyway, so the incompleteness is inspectable.
+    manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["complete"] is False
+    assert manifest["partial_failures"]["policies"] == ["2000-2004: HTTP 500"]
+
+    # And keepable on purpose, for a known-degraded source.
+    report = fz.freeze(out, until="2009-12-31", label="A1", allow_partial=True)
+    assert report["complete"] is False
+    assert report["partial_failures"]["policies"]
+
+
+def test_partial_failures_reach_the_caller(monkeypatch):
+    """fetch_policies collected failures and then dropped them on the floor."""
+    import gif.finder_data as fd
+    calls = []
+
+    def fake_cellar(keywords, since, until, limit):
+        calls.append(since)
+        if since.startswith("2000"):
+            raise RuntimeError("HTTP 500")
+        return [{"id": f"p:{since[:4]}", "kind": "policy", "date": f"{since[:4]}-06-01",
+                 "title": "act", "summary": ""}]
+
+    monkeypatch.setattr(fd, "_cellar_query", fake_cellar)
+    failures = []
+    docs = fd.fetch_policies(["mining"], since="2000-01-01", until="2009-12-31",
+                             failures_out=failures)
+    assert docs, "the slices that worked should still be returned"
+    assert len(failures) == 1 and "HTTP 500" in failures[0]
+
+
 def test_freeze_can_skip_projects(tmp_path, monkeypatch):
     monkeypatch.setattr(fz, "find_repo_root", lambda: tmp_path)
     out = tmp_path / "frozen"

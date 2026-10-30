@@ -218,9 +218,13 @@ def _cmd_freeze(args) -> int:
                   if args.programmes else None)
     report = freeze(out, since=args.since, until=args.until, keywords=keywords,
                     programmes=programmes, label=args.label,
-                    skip_projects=args.no_projects)
+                    skip_projects=args.no_projects,
+                    allow_partial=args.allow_partial)
 
-    print(f"froze {report['documents']} documents into {report['dir']}")
+    print(f"froze {report['documents']} documents into {report['dir']}"
+          + ("" if report["complete"] else "  [INCOMPLETE]"))
+    for source, items in (report["partial_failures"] or {}).items():
+        print(f"  ! {source}: {len(items)} partial failure(s) — {'; '.join(items[:3])}")
     for entry in report["files"]:
         print(f"  - {entry['name']}: {entry['items']} items, "
               f"{entry['earliest'] or '?'}..{entry['latest'] or '?'}, "
@@ -370,6 +374,11 @@ def build_parser() -> argparse.ArgumentParser:
                     help="Name recorded in the manifest, e.g. the arm this corpus is for")
     fr.add_argument("--no-projects", action="store_true", dest="no_projects",
                     help="Skip CORDIS; policies and call topics only")
+    fr.add_argument("--allow-partial", action="store_true", dest="allow_partial",
+                    help="Keep the corpus even if a source failed partially. Only "
+                         "for a known-degraded source whose incompleteness will be "
+                         "reported — the corpus is otherwise an unknown fraction "
+                         "of the period")
     fr.add_argument("--verify", action="store_true",
                     help="Re-hash an existing corpus against its manifest and exit")
     fr.set_defaults(func=_cmd_freeze)
