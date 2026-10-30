@@ -1,0 +1,87 @@
+name: CORDIS adapter verification (temporary)
+
+# Runs `gif cordis` against the real CORDIS archives once, to check the adapter
+# on live data rather than only on the synthetic archives in tests/test_cordis.py.
+# WP0 showed how far the real files drift from their documentation — empty
+# ecSignatureDate columns, ragged rows, FP6's nested layout — so the unit tests
+# encode what was measured, and this confirms the measurement still holds.
+#
+# It writes nothing to the repository: the snapshot goes to a temp directory and
+# is uploaded as an artifact. Delete this workflow once the adapter is trusted,
+# or promote it into the finder-data schedule.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/policy-grant-finder-l84zm2
+    paths:
+      - "src/gif/cordis.py"
+      - ".github/workflows/cordis-verify.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: python -m pip install --quiet -e .
+
+      - name: Fetch FP6 and FP7 at the study's first freeze point
+        run: |
+          gif cordis --programmes fp6,fp7 --as-of 2009-12-31 --out /tmp/cordis-a1
+
+      - name: Fetch every programme, unfiltered by date
+        run: |
+          gif cordis --programmes fp6,fp7,h2020,horizon --out /tmp/cordis-all
+
+      - name: Describe what came back
+        run: |
+          python - <<'PY'
+          import json, pathlib, collections
+          for name in ("cordis-a1", "cordis-all"):
+              path = pathlib.Path("/tmp") / name / "projects.json"
+              if not path.exists():
+                  print(f"{name}: MISSING"); continue
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              items = payload["items"]
+              size_mb = path.stat().st_size / 1e6
+              print(f"\n=== {name}: {len(items)} projects, {size_mb:.1f} MB "
+                    f"on disk, window {payload['window']} ===")
+              if not items:
+                  print("  no projects — check the keyword filter"); continue
+              dates = sorted(d["date"] for d in items if d["date"])
+              print(f"  date range: {dates[0]} .. {dates[-1]}"
+                    f"  ({len(items) - len(dates)} undated)")
+              per = collections.Counter(d["id"].split(":")[1] for d in items)
+              print(f"  per programme: {dict(per)}")
+              budgets = [d["budgetEUR"] for d in items if d["budgetEUR"]]
+              print(f"  with a budget: {len(budgets)}/{len(items)}"
+                    + (f", total {sum(budgets)/1e9:.2f} bn EUR" if budgets else ""))
+              print(f"  with euroSciVoc topics: "
+                    f"{sum(1 for d in items if ' · ' in d['summary'])}/{len(items)}")
+              # The available-at-T rule is the one that must not be merely
+              # plausible: assert it rather than eyeball it.
+              until = payload["window"]["until"]
+              if until:
+                  late = [d["id"] for d in items if not d["date"] or d["date"] > until]
+                  assert not late, f"{len(late)} project(s) past {until}: {late[:5]}"
+                  print(f"  OK  no project starts after {until}")
+              for d in items[:3]:
+                  print(f"  - {d['date']} {d['id']} {d['title'][:70]!r} "
+                        f"{d['budgetEUR']} EUR  deadline={d['deadline']}")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cordis-verification
+          path: /tmp/cordis-*/projects.json
