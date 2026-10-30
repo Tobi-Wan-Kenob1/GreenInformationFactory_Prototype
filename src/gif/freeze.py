@@ -51,23 +51,34 @@ def sha256_file(path: Path) -> str:
 
 
 def tool_version(repo_root: Optional[Path] = None) -> Dict[str, Any]:
-    """The tool's commit, and whether the tree was dirty when it ran.
+    """The tool's commit, and whether the tracked tree was modified.
 
     A corpus is only reproducible against a known version of the code that
     built it, and "dirty" matters as much as the hash: a corpus built from
     uncommitted changes cannot be reconstructed from the repository at all, so
     the manifest says so instead of implying a clean provenance.
+
+    Only **tracked** modifications count. Untracked files were counted at first
+    and the first real run came back dirty for an uninteresting reason: an
+    editable install drops an ``egg-info`` directory in the tree. Flagging that
+    as unreproducible would train the reader to ignore the flag, which is worse
+    than not having one. Untracked files are reported as a count, so an
+    unexpected pile of them is still visible without crying wolf.
     """
     root = repo_root or find_repo_root()
-    out: Dict[str, Any] = {"commit": None, "dirty": None}
+    out: Dict[str, Any] = {"commit": None, "dirty": None, "untracked": None}
+
+    def git(*args: str) -> str:
+        return subprocess.run(["git", "-C", str(root), *args],
+                              capture_output=True, text=True, timeout=30,
+                              check=True).stdout
+
     try:
-        out["commit"] = subprocess.run(
-            ["git", "-C", str(root), "rev-parse", "HEAD"],
-            capture_output=True, text=True, timeout=30, check=True).stdout.strip()
-        status = subprocess.run(
-            ["git", "-C", str(root), "status", "--porcelain"],
-            capture_output=True, text=True, timeout=30, check=True).stdout
-        out["dirty"] = bool(status.strip())
+        out["commit"] = git("rev-parse", "HEAD").strip()
+        tracked = git("status", "--porcelain", "--untracked-files=no").strip()
+        out["dirty"] = bool(tracked)
+        others = git("ls-files", "--others", "--exclude-standard").strip()
+        out["untracked"] = len(others.splitlines()) if others else 0
     except Exception:                             # noqa: BLE001 - absence is reported
         pass
     return out

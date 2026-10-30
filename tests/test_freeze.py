@@ -185,7 +185,41 @@ def test_tool_version_reports_commit_and_dirty_state():
     misleading in exactly the case that matters.
     """
     version = fz.tool_version()
-    assert set(version) == {"commit", "dirty"}
+    assert set(version) == {"commit", "dirty", "untracked"}
     if version["commit"] is not None:
         assert len(version["commit"]) == 40
         assert isinstance(version["dirty"], bool)
+        assert isinstance(version["untracked"], int)
+
+
+def test_untracked_files_do_not_make_a_corpus_unreproducible(tmp_path):
+    """The first real run came back dirty because of an egg-info directory.
+
+    An editable install drops one in the tree. Treating that as unreproducible
+    would train the reader to ignore the flag, which is worse than not having
+    one, so untracked files are counted instead of raising it.
+    """
+    import subprocess
+    repo = tmp_path / "repo"
+    (repo / "src").mkdir(parents=True)
+    env = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@e",
+           "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@e", "PATH": "/usr/bin:/bin"}
+    run = lambda *a: subprocess.run(["git", "-C", str(repo), *a], check=True,
+                                    capture_output=True, env=env)
+    run("init", "-q")
+    (repo / "src" / "mod.py").write_text("x = 1\n", encoding="utf-8")
+    run("add", "-A")
+    run("commit", "-qm", "initial")
+
+    clean = fz.tool_version(repo)
+    assert clean["dirty"] is False and clean["untracked"] == 0
+
+    (repo / "thing.egg-info").mkdir()
+    (repo / "thing.egg-info" / "PKG-INFO").write_text("meta\n", encoding="utf-8")
+    with_untracked = fz.tool_version(repo)
+    assert with_untracked["dirty"] is False, "an untracked build artifact is not a code change"
+    assert with_untracked["untracked"] >= 1
+
+    (repo / "src" / "mod.py").write_text("x = 2\n", encoding="utf-8")
+    modified = fz.tool_version(repo)
+    assert modified["dirty"] is True, "a modified tracked file must still flag"
