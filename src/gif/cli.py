@@ -249,15 +249,22 @@ def _cmd_codebook_queries(args) -> int:
     selection = select_queries(
         Path(args.corpus), dimensions=dimensions,
         max_df=args.max_df if args.max_df is not None else DEFAULT_MAX_DF,
-        top=args.top if args.top is not None else DEFAULT_TOP)
+        top=args.top if args.top is not None else DEFAULT_TOP,
+        require_both=args.require_both)
 
-    print(f"{selection['documents']} documents in {selection['corpus']}")
+    by_side = selection["documents_by_side"]
+    print(f"{selection['documents']} documents in {selection['corpus']} "
+          f"({by_side['policy']} policy, {by_side['grant']} funding)")
     print(f"queries: {', '.join(selection['queries']) or '(none)'}")
-    print(f"{'code':24s} {'dim':10s} {'papers':>6s} {'docs':>6s} {'df':>7s}  status")
+    print(f"  {selection['selected_on_both_sides']} of {len(selection['queries'])} "
+          f"present on both sides")
+    print(f"{'code':24s} {'dim':10s} {'papers':>6s} {'docs':>6s} {'pol':>5s} "
+          f"{'fund':>5s} {'df':>7s}  status")
     for cand in selection["candidates"]:
         print(f"{cand['code'][:24]:24s} {cand['dimension'][:10]:10s} "
-              f"{cand['papers']:6d} {cand['documents']:6d} {cand['df']:7.3f}  "
-              f"{cand['status']}")
+              f"{cand['papers']:6d} {cand['documents']:6d} "
+              f"{cand['policy_documents']:5d} {cand['grant_documents']:5d} "
+              f"{cand['df']:7.3f}  {cand['status']}")
     if selection["short"]:
         print(f"! only {len(selection['queries'])} of {args.top or 10} queries "
               f"survived the filter — report this rather than relaxing it")
@@ -421,6 +428,10 @@ def build_parser() -> argparse.ArgumentParser:
     cq.add_argument("--top", type=int, default=None, help="How many queries (default 10)")
     cq.add_argument("--dimensions", default=None,
                     help="Comma-separated codebook dimensions (default: barriers,drivers)")
+    cq.add_argument("--require-both-sides", action="store_true", dest="require_both",
+                    help="Keep only codes present in both the policy and the funding "
+                         "corpus. Without it, the larger side dominates the ranking "
+                         "and a term can be chosen that appears in no act at all")
     cq.set_defaults(func=_cmd_codebook_queries)
 
     fc = sub.add_parser("finder-codebook",

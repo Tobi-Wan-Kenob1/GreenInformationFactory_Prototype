@@ -85,6 +85,18 @@ jobs:
             --corpus "corpus-${{ matrix.label }}" \
             --out "corpus-${{ matrix.label }}/queries.json"
 
+      - name: Select queries requiring both sides, for comparison
+        # The corpus-wide rule let the larger funding side dominate: in the
+        # first run eight of ten queries matched no policy at all, which leaves
+        # a bridge-versus-single-corpus comparison with nothing to compare.
+        # Both selections are computed from the same frozen corpus so the choice
+        # between them rests on evidence rather than on one run's output.
+        run: |
+          gif codebook-queries \
+            --corpus "corpus-${{ matrix.label }}" \
+            --require-both-sides \
+            --out "corpus-${{ matrix.label }}/queries-both-sides.json"
+
       - name: Record the tool's output
         run: |
           node tests/browser/record.js \
@@ -110,10 +122,18 @@ jobs:
               print(f"  {f['name']:15s} {f['items']:5d} items  "
                     f"content {f['content_sha256'][:16]}…")
 
-          print(f"\nqueries ({len(queries['queries'])}): {', '.join(queries['queries'])}")
-          dropped = [c for c in queries["candidates"] if c["status"].startswith("dropped")]
-          print(f"  {len(dropped)} candidate(s) dropped; broadest kept df="
-                f"{max((c['df'] for c in queries['selected']), default=0):.3f}")
+          by_side = queries["documents_by_side"]
+          print(f"\nsides: {by_side['policy']} policy, {by_side['grant']} funding")
+          for name in ("queries.json", "queries-both-sides.json"):
+              sel = json.loads((corpus / name).read_text())
+              both = sel["selected_on_both_sides"]
+              print(f"\n{name}  require_both={sel['rule']['require_both_sides']}")
+              print(f"  {len(sel['queries'])} queries: {', '.join(sel['queries'])}")
+              print(f"  {both} of {len(sel['queries'])} present on both sides")
+              for c in sel["selected"]:
+                  print(f"    {c['code']:20s} papers={c['papers']:3d} "
+                        f"policy={c['policy_documents']:4d} "
+                        f"funding={c['grant_documents']:4d} df={c['df']:.3f}")
 
           print("\nrecorded runs:")
           for run in recorded["runs"]:

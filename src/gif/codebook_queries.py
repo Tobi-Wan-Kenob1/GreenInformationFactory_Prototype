@@ -47,16 +47,32 @@ def load_codebook(path: Optional[Path] = None,
     return json.loads(cb_path.read_text(encoding="utf-8"))
 
 
-def corpus_documents(corpus_dir: Path) -> List[Dict[str, Any]]:
-    """Every document in a frozen corpus, whatever sources it holds."""
-    docs: List[Dict[str, Any]] = []
-    for name in ("policies.json", "grants.json", "projects.json"):
+#: Which corpus each snapshot file belongs to. Funded projects sit on the
+#: funding side with call topics, because that is how the tool treats them:
+#: both answer "what is being financed here".
+CORPUS_SIDES = {
+    "policies.json": "policy",
+    "grants.json": "grant",
+    "projects.json": "grant",
+}
+
+
+def corpus_sides(corpus_dir: Path) -> Dict[str, List[Dict[str, Any]]]:
+    """A frozen corpus split into its policy and funding sides."""
+    sides: Dict[str, List[Dict[str, Any]]] = {"policy": [], "grant": []}
+    for name, side in CORPUS_SIDES.items():
         path = corpus_dir / name
         if not path.exists():
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
-        docs.extend(payload.get("items") or [])
-    return docs
+        sides[side].extend(payload.get("items") or [])
+    return sides
+
+
+def corpus_documents(corpus_dir: Path) -> List[Dict[str, Any]]:
+    """Every document in a frozen corpus, whatever sources it holds."""
+    sides = corpus_sides(corpus_dir)
+    return sides["policy"] + sides["grant"]
 
 
 def document_frequency(docs: Iterable[Dict[str, Any]],
@@ -84,6 +100,7 @@ def select_queries(corpus_dir: Path,
                    dimensions: Iterable[str] = DEFAULT_DIMENSIONS,
                    max_df: float = DEFAULT_MAX_DF,
                    top: int = DEFAULT_TOP,
+                   require_both: bool = False,
                    repo_root: Optional[Path] = None) -> Dict[str, Any]:
     """Apply the selection rule and show its working.
 
@@ -92,7 +109,8 @@ def select_queries(corpus_dir: Path,
     output cannot be audited is indistinguishable from a choice.
     """
     codebook = codebook or load_codebook(repo_root=repo_root)
-    docs = corpus_documents(Path(corpus_dir))
+    sides = corpus_sides(Path(corpus_dir))
+    docs = sides["policy"] + sides["grant"]
     total = len(docs)
     if not total:
         raise RuntimeError(f"no documents found in {corpus_dir}")
@@ -102,6 +120,11 @@ def select_queries(corpus_dir: Path,
         for entry in codebook.get("dimensions", {}).get(dimension, []):
             terms = list(entry.get("terms") or [entry["code"]])
             hits = document_frequency(docs, terms)
+            # Per-side counts, because a corpus-wide frequency hides which side
+            # a term lives on. The funding side outnumbers the policy side
+            # several times over, so a term can look well attested while being
+            # absent from every act — and a term in only one corpus cannot
+            # support any comparison between the two.
             candidates.append({
                 "code": entry["code"],
                 "dimension": dimension,
@@ -109,15 +132,20 @@ def select_queries(corpus_dir: Path,
                 "papers": int(entry.get("papers") or 0),
                 "documents": hits,
                 "df": round(hits / total, 4),
+                "policy_documents": document_frequency(sides["policy"], terms),
+                "grant_documents": document_frequency(sides["grant"], terms),
             })
 
     for cand in candidates:
+        cand["both_sides"] = bool(cand["policy_documents"] and cand["grant_documents"])
         if cand["df"] > max_df:
             cand["status"] = "dropped: too broad"
         elif cand["documents"] == 0:
             # A code absent from the corpus cannot be ranked against the others
             # on subsequent uptake, so it is not a usable query either.
             cand["status"] = "dropped: absent from corpus"
+        elif require_both and not cand["both_sides"]:
+            cand["status"] = "dropped: one side only"
         else:
             cand["status"] = "eligible"
 
@@ -134,10 +162,17 @@ def select_queries(corpus_dir: Path,
     return {
         "corpus": str(corpus_dir),
         "documents": total,
+        "documents_by_side": {"policy": len(sides["policy"]),
+                              "grant": len(sides["grant"])},
         "rule": {"dimensions": list(dimensions), "max_df": max_df, "top": top,
+                 "require_both_sides": require_both,
                  "tie_break": "alphabetical by code",
                  "matching": "leading word boundary, case-insensitive, no thesaurus"},
         "queries": [c["code"] for c in selected],
+        # How many of the chosen queries exist on both sides at all. A low
+        # number here means a bridge-versus-single-corpus comparison has
+        # almost nothing to work with, whatever the outcome data later says.
+        "selected_on_both_sides": sum(1 for c in selected if c["both_sides"]),
         "selected": selected,
         "candidates": sorted(candidates, key=lambda c: (-c["papers"], c["code"])),
         "short": len(selected) < top,

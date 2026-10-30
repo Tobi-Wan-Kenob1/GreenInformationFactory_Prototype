@@ -135,6 +135,46 @@ def test_all_sources_in_the_corpus_are_counted(tmp_path):
     assert soil["documents"] == 2
 
 
+def test_per_side_counts_expose_a_term_that_lives_on_one_side_only(tmp_path):
+    """The failure the first real run showed: 8 of 10 queries matched no act.
+
+    The funding side outnumbered the policy side four to one, so corpus-wide
+    frequency chose terms that were well attested in projects and absent from
+    every policy — leaving a bridge-versus-single-corpus comparison with
+    nothing to compare.
+    """
+    corpus = _corpus(
+        tmp_path,
+        policies=[_doc("p:1", "soil monitoring act"), _doc("p:2", "water act")],
+        projects=[_doc("c:1", "technology for soil"), _doc("c:2", "technology"),
+                  _doc("c:3", "technology"), _doc("c:4", "unrelated")])
+    codebook = _codebook(barriers=[("technology", ["technology"], 50),
+                                   ("soil", ["soil"], 20)])
+
+    wide = cq.select_queries(corpus, codebook=codebook, top=2, max_df=0.9)
+    tech = next(c for c in wide["candidates"] if c["code"] == "technology")
+    assert tech["policy_documents"] == 0 and tech["grant_documents"] == 3
+    assert tech["both_sides"] is False
+    assert wide["queries"] == ["technology", "soil"]
+    assert wide["selected_on_both_sides"] == 1, "only soil spans both sides"
+    assert wide["documents_by_side"] == {"policy": 2, "grant": 4}
+
+    strict = cq.select_queries(corpus, codebook=codebook, top=2, max_df=0.9,
+                               require_both=True)
+    assert strict["queries"] == ["soil"]
+    assert next(c for c in strict["candidates"]
+                if c["code"] == "technology")["status"] == "dropped: one side only"
+    assert strict["rule"]["require_both_sides"] is True
+
+
+def test_projects_count_on_the_funding_side_with_call_topics(tmp_path):
+    """Both answer "what is being financed here", which is how the tool reads them."""
+    corpus = _corpus(tmp_path, policies=[_doc("p:1", "act")],
+                     projects=[_doc("c:1", "project")])
+    sides = cq.corpus_sides(corpus)
+    assert len(sides["policy"]) == 1 and len(sides["grant"]) == 1
+
+
 def test_empty_corpus_is_an_error_not_an_empty_answer(tmp_path):
     corpus = _corpus(tmp_path)
     with pytest.raises(RuntimeError, match="no documents"):
