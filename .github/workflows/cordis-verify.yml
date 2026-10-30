@@ -12,12 +12,6 @@ name: CORDIS adapter verification (temporary)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - claude/policy-grant-finder-l84zm2
-    paths:
-      - "src/gif/cordis.py"
-      - ".github/workflows/cordis-verify.yml"
 
 permissions:
   contents: read
