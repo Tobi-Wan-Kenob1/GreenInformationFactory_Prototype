@@ -136,9 +136,20 @@ def select_queries(corpus_dir: Path,
                 "grant_documents": document_frequency(sides["grant"], terms),
             })
 
+    n_policy = len(sides["policy"]) or 1
+    n_grant = len(sides["grant"]) or 1
     for cand in candidates:
         cand["both_sides"] = bool(cand["policy_documents"] and cand["grant_documents"])
-        if cand["df"] > max_df:
+        cand["df_policy"] = round(cand["policy_documents"] / n_policy, 4)
+        cand["df_grant"] = round(cand["grant_documents"] / n_grant, 4)
+        # Broadness is judged per side, not corpus-wide. A corpus-wide ratio is
+        # diluted by whichever side is larger, and that let two pieces of pure
+        # boilerplate through: "regulation" matched 143 of 148 acts because
+        # EUR-Lex titles contain the word Regulation, and "standard" matched 77
+        # through "standardisation" — yet both sat under a 20% corpus-wide
+        # threshold because 679 projects outnumbered the acts. A term that
+        # describes almost everything on either side is background on that side.
+        if max(cand["df_policy"], cand["df_grant"]) > max_df:
             cand["status"] = "dropped: too broad"
         elif cand["documents"] == 0:
             # A code absent from the corpus cannot be ranked against the others
@@ -181,7 +192,8 @@ def select_queries(corpus_dir: Path,
         "documents": total,
         "documents_by_side": {"policy": len(sides["policy"]),
                               "grant": len(sides["grant"])},
-        "rule": {"dimensions": list(dimensions), "max_df": max_df, "top": top,
+        "rule": {"dimensions": list(dimensions), "max_df": max_df,
+                 "max_df_applies_to": "each side separately", "top": top,
                  "require_both_sides": require_both,
                  "tie_break": "alphabetical by code",
                  "matching": "leading word boundary, case-insensitive, no thesaurus"},

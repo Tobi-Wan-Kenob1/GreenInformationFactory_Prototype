@@ -38,6 +38,31 @@ def _codebook(barriers=(), drivers=()):
     }
 
 
+def test_boilerplate_on_the_smaller_side_is_dropped(tmp_path):
+    """The real miss: "regulation" matched 143 of 148 acts and survived.
+
+    EUR-Lex titles contain the word Regulation, so the term describes the
+    policy corpus rather than anything in it — but with 679 projects against
+    148 acts, its corpus-wide frequency was 0.195, just under the threshold.
+    Broadness has to be judged per side.
+    """
+    policies = [_doc(f"p:{i}", "Regulation on something") for i in range(9)]
+    policies.append(_doc("p:9", "Soil monitoring"))
+    projects = [_doc(f"c:{i}", "unrelated work") for i in range(90)]
+    projects.append(_doc("c:90", "regulation compliance project"))
+    corpus = _corpus(tmp_path, policies=policies, projects=projects)
+
+    codebook = _codebook(barriers=[("regulation", ["regulation"], 13),
+                                   ("soil", ["soil"], 20)])
+    result = cq.select_queries(corpus, codebook=codebook, top=5)
+
+    reg = next(c for c in result["candidates"] if c["code"] == "regulation")
+    assert reg["df"] <= cq.DEFAULT_MAX_DF, "corpus-wide it looks acceptable"
+    assert reg["df_policy"] == 0.9, "on the policy side it is background"
+    assert reg["status"] == "dropped: too broad"
+    assert result["queries"] == ["soil"]
+
+
 def test_a_term_matching_most_of_the_corpus_is_dropped(tmp_path):
     """The failure the rule exists to prevent: "water" as a topic.
 
