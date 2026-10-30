@@ -116,6 +116,54 @@ def test_no_as_of_keeps_everything_including_undated():
     assert report["dropped_window"] == 0
 
 
+def test_keywords_match_on_a_word_boundary_not_a_substring():
+    """The real-data failure: "mining" must not fire on "determining".
+
+    A first run over the full archives matched 6 692 projects with substring
+    matching, including work on bilingualism and fungus-farming ants, because
+    "mining" is inside "determining" and "land" inside "Finland".
+    """
+    rows = [
+        _project_row("1", "Mining waste valorisation", "2008-01-01", "obj"),
+        _project_row("2", "Determining protein structures", "2008-01-01",
+                     "a method for determining folds"),
+        _project_row("3", "Research in Finland", "2008-01-01", "sited in Finland"),
+        _project_row("4", "Land use change", "2008-01-01", "land cover"),
+    ]
+    report = cordis.projects_from_archive(_archive(rows), "fp7",
+                                          keywords=["mining", "land"])
+    kept = sorted(d["id"] for d in report["items"])
+    assert kept == ["c:fp7:1", "c:fp7:4"], \
+        "determining and Finland must not count as mining and land"
+
+    # Leading boundary only, as the web app matches: plurals still count.
+    plural = [_project_row("9", "Minings and quarryings", "2008-01-01", "obj")]
+    assert cordis.projects_from_archive(_archive(plural), "fp7",
+                                        keywords=["mining"])["items"]
+
+    # And the same rule's cost, stated so it is a choice and not a surprise:
+    # a leading boundary means "land" does not reach "grassland". That is the
+    # app's behaviour, handled there by keyword expansion, and the snapshot
+    # agreeing with the app matters more than either rule in isolation.
+    compound = [_project_row("8", "Grassland carbon", "2008-01-01", "grassland soils")]
+    assert cordis.projects_from_archive(_archive(compound), "fp7",
+                                        keywords=["land"])["items"] == []
+
+
+def test_multi_word_keywords_tolerate_whitespace():
+    rows = [_project_row("1", "Towards a circular  economy for plastics",
+                         "2008-01-01", "obj")]
+    report = cordis.projects_from_archive(_archive(rows), "fp7",
+                                          keywords=["circular economy"])
+    assert len(report["items"]) == 1
+
+
+def test_empty_keyword_list_keeps_everything():
+    rows = [_project_row("1", "Quantum optics", "2008-01-01", "unrelated")]
+    assert cordis.projects_from_archive(_archive(rows), "fp7", keywords=[])["items"]
+    assert cordis.projects_from_archive(_archive(rows), "fp7", keywords=None)["items"]
+
+
 def test_keywords_match_title_and_objective():
     rows = [
         _project_row("1", "Quarry rehabilitation", "2008-01-01", "restoring sites"),

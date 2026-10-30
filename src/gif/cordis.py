@@ -65,6 +65,33 @@ DEFAULT_PROGRAMMES = ["fp6", "fp7", "h2020", "horizon"]
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}")
 
+#: Objective text kept per project. Objectives run to several thousand
+#: characters and are the dominant cost of the snapshot the browser downloads;
+#: the opening lines carry the topic, which is what the analytics read.
+SUMMARY_CHARS = 300
+
+
+def term_pattern(terms: Iterable[str]) -> Optional[re.Pattern]:
+    """One leading-word-boundary regex over all terms, as the web app matches.
+
+    Substring matching is not good enough and the real data says so: a plain
+    ``"mining" in text`` test also fires on *determining* and *examining*, and
+    ``"land"`` on *Finland*. A first pass over the full CORDIS archives matched
+    6 692 projects that way, including work on bilingualism and on fungus-
+    farming ants. The web app has always matched on a leading word boundary
+    (``\\bmining``), so a snapshot built by substring contains records the app
+    itself would then refuse to show — the file disagreeing with the only
+    program that reads it.
+
+    The boundary is leading-only, like the app: *mining* should still match
+    *minings* and *bioeconomy* should match *bioeconomies*.
+    """
+    patterns = [re.escape(str(t).strip()).replace(r"\ ", r"\s+")
+                for t in terms if str(t).strip()]
+    if not patterns:
+        return None
+    return re.compile(r"\b(?:" + "|".join(patterns) + r")", re.IGNORECASE)
+
 
 def _clean(text: Any) -> str:
     """Collapse whitespace; CORDIS objectives contain newlines and tabs."""
@@ -151,7 +178,7 @@ def normalize_project(row: Dict[str, str], programme: str,
     acronym = _clean(row.get("acronym"))
     title = _clean(row.get("title")) or acronym or pid
 
-    summary = objective[:600]
+    summary = objective[:SUMMARY_CHARS]
     if topics:
         summary = (summary + " · " + ", ".join(topics[:8])).strip(" ·")
 
@@ -230,16 +257,15 @@ def projects_from_archive(archive: zipfile.ZipFile, programme: str,
     rows, ragged = _rows_as_dicts(*entry)
     topics = euroscivoc_by_project(members)
 
-    terms = [str(k).lower() for k in (keywords or []) if str(k).strip()]
+    pattern = term_pattern(keywords or [])
     docs: List[Dict[str, Any]] = []
     dropped_keyword = dropped_window = 0
 
     for row in rows:
         pid = str(row.get("id") or "").strip()
         doc = normalize_project(row, programme, topics.get(pid))
-        if terms:
-            haystack = (doc["title"] + " " + doc["summary"]).lower()
-            if not any(term in haystack for term in terms):
+        if pattern is not None:
+            if not pattern.search(doc["title"] + " " + doc["summary"]):
                 dropped_keyword += 1
                 continue
         if not available_at(doc, as_of) or (since and (doc["date"] or "") < since[:10]):
