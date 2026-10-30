@@ -39,7 +39,7 @@ jobs:
       - name: Probe
         # Sections: A catalogue, B CORDIS, C Eurostat, D GLEIF, E ETS.
         # Narrow this to re-check one source without re-downloading the rest.
-        run: python paper/analysis/wp0_probe.py B 2>&1 | tee wp0-report.txt
+        run: python paper/analysis/wp0_probe.py 2>&1 | tee wp0-report.txt
 
       - name: Upload report
         if: always()

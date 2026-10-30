@@ -7,10 +7,17 @@ branch adds the study around it.
 | File | What it is |
 |------|------------|
 | `PROTOCOL.md` | The study protocol — design, hypotheses, data sources, analysis plan, limitations. **Read this first.** |
+| `analysis/wp0_probe.py` | Read-only data-availability probe. Takes section letters (`A` catalogue, `B` CORDIS, `C` Eurostat, `D` GLEIF, `E` ETS) to re-check one source; findings are recorded in protocol §6.1. |
 
 Planned, not yet present: `PREREGISTRATION.md` (generated from the protocol
 before outcome data is retrieved), `data/` (frozen corpora and linked outcome
-tables), `analysis/` (scripts producing the paper's figures and tables).
+tables), further `analysis/` scripts producing the paper's figures and tables.
+
+The probe needs internet access to EU hosts, which the development sandbox
+denies, so it runs on a GitHub Actions runner via
+`.github/workflows/wp0-probe.yml` — a temporary workflow that lives on this
+branch and fires when the probe is pushed, so nothing had to be added to
+`main`. Delete it once the data sources stop moving.
 
 ## The one rule that matters
 
@@ -33,9 +40,9 @@ the frozen inputs.
 
 - [x] Design restructured around what the tool actually claims
 - [x] Protocol drafted (v0.1, for co-author review)
-- [ ] WP0 — confirm CORDIS / EUTL / Eurostat / GLEIF availability
+- [x] WP0 — CORDIS / ETS / Eurostat / GLEIF confirmed; findings in §6.1
 - [ ] WP1 — on `main`: fix the `finder-data` date-window defect; `gif cordis`
-      adapter (extends the tool below 2014)
+      adapter (extends the tool below 2014 — WP0 found CORDIS reaches FP1/1984)
 - [ ] WP2 — freeze corpora, run tool, pre-register
 - [ ] WP3 — outcomes and analysis
 - [ ] WP4 — case studies
