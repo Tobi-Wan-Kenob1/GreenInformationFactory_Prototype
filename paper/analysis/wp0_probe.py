@@ -431,27 +431,64 @@ def probe_ets() -> None:
             print("    no webdav distribution was advertised this time")
             break
         h = head(url)
-        # Round 3: HTTP 200 but text/html and zero length — the access_url is a
-        # webdav *directory*, not the data file. Fetch it and list what is in it.
+        # Rounds 3-4: HTTP 200, text/html, near-zero length. The access_url is
+        # not the data file but a Nextcloud public-share page whose file list is
+        # rendered by JavaScript, so there is nothing in the static HTML to
+        # enumerate — round 4 scraped only the page's own stylesheets. The
+        # share's WebDAV endpoint answers without a browser, so ask it directly.
         if h is not None and "html" in (h.headers.get("content-type") or ""):
-            print("      that is a directory listing, not a file — enumerating it")
+            print("      that is a share page, not a file — trying its WebDAV endpoint")
             r = get(url)
             if r is None or r.status_code != 200:
                 continue
-            hrefs = re.findall(r'href="([^"]+)"', r.text)
-            files = [h2 for h2 in hrefs
-                     if not h2.startswith("?") and not h2.endswith("/")
-                     and h2 not in ("..", ".")]
-            print(f"      {len(files)} entry(ies):")
-            for name in files[:25]:
-                print(f"        {name}")
-            # Fetch the most promising tabular file to confirm it is really data.
-            pick = next((f for f in files
-                         if f.lower().endswith((".csv", ".zip", ".xlsx", ".parquet"))), None)
-            if pick:
-                child = url.rstrip("/") + "/" + pick.lstrip("/")
-                print(f"      confirming {pick}")
-                head(child)
+            token = None
+            for pat in (r'"sharingToken"\s*:\s*"([^"]+)"',
+                        r'data-sharingtoken="([^"]+)"',
+                        r'/datashare/s/([A-Za-z0-9]+)'):
+                m = re.search(pat, r.text)
+                if m:
+                    token = m.group(1)
+                    break
+            print(f"      share token: {token or 'not found in the page'}")
+            if token:
+                dav = f"https://sdi.eea.europa.eu/datashare/public.php/webdav/"
+                pr = None
+                try:
+                    pr = requests.request(
+                        "PROPFIND", dav, headers={**UA, "Depth": "1"},
+                        auth=(token, ""), timeout=TIMEOUT)
+                    print(f"      PROPFIND {dav} -> HTTP {pr.status_code}")
+                except Exception as exc:                      # noqa: BLE001
+                    print(f"      PROPFIND failed: {type(exc).__name__}: {exc}")
+                if pr is not None and pr.status_code < 400:
+                    for href in re.findall(r"<d:href>([^<]+)</d:href>", pr.text,
+                                           re.IGNORECASE)[:25]:
+                        print(f"        {href}")
+    # The EEA runs a GeoNetwork catalogue whose record API lists a dataset's
+    # real distribution links, which is the documented route to the file rather
+    # than scraping a share page.
+    uuid = "9eee3fc9-3060-4e3f-bc8d-e22e7c3f6bda"
+    print("\n  asking the EEA catalogue for that dataset's distributions…")
+    r = get(f"https://sdi.eea.europa.eu/catalogue/api/records/{uuid}",
+            headers={"Accept": "application/json"})
+    if r is not None and r.status_code == 200:
+        try:
+            rec = r.json()
+            blob = json.dumps(rec)
+        except ValueError:
+            blob = r.text
+        links = sorted(set(re.findall(r'https?://[^"\\\s<>]+', blob)))
+        data_links = [u for u in links
+                      if any(u.lower().endswith(ext) for ext in
+                             (".csv", ".zip", ".xlsx", ".parquet", ".tsv"))
+                      or "download" in u.lower()]
+        print(f"      {len(links)} link(s) in the record, {len(data_links)} look like data:")
+        for u in data_links[:15]:
+            print(f"        {u}")
+        if not data_links:
+            for u in links[:15]:
+                print(f"        (all) {u}")
+
     for label, url in [
         # The datahub item id used in round 1 is dead; these are the entry
         # points that do not depend on a UUID staying valid.
