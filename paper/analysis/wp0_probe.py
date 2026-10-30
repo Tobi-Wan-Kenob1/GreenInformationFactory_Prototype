@@ -529,14 +529,28 @@ def probe_ets() -> None:
         head(url)
 
 
+SECTIONS = {
+    "A": probe_catalogue,
+    "B": probe_cordis_bulk,
+    "C": probe_eurostat,
+    "D": probe_gleif,
+    "E": probe_ets,
+}
+
+
 def main() -> int:
+    # Sections can be named on the command line (e.g. "B C") so one source can
+    # be re-checked on its own; with no argument the whole probe runs.
+    wanted = [s.upper() for s in sys.argv[1:]] or list(SECTIONS)
+    unknown = [s for s in wanted if s not in SECTIONS]
+    if unknown:
+        print(f"unknown section(s): {', '.join(unknown)}; "
+              f"choose from {', '.join(SECTIONS)}")
+        return 2
     print("WP0 data availability probe — validation study")
-    print("protocol: paper/PROTOCOL.md §6, §7")
-    probe_catalogue()
-    probe_cordis_bulk()
-    probe_eurostat()
-    probe_gleif()
-    probe_ets()
+    print(f"protocol: paper/PROTOCOL.md §6, §7 — sections {', '.join(wanted)}")
+    for name in wanted:
+        SECTIONS[name]()
     print("\n\nProbe complete. Record the findings in paper/PROTOCOL.md §6 "
           "and resolve any MISS before WP2.")
     return 0

@@ -37,7 +37,9 @@ jobs:
         run: python -m pip install --quiet requests
 
       - name: Probe
-        run: python paper/analysis/wp0_probe.py 2>&1 | tee wp0-report.txt
+        # Sections: A catalogue, B CORDIS, C Eurostat, D GLEIF, E ETS.
+        # Narrow this to re-check one source without re-downloading the rest.
+        run: python paper/analysis/wp0_probe.py B 2>&1 | tee wp0-report.txt
 
       - name: Upload report
         if: always()
