@@ -1,0 +1,127 @@
+name: Freeze, select queries and record (benchmark)
+
+# One run does all three, deliberately. Freezing, selecting and recording have
+# to see the same corpus: if they ran separately, each would fetch or load a
+# corpus that may have moved in between, and the recorded output would not be
+# the output for the recorded input. Splitting them would also mean passing a
+# corpus between runs, which is the step where the wrong one gets used.
+#
+# The artifact is the deliverable and must be kept — corpus, manifest, selected
+# queries and the tool's recorded answers, together. Nothing is committed:
+# re-running produces a different corpus, so a committed copy would imply a
+# permanence it does not have, and the manifest's digests are what make the
+# archived copy citable.
+#
+# Nothing here looks at what happened after the freeze date. That is the point.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/policy-grant-finder-l84zm2
+    paths:
+      - ".github/workflows/wp2-freeze-and-record.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: A1
+            until: "2009-12-31"
+            to_year: "2009"
+            programmes: "fp6,fp7"
+          - label: A2
+            until: "2013-12-31"
+            to_year: "2013"
+            programmes: "fp6,fp7"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install
+        run: |
+          python -m pip install --quiet -e .
+          npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Freeze ${{ matrix.label }}
+        run: |
+          gif freeze --out "corpus-${{ matrix.label }}" \
+            --since 1990-01-01 \
+            --until "${{ matrix.until }}" \
+            --programmes "${{ matrix.programmes }}" \
+            --label "${{ matrix.label }}"
+
+      - name: Verify the corpus against its manifest
+        run: gif freeze --out "corpus-${{ matrix.label }}" --verify
+
+      - name: Select queries by rule
+        run: |
+          gif codebook-queries \
+            --corpus "corpus-${{ matrix.label }}" \
+            --out "corpus-${{ matrix.label }}/queries.json"
+
+      - name: Record the tool's output
+        run: |
+          node tests/browser/record.js \
+            --corpus "corpus-${{ matrix.label }}" \
+            --out "corpus-${{ matrix.label }}/recorded.json" \
+            --from 1990 --to "${{ matrix.to_year }}" \
+            --label "${{ matrix.label }}"
+
+      - name: Summarise what was recorded
+        run: |
+          python - "corpus-${{ matrix.label }}" <<'PY'
+          import json, pathlib, sys
+          corpus = pathlib.Path(sys.argv[1])
+          manifest = json.loads((corpus / "manifest.json").read_text())
+          queries = json.loads((corpus / "queries.json").read_text())
+          recorded = json.loads((corpus / "recorded.json").read_text())
+
+          print(f"=== {manifest['label']} ===")
+          print(f"corpus: {manifest['documents']} documents, "
+                f"complete={manifest['complete']}, window={manifest['window']}")
+          print(f"tool: {manifest['tool']['commit'][:12]} dirty={manifest['tool']['dirty']}")
+          for f in manifest["files"]:
+              print(f"  {f['name']:15s} {f['items']:5d} items  "
+                    f"content {f['content_sha256'][:16]}…")
+
+          print(f"\nqueries ({len(queries['queries'])}): {', '.join(queries['queries'])}")
+          dropped = [c for c in queries["candidates"] if c["status"].startswith("dropped")]
+          print(f"  {len(dropped)} candidate(s) dropped; broadest kept df="
+                f"{max((c['df'] for c in queries['selected']), default=0):.3f}")
+
+          print("\nrecorded runs:")
+          for run in recorded["runs"]:
+              scopes = {s["scope"]: len(s["topics"]) for s in run.get("scopes", [])}
+              print(f"  {run['query']:22s} {run['counts']['policies']:4d}p "
+                    f"{run['counts']['grants']:4d}g  topics={scopes}")
+              if run.get("note"):
+                  print(f"    note: {run['note']}")
+          assert recorded["runs"], "nothing was recorded"
+          assert not recorded["pageErrors"], recorded["pageErrors"]
+          print("\nno page errors")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-${{ matrix.label }}
+          path: corpus-${{ matrix.label }}/
