@@ -43,8 +43,9 @@ def rule(title: str) -> None:
 
 
 def get(url: str, **kw) -> Optional[requests.Response]:
+    headers = {**UA, **kw.pop("headers", {})}
     try:
-        r = requests.get(url, headers=UA, timeout=TIMEOUT, **kw)
+        r = requests.get(url, headers=headers, timeout=TIMEOUT, **kw)
         print(f"  GET {url[:110]}\n      -> HTTP {r.status_code}, "
               f"{r.headers.get('content-type', '?')}, "
               f"{r.headers.get('content-length', '?')} bytes")
@@ -126,65 +127,85 @@ def probe_catalogue() -> List[Dict[str, Any]]:
 # B. CORDIS bulk files — the fields the study needs
 # ---------------------------------------------------------------------------
 
-CORDIS_CANDIDATES = [
-    ("FP7 projects", "https://cordis.europa.eu/data/cordis-fp7projects-csv.zip"),
-    ("H2020 projects", "https://cordis.europa.eu/data/cordis-h2020projects-csv.zip"),
-    ("Horizon Europe projects",
-     "https://cordis.europa.eu/data/cordis-HORIZONprojects-csv.zip"),
+CORDIS_BASE = "https://cordis.europa.eu/data"
+
+# Round 1 established that CORDIS publishes every framework programme back to
+# FP1 (1984), not just FP7 onward. That matters for the design: the pre-2010
+# arm can be built from grant data that genuinely existed at T, instead of
+# being policy-only. So FP6 is downloaded and checked in full alongside FP7 —
+# it is the programme that supplies arm A1's grant corpus.
+CORDIS_FULL = [                        # downloaded and read column by column
+    ("FP7 projects (2007-2013)", f"{CORDIS_BASE}/cordis-fp7projects-csv.zip"),
+    ("FP6 projects (2002-2006)", f"{CORDIS_BASE}/cordis-fp6projects-csv.zip"),
 ]
+CORDIS_EXISTS = [                      # existence and size only
+    ("FP5 projects (1998-2002)", f"{CORDIS_BASE}/cordis-fp5projects-csv.zip"),
+    ("H2020 projects (2014-2020)", f"{CORDIS_BASE}/cordis-h2020projects-csv.zip"),
+    ("Horizon Europe projects (2021-)",
+     f"{CORDIS_BASE}/cordis-HORIZONprojects-csv.zip"),
+]
+
+# The field that makes the available-at-T rule of §4.2 enforceable: a project
+# is known at T only once its grant agreement is signed.
+CORDIS_TIMING_FIELDS = ["ecSignatureDate", "startDate", "frameworkProgramme"]
+
+
+def probe_cordis_archive(label: str, url: str) -> None:
+    """Download one CORDIS CSV archive and report every CSV's schema."""
+    print(f"\n  --- {label} ---")
+    h = head(url)
+    if not h or h.status_code >= 400:
+        print("      unavailable at this URL")
+        return
+    r = get(url)
+    if not r or r.status_code != 200:
+        return
+    try:
+        zf = zipfile.ZipFile(io.BytesIO(r.content))
+    except zipfile.BadZipFile:
+        print(f"      not a zip: first bytes {r.content[:60]!r}")
+        return
+    names = zf.namelist()
+    print(f"    archive members ({len(names)}): {', '.join(names[:12])}")
+    for member in names:
+        low = member.lower()
+        if not low.endswith(".csv"):
+            continue
+        if not any(k in low for k in ("project", "organization", "organisation",
+                                      "euroscivoc", "topic", "legalbasis")):
+            continue
+        with zf.open(member) as fh:
+            text = io.TextIOWrapper(fh, encoding="utf-8", errors="replace")
+            reader = csv.reader(text, delimiter=";")
+            try:
+                header = next(reader)
+            except StopIteration:
+                print(f"\n    {member}: empty")
+                continue
+            if len(header) == 1:        # wrong delimiter guess
+                text.seek(0)
+                reader = csv.reader(text, delimiter=",")
+                header = next(reader)
+            rows = sum(1 for _ in reader)
+        print(f"\n    {member}: {rows} rows, {len(header)} columns")
+        print(f"      columns: {', '.join(header[:22])}"
+              + (" …" if len(header) > 22 else ""))
+        if "project" in low and "organi" not in low:
+            report_fields(member, header, CORDIS_PROJECT_FIELDS)
+            report_fields(member, header, CORDIS_TIMING_FIELDS)
+        if "organi" in low:
+            report_fields(member, header, CORDIS_ORG_FIELDS)
+        if "euroscivoc" in low:
+            print("      → euroSciVoc classification IS present for this programme")
 
 
 def probe_cordis_bulk() -> None:
     rule("B. CORDIS bulk downloads — availability and schema")
-    for label, url in CORDIS_CANDIDATES:
+    for label, url in CORDIS_FULL:
+        probe_cordis_archive(label, url)
+    for label, url in CORDIS_EXISTS:
         print(f"\n  --- {label} ---")
-        h = head(url)
-        if not h or h.status_code >= 400:
-            print("      unavailable at this URL")
-            continue
-        if label != "FP7 projects":
-            # One full download is enough to establish the schema; the others
-            # are only checked for existence and size.
-            continue
-        r = get(url)
-        if not r or r.status_code != 200:
-            continue
-        try:
-            zf = zipfile.ZipFile(io.BytesIO(r.content))
-        except zipfile.BadZipFile:
-            print(f"      not a zip: first bytes {r.content[:60]!r}")
-            continue
-        names = zf.namelist()
-        print(f"    archive members ({len(names)}): {', '.join(names[:12])}")
-        for member in names:
-            low = member.lower()
-            if not low.endswith(".csv"):
-                continue
-            if not any(k in low for k in ("project", "organization", "organisation",
-                                          "euroscivoc", "topic", "legalbasis")):
-                continue
-            with zf.open(member) as fh:
-                text = io.TextIOWrapper(fh, encoding="utf-8", errors="replace")
-                reader = csv.reader(text, delimiter=";")
-                try:
-                    header = next(reader)
-                except StopIteration:
-                    print(f"\n    {member}: empty")
-                    continue
-                if len(header) == 1:        # wrong delimiter guess
-                    text.seek(0)
-                    reader = csv.reader(text, delimiter=",")
-                    header = next(reader)
-                rows = sum(1 for _ in reader)
-            print(f"\n    {member}: {rows} rows, {len(header)} columns")
-            print(f"      columns: {', '.join(header[:22])}"
-                  + (" …" if len(header) > 22 else ""))
-            if "project" in low and "organi" not in low:
-                report_fields(member, header, CORDIS_PROJECT_FIELDS)
-            if "organi" in low:
-                report_fields(member, header, CORDIS_ORG_FIELDS)
-            if "euroscivoc" in low:
-                print("      → euroSciVoc classification IS present for this programme")
+        head(url)
 
 
 # ---------------------------------------------------------------------------
@@ -199,22 +220,51 @@ def probe_eurostat() -> None:
          {"format": "JSON", "lang": "EN", "geo": "DE21", "time": "2015"}),
         ("regional employment (nama_10r_3empers)", "nama_10r_3empers",
          {"format": "JSON", "lang": "EN", "geo": "DE21", "time": "2015"}),
-        ("structural business statistics (sbs_ovw_act)", "sbs_ovw_act",
-         {"format": "JSON", "lang": "EN", "time": "2020"}),
+        # Round 1 returned a well-formed envelope with zero values for
+        # sbs_ovw_act at time=2020, which means the filter missed, not that the
+        # dataset is empty. SBS needs an indicator and a NACE activity, and the
+        # mining/agriculture activities are the ones the study uses, so ask for
+        # exactly those.
+        ("SBS: enterprises in mining of other minerals (sbs_ovw_act, B08)",
+         "sbs_ovw_act",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "nace_r2": "B08",
+          "indic_sbs": "ENT", "lastTimePeriod": "3"}),
+        ("SBS: turnover in mining of other minerals (sbs_ovw_act, B08)",
+         "sbs_ovw_act",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "nace_r2": "B08",
+          "indic_sbs": "NETTUR", "lastTimePeriod": "3"}),
+        ("SBS unfiltered, most recent period only (shape check)", "sbs_ovw_act",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "lastTimePeriod": "1"}),
     ]
     for label, dataset, params in checks:
         print(f"\n  --- {label} ---")
         r = get(f"{base}/{dataset}", params=params)
         if not r or r.status_code != 200:
+            if r is not None:
+                print(f"      body: {r.text[:300]!r}")
             continue
         try:
             payload = r.json()
         except ValueError:
             print(f"      non-JSON: {r.text[:160]!r}")
             continue
-        dims = list((payload.get("dimension") or {}).keys())
+        dims = payload.get("dimension") or {}
         values = payload.get("value") or {}
-        print(f"      JSON-stat OK: {len(values)} value(s), dimensions: {', '.join(dims)}")
+        print(f"      JSON-stat OK: {len(values)} value(s), "
+              f"dimensions: {', '.join(dims.keys())}")
+        if not values:
+            # A zero-value envelope still carries the category lists, which say
+            # what the dataset would accept. Print them so the filter can be
+            # fixed rather than guessed at again.
+            print("      zero values — the dataset's own categories are:")
+            for name, dim in dims.items():
+                cats = list(((dim.get("category") or {}).get("index") or {}).keys())
+                if cats:
+                    print(f"        {name}: {', '.join(cats[:14])}"
+                          + (f" … ({len(cats)} total)" if len(cats) > 14 else ""))
+        else:
+            sample = list(values.items())[:3]
+            print(f"      sample values: {sample}")
 
 
 # ---------------------------------------------------------------------------
@@ -259,10 +309,14 @@ def probe_gleif() -> None:
 
 def probe_ets() -> None:
     rule("E. EU ETS / EUTL — verified installation emissions")
+    # Round 1 named two plausible datasets ("Verified ETS emissions" and the
+    # Union Registry extract) but printed no URL for either, because their
+    # distributions carry an access_url and no download_url. Print both, and
+    # the dataset id, so the right one can be identified.
     print("  searching the catalogue for an ETS/EUTL dataset…")
     r = get("https://data.europa.eu/api/hub/search/search",
             params={"q": "EU Emissions Trading System EUTL verified emissions",
-                    "limit": 5, "filter": "dataset"})
+                    "limit": 6, "filter": "dataset"})
     if r and r.status_code == 200:
         try:
             results = (r.json().get("result") or {}).get("results") or []
@@ -272,16 +326,30 @@ def probe_ets() -> None:
             title = ds.get("title")
             if isinstance(title, dict):
                 title = title.get("en") or next(iter(title.values()), "?")
-            print(f"    • {str(title)[:88]}")
-            for res in (ds.get("distributions") or [])[:3]:
-                dl = res.get("download_url") or res.get("downloadUrl") or []
-                dl = dl[0] if isinstance(dl, list) and dl else dl
-                if dl:
-                    print(f"        {str(dl)[:100]}")
+            print(f"\n    • {str(title)[:88]}")
+            print(f"      id: {ds.get('id')}")
+            dists = ds.get("distributions") or []
+            if not dists:
+                print("      (no distributions listed in the search response)")
+            for res in dists[:8]:
+                fmt = res.get("format")
+                fmt = (fmt or {}).get("label") if isinstance(fmt, dict) else fmt
+                for key in ("download_url", "downloadUrl", "access_url", "accessUrl"):
+                    val = res.get(key)
+                    if isinstance(val, list):
+                        val = val[0] if val else None
+                    if val:
+                        print(f"        {str(fmt)[:12]:12s} {key}: {str(val)[:95]}")
+                        break
     for label, url in [
-        ("EEA datahub (ETS)", "https://www.eea.europa.eu/en/datahub/datahubitem-view/"
-                              "98f04097-26de-4fca-83ee-5d6a4b1e5c6a"),
+        # The datahub item id used in round 1 is dead; these are the entry
+        # points that do not depend on a UUID staying valid.
+        ("EEA datahub, ETS search", "https://www.eea.europa.eu/en/datahub?"
+                                    "size=n_20_n&q=emissions%20trading"),
         ("EUTL public site", "https://ec.europa.eu/clima/ets/"),
+        ("EEA ETS data viewer (legacy bulk)",
+         "https://www.eea.europa.eu/data-and-maps/data/european-union-emissions-"
+         "trading-scheme-eu-ets-data-from-citl-22"),
     ]:
         print(f"\n  --- {label} ---")
         head(url)
