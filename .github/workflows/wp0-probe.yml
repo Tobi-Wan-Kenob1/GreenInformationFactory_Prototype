@@ -1,0 +1,47 @@
+name: WP0 data availability probe
+
+# Temporary, read-only. Protocol §7 WP0 requires the study's four outcome data
+# sources to be confirmed reachable and schema-compatible before anything is
+# pre-registered. The dev sandbox cannot reach EU hosts, so the check runs here,
+# where the runner is an ordinary internet client.
+#
+# Lives on the paper branch only and is triggered by pushing the probe itself,
+# so dispatch does not depend on the default branch. Delete once WP0 is
+# recorded in paper/PROTOCOL.md §6.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/validation-paper
+    paths:
+      - "paper/analysis/wp0_probe.py"
+      - ".github/workflows/wp0-probe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install requests
+        run: python -m pip install --quiet requests
+
+      - name: Probe
+        run: python paper/analysis/wp0_probe.py 2>&1 | tee wp0-report.txt
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wp0-report
+          path: wp0-report.txt
