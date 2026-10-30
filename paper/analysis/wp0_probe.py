@@ -68,6 +68,29 @@ def head(url: str) -> Optional[requests.Response]:
         return None
 
 
+def report_fill(label: str, header: List[str], rows: List[List[str]],
+                fields: List[str]) -> None:
+    """How often a field is actually populated — a column can exist and be empty.
+
+    This matters for the oldest programmes: the available-at-*T* rule of §4.2
+    rests on `ecSignatureDate`, and a present-but-blank column would silently
+    turn that rule into a guess.
+    """
+    idx = {c.lower(): i for i, c in enumerate(header)}
+    print(f"    {label}: fill rate over {len(rows)} rows")
+    for field in fields:
+        i = idx.get(field.lower())
+        if i is None:
+            print(f"      —    {field} (absent)")
+            continue
+        vals = [r[i].strip() for r in rows if len(r) > i and r[i].strip()]
+        pct = 100.0 * len(vals) / len(rows) if rows else 0.0
+        extra = ""
+        if vals and "date" in field.lower():
+            extra = f", range {min(vals)[:10]} … {max(vals)[:10]}"
+        print(f"      {pct:5.1f}%  {field}{extra}")
+
+
 def report_fields(label: str, present: Iterable[str], wanted: List[str]) -> None:
     have = {c.lower(): c for c in present}
     print(f"    {label}: required-field check")
@@ -186,15 +209,22 @@ def probe_cordis_archive(label: str, url: str) -> None:
                 text.seek(0)
                 reader = csv.reader(text, delimiter=",")
                 header = next(reader)
-            rows = sum(1 for _ in reader)
+            body = list(reader)
+            rows = len(body)
         print(f"\n    {member}: {rows} rows, {len(header)} columns")
         print(f"      columns: {', '.join(header[:22])}"
               + (" …" if len(header) > 22 else ""))
         if "project" in low and "organi" not in low:
             report_fields(member, header, CORDIS_PROJECT_FIELDS)
             report_fields(member, header, CORDIS_TIMING_FIELDS)
+            report_fill(member, header, body,
+                        CORDIS_TIMING_FIELDS + ["ecMaxContribution", "objective",
+                                                "endDate"])
         if "organi" in low:
             report_fields(member, header, CORDIS_ORG_FIELDS)
+            report_fill(member, header, body,
+                        ["organisationID", "vatNumber", "SME", "activityType",
+                         "country", "ecContribution", "nutsCode"])
         if "euroscivoc" in low:
             print("      → euroSciVoc classification IS present for this programme")
 
@@ -235,6 +265,27 @@ def probe_eurostat() -> None:
           "indic_sbs": "NETTUR", "lastTimePeriod": "3"}),
         ("SBS unfiltered, most recent period only (shape check)", "sbs_ovw_act",
          {"format": "JSON", "lang": "EN", "geo": "DE", "lastTimePeriod": "1"}),
+        # Round 2 showed sbs_ovw_act carries 2022 onward only, which is no use
+        # for a 2009 or 2013 baseline. The discontinued NACE Rev.2 series are
+        # the ones that reach back that far; find which of them still answers.
+        ("SBS historical, NACE Rev.2 national (sbs_na_sca_r2, 2009)",
+         "sbs_na_sca_r2",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "nace_r2": "B08",
+          "indic_sb": "V11110", "time": "2009"}),
+        ("SBS historical, industry detail (sbs_na_ind_r2, 2009)",
+         "sbs_na_ind_r2",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "nace_r2": "B08",
+          "indic_sb": "V11110", "time": "2009"}),
+        ("SBS historical, regional (sbs_r_nuts06_r2, 2009)", "sbs_r_nuts06_r2",
+         {"format": "JSON", "lang": "EN", "geo": "DE2", "nace_r2": "B",
+          "indic_sb": "V11110", "time": "2009"}),
+        # Agriculture is outside SBS entirely (NACE A is excluded), so the
+        # agricultural half of the sector scope needs its own series.
+        ("Agriculture: economic accounts (aact_eaa01, 2009)", "aact_eaa01",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "time": "2009",
+          "indic_ag": "01000", "itm_newa": "01000"}),
+        ("Agriculture: farm labour force (aact_ali01, 2009)", "aact_ali01",
+         {"format": "JSON", "lang": "EN", "geo": "DE", "time": "2009"}),
     ]
     for label, dataset, params in checks:
         print(f"\n  --- {label} ---")
@@ -313,6 +364,7 @@ def probe_ets() -> None:
     # Union Registry extract) but printed no URL for either, because their
     # distributions carry an access_url and no download_url. Print both, and
     # the dataset id, so the right one can be identified.
+    ets_candidates: List[str] = []
     print("  searching the catalogue for an ETS/EUTL dataset…")
     r = get("https://data.europa.eu/api/hub/search/search",
             params={"q": "EU Emissions Trading System EUTL verified emissions",
@@ -339,8 +391,18 @@ def probe_ets() -> None:
                     if isinstance(val, list):
                         val = val[0] if val else None
                     if val:
-                        print(f"        {str(fmt)[:12]:12s} {key}: {str(val)[:95]}")
+                        # Printed in full: round 2 truncated exactly the URL
+                        # that turned out to be the useful one.
+                        print(f"        {str(fmt)[:12]:12s} {key}: {val}")
+                        if "sdi.eea.europa.eu/webdav" in str(val):
+                            ets_candidates.append(str(val))
                         break
+    print("\n  testing the EEA Union Registry distribution(s) found above…")
+    for url in ets_candidates or ["(none found)"]:
+        if url.startswith("("):
+            print("    no webdav distribution was advertised this time")
+            break
+        head(url)
     for label, url in [
         # The datahub item id used in round 1 is dead; these are the entry
         # points that do not depend on a UUID staying valid.
