@@ -152,6 +152,23 @@ def select_queries(corpus_dir: Path,
     # Rank eligible codes by the codebook's paper count, ties alphabetically.
     eligible = sorted((c for c in candidates if c["status"] == "eligible"),
                       key=lambda c: (-c["papers"], c["code"]))
+
+    # Collapse codes that search for the same thing. The codebook has separate
+    # entries whose term sets coincide — "regulation" and "regulations" both
+    # expand to the same terms and matched the same 143 acts, and "funding"
+    # appears under both barriers and drivers — so without this they consume two
+    # of the ten slots for one query. The higher paper count survives, which is
+    # the ranking the rule already uses.
+    seen_terms: Dict[frozenset, Dict[str, Any]] = {}
+    deduped: List[Dict[str, Any]] = []
+    for cand in eligible:
+        key = frozenset(t.lower() for t in cand["terms"])
+        if key in seen_terms:
+            cand["status"] = f"dropped: same terms as {seen_terms[key]['code']}"
+            continue
+        seen_terms[key] = cand
+        deduped.append(cand)
+    eligible = deduped
     for cand in eligible[top:]:
         cand["status"] = "eligible, below the cut"
     selected = eligible[:top]

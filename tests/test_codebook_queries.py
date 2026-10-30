@@ -167,6 +167,32 @@ def test_per_side_counts_expose_a_term_that_lives_on_one_side_only(tmp_path):
     assert strict["rule"]["require_both_sides"] is True
 
 
+def test_codes_searching_for_the_same_thing_take_one_slot(tmp_path):
+    """"regulation" and "regulations" matched the same 143 acts and took two slots.
+
+    The codebook also lists "funding" under both barriers and drivers. Either
+    way one query was spending two of the ten places available.
+    """
+    corpus = _corpus(tmp_path, policies=[
+        _doc("p:1", "regulation on soil"), _doc("p:2", "x"), _doc("p:3", "y"),
+        _doc("p:4", "z"), _doc("p:5", "w")])
+    codebook = _codebook(
+        barriers=[("regulation", ["regulation", "regulations"], 13),
+                  ("funding", ["funding"], 2)],
+        drivers=[("regulations", ["regulations", "regulation"], 5),
+                 ("funding", ["funding"], 2)])
+    result = cq.select_queries(corpus, codebook=codebook, top=10, max_df=0.9)
+
+    assert result["queries"] == ["regulation"], \
+        "the higher paper count survives and the duplicate is dropped"
+    dropped = [c for c in result["candidates"]
+               if c["status"].startswith("dropped: same terms")]
+    assert any(c["code"] == "regulations" for c in dropped)
+    # The duplicated "funding" entry across two dimensions collapses too.
+    assert sum(1 for c in result["candidates"]
+               if c["code"] == "funding" and c["status"] == "eligible, below the cut") <= 1
+
+
 def test_projects_count_on_the_funding_side_with_call_topics(tmp_path):
     """Both answer "what is being financed here", which is how the tool reads them."""
     corpus = _corpus(tmp_path, policies=[_doc("p:1", "act")],
