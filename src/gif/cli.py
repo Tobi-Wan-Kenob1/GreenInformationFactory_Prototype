@@ -239,6 +239,33 @@ def _cmd_freeze(args) -> int:
     return 0
 
 
+def _cmd_codebook_queries(args) -> int:
+    from pathlib import Path
+
+    from .codebook_queries import (DEFAULT_DIMENSIONS, DEFAULT_MAX_DF,
+                                   DEFAULT_TOP, select_queries, write_selection)
+    dimensions = ([d.strip() for d in args.dimensions.split(",") if d.strip()]
+                  if args.dimensions else DEFAULT_DIMENSIONS)
+    selection = select_queries(
+        Path(args.corpus), dimensions=dimensions,
+        max_df=args.max_df if args.max_df is not None else DEFAULT_MAX_DF,
+        top=args.top if args.top is not None else DEFAULT_TOP)
+
+    print(f"{selection['documents']} documents in {selection['corpus']}")
+    print(f"queries: {', '.join(selection['queries']) or '(none)'}")
+    print(f"{'code':24s} {'dim':10s} {'papers':>6s} {'docs':>6s} {'df':>7s}  status")
+    for cand in selection["candidates"]:
+        print(f"{cand['code'][:24]:24s} {cand['dimension'][:10]:10s} "
+              f"{cand['papers']:6d} {cand['documents']:6d} {cand['df']:7.3f}  "
+              f"{cand['status']}")
+    if selection["short"]:
+        print(f"! only {len(selection['queries'])} of {args.top or 10} queries "
+              f"survived the filter — report this rather than relaxing it")
+    if args.out:
+        print(f"wrote {write_selection(Path(args.out), selection)}")
+    return 0
+
+
 def _cmd_finder_codebook(args) -> int:
     from pathlib import Path
 
@@ -382,6 +409,19 @@ def build_parser() -> argparse.ArgumentParser:
     fr.add_argument("--verify", action="store_true",
                     help="Re-hash an existing corpus against its manifest and exit")
     fr.set_defaults(func=_cmd_freeze)
+
+    cq = sub.add_parser("codebook-queries",
+                        help="Pick codebook codes that are specific to a frozen corpus")
+    cq.add_argument("--corpus", required=True, help="A corpus directory from gif freeze")
+    cq.add_argument("--out", default=None,
+                    help="Write the selection as JSON (default: print only)")
+    cq.add_argument("--max-df", type=float, default=None, dest="max_df",
+                    help="Drop codes matching more than this share of the corpus "
+                         "(default 0.20)")
+    cq.add_argument("--top", type=int, default=None, help="How many queries (default 10)")
+    cq.add_argument("--dimensions", default=None,
+                    help="Comma-separated codebook dimensions (default: barriers,drivers)")
+    cq.set_defaults(func=_cmd_codebook_queries)
 
     fc = sub.add_parser("finder-codebook",
                         help="Derive the WP1/D1.2 code vocabulary the finder matches against")
