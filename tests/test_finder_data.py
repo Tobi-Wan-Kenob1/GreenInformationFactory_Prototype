@@ -147,6 +147,15 @@ class FakeResp:
         return {"results": self._results}
 
 
+def _topic(identifier, start=None, **meta):
+    """A minimal SEDIA call-topic result, dated unless `start` says otherwise."""
+    md = {"type": ["1"], "identifier": [identifier], "title": [f"Topic {identifier}"]}
+    if start:
+        md["startDate"] = [start]
+    md.update({k: (v if isinstance(v, list) else [v]) for k, v in meta.items()})
+    return {"metadata": md}
+
+
 def _record_posts(monkeypatch, responder):
     """Capture every SEDIA request; `responder(text)` supplies the response."""
     calls = []
@@ -478,21 +487,29 @@ def test_fetch_policies_raises_when_every_slice_fails(monkeypatch):
 
 def _patch_sources(monkeypatch, tmp_path, grants=None, policies=None,
                    grants_exc=None, policies_exc=None):
-    """Point build_snapshot at a temp repo with stubbed fetchers."""
-    monkeypatch.setattr(fd, "find_repo_root", lambda: tmp_path)
+    """Point build_snapshot at a temp repo with stubbed fetchers.
 
-    def fake_grants(kws):
+    Returns the window each fetcher was called with, so a test can check that
+    the command's dates actually reach both sources.
+    """
+    monkeypatch.setattr(fd, "find_repo_root", lambda: tmp_path)
+    seen = {}
+
+    def fake_grants(kws, since=None, until=None, **kw):
+        seen["grants"] = (since, until)
         if grants_exc:
             raise grants_exc
         return list(grants or [])
 
-    def fake_policies(kws, since="2015-01-01", until=None):
+    def fake_policies(kws, since="2015-01-01", until=None, **kw):
+        seen["policies"] = (since, until)
         if policies_exc:
             raise policies_exc
         return list(policies or [])
 
     monkeypatch.setattr(fd, "fetch_grants", fake_grants)
     monkeypatch.setattr(fd, "fetch_policies", fake_policies)
+    return seen
 
 
 def test_build_snapshot_monkeypatched(tmp_path, monkeypatch):
@@ -538,3 +555,62 @@ def test_build_snapshot_keeps_existing_file_when_fetch_fails(tmp_path, monkeypat
     assert "grants" in report["skipped"]
     kept = json.loads((out / "grants.json").read_text(encoding="utf-8"))
     assert kept["items"][0]["id"] == "g:kept"      # not clobbered with an empty list
+
+
+# --- the date window must bound both sources -------------------------------
+# build_snapshot used to call fetch_grants() with no dates, so a command asking
+# for a past period wrote a grants.json full of current call topics. The app
+# filters by window itself and so hid the problem; only a reader of the file
+# would have noticed.
+
+def test_build_snapshot_passes_window_to_both_sources(tmp_path, monkeypatch):
+    seen = _patch_sources(monkeypatch, tmp_path)
+    fd.build_snapshot(keywords=["mining"], out_dir=tmp_path / "out",
+                      since="2000-01-01", until="2009-12-31")
+    assert seen["policies"] == ("2000-01-01", "2009-12-31")
+    assert seen["grants"] == ("2000-01-01", "2009-12-31"), \
+        "the grant fetch must receive the window, not silently ignore it"
+
+
+def test_snapshot_records_the_window_it_was_built_for(tmp_path, monkeypatch):
+    _patch_sources(monkeypatch, tmp_path, grants=[{"id": "g:x", "kind": "grant"}])
+    out = tmp_path / "out"
+    report = fd.build_snapshot(keywords=["mining"], out_dir=out,
+                               since="2000-01-01", until="2009-12-31")
+    assert report["window"] == {"since": "2000-01-01", "until": "2009-12-31"}
+    payload = json.loads((out / "grants.json").read_text(encoding="utf-8"))
+    assert payload["window"] == {"since": "2000-01-01", "until": "2009-12-31"}
+
+
+def test_fetch_grants_drops_topics_outside_the_window(monkeypatch):
+    old = _topic("OLD-2008", start="2008-03-01T00:00:00+0100")
+    new = _topic("NEW-2024", start="2024-03-01T00:00:00+0100")
+    _record_posts(monkeypatch, lambda text: FakeResp([old, new]))
+
+    docs = fd.fetch_grants(["mining"], until="2009-12-31")
+    assert [d["id"] for d in docs] == ["g:OLD-2008"]
+
+    docs = fd.fetch_grants(["mining"], since="2010-01-01")
+    assert [d["id"] for d in docs] == ["g:NEW-2024"]
+
+    assert len(fd.fetch_grants(["mining"])) == 2       # no window, no filtering
+
+
+def test_fetch_grants_excludes_undated_topics_only_when_bounded_above(monkeypatch):
+    """An undated record cannot be shown to predate a cut-off, so it is dropped.
+
+    With an open end there is nothing to prove and dropping it would lose a
+    real call topic, which is why the web app never hides undated records.
+    """
+    undated = _topic("NODATE-1", start="")
+    _record_posts(monkeypatch, lambda text: FakeResp([undated]))
+
+    assert fd.fetch_grants(["mining"], since="2000-01-01") != []
+    assert fd.fetch_grants(["mining"], until="2009-12-31") == []
+
+
+def test_in_window_boundaries_are_inclusive():
+    assert fd.in_window({"date": "2009-12-31"}, until="2009-12-31")
+    assert fd.in_window({"date": "2000-01-01"}, since="2000-01-01")
+    assert not fd.in_window({"date": "2010-01-01"}, until="2009-12-31")
+    assert not fd.in_window({"date": "1999-12-31"}, since="2000-01-01")

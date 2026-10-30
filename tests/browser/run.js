@@ -71,6 +71,7 @@ async function main() {
   const server = await startServer(DOCS, {
     '/finder/data/policies.json': path.join(FIXTURES, 'policies.json'),
     '/finder/data/grants.json': path.join(FIXTURES, 'grants.json'),
+    '/finder/data/projects.json': path.join(FIXTURES, 'projects.json'),
   });
   const exe = chromiumPath();
   const browser = await chromium.launch(exe ? { executablePath: exe } : {});

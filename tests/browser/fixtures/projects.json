@@ -1,0 +1,61 @@
+{
+ "generated": "2026-10-30T09:00:00Z",
+ "keywords": ["soil", "mining"],
+ "window": {"since": null, "until": null},
+ "items": [
+  {
+   "id": "c:fp7:241827",
+   "kind": "grant",
+   "title": "Soil carbon accounting for arable land",
+   "summary": "Developed a measurement protocol for soil organic carbon in arable systems across four Member States. · soil sciences, carbon sequestration",
+   "date": "2009-09-01",
+   "endDate": "2013-08-31",
+   "deadline": null,
+   "status": "CLOSED",
+   "callId": "FP7-KBBE-2009-3",
+   "programmePeriod": "FP7",
+   "acronym": "SOILCARB",
+   "url": "https://cordis.europa.eu/project/id/241827",
+   "budgetEUR": 2900000,
+   "doctype": "Funded project",
+   "level": "EU",
+   "source": "cache"
+  },
+  {
+   "id": "c:fp6:502624",
+   "kind": "grant",
+   "title": "Rehabilitation of abandoned mining sites",
+   "summary": "Assessed revegetation techniques for abandoned quarrying and mining sites in southern Europe. · mining engineering, land reclamation",
+   "date": "2004-03-01",
+   "endDate": "2007-02-28",
+   "deadline": null,
+   "status": "CLOSED",
+   "callId": "FP6-2003-GLOBAL-2",
+   "programmePeriod": "FP6",
+   "acronym": "REMINE",
+   "url": "https://cordis.europa.eu/project/id/502624",
+   "budgetEUR": 1450000,
+   "doctype": "Funded project",
+   "level": "EU",
+   "source": "cache"
+  },
+  {
+   "id": "c:horizon:101112233",
+   "kind": "grant",
+   "title": "Soil health monitoring at scale",
+   "summary": "Continental-scale soil health indicators from remote sensing and in-situ networks. · soil sciences, earth observation",
+   "date": "2023-01-01",
+   "endDate": "2026-12-31",
+   "deadline": null,
+   "status": "SIGNED",
+   "callId": "HORIZON-CL6-2022-SOIL",
+   "programmePeriod": "Horizon Europe",
+   "acronym": "SOILWATCH",
+   "url": "https://cordis.europa.eu/project/id/101112233",
+   "budgetEUR": 6200000,
+   "doctype": "Funded project",
+   "level": "EU",
+   "source": "cache"
+  }
+ ]
+}

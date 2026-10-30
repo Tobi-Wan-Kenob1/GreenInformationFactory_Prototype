@@ -449,6 +449,26 @@ ORDER BY DESC(?date) LIMIT 75`;
     return anyTermIn(expandAll(keywords, useSynonyms), hay);
   }
 
+  /* ---------- funded projects (CORDIS, snapshot only) ----------
+   * Awards already made, from `gif cordis`. This is a third source, not a
+   * fallback: CORDIS publishes bulk CSV archives tens of megabytes each and no
+   * browser-callable API, so projects can only ever come from the snapshot.
+   * Treating them as a fallback would hide them exactly when things work —
+   * the live call-topic tier succeeds in a real browser, and the cache would
+   * never be consulted. So they are merged into the grant results whatever
+   * tier those came from. Absent file, absent projects: nothing breaks. */
+  async function cachedProjects(keywords, flt, useSynonyms) {
+    try {
+      const json = await loadJson('data/projects.json');
+      const items = (json.items || [])
+        .map(d => Object.assign({}, d, { source: 'cache' }))
+        .filter(d => matchesKeywords(d, keywords, useSynonyms) && inWindow(d, flt));
+      return { items, generated: json.generated || null };
+    } catch (e) {
+      return { items: [], generated: null };
+    }
+  }
+
   async function cachedDocs(kind, keywords, flt, useSynonyms) {
     // Snapshot written by the GitHub Action first, bundled demo sample last.
     const paths = kind === 'grant'
@@ -474,28 +494,52 @@ ORDER BY DESC(?date) LIMIT 75`;
     const flt = normFilters(filters);
     const liveFn = kind === 'grant' ? liveGrants : livePolicies;
     const window_ = flt.from + '–' + flt.to;
+
+    // Merge CORDIS projects into whatever the call-topic tier produced, and
+    // say so in the detail line, because "12 grants" meaning "4 open calls and
+    // 8 awards made in 2008" is a difference the reader must be able to see.
+    const projects = kind === 'grant'
+      ? await cachedProjects(keywords, flt, useSynonyms)
+      : { items: [], generated: null };
+    const withProjects = (items, detail) => {
+      if (!projects.items.length) return { items, detail };
+      const seen = {};
+      items.forEach(d => { seen[d.id] = true; });
+      const merged = items.concat(projects.items.filter(d => !seen[d.id]));
+      return {
+        items: rankDocs(merged, keywords, useSynonyms),
+        detail: detail + ' + ' + projects.items.length + ' funded project(s) from CORDIS'
+      };
+    };
+
     try {
       const items = rankDocs(await liveFn(keywords, flt, useSynonyms), keywords, useSynonyms);
       if (items.length > 0) {
-        return { items, tier: 'live', detail: 'live API, ' + window_ };
+        const m = withProjects(items, 'live API, ' + window_);
+        return { items: m.items, tier: 'live', detail: m.detail };
       }
       // Live worked but returned nothing — offer cached matches as a hint.
       const c = await cachedDocs(kind, keywords, flt, useSynonyms);
-      return c.items.length
-        ? { items: c.items, tier: c.isSample ? 'sample' : 'cache',
-            detail: 'live returned 0 for ' + window_ + ', showing ' +
-                    (c.isSample ? 'bundled demo data' : 'snapshot') + ' (' + c.snapshot + ')' }
-        : { items: [], tier: 'live', detail: 'live API, no matches in ' + window_ };
+      if (c.items.length) {
+        const m = withProjects(c.items,
+          'live returned 0 for ' + window_ + ', showing ' +
+          (c.isSample ? 'bundled demo data' : 'snapshot') + ' (' + c.snapshot + ')');
+        return { items: m.items, tier: c.isSample ? 'sample' : 'cache', detail: m.detail };
+      }
+      const m = withProjects([], 'live API, no matches in ' + window_);
+      return { items: m.items, tier: m.items.length ? 'cache' : 'live', detail: m.detail };
     } catch (err) {
       const c = await cachedDocs(kind, keywords, flt, useSynonyms);
+      const base = c.snapshot
+        ? 'live unreachable (' + err.message + ') — ' +
+          (c.isSample ? 'bundled DEMO data, not real EU records' : 'snapshot ' + c.snapshot) +
+          (c.generated ? ', ' + String(c.generated).slice(0, 10) : '') + ', ' + window_
+        : 'live unreachable and no cached data (' + err.message + ')';
+      const m = withProjects(c.items, base);
       return {
-        items: c.items,
-        tier: c.snapshot ? (c.isSample ? 'sample' : 'cache') : 'err',
-        detail: c.snapshot
-          ? 'live unreachable (' + err.message + ') — ' +
-            (c.isSample ? 'bundled DEMO data, not real EU records' : 'snapshot ' + c.snapshot) +
-            (c.generated ? ', ' + String(c.generated).slice(0, 10) : '') + ', ' + window_
-          : 'live unreachable and no cached data (' + err.message + ')'
+        items: m.items,
+        tier: c.snapshot ? (c.isSample ? 'sample' : 'cache') : (m.items.length ? 'cache' : 'err'),
+        detail: m.detail
       };
     }
   }

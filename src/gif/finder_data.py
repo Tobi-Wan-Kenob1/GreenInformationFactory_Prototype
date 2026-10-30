@@ -220,8 +220,33 @@ def _sedia_search(text: str, page_size: int, page: int,
     return resp.json().get("results") or []
 
 
+def in_window(doc: Dict[str, Any], since: Optional[str] = None,
+              until: Optional[str] = None) -> bool:
+    """Whether a document's date falls inside ``[since, until]``.
+
+    Undated documents are kept when there is **no upper bound** and dropped
+    when there is one. The asymmetry is deliberate. With an open end the window
+    only says "not older than", and hiding an undated act would lose a real
+    document for no gain — which is why the web app never hides them. With
+    ``until`` set, the caller is asking for the state of the world at a past
+    date, and an undated record cannot be shown to predate it. Keeping it would
+    let a later document into a corpus that is supposed to be frozen, so the
+    uncertain case is excluded rather than assumed benign.
+    """
+    date_str = str(doc.get("date") or "")[:10]
+    if not date_str:
+        return until is None
+    if since and date_str < str(since)[:10]:
+        return False
+    if until and date_str > str(until)[:10]:
+        return False
+    return True
+
+
 def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
-                 pages: int = 1, include_closed: bool = True) -> List[Dict[str, Any]]:
+                 pages: int = 1, include_closed: bool = True,
+                 since: Optional[str] = None,
+                 until: Optional[str] = None) -> List[Dict[str, Any]]:
     """Query SEDIA for grant call topics matching the keywords.
 
     One request **per keyword** rather than a single ``OR`` query: the API
@@ -229,6 +254,11 @@ def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
     multi-keyword query exceeds it (``400 … Result size limit 100mb has been
     reached``) regardless of page size. Per-keyword queries stay well inside
     the limit and let one bad keyword fail without losing the rest.
+
+    ``since``/``until`` bound the call topics by date. The filter is applied
+    here, on normalised records, rather than in the query: the API's own date
+    handling is not dependable enough to rely on for a corpus that must not
+    contain documents from after a stated date.
     """
     page_size = min(page_size, MAX_PAGE_SIZE)
     statuses = [STATUS_FORTHCOMING, STATUS_OPEN]
@@ -238,6 +268,7 @@ def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
     docs: List[Dict[str, Any]] = []
     seen: set = set()
     failures: List[str] = []
+    out_of_window = 0
     keywords = list(keywords)
 
     for keyword in keywords:
@@ -251,10 +282,14 @@ def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
                 if not is_call_topic(r):          # drop FAQs / tenders
                     continue
                 doc = normalize_grant(r)
-                if doc["id"] not in seen:
-                    seen.add(doc["id"])
-                    doc["matchedKeyword"] = keyword
-                    docs.append(doc)
+                if doc["id"] in seen:
+                    continue
+                seen.add(doc["id"])
+                if not in_window(doc, since, until):
+                    out_of_window += 1
+                    continue
+                doc["matchedKeyword"] = keyword
+                docs.append(doc)
             if len(results) < page_size:
                 break
 
@@ -263,6 +298,9 @@ def fetch_grants(keywords: Iterable[str], page_size: int = DEFAULT_PAGE_SIZE,
     if failures:
         print(f"  warning: {len(failures)}/{len(keywords)} keyword queries failed: "
               + "; ".join(failures))
+    if out_of_window:
+        window = f"{since or 'any'}..{until or 'any'}"
+        print(f"  {out_of_window} call topic(s) outside {window} dropped")
     return docs
 
 
@@ -525,11 +563,18 @@ def load_snapshot_keywords(repo_root: Optional[Path] = None) -> List[str]:
 def write_snapshot(out_dir: Path, keywords: List[str],
                    grants: List[Dict[str, Any]],
                    policies: List[Dict[str, Any]],
-                   skip: Optional[Iterable[str]] = None) -> Dict[str, Path]:
+                   skip: Optional[Iterable[str]] = None,
+                   since: Optional[str] = None,
+                   until: Optional[str] = None) -> Dict[str, Path]:
     """Write grants.json / policies.json in the shape the web app expects.
 
     Names listed in ``skip`` are left untouched, so a failed fetch cannot
     replace an existing good snapshot with an empty file.
+
+    The window the files were built for is recorded in them. A snapshot of a
+    past period is indistinguishable from a current one by inspection
+    otherwise, and anyone reusing the file — a reviewer, or us in six months —
+    has to take the filename's word for what it covers.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -539,7 +584,8 @@ def write_snapshot(out_dir: Path, keywords: List[str],
         if name in skip:
             continue
         path = out_dir / f"{name}.json"
-        payload = {"generated": stamp, "keywords": keywords, "items": items}
+        payload = {"generated": stamp, "keywords": keywords,
+                   "window": {"since": since, "until": until}, "items": items}
         path.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n",
                         encoding="utf-8")
         written[name] = path
@@ -555,6 +601,13 @@ def build_snapshot(keywords: Optional[List[str]] = None,
     Each source is fetched independently: if one endpoint fails, the other is
     still written and the failure is reported in ``errors`` rather than
     aborting the run (a single 400 used to lose the whole snapshot).
+
+    ``since``/``until`` bound **both** sources. They used to bound policies
+    only, because the grant fetch was called without them, so a command asking
+    for a past period still wrote a `grants.json` full of current call topics.
+    The web app hid them (it filters by window itself), which is exactly why
+    the defect survived: the snapshot on disk disagreed with the command that
+    produced it, and only a reader of the file would notice.
     """
     root = find_repo_root()
     keywords = keywords or load_snapshot_keywords(root)
@@ -562,7 +615,7 @@ def build_snapshot(keywords: Optional[List[str]] = None,
 
     errors: Dict[str, str] = {}
     try:
-        grants = fetch_grants(keywords)
+        grants = fetch_grants(keywords, since=since, until=until)
     except Exception as exc:                      # noqa: BLE001 - reported, not raised
         grants, errors["grants"] = [], f"{type(exc).__name__}: {exc}"
     try:
@@ -573,10 +626,12 @@ def build_snapshot(keywords: Optional[List[str]] = None,
     # Never overwrite a good snapshot with an empty one from a failed fetch.
     skipped = [name for name, items in (("grants", grants), ("policies", policies))
                if name in errors and (out / f"{name}.json").exists()]
-    written = write_snapshot(out, keywords, grants, policies, skip=skipped)
+    written = write_snapshot(out, keywords, grants, policies, skip=skipped,
+                             since=since, until=until)
 
     return {
         "keywords": keywords,
+        "window": {"since": since, "until": until},
         "grants": len(grants),
         "policies": len(policies),
         "errors": errors,

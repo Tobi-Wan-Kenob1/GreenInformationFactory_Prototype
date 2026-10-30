@@ -172,6 +172,32 @@ def _cmd_finder_data(args) -> int:
     return 0
 
 
+def _cmd_cordis(args) -> int:
+    from pathlib import Path
+
+    from .cordis import build_projects
+    programmes = ([p.strip() for p in args.programmes.split(",") if p.strip()]
+                  if args.programmes else None)
+    # An empty --keywords means "no keyword filter"; omitting it means "use the
+    # configured scope keywords". None and [] have to stay distinguishable.
+    keywords = ([k.strip() for k in args.keywords.split(",") if k.strip()]
+                if args.keywords is not None else None)
+    report = build_projects(programmes=programmes, keywords=keywords,
+                            out_dir=Path(args.out) if args.out else None,
+                            as_of=args.as_of, since=args.since)
+    print(f"cordis: {report['projects']} projects -> {report['file']}")
+    for prog in report["programmes"]:
+        print(f"  - {prog['programme']}: {prog['projects_in_archive']} in archive, "
+              f"{prog['dropped_keyword']} off-keyword, "
+              f"{prog['dropped_window']} outside window, "
+              f"{prog['ragged_rows']} ragged rows skipped")
+    if report["errors"]:
+        for name, err in report["errors"].items():
+            print(f"  ! {name} failed: {err}")
+        return 1
+    return 0
+
+
 def _cmd_finder_codebook(args) -> int:
     from pathlib import Path
 
@@ -265,11 +291,31 @@ def build_parser() -> argparse.ArgumentParser:
     fd.add_argument("--out", default=None,
                     help="Output directory (default: docs/finder/data)")
     fd.add_argument("--since", default="2015-01-01",
-                    help="Earliest policy document date (YYYY-MM-DD)")
+                    help="Earliest document date, policies and grants (YYYY-MM-DD)")
     fd.add_argument("--until", default=None,
-                    help="Latest policy document date (YYYY-MM-DD) — set both to "
-                         "snapshot a past period for benchmarking")
+                    help="Latest document date, policies and grants (YYYY-MM-DD) — "
+                         "set both to snapshot a past period for benchmarking. With "
+                         "--until, undated records are excluded, since they cannot be "
+                         "shown to predate it")
     fd.set_defaults(func=_cmd_finder_data)
+
+    cd = sub.add_parser("cordis",
+                        help="Fetch CORDIS funded projects (FP5-Horizon Europe) for the finder")
+    cd.add_argument("--programmes", default=None,
+                    help="Comma-separated: fp5,fp6,fp7,h2020,horizon "
+                         "(default: fp6,fp7,h2020,horizon)")
+    cd.add_argument("--keywords", default=None,
+                    help="Comma-separated keywords (default: docs/finder/data/snapshot_config.json). "
+                         "Pass an empty string to keep every project")
+    cd.add_argument("--out", default=None,
+                    help="Output directory (default: docs/finder/data)")
+    cd.add_argument("--since", default=None,
+                    help="Earliest project start date (YYYY-MM-DD)")
+    cd.add_argument("--as-of", default=None, dest="as_of",
+                    help="Keep only projects already started by this date — what was "
+                         "public knowledge then. Projects with no start date are "
+                         "excluded, since they cannot be shown to predate it")
+    cd.set_defaults(func=_cmd_cordis)
 
     fc = sub.add_parser("finder-codebook",
                         help="Derive the WP1/D1.2 code vocabulary the finder matches against")

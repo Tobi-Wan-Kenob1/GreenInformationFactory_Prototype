@@ -15,8 +15,11 @@ module.exports = {
     const recent = await finder.counts();
     check.equal(recent.policies, 3,
       'the default 2015+ window should match soil 2024, fertiliser 2019 and carbon farming 2018');
-    check.equal(recent.grants, 2,
-      'the default 2015+ window should match the soil 2024 and mining 2023 grants');
+    // Three, not two: the grant side is now call topics *plus* CORDIS funded
+    // projects, and the 2023 Horizon award matches "soil" in this window.
+    check.equal(recent.grants, 3,
+      'the default 2015+ window should match the soil 2024 and mining 2023 call '
+      + 'topics plus the 2023 Horizon project');
 
     await page.click('.stepper .step[data-stage="1"]');
     await finder.setWindow(2004, 2026);
@@ -24,7 +27,8 @@ module.exports = {
     const all = await finder.counts();
     check.equal(all.policies, 5,
       'widening to 2004 should add the 2012 mining decision and the 2005 quarrying directive');
-    check.equal(all.grants, 3, 'and the 2011 supply-chain grant');
+    check.equal(all.grants, 6,
+      'and the 2011 supply-chain call topic plus all three CORDIS awards');
 
     const titles = (await finder.titles()).join(' | ');
     check.match(titles, /soil monitoring and resilience/i, 'the soil directive should be found');
@@ -67,7 +71,8 @@ module.exports = {
     const historical = await finder.counts();
     check.equal(historical.policies, 2,
       '2004-2013 should leave the 2012 mining decision and the 2005 quarrying directive');
-    check.equal(historical.grants, 1, '2004-2013 should leave the 2011 supply-chain grant');
+    check.equal(historical.grants, 3,
+      '2004-2013 should leave the 2011 call topic and the two pre-2010 CORDIS awards');
     const oldTitles = (await finder.titles()).join(' | ');
     check.match(oldTitles, /quarrying operations/i, 'the 2005 act should survive the window');
     check.notMatch(oldTitles, /2024\/9002/, 'a 2024 act must not survive a 2004-2013 window');
