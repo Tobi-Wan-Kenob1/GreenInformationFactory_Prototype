@@ -105,7 +105,11 @@ async function recordQuery(page, baseUrl, query, from, to) {
   }
 
   await page.click('#go-topics');
-  await page.waitForSelector('#chart-policies svg', { timeout: 30000 });
+  // Wait for the stage, not for a chart. A query can match grants and no
+  // policies — single-source results are a feature, not an edge case — and
+  // then #chart-policies renders an empty state with no <svg> in it, so
+  // waiting on the chart hangs for exactly the corpora this is built for.
+  await page.waitForSelector('#topic-scope .scopebtn', { timeout: 30000 });
 
   // Every scope, not just the active one: H3 compares bridge topics against
   // single-corpus ones, so both have to be on the record before outcomes are
@@ -173,14 +177,29 @@ async function main() {
     process.exit(2);
   }
 
-  // Point the app's snapshot paths at the frozen corpus. Missing files are
-  // simply absent, which is correct: arm A1 has no call topics at all.
+  // Point the app's snapshot paths at the frozen corpus — and leave nothing
+  // unmapped. The app falls back to its bundled demo files when a snapshot is
+  // missing, and reports the result as a "snapshot" rather than as demo data,
+  // so a corpus lacking one source would be quietly topped up with invented
+  // documents that then look real in the record. A missing source is mapped to
+  // an empty file instead, which says what is true: that source has nothing.
+  // The demo files are mapped empty too, so the fallback cannot fire at all.
+  const stub = path.join(fs.mkdtempSync(path.join(require('os').tmpdir(), 'rec-')),
+                         'empty.json');
+  fs.writeFileSync(stub, JSON.stringify({ generated: null, items: [] }));
+
   const overrides = {};
+  let present = 0;
   for (const name of ['policies.json', 'grants.json', 'projects.json']) {
     const file = path.join(corpusDir, name);
-    if (fs.existsSync(file)) overrides['/finder/data/' + name] = file;
+    const found = fs.existsSync(file);
+    if (found) present += 1;
+    overrides['/finder/data/' + name] = found ? file : stub;
   }
-  if (!Object.keys(overrides).length) {
+  for (const name of ['sample_policies.json', 'sample_grants.json']) {
+    overrides['/finder/data/' + name] = stub;
+  }
+  if (!present) {
     console.error(`no corpus files found in ${corpusDir}`);
     process.exit(2);
   }
@@ -204,6 +223,12 @@ async function main() {
   for (const query of queries) {
     process.stdout.write(`  recording "${query}" … `);
     const record = await recordQuery(page, server.baseUrl, query, from, to);
+    // Belt and braces over the mapping above: if anything ever reaches the
+    // demo files again, the run must fail rather than be written down.
+    const tiers = (record.sources || []).join(' | ');
+    if (/demo|sample/i.test(tiers)) {
+      throw new Error(`demo data reached a recorded run for "${query}": ${tiers}`);
+    }
     records.push(record);
     console.log(`${record.counts.policies} policies, ${record.counts.grants} grants`);
   }
