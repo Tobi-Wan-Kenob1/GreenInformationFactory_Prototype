@@ -198,6 +198,43 @@ def _cmd_cordis(args) -> int:
     return 0
 
 
+def _cmd_freeze(args) -> int:
+    from pathlib import Path
+
+    from .freeze import freeze, verify
+    out = Path(args.out)
+
+    if args.verify:
+        result = verify(out)
+        print(f"corpus {result['label'] or out} created {result['created']}")
+        for entry in result["files"]:
+            print(f"  {entry['status']:8s} {entry['name']}")
+        print("manifest matches" if result["ok"] else "MANIFEST MISMATCH — corpus has changed")
+        return 0 if result["ok"] else 1
+
+    keywords = ([k.strip() for k in args.keywords.split(",") if k.strip()]
+                if args.keywords is not None else None)
+    programmes = ([p.strip() for p in args.programmes.split(",") if p.strip()]
+                  if args.programmes else None)
+    report = freeze(out, since=args.since, until=args.until, keywords=keywords,
+                    programmes=programmes, label=args.label,
+                    skip_projects=args.no_projects)
+
+    print(f"froze {report['documents']} documents into {report['dir']}")
+    for entry in report["files"]:
+        print(f"  - {entry['name']}: {entry['items']} items, "
+              f"{entry['earliest'] or '?'}..{entry['latest'] or '?'}, "
+              f"sha256 {entry['sha256'][:16]}…")
+    if report["undated"]:
+        print(f"  {report['undated']} undated document(s) recorded in the manifest")
+    print(f"  manifest: {report['manifest']}")
+    if report["errors"]:
+        for name, err in report["errors"].items():
+            print(f"  ! {name}: {err}")
+        return 1
+    return 0
+
+
 def _cmd_finder_codebook(args) -> int:
     from pathlib import Path
 
@@ -316,6 +353,26 @@ def build_parser() -> argparse.ArgumentParser:
                          "public knowledge then. Projects with no start date are "
                          "excluded, since they cannot be shown to predate it")
     cd.set_defaults(func=_cmd_cordis)
+
+    fr = sub.add_parser("freeze",
+                        help="Write a reproducible corpus (all sources) with a checksum manifest")
+    fr.add_argument("--out", required=True,
+                    help="Corpus directory to write (created if absent)")
+    fr.add_argument("--since", default=None, help="Earliest document date (YYYY-MM-DD)")
+    fr.add_argument("--until", default=None,
+                    help="Latest document date (YYYY-MM-DD). Enforced: the command "
+                         "fails if any document postdates it")
+    fr.add_argument("--keywords", default=None,
+                    help="Comma-separated keywords (default: docs/finder/data/snapshot_config.json)")
+    fr.add_argument("--programmes", default=None,
+                    help="CORDIS programmes (default: fp6,fp7,h2020,horizon)")
+    fr.add_argument("--label", default=None,
+                    help="Name recorded in the manifest, e.g. the arm this corpus is for")
+    fr.add_argument("--no-projects", action="store_true", dest="no_projects",
+                    help="Skip CORDIS; policies and call topics only")
+    fr.add_argument("--verify", action="store_true",
+                    help="Re-hash an existing corpus against its manifest and exit")
+    fr.set_defaults(func=_cmd_freeze)
 
     fc = sub.add_parser("finder-codebook",
                         help="Derive the WP1/D1.2 code vocabulary the finder matches against")
