@@ -75,6 +75,35 @@ def test_verify_detects_a_changed_corpus(tmp_path):
     assert changed["status"] == "CHANGED"
 
 
+def test_content_digest_ignores_the_generated_timestamp(tmp_path):
+    """Two runs that retrieved identical documents must be recognisable as such.
+
+    Every snapshot embeds a `generated` timestamp, so identical retrievals
+    produced different file hashes purely from the clock. "The corpus changed"
+    is a finding; "the corpus was written again" is noise, and the file hash
+    alone cannot tell them apart.
+    """
+    corpus = _write_corpus(tmp_path / "c", policies=[_doc("p:1", "2005-01-01")])
+    fz.write_manifest(corpus, fz.build_manifest(corpus, ["mining"], None, None))
+    first = fz.sha256_file(corpus / "policies.json")
+
+    payload = json.loads((corpus / "policies.json").read_text(encoding="utf-8"))
+    payload["generated"] = "2027-01-01T00:00:00Z"        # rewritten, same documents
+    (corpus / "policies.json").write_text(json.dumps(payload), encoding="utf-8")
+    assert fz.sha256_file(corpus / "policies.json") != first
+
+    result = fz.verify(corpus)
+    assert result["ok"] is True, "a rewrite with identical documents is not a change"
+    assert next(f["status"] for f in result["files"]
+                if f["name"] == "policies.json") == "rewritten"
+
+
+def test_content_digest_is_order_independent_but_catches_a_changed_set(tmp_path):
+    a = [_doc("p:1", "2005-01-01"), _doc("p:2", "2006-01-01")]
+    assert fz.content_digest(a) == fz.content_digest(list(reversed(a)))
+    assert fz.content_digest(a) != fz.content_digest(a[:1])
+
+
 def test_verify_reports_a_missing_file(tmp_path):
     corpus = _write_corpus(tmp_path / "c", policies=[_doc("p:1", "2005-01-01")])
     fz.write_manifest(corpus, fz.build_manifest(corpus, ["mining"], None, None))

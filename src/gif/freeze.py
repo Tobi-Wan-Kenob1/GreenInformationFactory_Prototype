@@ -50,6 +50,25 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def content_digest(items: List[Dict[str, Any]]) -> str:
+    """A digest of the documents themselves, ignoring when they were written.
+
+    The file hash answers "are these the same bytes", which is what verifying
+    an archived corpus needs. It cannot answer "are these the same documents",
+    because every snapshot embeds a ``generated`` timestamp: two runs that
+    retrieved an identical 679 projects produced different file hashes purely
+    from the clock. Without a content digest, "the corpus changed" and "the
+    corpus was written again" are indistinguishable — and the first is a
+    finding while the second is noise.
+
+    Documents are sorted by id so retrieval order cannot affect the digest.
+    """
+    canonical = json.dumps(sorted(items, key=lambda d: str(d.get("id") or "")),
+                           sort_keys=True, separators=(",", ":"),
+                           ensure_ascii=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
 def tool_version(repo_root: Optional[Path] = None) -> Dict[str, Any]:
     """The tool's commit, and whether the tracked tree was modified.
 
@@ -138,6 +157,7 @@ def build_manifest(corpus_dir: Path, keywords: List[str],
             "name": name,
             "source": source,
             "sha256": sha256_file(path),
+            "content_sha256": content_digest(items),
             "bytes": path.stat().st_size,
             "items": len(items),
             "earliest": dates[0] if dates else None,
@@ -178,9 +198,19 @@ def verify(corpus_dir: Path) -> Dict[str, Any]:
             continue
         actual = sha256_file(path)
         matched = actual == entry.get("sha256")
-        ok = ok and matched
-        results.append({"name": entry["name"],
-                        "status": "ok" if matched else "CHANGED",
+        # Same documents, different bytes: a rewrite, not a change. Reported as
+        # its own status so it is not mistaken for either a clean match or a
+        # corpus that has actually been altered.
+        same_content = (entry.get("content_sha256") is not None
+                        and content_digest(_items(path)) == entry["content_sha256"])
+        if matched:
+            status = "ok"
+        elif same_content:
+            status = "rewritten"
+        else:
+            status = "CHANGED"
+        ok = ok and (matched or same_content)
+        results.append({"name": entry["name"], "status": status,
                         "expected": entry.get("sha256"), "actual": actual})
     return {"ok": ok, "label": manifest.get("label"),
             "created": manifest.get("created"), "files": results}
