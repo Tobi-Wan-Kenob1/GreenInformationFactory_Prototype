@@ -1,0 +1,70 @@
+name: Policy text probe (temporary)
+
+# Before building the corpus on enriched act text, check what CELLAR actually
+# serves for a CELEX: which acts come back as readable text, which are scans
+# with nothing to read, and whether the excerpt says what the act is about or
+# just repeats Official Journal boilerplate.
+#
+# Every EU source probed today has differed from what its documentation implied,
+# so this looks first and reports numbers rather than assuming a hit rate.
+# Delete once the enrichment is settled.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/policy-grant-finder-l84zm2
+    paths:
+      - ".github/workflows/policy-text-probe.yml"
+      - "src/gif/policy_text.py"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet -e .
+
+      - name: Probe act text on a sample of real policies
+        run: |
+          python - <<'PY'
+          import collections
+          from gif import finder_data as fd
+          from gif import policy_text as pt
+
+          keywords = fd.load_snapshot_keywords()
+          print(f"keywords: {', '.join(keywords)}")
+
+          # A spread of periods, because the old acts are the ones likely to be
+          # scans and a sample of recent acts would flatter the hit rate.
+          samples = []
+          for since, until in (("1994-01-01", "1999-12-31"),
+                               ("2000-01-01", "2004-12-31"),
+                               ("2005-01-01", "2009-12-31")):
+              docs = fd.fetch_policies(keywords, since=since, until=until, limit=20)
+              print(f"\n{since[:4]}-{until[:4]}: {len(docs)} acts retrieved")
+              samples.extend(docs[:6])
+
+          print(f"\nenriching {len(samples)} acts …")
+          before = {d["id"]: len(d.get("summary") or "") for d in samples}
+          report = pt.enrich_policies(samples)
+          print(f"report: {report}")
+
+          for doc in samples:
+              status = doc.get("textStatus")
+              grew = len(doc.get("summary") or "") - before[doc["id"]]
+              print(f"\n  {doc['id']:24s} {doc.get('date')}  {status}  +{grew} chars")
+              print(f"    title: {doc['title'][:95]}")
+              print(f"    text : {(doc.get('summary') or '')[:260]}")
+
+          ok = report["statuses"].get("ok", 0)
+          print(f"\n=== {ok}/{len(samples)} acts have readable text ===")
+          counts = collections.Counter(d.get("textStatus") for d in samples)
+          print(f"statuses: {dict(counts)}")
+          PY
