@@ -451,7 +451,13 @@ def probe_ets() -> None:
                     break
             print(f"      share token: {token or 'not found in the page'}")
             if token:
-                dav = f"https://sdi.eea.europa.eu/datashare/public.php/webdav/"
+                # Round 5: PROPFIND on the share root answers 207 but lists the
+                # whole public datastore alphabetically, so the ETS folder sat
+                # far past any sane print limit. Ask for that folder directly —
+                # its name is the last segment of the advertised access_url.
+                folder = url.rstrip("/").rsplit("/", 1)[-1]
+                dav = ("https://sdi.eea.europa.eu/datashare/public.php/webdav/"
+                       + folder + "/")
                 pr = None
                 try:
                     pr = requests.request(
@@ -461,9 +467,29 @@ def probe_ets() -> None:
                 except Exception as exc:                      # noqa: BLE001
                     print(f"      PROPFIND failed: {type(exc).__name__}: {exc}")
                 if pr is not None and pr.status_code < 400:
-                    for href in re.findall(r"<d:href>([^<]+)</d:href>", pr.text,
-                                           re.IGNORECASE)[:25]:
-                        print(f"        {href}")
+                    hrefs = re.findall(r"<d:href>([^<]+)</d:href>", pr.text,
+                                       re.IGNORECASE)
+                    entries = [h2 for h2 in hrefs if not h2.rstrip("/").endswith(folder)]
+                    print(f"      {len(entries)} entry(ies) in {folder}:")
+                    for href in entries[:30]:
+                        print(f"        {href.rsplit('/', 1)[-1] or href}")
+                    pick = next((h2 for h2 in entries if h2.lower().endswith(
+                        (".csv", ".zip", ".xlsx", ".parquet", ".gpkg", ".tsv"))), None)
+                    if pick:
+                        from urllib.parse import unquote, quote
+                        name = unquote(pick.rsplit("/", 1)[-1])
+                        print(f"      confirming {name}")
+                        try:
+                            hr = requests.head(
+                                dav + quote(name), headers=UA, auth=(token, ""),
+                                timeout=TIMEOUT, allow_redirects=True)
+                            size = hr.headers.get("content-length")
+                            mb = (f"{int(size) / 1e6:.1f} MB"
+                                  if size and size.isdigit() else "size unknown")
+                            print(f"        -> HTTP {hr.status_code}, "
+                                  f"{hr.headers.get('content-type', '?')}, {mb}")
+                        except Exception as exc:              # noqa: BLE001
+                            print(f"        failed: {type(exc).__name__}: {exc}")
     # The EEA runs a GeoNetwork catalogue whose record API lists a dataset's
     # real distribution links, which is the documented route to the file rather
     # than scraping a share page.
