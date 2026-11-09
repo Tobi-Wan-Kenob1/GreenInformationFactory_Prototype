@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-02T13:30:15Z",
+ "generated": "2026-11-09T13:54:17Z",
  "keywords": [
   "agriculture",
   "mining",
@@ -82,6 +82,23 @@
    "matchedKeyword": "mining"
   },
   {
+   "id": "g:HORIZON-CL4-2023-RESILIENCE-01-02",
+   "kind": "grant",
+   "title": "Innovative technologies for sustainable and decarbonised extraction (RIA)",
+   "summary": "ExpectedOutcome : A secure supply of sustainable raw materials is crucial for the green and digital transition. Environmentally friendly, safe, intelligent and resource efficient extraction technologies and methods for both open pit and underground mining need to be developed and implemented. Projects outcomes will enable achieving the expected impacts of the destination by increasing access to primary raw materials in particular critical raw materials [1] for EU industrial value chains and strategic sectors. Projects are expected to contribute to the following outcomes: Develop innovative tec · Civil engineering, Environmental engineering, Chemical engineering, Mining and mineral processing, critical raw materials, mining, extraction",
+   "date": "2022-12-08",
+   "deadline": "2023-04-20",
+   "status": "31094503",
+   "callId": "HORIZON-CL4-2023-RESILIENCE-01",
+   "programmePeriod": "2021 - 2027",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-cl4-2023-resilience-01-02",
+   "budgetEUR": 29000000,
+   "doctype": "Call topic",
+   "level": "EU",
+   "source": "cache",
+   "matchedKeyword": "mining"
+  },
+  {
    "id": "g:HORIZON-CL4-2023-RESILIENCE-01-07",
    "kind": "grant",
    "title": "Expert network on Critical raw materials (CSA)",
@@ -110,23 +127,6 @@
    "programmePeriod": "2021 - 2027",
    "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-cl4-2024-digital-emerging-01-45",
    "budgetEUR": 33000000,
-   "doctype": "Call topic",
-   "level": "EU",
-   "source": "cache",
-   "matchedKeyword": "mining"
-  },
-  {
-   "id": "g:HORIZON-CL4-2023-RESILIENCE-01-02",
-   "kind": "grant",
-   "title": "Innovative technologies for sustainable and decarbonised extraction (RIA)",
-   "summary": "ExpectedOutcome : A secure supply of sustainable raw materials is crucial for the green and digital transition. Environmentally friendly, safe, intelligent and resource efficient extraction technologies and methods for both open pit and underground mining need to be developed and implemented. Projects outcomes will enable achieving the expected impacts of the destination by increasing access to primary raw materials in particular critical raw materials [1] for EU industrial value chains and strategic sectors. Projects are expected to contribute to the following outcomes: Develop innovative tec · Civil engineering, Environmental engineering, Chemical engineering, Mining and mineral processing, critical raw materials, mining, extraction",
-   "date": "2022-12-08",
-   "deadline": "2023-04-20",
-   "status": "31094503",
-   "callId": "HORIZON-CL4-2023-RESILIENCE-01",
-   "programmePeriod": "2021 - 2027",
-   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/horizon-cl4-2023-resilience-01-02",
-   "budgetEUR": 29000000,
    "doctype": "Call topic",
    "level": "EU",
    "source": "cache",
