@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-09T13:54:17Z",
+ "generated": "2026-11-16T13:39:04Z",
  "keywords": [
   "agriculture",
   "mining",
@@ -13,6 +13,31 @@
   "just transition"
  ],
  "items": [
+  {
+   "id": "p:32026D2575",
+   "kind": "policy",
+   "title": "Council Decision (CFSP) 2026/2575 of 16 November 2026 amending Decision 2014/145/CFSP concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
+   "summary": "EU restrictive measure, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, international sanctions, legal person, natural person, territorial dispute, territorial law",
+   "subjects": [
+    "EU restrictive measure",
+    "Russia",
+    "Russo-Ukrainian issue",
+    "Ukraine",
+    "economic sanctions",
+    "international sanctions",
+    "legal person",
+    "natural person",
+    "territorial dispute",
+    "territorial law"
+   ],
+   "inForce": null,
+   "date": "2026-11-16",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2575",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "level": "EU",
+   "source": "cache"
+  },
   {
    "id": "p:32021R2117R(12)",
    "kind": "policy",
@@ -64,31 +89,6 @@
    "source": "cache"
   },
   {
-   "id": "p:32026D2279",
-   "kind": "policy",
-   "title": "Council Decision (CFSP) 2026/2279 of 12 October 2026 amending Decision 2014/145/CFSP concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
-   "summary": "EU restrictive measure, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, international sanctions, legal person, natural person, territorial dispute, territorial law",
-   "subjects": [
-    "EU restrictive measure",
-    "Russia",
-    "Russo-Ukrainian issue",
-    "Ukraine",
-    "economic sanctions",
-    "international sanctions",
-    "legal person",
-    "natural person",
-    "territorial dispute",
-    "territorial law"
-   ],
-   "inForce": null,
-   "date": "2026-10-12",
-   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2279",
-   "budgetEUR": null,
-   "doctype": "DEC",
-   "level": "EU",
-   "source": "cache"
-  },
-  {
    "id": "p:32026D2291",
    "kind": "policy",
    "title": "Council Decision (CFSP) 2026/2291 of 12 October 2026 amending Decision 2014/145/CFSP concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
@@ -108,6 +108,31 @@
    "inForce": null,
    "date": "2026-10-12",
    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2291",
+   "budgetEUR": null,
+   "doctype": "DEC",
+   "level": "EU",
+   "source": "cache"
+  },
+  {
+   "id": "p:32026D2279",
+   "kind": "policy",
+   "title": "Council Decision (CFSP) 2026/2279 of 12 October 2026 amending Decision 2014/145/CFSP concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
+   "summary": "EU restrictive measure, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, international sanctions, legal person, natural person, territorial dispute, territorial law",
+   "subjects": [
+    "EU restrictive measure",
+    "Russia",
+    "Russo-Ukrainian issue",
+    "Ukraine",
+    "economic sanctions",
+    "international sanctions",
+    "legal person",
+    "natural person",
+    "territorial dispute",
+    "territorial law"
+   ],
+   "inForce": null,
+   "date": "2026-10-12",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D2279",
    "budgetEUR": null,
    "doctype": "DEC",
    "level": "EU",
@@ -307,31 +332,6 @@
    "source": "cache"
   },
   {
-   "id": "p:32026R1891",
-   "kind": "policy",
-   "title": "Council Regulation (EU) 2026/1891 of 30 July 2026 amending Regulation (EU) 2023/1529 concerning restrictive measures in view of Iran’s military support to Russia’s war of aggression against Ukraine and to armed groups and entities in the Middle East and the Red Sea region as well as Iran’s actions undermining freedom of navigation in the Middle East",
-   "summary": "EU restrictive measure, Iran, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, freedom of navigation, international sanctions, military intervention, trade restriction",
-   "subjects": [
-    "EU restrictive measure",
-    "Iran",
-    "Russia",
-    "Russo-Ukrainian issue",
-    "Ukraine",
-    "economic sanctions",
-    "freedom of navigation",
-    "international sanctions",
-    "military intervention",
-    "trade restriction"
-   ],
-   "inForce": null,
-   "date": "2026-07-30",
-   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R1891",
-   "budgetEUR": null,
-   "doctype": "REG",
-   "level": "EU",
-   "source": "cache"
-  },
-  {
    "id": "p:32026D1892",
    "kind": "policy",
    "title": "Council Decision (CFSP) 2026/1892 of 30 July 2026 amending Decision (CFSP) 2023/1532 concerning restrictive measures in view of Iran’s military support to Russia’s war of aggression against Ukraine and to armed groups and entities in the Middle East and the Red Sea region as well as Iran’s actions undermining freedom of navigation in the Middle-East",
@@ -353,6 +353,31 @@
    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026D1892",
    "budgetEUR": null,
    "doctype": "DEC",
+   "level": "EU",
+   "source": "cache"
+  },
+  {
+   "id": "p:32026R1891",
+   "kind": "policy",
+   "title": "Council Regulation (EU) 2026/1891 of 30 July 2026 amending Regulation (EU) 2023/1529 concerning restrictive measures in view of Iran’s military support to Russia’s war of aggression against Ukraine and to armed groups and entities in the Middle East and the Red Sea region as well as Iran’s actions undermining freedom of navigation in the Middle East",
+   "summary": "EU restrictive measure, Iran, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, freedom of navigation, international sanctions, military intervention, trade restriction",
+   "subjects": [
+    "EU restrictive measure",
+    "Iran",
+    "Russia",
+    "Russo-Ukrainian issue",
+    "Ukraine",
+    "economic sanctions",
+    "freedom of navigation",
+    "international sanctions",
+    "military intervention",
+    "trade restriction"
+   ],
+   "inForce": null,
+   "date": "2026-07-30",
+   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R1891",
+   "budgetEUR": null,
+   "doctype": "REG",
    "level": "EU",
    "source": "cache"
   },
@@ -599,31 +624,6 @@
    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024D0847R(02)",
    "budgetEUR": null,
    "doctype": "DEC",
-   "level": "EU",
-   "source": "cache"
-  },
-  {
-   "id": "p:32026R1336",
-   "kind": "policy",
-   "title": "Council Regulation (EU) 2026/1336 of 15 June 2026 amending Regulation (EU) No 269/2014 concerning restrictive measures in respect of actions undermining or threatening the territorial integrity, sovereignty and independence of Ukraine",
-   "summary": "EU restrictive measure, Russia, Russo-Ukrainian issue, Ukraine, economic sanctions, freezing of assets, international sanctions, legal person, territorial dispute, trade restriction",
-   "subjects": [
-    "EU restrictive measure",
-    "Russia",
-    "Russo-Ukrainian issue",
-    "Ukraine",
-    "economic sanctions",
-    "freezing of assets",
-    "international sanctions",
-    "legal person",
-    "territorial dispute",
-    "trade restriction"
-   ],
-   "inForce": null,
-   "date": "2026-06-15",
-   "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R1336",
-   "budgetEUR": null,
-   "doctype": "REG",
    "level": "EU",
    "source": "cache"
   },
