@@ -1,0 +1,42 @@
+name: Tag the registered material
+
+# Creates `prereg-v1` at the commit holding the pre-registration, protocol,
+# frozen corpora, query selections and recorded tool output — the commit the
+# OSF registration cites. Pinned to the hash, never to a branch head, and
+# refuses to move a tag that already points elsewhere.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/validation-paper
+    paths:
+      - ".github/workflows/tag-prereg.yml"
+
+permissions:
+  contents: write
+
+env:
+  TAG: prereg-v1
+  COMMIT: "8d023f45439b2b8c19b8956d628b71194ecd5b78"
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: claude/validation-paper
+      - name: Create the tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git cat-file -e "$COMMIT^{commit}"
+          if existing=$(git ls-remote --tags origin "refs/tags/$TAG^{}" | cut -f1) && [ -n "$existing" ]; then
+            test "$existing" = "$COMMIT" && { echo "$TAG already at $COMMIT"; exit 0; }
+            echo "$TAG exists at $existing, not $COMMIT — refusing to move it"; exit 1
+          fi
+          git tag -a "$TAG" "$COMMIT" -m "Material registered on OSF: pre-registration, protocol, frozen corpora, query selections and recorded tool output"
+          git push origin "refs/tags/$TAG"
+          git ls-remote --tags origin "$TAG*"
