@@ -1,0 +1,90 @@
+{
+ "arm": "A2",
+ "exploratory": true,
+ "protocol": "Appendix C.1",
+ "seed": 20131232,
+ "H3_bridge_vs_single": {
+  "n": [
+   41,
+   104
+  ],
+  "spearman_freq_uptake": 0.8082260491122062,
+  "freq_by_class": {
+   "class_1": {
+    "min": 6.0,
+    "median": 82.0,
+    "max": 615.0,
+    "per_tercile": [
+     3,
+     20,
+     18
+    ]
+   },
+   "class_0": {
+    "min": 0.0,
+    "median": 29.5,
+    "max": 404.0,
+    "per_tercile": [
+     45,
+     30,
+     29
+    ]
+   }
+  },
+  "within_tercile_superiority": [
+   0.8740740740740741,
+   0.6583333333333333,
+   0.49808429118773945
+  ],
+  "overlap_in_every_tercile": true,
+  "partial_r": 0.19269203766441073,
+  "p_one_sided": 0.0458954104589541,
+  "ci95": [
+   0.018424072749417007,
+   0.35527912988217863
+  ],
+  "expected_sign": 1
+ },
+ "H4_blind_vs_covered": {
+  "n": [
+   26,
+   16
+  ],
+  "spearman_freq_uptake": 0.7940234936213281,
+  "freq_by_class": {
+   "class_1": {
+    "min": 0.0,
+    "median": 0.0,
+    "max": 13.0,
+    "per_tercile": [
+     14,
+     12,
+     0
+    ]
+   },
+   "class_0": {
+    "min": 16.0,
+    "median": 59.0,
+    "max": 615.0,
+    "per_tercile": [
+     0,
+     2,
+     14
+    ]
+   }
+  },
+  "within_tercile_superiority": [
+   null,
+   0.20833333333333334,
+   null
+  ],
+  "overlap_in_every_tercile": false,
+  "partial_r": 0.07088415855468592,
+  "p_one_sided": 0.38366163383661633,
+  "ci95": [
+   -0.3492538812084651,
+   0.40247759351900997
+  ],
+  "expected_sign": -1
+ }
+}

@@ -889,3 +889,14 @@ codebook terms. This uses input data only.
 code has frequency 0 and every covered code more — the effect cannot be
 separated from frequency with these data. That is reported as the finding,
 and no other model is tried in its place.
+
+**Result (run 2026-11-20, from `d9a141c`; exploratory).**
+`results/exploratory/FREQUENCY_CONTROL.md`:
+- Input frequency alone tracks later uptake strongly: ρ 0.69–0.81.
+- **H3 keeps a modest effect beyond frequency** in both arms. Partial r =
+  0.16 [−0.03, 0.34] in A1 and 0.19 [0.02, 0.36] in A2, one-sided p ≈ 0.04 in
+  each. The advantage is largest among rare terms and fades among common ones.
+- **H4 cannot be separated from frequency.** Covered codes sit almost entirely
+  in the top frequency tercile, and blind spots in the lower two. Partial r is
+  near zero, with wide intervals. As specified, that is reported as the
+  finding, and no other model replaces it.
