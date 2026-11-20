@@ -92,7 +92,43 @@ jobs:
           if sr.ok and sr.json().get("data"):
               blocks = sr.json()["data"][0]["attributes"].get("revision_responses") or {}
               print("\nform responses (first 200 chars each):")
+              # Label each response with the question it answers.
+              labels = {}
+              schema = reg.json()["data"]["relationships"].get("registration_schema", {})
+              href = ((schema.get("links") or {}).get("related") or {}).get("href")
+              if href:
+                  url = href.rstrip("/") + "/schema_blocks/"
+                  current = ""
+                  while url:
+                      j = s.get(url, timeout=60).json()
+                      for b in j.get("data", []):
+                          at = b["attributes"]
+                          if at.get("block_type") == "question-label":
+                              current = at.get("display_text") or ""
+                          key = at.get("registration_response_key")
+                          if key and key not in labels:
+                              labels[key] = (current, at.get("block_type"), at.get("display_text"))
+                      url = (j.get("links") or {}).get("next")
+              print("\nform responses, in full:")
               for k, v in blocks.items():
-                  text = v if isinstance(v, str) else json.dumps(v)
-                  print(f"  {k}: {text[:200]!r}")
+                  q, kind, opt = labels.get(k, ("?", "?", ""))
+                  text = v if isinstance(v, str) else json.dumps(v, ensure_ascii=False)
+                  print(f"\n--- {k} | {q} | {kind}\n{text}")
+
+          # The project it was registered from, and what files that holds.
+          rf = reg.json()["data"]["relationships"].get("registered_from", {})
+          href = ((rf.get("links") or {}).get("related") or {}).get("href")
+          print("\nregistered from:", href)
+          if href:
+              node = s.get(href, timeout=60)
+              print("  project HTTP", node.status_code,
+                    "(403/401 = private project)" if node.status_code in (401, 403) else "")
+              if node.ok:
+                  print("  public:", node.json()["data"]["attributes"].get("public"))
+                  fl = s.get(href.rstrip("/") + "/files/osfstorage/", timeout=60)
+                  for item in fl.json().get("data", []) if fl.ok else []:
+                      at = item["attributes"]
+                      h = ((at.get("extra") or {}).get("hashes") or {}).get("sha256")
+                      print(f"  project file: {at['name']} sha256={h} "
+                            f"{'MATCHES tag' if expected.get(at['name']) == h else ''}")
           PY
