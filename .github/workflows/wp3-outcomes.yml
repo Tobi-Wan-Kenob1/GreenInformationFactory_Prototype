@@ -10,6 +10,14 @@ name: WP3 — retrieve outcomes and run the registered analysis (once)
 
 on:
   workflow_dispatch:
+  # A manual-only workflow cannot be started from a non-default branch
+  # until it has run once, so it starts on the push of this file. The
+  # guard below makes any later trigger a no-op failure.
+  push:
+    branches:
+      - claude/validation-paper
+    paths:
+      - ".github/workflows/wp3-outcomes.yml"
 
 permissions:
   contents: write
