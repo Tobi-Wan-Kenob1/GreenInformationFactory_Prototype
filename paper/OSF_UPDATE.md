@@ -17,7 +17,7 @@ No hypothesis, measure, test or threshold differs. Everything filed matches
 the pre-registration at commit `8d023f4`.
 
 **How to fix it:**
-1. Deposit the files (step A).
+1. Publish the Zenodo deposit I prepared (step A).
 2. Link them under Resources (step B).
 3. Submit an Update (step C).
 
@@ -28,17 +28,22 @@ timestamp, which is the point of registering.
 
 ---
 
-## A — deposit the three files (≈ 5 min)
+## A — publish the Zenodo deposit (≈ 2 min)
 
-1. osf.io → **Create new project**.
-   - Title: `Policy & Grant Finder back-test — registered material (prereg-v1)`
-   - Storage: Germany – Frankfurt.
-2. **Files** → upload the three files sent earlier: `PREREGISTRATION.md`,
-   `PROTOCOL.md` and `prereg-v1-data.zip`.
-3. Make the project **Public**: Settings, or the *Make Public* button.
-4. Project overview → **Create DOI**. Note the DOI.
+The files are already deposited as an **unpublished Zenodo draft**:
+<https://zenodo.org/deposit/24392976>. The DOI is reserved,
+**10.5281/zenodo.24392976**, and becomes live when you publish.
 
-The files' SHA-256s, which the Update below quotes so the deposit can be checked:
+1. Open the link, signed in to Zenodo.
+2. Check **Creators**. It holds *Rosnitschek, Tobias — University of Bayreuth,
+   ORCID 0000-0002-4876-2536*, copied from your most recent deposition. Correct
+   it or add co-authors if needed. A later version can change authors, but the
+   first version's record stays.
+3. Check the rest: title, description, CC-BY 4.0, the EU grant 101181568, and
+   the links to the OSF registration and the GitHub tag.
+4. **Publish.** It is permanent from here.
+
+The three files, as uploaded (Zenodo's MD5s were checked against them):
 
 ```
 78d91753e665319926dbe1434e7bd22f2bca010c4a456dac3c1c1f0d120e8990  PREREGISTRATION.md
@@ -46,10 +51,15 @@ The files' SHA-256s, which the Update below quotes so the deposit can be checked
 876fac9996bd4ebd14437a3b484865a8d27f924236a4df8074f4692c46b253e2  prereg-v1-data.zip
 ```
 
+The two `.md` files rebuild byte-for-byte from the tag. The zip does not:
+`git archive` stamps a sub-folder's files with the time of archiving. Its
+**contents** were checked instead: all 17 files inside are byte-identical to
+`paper/data/` at the tag.
+
 ## B — link it to the registration
 
-Open the registration → **Resources** → **Add resource**. Add it twice with the
-project DOI from A.4:
+Open the registration → **Resources** → **Add resource**. Add it twice with
+DOI `10.5281/zenodo.24392976`:
 - **Data**, with the description `Frozen corpora, query selections and recorded tool output (paper/data at tag prereg-v1)`
 - **Materials**, with the description `Pre-registration document and study protocol at tag prereg-v1`
 
@@ -64,7 +74,7 @@ Corrections made on the day of registration, before any outcome data was retriev
 (1) Foreknowledge: the option first selected certified that the authors had not accessed the data. That was wrong: the CORDIS files containing outcome-window projects had been downloaded and their field completeness inspected. The option is corrected and the explanation, omitted at filing, added.
 (2) Sample size: the field repeated the sample-size rationale; the sample-size text is restored.
 (3) Four fields left empty at filing (causal interpretation, additional blinding, randomization, other planned analysis) are completed from the same document.
-(4) The registration was created without attached files although "Data collection procedures" said the data were attached. The files are deposited in a public OSF project linked under Resources, and their SHA-256 checksums are given in that field so the deposit can be verified.
+(4) The registration was created without attached files although "Data collection procedures" said the data were attached. The files are deposited on Zenodo, doi:10.5281/zenodo.24392976, linked under Resources, and their SHA-256 checksums are given in that field so the deposit can be verified.
 ```
 
 **Foreknowledge of data or evidence** → select:
@@ -100,7 +110,7 @@ No randomisation of units. Permutation and bootstrap procedures use seeds fixed 
 `Archived at paper/data/ in the repository, commit 8d023f45439b2b8c19b8956d628b71194ecd5b78; also attached as prereg-v1-data.zip.`
 with
 ```
-Archived at paper/data/ in the repository, commit 8d023f45439b2b8c19b8956d628b71194ecd5b78 (tag prereg-v1). A copy is deposited in the public OSF project linked under Resources, SHA-256:
+Archived at paper/data/ in the repository, commit 8d023f45439b2b8c19b8956d628b71194ecd5b78 (tag prereg-v1). A copy is deposited on Zenodo, doi:10.5281/zenodo.24392976 (linked under Resources). SHA-256 of the deposited files (the zip's contents, not the zip itself, rebuild byte-for-byte from the tag):
   78d91753e665319926dbe1434e7bd22f2bca010c4a456dac3c1c1f0d120e8990  PREREGISTRATION.md
   58cfa8b6761c53b1bfb6a597aab4ca2507a88b9244efb0eb9127672b3dfd336d  PROTOCOL.md
   876fac9996bd4ebd14437a3b484865a8d27f924236a4df8074f4692c46b253e2  prereg-v1-data.zip
@@ -119,5 +129,5 @@ Tier B case studies (about 10 organisations, stratified by CORDIS activity type 
 Then **Review** → **Submit**. As the only admin you'll be asked to **Accept
 Changes**.
 
-Tell me when it's through. I'll re-run the check, which compares the deposit's
-hashes too, and record the registration as filed.
+Tell me when it's through. I'll re-run the check against both OSF and
+Zenodo, and record the registration as filed.
