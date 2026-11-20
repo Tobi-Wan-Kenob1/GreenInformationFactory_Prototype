@@ -1,0 +1,131 @@
+{
+ "retrieved": "2026-11-20T10:34:12Z",
+ "programmes": [
+  "fp7",
+  "h2020",
+  "horizon"
+ ],
+ "archives": {
+  "fp7": {
+   "url": "https://cordis.europa.eu/data/cordis-fp7projects-csv.zip",
+   "bytes": 32953397,
+   "sha256": "886ee47973584971259db3ab3de76feb4d95c9b13fbe41241b85e5bfc97113a6",
+   "rows": 25022,
+   "ragged": 763,
+   "undated": 109,
+   "duplicate_or_no_id": 0,
+   "usable": 24913,
+   "with_euroscivoc": 22092,
+   "with_organisations": 24913
+  },
+  "h2020": {
+   "url": "https://cordis.europa.eu/data/cordis-h2020projects-csv.zip",
+   "bytes": 55260681,
+   "sha256": "8d4baffe558b7d0a74fc538f6ddf857147aab3895cf8032fb76ca4c5ce7df0fe",
+   "rows": 35103,
+   "ragged": 286,
+   "undated": 12,
+   "duplicate_or_no_id": 0,
+   "usable": 35091,
+   "with_euroscivoc": 31623,
+   "with_organisations": 35091
+  },
+  "horizon": {
+   "url": "https://cordis.europa.eu/data/cordis-HORIZONprojects-csv.zip",
+   "bytes": 38336525,
+   "sha256": "69dc223a80864d0e6a695b3d4344a74da226a93727da564a677edcd3ed5d3f33",
+   "rows": 24217,
+   "ragged": 202,
+   "undated": 0,
+   "duplicate_or_no_id": 0,
+   "usable": 24217,
+   "with_euroscivoc": 19890,
+   "with_organisations": 24217
+  }
+ },
+ "codebook": {
+  "path": "../tool/docs/finder/data/wp1_codebook.json",
+  "sha256": "b4c0d69816593caba9a9d5a87154df777173344ee5bdebbc6f0d221e9d69941b",
+  "codes": 87
+ },
+ "arms": {
+  "A1": {
+   "file": "outcomes-A1.json",
+   "sha256": "0e26aa1740b76faf8a4e2e078716c56fd4fce0c8b0b42d8884d03e3ad9d3eea9",
+   "topics": 162,
+   "codes": 87,
+   "window": {
+    "since": "2010-01-01",
+    "until": "2026-12-31"
+   },
+   "denominator": {
+    "projects": 76949,
+    "ec_eur": 163883423605.3,
+    "projects_missing_ec": 0,
+    "by_programme": {
+     "fp7": 19087,
+     "h2020": 35091,
+     "horizon": 22771
+    }
+   },
+   "acts": {
+    "fetched": true,
+    "acts": 148,
+    "keywords": [
+     "agriculture",
+     "mining",
+     "bioeconomy",
+     "biomass",
+     "soil",
+     "circular economy",
+     "carbon farming",
+     "raw materials",
+     "land use",
+     "just transition"
+    ],
+    "earliest": "2012-12-10",
+    "latest": "2026-11-16"
+   }
+  },
+  "A2": {
+   "file": "outcomes-A2.json",
+   "sha256": "f89e5185dfd2b1ed63d4cc86958342b2312cd7f03528cfebe75719b9a999a91c",
+   "topics": 167,
+   "codes": 87,
+   "window": {
+    "since": "2014-01-01",
+    "until": "2026-12-31"
+   },
+   "denominator": {
+    "projects": 61051,
+    "ec_eur": 135156415568.85,
+    "projects_missing_ec": 0,
+    "by_programme": {
+     "fp7": 3189,
+     "h2020": 35091,
+     "horizon": 22771
+    }
+   },
+   "acts": {
+    "fetched": true,
+    "acts": 150,
+    "keywords": [
+     "agriculture",
+     "mining",
+     "bioeconomy",
+     "biomass",
+     "soil",
+     "circular economy",
+     "carbon farming",
+     "raw materials",
+     "land use",
+     "just transition"
+    ],
+    "earliest": "2014-11-28",
+    "latest": "2026-11-16"
+   }
+  }
+ },
+ "code_commit": "f91baa603efcd96381f1aa8247e27b3e4abbb72b",
+ "tool_commit": "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e"
+}

@@ -1,0 +1,2061 @@
+{
+ "T": "2009-12-31",
+ "acts": {
+  "acts": 148,
+  "earliest": "2012-12-10",
+  "fetched": true,
+  "keywords": [
+   "agriculture",
+   "mining",
+   "bioeconomy",
+   "biomass",
+   "soil",
+   "circular economy",
+   "carbon farming",
+   "raw materials",
+   "land use",
+   "just transition"
+  ],
+  "latest": "2026-11-16",
+  "report": {
+   "dropped_thin": 0,
+   "enriched_text": {
+    "documents": 148,
+    "enriched": 146,
+    "statuses": {
+     "http_404": 1,
+     "no_celex": 1,
+     "ok": 146
+    }
+   },
+   "excluded_routine": true,
+   "min_subjects": 0,
+   "routine_patterns": [
+    "standard import value",
+    "world market price",
+    "export refund",
+    "import duties",
+    "import duty",
+    "representative price",
+    "minimum selling price",
+    "allocation coefficient",
+    "import licence",
+    "export licence",
+    "production levy",
+    "invitation to tender",
+    "corrigendum"
+   ]
+  }
+ },
+ "arm": "A1",
+ "codes": {
+  "barriers:agriculture": {
+   "acts": 22,
+   "ec_eur": 5722127760.66,
+   "organisations": 7833,
+   "projects": 2249,
+   "projects_missing_ec": 0,
+   "share": 0.034915842217461135
+  },
+  "barriers:climate change": {
+   "acts": 2,
+   "ec_eur": 9254857758.53,
+   "organisations": 10298,
+   "projects": 3524,
+   "projects_missing_ec": 0,
+   "share": 0.05647220173298051
+  },
+  "barriers:collection": {
+   "acts": 1,
+   "ec_eur": 5280365583.35,
+   "organisations": 7639,
+   "projects": 2189,
+   "projects_missing_ec": 0,
+   "share": 0.032220254295317476
+  },
+  "barriers:database": {
+   "acts": 7,
+   "ec_eur": 4869259186.6,
+   "organisations": 6987,
+   "projects": 2299,
+   "projects_missing_ec": 0,
+   "share": 0.02971172483147056
+  },
+  "barriers:dataset": {
+   "acts": 0,
+   "ec_eur": 4706150498.37,
+   "organisations": 4827,
+   "projects": 2131,
+   "projects_missing_ec": 0,
+   "share": 0.028716452188016182
+  },
+  "barriers:feedstock": {
+   "acts": 0,
+   "ec_eur": 2769957879.37,
+   "organisations": 3143,
+   "projects": 686,
+   "projects_missing_ec": 0,
+   "share": 0.01690200154740006
+  },
+  "barriers:few studies": {
+   "acts": 0,
+   "ec_eur": 52698935.18,
+   "organisations": 147,
+   "projects": 99,
+   "projects_missing_ec": 0,
+   "share": 0.0003215635481653174
+  },
+  "barriers:funding": {
+   "acts": 1,
+   "ec_eur": 8834927839.18,
+   "organisations": 8770,
+   "projects": 2512,
+   "projects_missing_ec": 0,
+   "share": 0.05390983203071356
+  },
+  "barriers:infrastructure": {
+   "acts": 0,
+   "ec_eur": 23111521346.3,
+   "organisations": 19836,
+   "projects": 5703,
+   "projects_missing_ec": 0,
+   "share": 0.14102415508454494
+  },
+  "barriers:investment": {
+   "acts": 0,
+   "ec_eur": 9064411743.86,
+   "organisations": 11841,
+   "projects": 2995,
+   "projects_missing_ec": 0,
+   "share": 0.055310119501108944
+  },
+  "barriers:land": {
+   "acts": 1,
+   "ec_eur": 11505084578.25,
+   "organisations": 12241,
+   "projects": 4589,
+   "projects_missing_ec": 0,
+   "share": 0.07020285715997164
+  },
+  "barriers:land use": {
+   "acts": 1,
+   "ec_eur": 1067520968.62,
+   "organisations": 2048,
+   "projects": 357,
+   "projects_missing_ec": 0,
+   "share": 0.006513904488540819
+  },
+  "barriers:land use conflict": {
+   "acts": 0,
+   "ec_eur": 5701836.95,
+   "organisations": 24,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 3.4792029752395305e-05
+  },
+  "barriers:landfills": {
+   "acts": 0,
+   "ec_eur": 739142317.67,
+   "organisations": 1521,
+   "projects": 277,
+   "projects_missing_ec": 0,
+   "share": 0.004510171324283318
+  },
+  "barriers:landform": {
+   "acts": 0,
+   "ec_eur": 10996785.66,
+   "organisations": 18,
+   "projects": 17,
+   "projects_missing_ec": 0,
+   "share": 6.710126880486016e-05
+  },
+  "barriers:landsat": {
+   "acts": 0,
+   "ec_eur": 14056238.54,
+   "organisations": 35,
+   "projects": 10,
+   "projects_missing_ec": 0,
+   "share": 8.576973943291126e-05
+  },
+  "barriers:landscape": {
+   "acts": 0,
+   "ec_eur": 5484500456.04,
+   "organisations": 6256,
+   "projects": 2224,
+   "projects_missing_ec": 0,
+   "share": 0.03346586454801541
+  },
+  "barriers:landslides": {
+   "acts": 0,
+   "ec_eur": 196982313.07,
+   "organisations": 495,
+   "projects": 109,
+   "projects_missing_ec": 0,
+   "share": 0.0012019660606091317
+  },
+  "barriers:logistics": {
+   "acts": 0,
+   "ec_eur": 2958789476.75,
+   "organisations": 4829,
+   "projects": 675,
+   "projects_missing_ec": 0,
+   "share": 0.018054232768995634
+  },
+  "barriers:loss of biodiversity": {
+   "acts": 0,
+   "ec_eur": 123412866.74,
+   "organisations": 395,
+   "projects": 54,
+   "projects_missing_ec": 0,
+   "share": 0.0007530527738865764
+  },
+  "barriers:regulation": {
+   "acts": 46,
+   "ec_eur": 8414866524.72,
+   "organisations": 9584,
+   "projects": 4501,
+   "projects_missing_ec": 0,
+   "share": 0.05134666056883537
+  },
+  "barriers:seasonality": {
+   "acts": 0,
+   "ec_eur": 65855852.15,
+   "organisations": 191,
+   "projects": 43,
+   "projects_missing_ec": 0,
+   "share": 0.00040184571875071705
+  },
+  "barriers:standard": {
+   "acts": 2,
+   "ec_eur": 23169082589.23,
+   "organisations": 22347,
+   "projects": 7725,
+   "projects_missing_ec": 0,
+   "share": 0.14137538794058188
+  },
+  "barriers:standardization": {
+   "acts": 0,
+   "ec_eur": 2651997632.04,
+   "organisations": 4537,
+   "projects": 636,
+   "projects_missing_ec": 0,
+   "share": 0.016182220103157733
+  },
+  "barriers:storage": {
+   "acts": 2,
+   "ec_eur": 8816031704.4,
+   "organisations": 9666,
+   "projects": 3071,
+   "projects_missing_ec": 0,
+   "share": 0.053794529736166004
+  },
+  "barriers:transport": {
+   "acts": 2,
+   "ec_eur": 14333757959.99,
+   "organisations": 14188,
+   "projects": 5738,
+   "projects_missing_ec": 0,
+   "share": 0.08746313473723676
+  },
+  "barriers:transportation": {
+   "acts": 0,
+   "ec_eur": 3201743199.36,
+   "organisations": 4944,
+   "projects": 1138,
+   "projects_missing_ec": 0,
+   "share": 0.019536711699843057
+  },
+  "barriers:urbanisation": {
+   "acts": 0,
+   "ec_eur": 256525261.49,
+   "organisations": 671,
+   "projects": 116,
+   "projects_missing_ec": 0,
+   "share": 0.0015652910822013361
+  },
+  "barriers:water": {
+   "acts": 1,
+   "ec_eur": 11651665266.62,
+   "organisations": 13314,
+   "projects": 5109,
+   "projects_missing_ec": 0,
+   "share": 0.0710972776275537
+  },
+  "barriers:waterbodies": {
+   "acts": 0,
+   "ec_eur": 50000.0,
+   "organisations": 1,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 3.0509491991344387e-07
+  },
+  "barriers:watercourse": {
+   "acts": 0,
+   "ec_eur": 4290731.43,
+   "organisations": 13,
+   "projects": 11,
+   "projects_missing_ec": 0,
+   "share": 2.6181607240118935e-05
+  },
+  "barriers:watershed": {
+   "acts": 0,
+   "ec_eur": 65872185.0,
+   "organisations": 185,
+   "projects": 46,
+   "projects_missing_ec": 0,
+   "share": 0.0004019453801419712
+  },
+  "bio:anaerobic digestion": {
+   "acts": 0,
+   "ec_eur": 231576262.31,
+   "organisations": 634,
+   "projects": 105,
+   "projects_missing_ec": 0,
+   "share": 0.0014130548240664825
+  },
+  "bio:biochar": {
+   "acts": 0,
+   "ec_eur": 276090733.43,
+   "organisations": 610,
+   "projects": 68,
+   "projects_missing_ec": 0,
+   "share": 0.0016846776040933967
+  },
+  "bio:bioenergy": {
+   "acts": 0,
+   "ec_eur": 346417072.53,
+   "organisations": 901,
+   "projects": 146,
+   "projects_missing_ec": 0,
+   "share": 0.0021138017800038005
+  },
+  "bio:bioethanol": {
+   "acts": 0,
+   "ec_eur": 285312372.73,
+   "organisations": 367,
+   "projects": 51,
+   "projects_missing_ec": 0,
+   "share": 0.0017409471101674802
+  },
+  "bio:biogas": {
+   "acts": 0,
+   "ec_eur": 704202195.11,
+   "organisations": 1267,
+   "projects": 231,
+   "projects_missing_ec": 0,
+   "share": 0.004296970246399137
+  },
+  "bio:biomethane": {
+   "acts": 0,
+   "ec_eur": 160300205.75,
+   "organisations": 361,
+   "projects": 56,
+   "projects_missing_ec": 0,
+   "share": 0.0009781355687080967
+  },
+  "bio:biorefinery": {
+   "acts": 0,
+   "ec_eur": 1097496379.41,
+   "organisations": 1482,
+   "projects": 194,
+   "projects_missing_ec": 0,
+   "share": 0.006696811399627772
+  },
+  "bio:composting": {
+   "acts": 0,
+   "ec_eur": 124795154.14,
+   "organisations": 423,
+   "projects": 43,
+   "projects_missing_ec": 0,
+   "share": 0.0007614873511585837
+  },
+  "bio:digestate": {
+   "acts": 0,
+   "ec_eur": 95519216.9,
+   "organisations": 241,
+   "projects": 37,
+   "projects_missing_ec": 0,
+   "share": 0.0005828485566060076
+  },
+  "bio:lignocellulosic": {
+   "acts": 0,
+   "ec_eur": 491175291.01,
+   "organisations": 704,
+   "projects": 117,
+   "projects_missing_ec": 0,
+   "share": 0.002997101721483169
+  },
+  "bio:pyrolysis": {
+   "acts": 0,
+   "ec_eur": 418340688.93,
+   "organisations": 706,
+   "projects": 126,
+   "projects_missing_ec": 0,
+   "share": 0.002552672379712666
+  },
+  "ce:recyclable": {
+   "acts": 0,
+   "ec_eur": 934795500.57,
+   "organisations": 1638,
+   "projects": 305,
+   "projects_missing_ec": 0,
+   "share": 0.0057040271676370375
+  },
+  "ce:recycling": {
+   "acts": 4,
+   "ec_eur": 4394162111.74,
+   "organisations": 6166,
+   "projects": 1292,
+   "projects_missing_ec": 0,
+   "share": 0.026812730751360096
+  },
+  "ce:reuse": {
+   "acts": 0,
+   "ec_eur": 2954465104.06,
+   "organisations": 5318,
+   "projects": 788,
+   "projects_missing_ec": 0,
+   "share": 0.018027845886205006
+  },
+  "ce:waste management": {
+   "acts": 0,
+   "ec_eur": 1067236502.6,
+   "organisations": 2306,
+   "projects": 368,
+   "projects_missing_ec": 0,
+   "share": 0.006512168705789019
+  },
+  "drivers:behaviours": {
+   "acts": 0,
+   "ec_eur": 1424403826.24,
+   "organisations": 2215,
+   "projects": 712,
+   "projects_missing_ec": 0,
+   "share": 0.008691567425821917
+  },
+  "drivers:collaboration": {
+   "acts": 0,
+   "ec_eur": 18288110808.2,
+   "organisations": 19051,
+   "projects": 6973,
+   "projects_missing_ec": 0,
+   "share": 0.11159219404791934
+  },
+  "drivers:demand": {
+   "acts": 0,
+   "ec_eur": 16510722275.27,
+   "organisations": 18445,
+   "projects": 6348,
+   "projects_missing_ec": 0,
+   "share": 0.1007467498057323
+  },
+  "drivers:efficiency": {
+   "acts": 1,
+   "ec_eur": 21292666184.79,
+   "organisations": 20653,
+   "projects": 7730,
+   "projects_missing_ec": 0,
+   "share": 0.12992568568784402
+  },
+  "drivers:funding": {
+   "acts": 1,
+   "ec_eur": 8834927839.18,
+   "organisations": 8770,
+   "projects": 2512,
+   "projects_missing_ec": 0,
+   "share": 0.05390983203071356
+  },
+  "drivers:funds": {
+   "acts": 3,
+   "ec_eur": 1342339225.23,
+   "organisations": 1872,
+   "projects": 445,
+   "projects_missing_ec": 0,
+   "share": 0.008190817568364423
+  },
+  "drivers:incentives": {
+   "acts": 0,
+   "ec_eur": 1301099409.14,
+   "organisations": 2807,
+   "projects": 491,
+   "projects_missing_ec": 0,
+   "share": 0.00793917640061995
+  },
+  "drivers:innovations": {
+   "acts": 0,
+   "ec_eur": 10567586274.44,
+   "organisations": 13363,
+   "projects": 2638,
+   "projects_missing_ec": 0,
+   "share": 0.06448233776157361
+  },
+  "drivers:investment": {
+   "acts": 0,
+   "ec_eur": 9064411743.86,
+   "organisations": 11841,
+   "projects": 2995,
+   "projects_missing_ec": 0,
+   "share": 0.055310119501108944
+  },
+  "drivers:lca": {
+   "acts": 0,
+   "ec_eur": 1921022066.11,
+   "organisations": 3244,
+   "projects": 376,
+   "projects_missing_ec": 0,
+   "share": 0.011721881468235778
+  },
+  "drivers:machine learning": {
+   "acts": 0,
+   "ec_eur": 5804689271.04,
+   "organisations": 6448,
+   "projects": 2615,
+   "projects_missing_ec": 0,
+   "share": 0.03541962416540752
+  },
+  "drivers:monitoring": {
+   "acts": 3,
+   "ec_eur": 17006900526.04,
+   "organisations": 18614,
+   "projects": 5774,
+   "projects_missing_ec": 0,
+   "share": 0.10377437907936161
+  },
+  "drivers:partnership": {
+   "acts": 0,
+   "ec_eur": 10759034449.54,
+   "organisations": 11184,
+   "projects": 2328,
+   "projects_missing_ec": 0,
+   "share": 0.0656505350745678
+  },
+  "drivers:regulations": {
+   "acts": 46,
+   "ec_eur": 8414866524.72,
+   "organisations": 9584,
+   "projects": 4501,
+   "projects_missing_ec": 0,
+   "share": 0.05134666056883537
+  },
+  "drivers:revegetation": {
+   "acts": 0,
+   "ec_eur": 100000.0,
+   "organisations": 1,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 6.101898398268877e-07
+  },
+  "drivers:risk assessment": {
+   "acts": 0,
+   "ec_eur": 2964120820.25,
+   "organisations": 4398,
+   "projects": 779,
+   "projects_missing_ec": 0,
+   "share": 0.018086764085358906
+  },
+  "drivers:satellite data": {
+   "acts": 0,
+   "ec_eur": 348317888.11,
+   "organisations": 717,
+   "projects": 158,
+   "projects_missing_ec": 0,
+   "share": 0.002125400363546807
+  },
+  "drivers:spatial analysis": {
+   "acts": 0,
+   "ec_eur": 92066586.58,
+   "organisations": 191,
+   "projects": 78,
+   "projects_missing_ec": 0,
+   "share": 0.000561780957186585
+  },
+  "drivers:technology": {
+   "acts": 1,
+   "ec_eur": 49689844008.35,
+   "organisations": 35653,
+   "projects": 19156,
+   "projects_missing_ec": 0,
+   "share": 0.30320237956478124
+  },
+  "stakeholders:agency": {
+   "acts": 6,
+   "ec_eur": 1686213417.63,
+   "organisations": 2858,
+   "projects": 853,
+   "projects_missing_ec": 0,
+   "share": 0.010289102952175989
+  },
+  "stakeholders:bank": {
+   "acts": 0,
+   "ec_eur": 1352756400.72,
+   "organisations": 2694,
+   "projects": 644,
+   "projects_missing_ec": 0,
+   "share": 0.00825438211480134
+  },
+  "stakeholders:communities": {
+   "acts": 0,
+   "ec_eur": 11857820788.36,
+   "organisations": 13177,
+   "projects": 3991,
+   "projects_missing_ec": 0,
+   "share": 0.07235521767545329
+  },
+  "stakeholders:consumers": {
+   "acts": 4,
+   "ec_eur": 6417736614.63,
+   "organisations": 10393,
+   "projects": 2373,
+   "projects_missing_ec": 0,
+   "share": 0.039160376769322325
+  },
+  "stakeholders:farmers": {
+   "acts": 1,
+   "ec_eur": 2918290739.34,
+   "organisations": 4607,
+   "projects": 873,
+   "projects_missing_ec": 0,
+   "share": 0.017807113588061647
+  },
+  "stakeholders:government": {
+   "acts": 2,
+   "ec_eur": 4520335183.62,
+   "organisations": 7318,
+   "projects": 2006,
+   "projects_missing_ec": 0,
+   "share": 0.02758262601656933
+  },
+  "stakeholders:local communities": {
+   "acts": 0,
+   "ec_eur": 1026625098.37,
+   "organisations": 2495,
+   "projects": 327,
+   "projects_missing_ec": 0,
+   "share": 0.0062643620433665325
+  },
+  "stakeholders:manufacturer": {
+   "acts": 0,
+   "ec_eur": 5096226797.39,
+   "organisations": 7324,
+   "projects": 1652,
+   "projects_missing_ec": 0,
+   "share": 0.031096658132208976
+  },
+  "stakeholders:municipalities": {
+   "acts": 0,
+   "ec_eur": 938718363.48,
+   "organisations": 2503,
+   "projects": 310,
+   "projects_missing_ec": 0,
+   "share": 0.005727964078544194
+  },
+  "stakeholders:municipality": {
+   "acts": 0,
+   "ec_eur": 214865982.21,
+   "organisations": 558,
+   "projects": 63,
+   "projects_missing_ec": 0,
+   "share": 0.0013110903926896683
+  },
+  "stakeholders:policymakers": {
+   "acts": 0,
+   "ec_eur": 8002716752.0,
+   "organisations": 10945,
+   "projects": 2686,
+   "projects_missing_ec": 0,
+   "share": 0.04883176453082832
+  },
+  "stakeholders:producers": {
+   "acts": 0,
+   "ec_eur": 2406279214.94,
+   "organisations": 5001,
+   "projects": 976,
+   "projects_missing_ec": 0,
+   "share": 0.01468287128743008
+  },
+  "stakeholders:regulatory": {
+   "acts": 0,
+   "ec_eur": 10458674075.74,
+   "organisations": 11071,
+   "projects": 3501,
+   "projects_missing_ec": 0,
+   "share": 0.06381776659077414
+  },
+  "stakeholders:retailer": {
+   "acts": 0,
+   "ec_eur": 566782935.25,
+   "organisations": 1450,
+   "projects": 239,
+   "projects_missing_ec": 0,
+   "share": 0.003458451884768108
+  },
+  "stakeholders:scholars": {
+   "acts": 0,
+   "ec_eur": 1501674226.18,
+   "organisations": 1425,
+   "projects": 1327,
+   "projects_missing_ec": 0,
+   "share": 0.009163063555449399
+  },
+  "stakeholders:suppliers": {
+   "acts": 0,
+   "ec_eur": 2841608927.73,
+   "organisations": 4542,
+   "projects": 655,
+   "projects_missing_ec": 0,
+   "share": 0.01733920896462223
+  },
+  "stakeholders:university": {
+   "acts": 0,
+   "ec_eur": 5326892176.2,
+   "organisations": 6829,
+   "projects": 5130,
+   "projects_missing_ec": 0,
+   "share": 0.032504154837705794
+  },
+  "stakeholders:urban planners": {
+   "acts": 0,
+   "ec_eur": 135330190.35,
+   "organisations": 373,
+   "projects": 32,
+   "projects_missing_ec": 0,
+   "share": 0.0008257710717340873
+  },
+  "stakeholders:user": {
+   "acts": 0,
+   "ec_eur": 26789455543.4,
+   "organisations": 26433,
+   "projects": 8371,
+   "projects_missing_ec": 0,
+   "share": 0.1634665358707678
+  },
+  "stakeholders:utility": {
+   "acts": 0,
+   "ec_eur": 1947713093.96,
+   "organisations": 2828,
+   "projects": 655,
+   "projects_missing_ec": 0,
+   "share": 0.011884747408321844
+  },
+  "stakeholders:workers": {
+   "acts": 0,
+   "ec_eur": 2215495912.11,
+   "organisations": 3428,
+   "projects": 857,
+   "projects_missing_ec": 0,
+   "share": 0.013518730957475257
+  }
+ },
+ "denominator": {
+  "by_programme": {
+   "fp7": 19087,
+   "h2020": 35091,
+   "horizon": 22771
+  },
+  "ec_eur": 163883423605.3,
+  "projects": 76949,
+  "projects_missing_ec": 0
+ },
+ "topics": {
+  "accountancy data": {
+   "acts": 0,
+   "ec_eur": 4851872.28,
+   "organisations": 16,
+   "projects": 4,
+   "projects_missing_ec": 0,
+   "share": 2.960563169393717e-05
+  },
+  "addresses": {
+   "acts": 0,
+   "ec_eur": 10643878052.43,
+   "organisations": 12134,
+   "projects": 3845,
+   "projects_missing_ec": 0,
+   "share": 0.06494786243949188
+  },
+  "agency private": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "agreement": {
+   "acts": 14,
+   "ec_eur": 3896397929.24,
+   "organisations": 4036,
+   "projects": 925,
+   "projects_missing_ec": 0,
+   "share": 0.023775424283447727
+  },
+  "agricultural": {
+   "acts": 11,
+   "ec_eur": 3507652554.98,
+   "organisations": 5447,
+   "projects": 1546,
+   "projects_missing_ec": 0,
+   "share": 0.0214033395069162
+  },
+  "agricultural holdings": {
+   "acts": 0,
+   "ec_eur": 2576589.03,
+   "organisations": 1,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 1.572208447515416e-05
+  },
+  "agriculture": {
+   "acts": 22,
+   "ec_eur": 5722127760.66,
+   "organisations": 7833,
+   "projects": 2249,
+   "projects_missing_ec": 0,
+   "share": 0.034915842217461135
+  },
+  "agriculture animal": {
+   "acts": 0,
+   "ec_eur": 111174377.01,
+   "organisations": 379,
+   "projects": 44,
+   "projects_missing_ec": 0,
+   "share": 0.0006783747530058594
+  },
+  "agriculture research": {
+   "acts": 0,
+   "ec_eur": 7883018.2,
+   "organisations": 49,
+   "projects": 7,
+   "projects_missing_ec": 0,
+   "share": 4.810137612810442e-05
+  },
+  "aid referred": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "aid system": {
+   "acts": 0,
+   "ec_eur": 6509170.85,
+   "organisations": 28,
+   "projects": 7,
+   "projects_missing_ec": 0,
+   "share": 3.971829918367347e-05
+  },
+  "aims": {
+   "acts": 0,
+   "ec_eur": 43341112488.23,
+   "organisations": 33657,
+   "projects": 19531,
+   "projects_missing_ec": 0,
+   "share": 0.2644630648711219
+  },
+  "america": {
+   "acts": 1,
+   "ec_eur": 1883332455.29,
+   "organisations": 3701,
+   "projects": 1209,
+   "projects_missing_ec": 0,
+   "share": 0.011491903292341843
+  },
+  "animal husbandry": {
+   "acts": 0,
+   "ec_eur": 714692202.39,
+   "organisations": 1554,
+   "projects": 353,
+   "projects_missing_ec": 0,
+   "share": 0.004360979205018797
+  },
+  "application": {
+   "acts": 12,
+   "ec_eur": 40718672704.9,
+   "organisations": 29673,
+   "projects": 18641,
+   "projects_missing_ec": 0,
+   "share": 0.248461203757664
+  },
+  "area": {
+   "acts": 2,
+   "ec_eur": 28586211629.6,
+   "organisations": 25211,
+   "projects": 12048,
+   "projects_missing_ec": 0,
+   "share": 0.1744301589552314
+  },
+  "areas": {
+   "acts": 0,
+   "ec_eur": 18538816668.77,
+   "organisations": 19487,
+   "projects": 7352,
+   "projects_missing_ec": 0,
+   "share": 0.11312197573696804
+  },
+  "assessment": {
+   "acts": 1,
+   "ec_eur": 19185672121.8,
+   "organisations": 20062,
+   "projects": 6221,
+   "projects_missing_ec": 0,
+   "share": 0.11706902198972328
+  },
+  "assessment soil": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "basins ecosystems": {
+   "acts": 0,
+   "ec_eur": 22765875.24,
+   "organisations": 79,
+   "projects": 4,
+   "projects_missing_ec": 0,
+   "share": 0.0001389150576621451
+  },
+  "biodiversity": {
+   "acts": 1,
+   "ec_eur": 4613326258.86,
+   "organisations": 5523,
+   "projects": 1604,
+   "projects_missing_ec": 0,
+   "share": 0.028150048109629587
+  },
+  "biofuels": {
+   "acts": 0,
+   "ec_eur": 1059772824.57,
+   "organisations": 1609,
+   "projects": 371,
+   "projects_missing_ec": 0,
+   "share": 0.006466626100772568
+  },
+  "biomass": {
+   "acts": 0,
+   "ec_eur": 3302015477.58,
+   "organisations": 4402,
+   "projects": 1100,
+   "projects_missing_ec": 0,
+   "share": 0.020148562953704444
+  },
+  "bureaucracy drainage": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "business operation": {
+   "acts": 0,
+   "ec_eur": 68448733.19,
+   "organisations": 244,
+   "projects": 29,
+   "projects_missing_ec": 0,
+   "share": 0.00041766721541559474
+  },
+  "butter butter": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "butter intervention": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "carbon": {
+   "acts": 1,
+   "ec_eur": 10101481684.66,
+   "organisations": 10500,
+   "projects": 4304,
+   "projects_missing_ec": 0,
+   "share": 0.06163821491176926
+  },
+  "certification": {
+   "acts": 1,
+   "ec_eur": 3196866331.8,
+   "organisations": 4803,
+   "projects": 858,
+   "projects_missing_ec": 0,
+   "share": 0.019506953549490124
+  },
+  "change": {
+   "acts": 2,
+   "ec_eur": 31202225563.54,
+   "organisations": 24698,
+   "projects": 14861,
+   "projects_missing_ec": 0,
+   "share": 0.19039281018858897
+  },
+  "changes": {
+   "acts": 0,
+   "ec_eur": 15621921657.66,
+   "organisations": 13634,
+   "projects": 8319,
+   "projects_missing_ec": 0,
+   "share": 0.09532337874075744
+  },
+  "characterisation soils": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "climate": {
+   "acts": 2,
+   "ec_eur": 18188526946.23,
+   "organisations": 16896,
+   "projects": 6185,
+   "projects_missing_ec": 0,
+   "share": 0.11098454344007117
+  },
+  "climatic": {
+   "acts": 0,
+   "ec_eur": 9619336260.23,
+   "organisations": 11732,
+   "projects": 3654,
+   "projects_missing_ec": 0,
+   "share": 0.05869621251870717
+  },
+  "climatic changes": {
+   "acts": 0,
+   "ec_eur": 5887526515.52,
+   "organisations": 7436,
+   "projects": 2328,
+   "projects_missing_ec": 0,
+   "share": 0.03592508861481704
+  },
+  "collection": {
+   "acts": 1,
+   "ec_eur": 5280365583.35,
+   "organisations": 7639,
+   "projects": 2189,
+   "projects_missing_ec": 0,
+   "share": 0.032220254295317476
+  },
+  "collection accountancy": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "commerce": {
+   "acts": 0,
+   "ec_eur": 870204907.16,
+   "organisations": 2331,
+   "projects": 594,
+   "projects_missing_ec": 0,
+   "share": 0.005309901929165322
+  },
+  "common": {
+   "acts": 6,
+   "ec_eur": 15202502252.26,
+   "organisations": 15582,
+   "projects": 6647,
+   "projects_missing_ec": 0,
+   "share": 0.0927641241427443
+  },
+  "common organisation": {
+   "acts": 1,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "communities": {
+   "acts": 0,
+   "ec_eur": 11857820788.36,
+   "organisations": 13177,
+   "projects": 3991,
+   "projects_missing_ec": 0,
+   "share": 0.07235521767545329
+  },
+  "community": {
+   "acts": 11,
+   "ec_eur": 18135151042.31,
+   "organisations": 16711,
+   "projects": 6199,
+   "projects_missing_ec": 0,
+   "share": 0.11065884909743556
+  },
+  "community position": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "contam databases": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "control": {
+   "acts": 9,
+   "ec_eur": 32292023745.25,
+   "organisations": 22150,
+   "projects": 15206,
+   "projects_missing_ec": 0,
+   "share": 0.19704264796800156
+  },
+  "coordination": {
+   "acts": 2,
+   "ec_eur": 6463348277.56,
+   "organisations": 8556,
+   "projects": 1943,
+   "projects_missing_ec": 0,
+   "share": 0.039438694502297277
+  },
+  "coordination energy-efficiency": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "countries": {
+   "acts": 1,
+   "ec_eur": 22625925670.78,
+   "organisations": 24411,
+   "projects": 7076,
+   "projects_missing_ec": 0,
+   "share": 0.13806109960988316
+  },
+  "crop domestication": {
+   "acts": 0,
+   "ec_eur": 17038075.81,
+   "organisations": 32,
+   "projects": 11,
+   "projects_missing_ec": 0,
+   "share": 0.0001039646074946227
+  },
+  "currently": {
+   "acts": 0,
+   "ec_eur": 13618888905.6,
+   "organisations": 14310,
+   "projects": 7674,
+   "projects_missing_ec": 0,
+   "share": 0.08310107639928244
+  },
+  "currently exist": {
+   "acts": 0,
+   "ec_eur": 245322050.09,
+   "organisations": 520,
+   "projects": 132,
+   "projects_missing_ec": 0,
+   "share": 0.0014969302245042085
+  },
+  "data": {
+   "acts": 9,
+   "ec_eur": 54612108423.74,
+   "organisations": 33984,
+   "projects": 22020,
+   "projects_missing_ec": 0,
+   "share": 0.3332375369169054
+  },
+  "data mining": {
+   "acts": 0,
+   "ec_eur": 811646941.27,
+   "organisations": 1630,
+   "projects": 291,
+   "projects_missing_ec": 0,
+   "share": 0.004952587170895247
+  },
+  "data network": {
+   "acts": 0,
+   "ec_eur": 531082848.73,
+   "organisations": 670,
+   "projects": 82,
+   "projects_missing_ec": 0,
+   "share": 0.0032406135840136597
+  },
+  "databases": {
+   "acts": 0,
+   "ec_eur": 4145565681.68,
+   "organisations": 6175,
+   "projects": 1940,
+   "projects_missing_ec": 0,
+   "share": 0.02529582059296162
+  },
+  "databases bureaucracy": {
+   "acts": 0,
+   "ec_eur": 3696569.0,
+   "organisations": 18,
+   "projects": 2,
+   "projects_missing_ec": 0,
+   "share": 2.2556088460190388e-05
+  },
+  "databases data": {
+   "acts": 0,
+   "ec_eur": 85762704.17,
+   "organisations": 227,
+   "projects": 33,
+   "projects_missing_ec": 0,
+   "share": 0.0005233153072061307
+  },
+  "dataset crop": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "declining organic": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "demand": {
+   "acts": 0,
+   "ec_eur": 16510722275.27,
+   "organisations": 18445,
+   "projects": 6348,
+   "projects_missing_ec": 0,
+   "share": 0.1007467498057323
+  },
+  "demands": {
+   "acts": 0,
+   "ec_eur": 4152184520.91,
+   "organisations": 6051,
+   "projects": 1467,
+   "projects_missing_ec": 0,
+   "share": 0.025336208077457557
+  },
+  "detailed": {
+   "acts": 0,
+   "ec_eur": 5910098714.23,
+   "organisations": 6326,
+   "projects": 3095,
+   "projects_missing_ec": 0,
+   "share": 0.03606282187797099
+  },
+  "determining": {
+   "acts": 23,
+   "ec_eur": 1494350930.56,
+   "organisations": 1796,
+   "projects": 1101,
+   "projects_missing_ec": 0,
+   "share": 0.00911837754963567
+  },
+  "develop": {
+   "acts": 2,
+   "ec_eur": 120041933893.54,
+   "organisations": 64155,
+   "projects": 53314,
+   "projects_missing_ec": 0,
+   "share": 0.7324836841500902
+  },
+  "development": {
+   "acts": 2,
+   "ec_eur": 67322726298.18,
+   "organisations": 44026,
+   "projects": 29588,
+   "projects_missing_ec": 0,
+   "share": 0.4107964357659586
+  },
+  "digital": {
+   "acts": 0,
+   "ec_eur": 22169737530.4,
+   "organisations": 22071,
+   "projects": 6214,
+   "projects_missing_ec": 0,
+   "share": 0.1352774859267892
+  },
+  "drainage basins": {
+   "acts": 0,
+   "ec_eur": 207334595.58,
+   "organisations": 686,
+   "projects": 89,
+   "projects_missing_ec": 0,
+   "share": 0.0012651346366753277
+  },
+  "ecosystem": {
+   "acts": 0,
+   "ec_eur": 19921749284.62,
+   "organisations": 18674,
+   "projects": 5186,
+   "projects_missing_ec": 0,
+   "share": 0.12156049005053693
+  },
+  "ecosystems": {
+   "acts": 0,
+   "ec_eur": 10206447364.24,
+   "organisations": 11694,
+   "projects": 3311,
+   "projects_missing_ec": 0,
+   "share": 0.06227870482387166
+  },
+  "eec": {
+   "acts": 1,
+   "ec_eur": 150441318.18,
+   "organisations": 367,
+   "projects": 44,
+   "projects_missing_ec": 0,
+   "share": 0.0009179776384360006
+  },
+  "efficiency": {
+   "acts": 1,
+   "ec_eur": 21292666184.79,
+   "organisations": 20653,
+   "projects": 7730,
+   "projects_missing_ec": 0,
+   "share": 0.12992568568784402
+  },
+  "energy": {
+   "acts": 5,
+   "ec_eur": 39502263094.35,
+   "organisations": 28714,
+   "projects": 14460,
+   "projects_missing_ec": 0,
+   "share": 0.24103879590341007
+  },
+  "energy consumption": {
+   "acts": 0,
+   "ec_eur": 3098891391.75,
+   "organisations": 5210,
+   "projects": 1333,
+   "projects_missing_ec": 0,
+   "share": 0.018909120419728538
+  },
+  "energy-efficiency labelling": {
+   "acts": 1,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "environmental": {
+   "acts": 6,
+   "ec_eur": 28081305910.71,
+   "organisations": 26012,
+   "projects": 10670,
+   "projects_missing_ec": 0,
+   "share": 0.17134927555785973
+  },
+  "fallow": {
+   "acts": 0,
+   "ec_eur": 4168169.79,
+   "organisations": 21,
+   "projects": 3,
+   "projects_missing_ec": 0,
+   "share": 2.5433748565313724e-05
+  },
+  "fallow land": {
+   "acts": 0,
+   "ec_eur": 3941418.75,
+   "organisations": 20,
+   "projects": 2,
+   "projects_missing_ec": 0,
+   "share": 2.4050136757531923e-05
+  },
+  "farm accountancy": {
+   "acts": 0,
+   "ec_eur": 4851872.28,
+   "organisations": 16,
+   "projects": 4,
+   "projects_missing_ec": 0,
+   "share": 2.960563169393717e-05
+  },
+  "february determining": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "food": {
+   "acts": 8,
+   "ec_eur": 10058039106.55,
+   "organisations": 12341,
+   "projects": 4203,
+   "projects_missing_ec": 0,
+   "share": 0.061373132713983175
+  },
+  "fuel": {
+   "acts": 0,
+   "ec_eur": 10553565630.97,
+   "organisations": 9412,
+   "projects": 3522,
+   "projects_missing_ec": 0,
+   "share": 0.06439678521964132
+  },
+  "fuels": {
+   "acts": 0,
+   "ec_eur": 6468971794.54,
+   "organisations": 6303,
+   "projects": 2234,
+   "projects_missing_ec": 0,
+   "share": 0.03947300863155018
+  },
+  "government": {
+   "acts": 2,
+   "ec_eur": 4520335183.62,
+   "organisations": 7318,
+   "projects": 2006,
+   "projects_missing_ec": 0,
+   "share": 0.02758262601656933
+  },
+  "growing": {
+   "acts": 0,
+   "ec_eur": 8840377886.58,
+   "organisations": 11631,
+   "projects": 4984,
+   "projects_missing_ec": 0,
+   "share": 0.05394308766621411
+  },
+  "growth": {
+   "acts": 0,
+   "ec_eur": 11687701500.71,
+   "organisations": 13655,
+   "projects": 6572,
+   "projects_missing_ec": 0,
+   "share": 0.07131716706662711
+  },
+  "health": {
+   "acts": 6,
+   "ec_eur": 32871526158.18,
+   "organisations": 24821,
+   "projects": 12352,
+   "projects_missing_ec": 0,
+   "share": 0.20057871281325207
+  },
+  "however": {
+   "acts": 0,
+   "ec_eur": 23768412651.71,
+   "organisations": 17951,
+   "projects": 16455,
+   "projects_missing_ec": 0,
+   "share": 0.14503243908886299
+  },
+  "hydrology": {
+   "acts": 0,
+   "ec_eur": 861653782.71,
+   "organisations": 1916,
+   "projects": 416,
+   "projects_missing_ec": 0,
+   "share": 0.005257723836580469
+  },
+  "impact": {
+   "acts": 1,
+   "ec_eur": 51019184753.08,
+   "organisations": 37058,
+   "projects": 20041,
+   "projects_missing_ec": 0,
+   "share": 0.3113138817258028
+  },
+  "impacts": {
+   "acts": 0,
+   "ec_eur": 11804062462.29,
+   "organisations": 13708,
+   "projects": 4123,
+   "projects_missing_ec": 0,
+   "share": 0.07202718983171315
+  },
+  "incomes agricultural": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "increasing": {
+   "acts": 1,
+   "ec_eur": 20164208677.65,
+   "organisations": 20734,
+   "projects": 9301,
+   "projects_missing_ec": 0,
+   "share": 0.12303995263251195
+  },
+  "industrial": {
+   "acts": 3,
+   "ec_eur": 30142960209.58,
+   "organisations": 26152,
+   "projects": 9926,
+   "projects_missing_ec": 0,
+   "share": 0.18392928062191874
+  },
+  "industry": {
+   "acts": 4,
+   "ec_eur": 36507249827.31,
+   "organisations": 31411,
+   "projects": 11305,
+   "projects_missing_ec": 0,
+   "share": 0.22276352924646464
+  },
+  "information": {
+   "acts": 6,
+   "ec_eur": 24175042970.48,
+   "organisations": 20613,
+   "projects": 11562,
+   "projects_missing_ec": 0,
+   "share": 0.1475136559796532
+  },
+  "innovative": {
+   "acts": 0,
+   "ec_eur": 45383792216.34,
+   "organisations": 38611,
+   "projects": 17101,
+   "projects_missing_ec": 0,
+   "share": 0.2769272890322526
+  },
+  "integrated": {
+   "acts": 1,
+   "ec_eur": 32898238040.01,
+   "organisations": 27662,
+   "projects": 9532,
+   "projects_missing_ec": 0,
+   "share": 0.20074170600220528
+  },
+  "internet": {
+   "acts": 0,
+   "ec_eur": 6451052747.8,
+   "organisations": 8287,
+   "projects": 2379,
+   "projects_missing_ec": 0,
+   "share": 0.03936366842894887
+  },
+  "intervention agency": {
+   "acts": 1,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "irrigation": {
+   "acts": 0,
+   "ec_eur": 435830050.28,
+   "organisations": 1205,
+   "projects": 218,
+   "projects_missing_ec": 0,
+   "share": 0.0026593906857209767
+  },
+  "iva": {
+   "acts": 0,
+   "ec_eur": 18582036.11,
+   "organisations": 49,
+   "projects": 20,
+   "projects_missing_ec": 0,
+   "share": 0.00011338569637618344
+  },
+  "june": {
+   "acts": 17,
+   "ec_eur": 353125227.03,
+   "organisations": 429,
+   "projects": 114,
+   "projects_missing_ec": 0,
+   "share": 0.002154734257202691
+  },
+  "labelling programmes": {
+   "acts": 1,
+   "ec_eur": 1650033.25,
+   "organisations": 11,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 1.006833524526539e-05
+  },
+  "land": {
+   "acts": 1,
+   "ec_eur": 11505084578.25,
+   "organisations": 12241,
+   "projects": 4589,
+   "projects_missing_ec": 0,
+   "share": 0.07020285715997164
+  },
+  "land management": {
+   "acts": 0,
+   "ec_eur": 339026454.53,
+   "organisations": 832,
+   "projects": 96,
+   "projects_missing_ec": 0,
+   "share": 0.002068704979867383
+  },
+  "land set": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "landscape": {
+   "acts": 0,
+   "ec_eur": 5484500456.04,
+   "organisations": 6256,
+   "projects": 2224,
+   "projects_missing_ec": 0,
+   "share": 0.03346586454801541
+  },
+  "management": {
+   "acts": 9,
+   "ec_eur": 34430708588.94,
+   "organisations": 30840,
+   "projects": 11050,
+   "projects_missing_ec": 0,
+   "share": 0.21009268559011549
+  },
+  "management entities": {
+   "acts": 1,
+   "ec_eur": 6758182.76,
+   "organisations": 26,
+   "projects": 4,
+   "projects_missing_ec": 0,
+   "share": 4.123774455845234e-05
+  },
+  "market milk": {
+   "acts": 0,
+   "ec_eur": 5440328.0,
+   "organisations": 22,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 3.319632870925733e-05
+  },
+  "material": {
+   "acts": 3,
+   "ec_eur": 31558806271.24,
+   "organisations": 24206,
+   "projects": 14560,
+   "projects_missing_ec": 0,
+   "share": 0.19256862943775718
+  },
+  "materials agricultural": {
+   "acts": 0,
+   "ec_eur": 1192700.0,
+   "organisations": 8,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 7.27773421961529e-06
+  },
+  "may": {
+   "acts": 19,
+   "ec_eur": 10296315263.17,
+   "organisations": 9200,
+   "projects": 6915,
+   "projects_missing_ec": 0,
+   "share": 0.06282706961240843
+  },
+  "measurement": {
+   "acts": 0,
+   "ec_eur": 6853802108.92,
+   "organisations": 6731,
+   "projects": 4173,
+   "projects_missing_ec": 0,
+   "share": 0.04182120411047081
+  },
+  "milk products": {
+   "acts": 0,
+   "ec_eur": 9861831.3,
+   "organisations": 50,
+   "projects": 6,
+   "projects_missing_ec": 0,
+   "share": 6.017589261346789e-05
+  },
+  "mining": {
+   "acts": 3,
+   "ec_eur": 3124229447.22,
+   "organisations": 4601,
+   "projects": 1020,
+   "projects_missing_ec": 0,
+   "share": 0.01906373065981618
+  },
+  "monitoring": {
+   "acts": 3,
+   "ec_eur": 17006900526.04,
+   "organisations": 18614,
+   "projects": 5774,
+   "projects_missing_ec": 0,
+   "share": 0.10377437907936161
+  },
+  "office": {
+   "acts": 1,
+   "ec_eur": 1453258039.08,
+   "organisations": 2906,
+   "projects": 646,
+   "projects_missing_ec": 0,
+   "share": 0.008867632900933621
+  },
+  "office equipment": {
+   "acts": 1,
+   "ec_eur": 1447543.75,
+   "organisations": 11,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 8.832764889549125e-06
+  },
+  "part": {
+   "acts": 127,
+   "ec_eur": 80475123359.27,
+   "organisations": 51912,
+   "projects": 33133,
+   "projects_missing_ec": 0,
+   "share": 0.49105102632642
+  },
+  "particular": {
+   "acts": 120,
+   "ec_eur": 18925801764.97,
+   "organisations": 17198,
+   "projects": 10640,
+   "projects_missing_ec": 0,
+   "share": 0.11548331947562475
+  },
+  "plant": {
+   "acts": 1,
+   "ec_eur": 10908879740.6,
+   "organisations": 10402,
+   "projects": 4420,
+   "projects_missing_ec": 0,
+   "share": 0.06656487581607495
+  },
+  "plants": {
+   "acts": 0,
+   "ec_eur": 5049053337.72,
+   "organisations": 5558,
+   "projects": 2452,
+   "projects_missing_ec": 0,
+   "share": 0.0308088104742078
+  },
+  "pollution": {
+   "acts": 3,
+   "ec_eur": 4538190665.27,
+   "organisations": 6878,
+   "projects": 1850,
+   "projects_missing_ec": 0,
+   "share": 0.027691578351449787
+  },
+  "power": {
+   "acts": 3,
+   "ec_eur": 26543221348.24,
+   "organisations": 19223,
+   "projects": 10616,
+   "projects_missing_ec": 0,
+   "share": 0.16196403982972196
+  },
+  "private stock": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "private storage": {
+   "acts": 0,
+   "ec_eur": 172750.08,
+   "organisations": 1,
+   "projects": 1,
+   "projects_missing_ec": 0,
+   "share": 1.0541034364528204e-06
+  },
+  "processes": {
+   "acts": 0,
+   "ec_eur": 28924890269.91,
+   "organisations": 23671,
+   "projects": 13548,
+   "projects_missing_ec": 0,
+   "share": 0.1764967416080669
+  },
+  "processing": {
+   "acts": 1,
+   "ec_eur": 15095050915.66,
+   "organisations": 14732,
+   "projects": 6418,
+   "projects_missing_ec": 0,
+   "share": 0.09210846700405291
+  },
+  "production": {
+   "acts": 6,
+   "ec_eur": 27124864708.4,
+   "organisations": 25375,
+   "projects": 10813,
+   "projects_missing_ec": 0,
+   "share": 0.165513168517446
+  },
+  "production raw": {
+   "acts": 0,
+   "ec_eur": 0,
+   "organisations": 0,
+   "projects": 0,
+   "projects_missing_ec": 0,
+   "share": 0.0
+  },
+  "proteins": {
+   "acts": 0,
+   "ec_eur": 6705498178.83,
+   "organisations": 3805,
+   "projects": 4912,
+   "projects_missing_ec": 0,
+   "share": 0.04091626859699765
+  },
+  "raw material": {
+   "acts": 3,
+   "ec_eur": 4270777868.12,
+   "organisations": 5977,
+   "projects": 1205,
+   "projects_missing_ec": 0,
+   "share": 0.0260598526328436
+  },
+  "raw materials": {
+   "acts": 1,
+   "ec_eur": 3319832929.57,
+   "organisations": 4659,
+   "projects": 873,
+   "projects_missing_ec": 0,
+   "share": 0.02025728323546346
+  },
+  "regard": {
+   "acts": 139,
+   "ec_eur": 6915155405.2,
+   "organisations": 9282,
+   "projects": 3700,
+   "projects_missing_ec": 0,
+   "share": 0.04219557569077025
+  },
+  "regards": {
+   "acts": 5,
+   "ec_eur": 540557656.09,
+   "organisations": 1446,
+   "projects": 271,
+   "projects_missing_ec": 0,
+   "share": 0.0032984278958675503
+  },
+  "renewable": {
+   "acts": 0,
+   "ec_eur": 10728330609.68,
+   "organisations": 12166,
+   "projects": 3426,
+   "projects_missing_ec": 0,
+   "share": 0.06546318336330537
+  },
+  "renewable energy": {
+   "acts": 0,
+   "ec_eur": 6958005857.74,
+   "organisations": 9212,
+   "projects": 2304,
+   "projects_missing_ec": 0,
+   "share": 0.04245704479848918
+  },
+  "research": {
+   "acts": 0,
+   "ec_eur": 74796320787.16,
+   "organisations": 43398,
+   "projects": 36663,
+   "projects_missing_ec": 0,
+   "share": 0.4563995500075768
+  },
+  "resources": {
+   "acts": 1,
+   "ec_eur": 17335409473.37,
+   "organisations": 18104,
+   "projects": 5812,
+   "projects_missing_ec": 0,
+   "share": 0.10577890729889153
+  },
+  "revision": {
+   "acts": 4,
+   "ec_eur": 363565990.44,
+   "organisations": 933,
+   "projects": 175,
+   "projects_missing_ec": 0,
+   "share": 0.002218442734730874
+  },
+  "sensors": {
+   "acts": 0,
+   "ec_eur": 11981761768.5,
+   "organisations": 12777,
+   "projects": 4975,
+   "projects_missing_ec": 0,
+   "share": 0.07311149294364942
+  },
+  "set aside": {
+   "acts": 0,
+   "ec_eur": 8337688.16,
+   "organisations": 7,
+   "projects": 6,
+   "projects_missing_ec": 0,
+   "share": 5.087572602876939e-05
+  },
+  "software": {
+   "acts": 0,
+   "ec_eur": 13047709331.64,
+   "organisations": 13956,
+   "projects": 5547,
+   "projects_missing_ec": 0,
+   "share": 0.079615796671812
+  },
+  "soil": {
+   "acts": 1,
+   "ec_eur": 3216625160.78,
+   "organisations": 4558,
+   "projects": 1387,
+   "projects_missing_ec": 0,
+   "share": 0.019627519916394855
+  },
+  "standard": {
+   "acts": 2,
+   "ec_eur": 23169082589.23,
+   "organisations": 22347,
+   "projects": 7725,
+   "projects_missing_ec": 0,
+   "share": 0.14137538794058188
+  },
+  "standards": {
+   "acts": 0,
+   "ec_eur": 9125388796.56,
+   "organisations": 12205,
+   "projects": 2510,
+   "projects_missing_ec": 0,
+   "share": 0.05568219528131022
+  },
+  "storage": {
+   "acts": 2,
+   "ec_eur": 8816031704.4,
+   "organisations": 9666,
+   "projects": 3071,
+   "projects_missing_ec": 0,
+   "share": 0.053794529736166004
+  },
+  "supply": {
+   "acts": 4,
+   "ec_eur": 12034171426.62,
+   "organisations": 15302,
+   "projects": 3597,
+   "projects_missing_ec": 0,
+   "share": 0.07343129135258568
+  },
+  "sustainable": {
+   "acts": 3,
+   "ec_eur": 35989407916.66,
+   "organisations": 33070,
+   "projects": 10536,
+   "projects_missing_ec": 0,
+   "share": 0.21960371052131294
+  },
+  "system": {
+   "acts": 7,
+   "ec_eur": 81773200763.15,
+   "organisations": 48469,
+   "projects": 33798,
+   "projects_missing_ec": 0,
+   "share": 0.4989717627579843
+  },
+  "systems": {
+   "acts": 1,
+   "ec_eur": 50869108761.15,
+   "organisations": 35350,
+   "projects": 19546,
+   "projects_missing_ec": 0,
+   "share": 0.31039813327102656
+  },
+  "technologies": {
+   "acts": 0,
+   "ec_eur": 46879104391.42,
+   "organisations": 34729,
+   "projects": 14159,
+   "projects_missing_ec": 0,
+   "share": 0.2860515319982852
+  },
+  "technology": {
+   "acts": 1,
+   "ec_eur": 49689844008.35,
+   "organisations": 35653,
+   "projects": 19156,
+   "projects_missing_ec": 0,
+   "share": 0.30320237956478124
+  },
+  "transport": {
+   "acts": 2,
+   "ec_eur": 14333757959.99,
+   "organisations": 14188,
+   "projects": 5738,
+   "projects_missing_ec": 0,
+   "share": 0.08746313473723676
+  },
+  "treatment": {
+   "acts": 0,
+   "ec_eur": 18757739613.67,
+   "organisations": 14174,
+   "projects": 8638,
+   "projects_missing_ec": 0,
+   "share": 0.11445782130379764
+  },
+  "treatment processes": {
+   "acts": 0,
+   "ec_eur": 1662490291.06,
+   "organisations": 3338,
+   "projects": 877,
+   "projects_missing_ec": 0,
+   "share": 0.010144346844156575
+  },
+  "treaty": {
+   "acts": 128,
+   "ec_eur": 104989580.87,
+   "organisations": 319,
+   "projects": 83,
+   "projects_missing_ec": 0,
+   "share": 0.0006406357553455738
+  },
+  "understanding": {
+   "acts": 0,
+   "ec_eur": 28405865004.12,
+   "organisations": 15985,
+   "projects": 17782,
+   "projects_missing_ec": 0,
+   "share": 0.17332970217008178
+  },
+  "wastewater treatment": {
+   "acts": 0,
+   "ec_eur": 1137798827.23,
+   "organisations": 2395,
+   "projects": 580,
+   "projects_missing_ec": 0,
+   "share": 0.006942732841426945
+  },
+  "water": {
+   "acts": 1,
+   "ec_eur": 11651665266.62,
+   "organisations": 13314,
+   "projects": 5109,
+   "projects_missing_ec": 0,
+   "share": 0.0710972776275537
+  },
+  "will": {
+   "acts": 0,
+   "ec_eur": 147167082726.18,
+   "organisations": 70346,
+   "projects": 68088,
+   "projects_missing_ec": 0,
+   "share": 0.8979985863647811
+  }
+ },
+ "window": {
+  "since": "2010-01-01",
+  "until": "2026-12-31"
+ }
+}
