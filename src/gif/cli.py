@@ -219,7 +219,8 @@ def _cmd_freeze(args) -> int:
     report = freeze(out, since=args.since, until=args.until, keywords=keywords,
                     programmes=programmes, label=args.label,
                     skip_projects=args.no_projects,
-                    allow_partial=args.allow_partial)
+                    allow_partial=args.allow_partial,
+                    enrich_text=args.enrich_text)
 
     print(f"froze {report['documents']} documents into {report['dir']}"
           + ("" if report["complete"] else "  [INCOMPLETE]"))
@@ -408,6 +409,10 @@ def build_parser() -> argparse.ArgumentParser:
                     help="Name recorded in the manifest, e.g. the arm this corpus is for")
     fr.add_argument("--no-projects", action="store_true", dest="no_projects",
                     help="Skip CORDIS; policies and call topics only")
+    fr.add_argument("--enrich-text", action="store_true", dest="enrich_text",
+                    help="Fetch each act's own text from CELLAR and keep an excerpt. "
+                         "One request per act, best-effort: an act served only as a "
+                         "scan keeps the summary it had")
     fr.add_argument("--allow-partial", action="store_true", dest="allow_partial",
                     help="Keep the corpus even if a source failed partially. Only "
                          "for a known-degraded source whose incompleteness will be "

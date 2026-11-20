@@ -223,7 +223,8 @@ def freeze(out_dir: Path,
            programmes: Optional[Iterable[str]] = None,
            label: Optional[str] = None,
            skip_projects: bool = False,
-           allow_partial: bool = False) -> Dict[str, Any]:
+           allow_partial: bool = False,
+           enrich_text: bool = False) -> Dict[str, Any]:
     """Fetch every source into ``out_dir`` and write the manifest.
 
     Raises in two cases, both of which produce a corpus that cannot carry the
@@ -254,7 +255,8 @@ def freeze(out_dir: Path,
 
     errors: Dict[str, str] = {}
     snapshot = build_snapshot(keywords=list(keywords), out_dir=out_dir,
-                              since=since or "1990-01-01", until=until)
+                              since=since or "1990-01-01", until=until,
+                              enrich_text=enrich_text)
     errors.update(snapshot.get("errors") or {})
     partial: Dict[str, List[str]] = dict(snapshot.get("partial") or {})
     policy_filter: Dict[str, Any] = dict(snapshot.get("policy_filter") or {})

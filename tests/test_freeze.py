@@ -136,7 +136,7 @@ def test_freeze_fails_when_the_corpus_breaches_its_window(tmp_path, monkeypatch)
     monkeypatch.setattr(fz, "find_repo_root", lambda: tmp_path)
     out = tmp_path / "frozen"
 
-    def fake_snapshot(keywords=None, out_dir=None, since=None, until=None):
+    def fake_snapshot(keywords=None, out_dir=None, since=None, until=None, **kw):
         _write_corpus(out_dir, policies=[_doc("p:late", "2015-01-01")])
         return {"errors": {}}
 
@@ -162,7 +162,7 @@ def test_freeze_writes_manifest_and_counts(tmp_path, monkeypatch):
     import gif.finder_data as fd
     import gif.cordis as cd
 
-    def fake_snapshot(keywords=None, out_dir=None, since=None, until=None):
+    def fake_snapshot(keywords=None, out_dir=None, since=None, until=None, **kw):
         _write_corpus(out_dir, policies=[_doc("p:1", "2005-01-01")], grants=[])
         return {"errors": {}}
 
@@ -199,7 +199,7 @@ def test_freeze_refuses_a_partially_fetched_corpus(tmp_path, monkeypatch):
     import gif.cordis as cd
     import gif.finder_data as fd
 
-    def fake_snapshot(keywords=None, out_dir=None, since=None, until=None):
+    def fake_snapshot(keywords=None, out_dir=None, since=None, until=None, **kw):
         _write_corpus(out_dir, policies=[_doc("p:1", "2005-01-01")])
         return {"errors": {}, "partial": {"policies": ["2000-2004: HTTP 500"]}}
 
@@ -249,7 +249,7 @@ def test_freeze_can_skip_projects(tmp_path, monkeypatch):
     called = []
 
     monkeypatch.setattr(fd, "build_snapshot",
-                        lambda keywords=None, out_dir=None, since=None, until=None:
+                        lambda keywords=None, out_dir=None, since=None, until=None, **kw:
                         (_write_corpus(out_dir, policies=[_doc("p:1", "2005-01-01")]),
                          {"errors": {}})[1])
     monkeypatch.setattr(fd, "load_snapshot_keywords", lambda root=None: ["mining"])

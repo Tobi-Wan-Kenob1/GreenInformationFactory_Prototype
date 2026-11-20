@@ -563,6 +563,7 @@ def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
                    failures_out: Optional[List[str]] = None,
                    exclude_routine: bool = True,
                    min_subjects: int = 0,
+                   enrich_text: bool = False,
                    report_out: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
     """Query CELLAR for EU acts whose English title matches any keyword.
 
@@ -600,8 +601,17 @@ def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
                 continue
             docs.append(doc)
 
+    # Fetch the act text last, once the corpus is settled: enrichment costs one
+    # request per act, and there is no sense paying it for acts that a filter
+    # is about to discard.
+    text_report: Dict[str, Any] = {}
+    if enrich_text and docs:
+        from .policy_text import enrich_policies
+        text_report = enrich_policies(docs)
+
     if report_out is not None:
         report_out.update({
+            "enriched_text": text_report or None,
             "excluded_routine": bool(exclude_routine),
             "routine_patterns": list(ROUTINE_TITLE_PATTERNS) if exclude_routine else [],
             "min_subjects": min_subjects,
@@ -668,7 +678,8 @@ def write_snapshot(out_dir: Path, keywords: List[str],
 def build_snapshot(keywords: Optional[List[str]] = None,
                    out_dir: Optional[Path] = None,
                    since: str = "2015-01-01",
-                   until: Optional[str] = None) -> Dict[str, Any]:
+                   until: Optional[str] = None,
+                   enrich_text: bool = False) -> Dict[str, Any]:
     """Fetch both sources and write the snapshot files. Returns a report.
 
     Each source is fetched independently: if one endpoint fails, the other is
@@ -702,6 +713,7 @@ def build_snapshot(keywords: Optional[List[str]] = None,
     try:
         policies = fetch_policies(keywords, since=since, until=until,
                                   failures_out=partial["policies"],
+                                  enrich_text=enrich_text,
                                   report_out=policy_filter)
     except Exception as exc:                      # noqa: BLE001 - reported, not raised
         policies, errors["policies"] = [], f"{type(exc).__name__}: {exc}"
