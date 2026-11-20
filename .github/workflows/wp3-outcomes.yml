@@ -1,0 +1,115 @@
+name: WP3 — retrieve outcomes and run the registered analysis (once)
+
+# The one run the registration (doi:10.17605/OSF.IO/QC2SP) was filed ahead of.
+# The analysis code and its operational definitions (PROTOCOL.md B.2) are
+# committed before this runs, so the code that produced the results is the
+# code in the commit this job ran from — recorded in the results.
+#
+# One shot: it refuses to run if outcome files already exist. It commits the
+# outcome data and the analysis as separate commits, so the order is visible.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  TOOL_COMMIT: "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e"
+
+jobs:
+  wp3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Check out the study
+        uses: actions/checkout@v4
+        with:
+          ref: claude/validation-paper
+          path: study
+
+      - name: Refuse a second run
+        run: |
+          if [ -e study/paper/results/outcomes-manifest.json ]; then
+            echo "outcome files already exist — WP3 has run; a re-run is a deviation, not a retry"
+            exit 1
+          fi
+
+      - name: Check out the tool at the registered commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TOOL_COMMIT }}
+          path: tool
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: python -m pip install --quiet -e tool numpy scipy pytest
+
+      - name: Tests on synthetic data must pass first
+        run: python -m pytest -q study/paper/analysis/test_wp3.py
+
+      - name: Download the CORDIS archives
+        run: |
+          mkdir -p archives
+          for f in cordis-fp7projects-csv.zip cordis-h2020projects-csv.zip cordis-HORIZONprojects-csv.zip; do
+            for i in 1 2 3 4; do
+              curl -fsSL --retry 3 -o "archives/$f" "https://cordis.europa.eu/data/$f" && break
+              sleep $((i * 20))
+            done
+            test -s "archives/$f"
+            ls -l "archives/$f"; sha256sum "archives/$f"
+          done
+
+      - name: Compute the outcome measures
+        working-directory: study
+        env:
+          PYTHONPATH: paper/analysis
+        run: |
+          python paper/analysis/wp3_outcomes.py \
+            --data paper/data \
+            --codebook ../tool/docs/finder/data/wp1_codebook.json \
+            --archives ../archives \
+            --out paper/results
+          python - <<'PY'
+          import json, subprocess
+          m = json.load(open("paper/results/outcomes-manifest.json"))
+          m["code_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          m["tool_commit"] = "${{ env.TOOL_COMMIT }}"
+          json.dump(m, open("paper/results/outcomes-manifest.json", "w"), indent=1)
+          print(json.dumps({k: v for k, v in m.items() if k != "archives"}, indent=1)[:4000])
+          PY
+
+      - name: Commit the outcome data
+        working-directory: study
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper/results
+          git commit -m "WP3: outcome measures for A1 and A2" \
+                     -m "CORDIS FP7/H2020/Horizon Europe and EUR-Lex, retrieved after registration doi:10.17605/OSF.IO/QC2SP; computed by paper/analysis/wp3_outcomes.py with the tool at ${TOOL_COMMIT}."
+          # Pushed at once: if the analysis then failed, an unpushed outcome
+          # commit would leave the one-shot guard open.
+          for i in 1 2 3 4; do
+            git pull --rebase origin claude/validation-paper && git push origin HEAD:claude/validation-paper && break
+            sleep $((i * 5))
+          done
+
+      - name: Run the registered analysis
+        working-directory: study
+        env:
+          PYTHONPATH: paper/analysis
+        run: python paper/analysis/wp3_analysis.py --data paper/data --results paper/results
+
+      - name: Commit the analysis and push
+        working-directory: study
+        run: |
+          git add paper/results
+          git commit -m "WP3: registered analysis, both arms" \
+                     -m "paper/analysis/wp3_analysis.py as committed before outcome retrieval; see PROTOCOL.md B.2."
+          for i in 1 2 3 4; do
+            git pull --rebase origin claude/validation-paper && git push origin HEAD:claude/validation-paper && break
+            sleep $((i * 5))
+          done

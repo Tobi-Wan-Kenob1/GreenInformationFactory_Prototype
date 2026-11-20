@@ -60,9 +60,11 @@ the frozen inputs.
       everything archived in `data/`; pre-registration complete
 - [x] WP2 — registration filed 2026-11-20, public,
       [doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP); repository tagged `prereg-v1`
-- [ ] WP2 — same-day correction of the OSF form and deposit of the files
-      (`OSF_UPDATE.md`). WP3 starts once the corrected form is accepted.
-- [ ] WP3 — outcomes and analysis
+- [x] WP2 — same-day correction of the OSF form (two updates, both approved);
+      files deposited on Zenodo, [doi:10.5281/zenodo.24392976](https://doi.org/10.5281/zenodo.24392976)
+- [ ] WP3 — outcomes and analysis: code and operational definitions frozen
+      (`analysis/wp3_*.py`, protocol B.2) before retrieval; run once by
+      `.github/workflows/wp3-outcomes.yml`, results in `results/`
 - [ ] WP4 — case studies
 - [ ] WP5 — write-up and FAIR release
 

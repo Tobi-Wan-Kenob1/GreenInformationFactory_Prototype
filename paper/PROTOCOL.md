@@ -750,3 +750,79 @@ earlier draft of the guide, before the deposit moved to Zenodo. It left one
 field claiming the files were attached and naming an OSF project, and one field
 empty. A second update replaces that field whole (`paper/OSF_UPDATE.md`,
 "Second update").
+
+### B.2 2026-11-20 — operational definitions, fixed before outcome retrieval
+The registration fixes the measures and tests. It leaves some mechanics open,
+and these are fixed here, committed together with the code that implements
+them (`paper/analysis/wp3_outcomes.py`, `wp3_analysis.py`, tested in
+`test_wp3.py` on synthetic data), before any outcome data was retrieved. The
+code was also run once on the real recorded output with **randomly generated**
+outcome values, to check that it runs on the real file structure. Those fake
+values were not kept, and every test came out null on them, as it should.
+
+**Outcome population.**
+- All FP7, H2020 and Horizon Europe projects in the CORDIS bulk archives as
+  downloaded at run time, whose `startDate` falls in the arm's window
+  (A1 2010-01-01 – 2026-12-31, A2 2014-01-01 – 2026-12-31). Archive SHA-256s are
+  recorded.
+- No keyword filter: the denominator is total programme contribution in the
+  window (registration, "Indices").
+- Projects without a start date cannot be placed in a window; they are
+  excluded and counted. Repeated project ids are kept once.
+
+**EC contribution.** `ecMaxContribution`. An empty or non-numeric value is
+missing, treated as €0 in sums (registration, "Missing data") and counted.
+
+**Matching.**
+- The tool's `term_pattern` at commit `8ff0b35`, imported rather than
+  reimplemented.
+- It is applied to the title, the full objective and the euroSciVoc titles.
+- A topic is matched on its own term; a code on its codebook terms.
+- The leading-only boundary means *land* also matches *landscape*: that is the
+  registered rule, applied as registered.
+
+**Organisations.** Distinct CORDIS `organisationID`, or the case-folded
+organisation name where the identifier is empty.
+
+**Acts.**
+- Built exactly as the input corpus was: `fetch_policies` with the frozen
+  keywords, routine-act exclusion, no EuroVoc threshold, act-text enrichment,
+  and the 150-act budget over five-year slices, for the outcome window.
+- It is a sample, not a census, and serves only the secondary measure.
+- A partial answer from EUR-Lex aborts the run.
+- Acts are matched on title and summary.
+
+**Direction.** ρ is computed between the tool's *score* (−rank) and uptake, so a
+positive ρ means the tool's top topics took up more funding.
+
+**Undefined lists.**
+- A list whose outcome is identical for every topic carries no ranking to
+  predict. It is excluded from H1/H2 and counted.
+- For H2, a list where either ρ is undefined is excluded and counted.
+
+**p-values.** Permutation and sign-flip p = (1 + #{null ≥ observed}) / (1 + N),
+with N = 10 000. Mann–Whitney is SciPy's, one-sided.
+
+**Headline effect size.**
+- The *top decile* is every term that holds rank ≤ ⌈0.1 × list length⌉ in at
+  least one H1 list.
+- The ratio is the median uptake of the top decile over the median uptake of
+  all terms in those lists.
+- If the latter median is 0, the ratio is undefined: both medians are
+  reported, and no substitute measure takes its place in the abstract.
+- 95 % CI: percentile bootstrap over terms.
+
+**H3/H4 effect.** P(a > b) + ½ P(a = b) (= U / n_a n_b), with a percentile
+bootstrap CI resampling within groups.
+
+**Secondary measures.** Project count, organisations and acts. The mean
+within-list ρ is reported descriptively, with no tests.
+
+**Seeds.** A1 20091231, A2 20131231.
+
+**One shot.**
+- `.github/workflows/wp3-outcomes.yml` refuses to run if outcome files already
+  exist.
+- It commits the outcome data, then the analysis, as separate commits.
+- If a defect is found afterwards, the fix is a reported deviation, and both
+  the original and the corrected results are published.
