@@ -13,12 +13,14 @@ branch name.
 | File | What it is |
 |------|------------|
 | `PROTOCOL.md` | The study protocol — design, hypotheses, data sources, analysis plan, limitations. **Read this first.** |
-| `PREREGISTRATION.md` | Generated from the protocol. Not yet filed; §9 lists what is still to be pasted in at filing. |
+| `PREREGISTRATION.md` | Generated from the protocol. Complete and ready to file; every hash and query list is filled in. |
+| `OSF_FILING.md` | Where to file it and what to enter in each OSF field. |
+| `data/` | The registered corpora (`frozen-A1/`, `frozen-A2/`): corpus files and manifest, both query selections, and the tool's recorded output for each. `REGISTRATION_VALUES.md` holds every digest, computed by workflow. |
 | `analysis/wp0_probe.py` | Read-only data-availability probe. Takes section letters (`A` catalogue, `B` CORDIS, `C` Eurostat, `D` GLEIF, `E` ETS) to re-check one source; findings are recorded in protocol §6.1. |
 
-Planned, not yet present: `data/` (frozen corpora and linked outcome tables)
-and the scripts producing the paper's figures and tables. The frozen corpora
-currently live as Actions artifacts, named in `PREREGISTRATION.md` §4.
+Planned, not yet present: the outcome tables and the scripts producing the
+paper's figures and tables. None may be produced before the registration is
+filed.
 
 The probe needs internet access to EU hosts, which some development sandboxes
 deny, so it runs on a GitHub Actions runner via
@@ -52,7 +54,8 @@ the frozen inputs.
       added (extends the tool below 2014 — CORDIS reaches FP1/1984); act-text
       enrichment and the routine-act filter (§6.2)
 - [x] WP2 — corpora frozen with manifests, queries selected by rule, tool
-      output recorded; pre-registration drafted
+      output recorded for both seed sets, with full codebook coverage;
+      everything archived in `data/`; pre-registration complete
 - [ ] WP2 — **file the registration and tag the repository.** Nothing in WP3
       may start before this: see `PREREGISTRATION.md` §9
 - [ ] WP3 — outcomes and analysis

@@ -1,12 +1,12 @@
 # Pre-registration — does the Policy & Grant Finder's ranking predict what was funded?
 
-**Status:** draft, not yet filed · **Prepared:** 2026-11-20
+**Status:** final draft, ready to file · **Prepared:** 2026-11-20
 **Protocol:** `paper/PROTOCOL.md` (this document is generated from it; where the
 two disagree the protocol is wrong and gets a dated appendix entry, never a
 silent edit)
 **Registry:** OSF, public — not embargoed. See §9.
-**Outcome data retrieved so far:** none. That is the claim this document exists
-to make checkable.
+**Outcome measures computed so far:** none. That is the claim this document
+exists to make checkable. Stated exactly, in §9.1.
 
 ---
 
@@ -49,7 +49,8 @@ Two freeze points, giving an internal replication.
 | **A2** | 2013-12-31 | EU acts ≤ 2013, plus FP6 and FP7 projects started ≤ 2013 | 2014–2026 |
 
 The unit of analysis is the **topic**, not the organisation. That is where the
-statistical power is: roughly 150 topics per arm under the broad seed set.
+statistical power is: 122–145 distinct topics per arm and seed set in the
+recorded output (§5).
 
 **Availability at *T* is enforced in code, not by hand.** A CORDIS project may
 enter an input corpus only if it *started* on or before *T*. The signature date
@@ -67,17 +68,37 @@ a SHA-256 per file, a content digest per file, item counts, observed date
 ranges, the endpoint each file came from, and the tool's commit and clean/dirty
 state.
 
-**On filing, this section carries for each arm:** the manifest's own SHA-256,
-each file's content digest and item count, the tool commit, and the Actions run
-that produced it. Those values are what a reader checks the archived corpus
-against.
+**The registered corpora** are the files archived in `paper/data/frozen-A1/`
+and `paper/data/frozen-A2/` of the public repository, produced by Actions run
+44684136624 with the tool at commit `8ff0b3537e5b9e1d938b2e90abc392811ac2c35e`
+(clean), and each verified against its manifest before it was archived. A
+re-fetch does not reproduce a corpus byte-for-byte; these files, checked
+against the digests below, are the input. Every value here was computed from
+the archived files by workflow, not typed (`paper/data/REGISTRATION_VALUES.md`).
 
-At the time of drafting, the candidate corpora are arm A1 at 827 documents (148
-acts, 0 call topics, 679 projects) and arm A2 at 1 523 (150 acts, 1 call topic,
-1 372 projects), both complete, with no window violations and no undated
-records. **These are candidates, not the registered corpora.** The registered
-corpus is whichever is archived and checksummed at filing; a re-fetch does not
-reproduce a corpus byte-for-byte, which is why the manifest exists.
+| | Arm A1 (*T* = 2009-12-31) | Arm A2 (*T* = 2013-12-31) |
+|---|---|---|
+| Frozen | 2026-11-20T05:57:27Z | 2026-11-20T05:59:39Z |
+| Window | 1990-01-01 – 2009-12-31 | 1990-01-01 – 2013-12-31 |
+| Documents | 827 — complete, 0 window violations, 0 undated | 1 523 — complete, 0 window violations, 0 undated |
+| **`manifest.json` SHA-256** | `afd89a28d22cf15cab6ac1947137f98ee1ed87297f0f1c3e634263f29c44a1a8` | `9e8993581ed95109d7fd2680ab0ead992b32ed4efc7b20bbb0075df3a9fe8cb5` |
+| Acts with own text | 117 of 148 (31: HTTP 404) | 123 of 150 (26: HTTP 404; 1: no CELEX) |
+
+Per file — item count, observed date range, content digest (SHA-256 of the
+items sorted by id, canonical JSON; unaffected by write timestamps):
+
+| Arm | File | Items | Earliest | Latest | Content SHA-256 |
+|---|---|---|---|---|---|
+| A1 | `policies.json` | 148 | 1994-03-10 | 2009-12-18 | `357825a45ba80ee316ed51a9e8ba831fa12a46ac78dc07381b67176f6e95373b` |
+| A1 | `grants.json` | 0 | — | — | `4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945` |
+| A1 | `projects.json` | 679 | 2003-08-01 | 2009-12-01 | `be638c45ab1e209a45c8df419c71a265233eb24a9394d0b3bc9ef5be91ed261c` |
+| A2 | `policies.json` | 150 | 1994-05-05 | 2013-12-18 | `8a3d6d4c19326e12dee8513e5b37f12a647ef2c149b22281f462ee4a1f1347c5` |
+| A2 | `grants.json` | 1 | 2013-12-11 | 2013-12-11 | `8de5d7f85565dfa7280a92a6db6364cb0112d191272837a6d5d01e3845951581` |
+| A2 | `projects.json` | 1 372 | 2003-08-01 | 2013-12-13 | `171d718302b5d40d882e72154f5d9ae861b58b022a9fbacbd27ff16ceff55937` |
+
+File SHA-256s are in each manifest. To check: `gif freeze --out
+paper/data/frozen-A1 --verify` reports each file as `ok`, `rewritten` (same
+content, new bytes) or `CHANGED`.
 
 **How the policy side was built** — both rules recorded in the manifest, with
 their rationale and measured cost in protocol §6.2 and Appendix A.2:
@@ -117,9 +138,46 @@ boundary, case-insensitive; the tool's own keyword thesaurus is **not** applied,
 since it was written as part of the tool and would make the measurement
 self-referential.
 
-**On filing, this section carries** the resulting query lists for each arm and
-variant, with every candidate's per-side document frequency and the reason it
-was kept or dropped.
+**Resulting queries.** Of 51 barrier and driver codes:
+
+| Arm | Seed set | Queries, in rank order |
+|---|---|---|
+| A1 | Broad | land, water, demand, landscape, database, dataset, efficiency, technology, standard, transport |
+| A1 | Bridging | land, efficiency, standard, transport, storage, collection, monitoring, land use — **8, not 10** |
+| A2 | Broad | land, water, demand, landscape, database, dataset, efficiency, technology, standard, transport |
+| A2 | Bridging | land, water, database, efficiency, standard, transport, storage, collection, monitoring, land use |
+
+Dropped in both arms as too broad: *regulation* and *regulations* (≈ 87–89 % of
+acts) and *agriculture* (≈ 42–43 % of projects). Collapsed as duplicates: *investment* and
+*funding* each appear under both dimensions with the same terms, so one copy
+of each was dropped. Absent
+from the corpus: 12 codes in A1, 10 in A2.
+
+**A1's bridging set is short.** Only eight codes appear on both sides of the
+2009 corpus. The rule says take the ten highest; it does not say pad, so A1
+seeds H3 and H4 with eight. This is fixed now, not adjusted after the result.
+
+Every candidate's per-side document frequency and the reason it was kept or
+dropped are in `queries.json` (broad) and `queries-both-sides.json` (bridging)
+beside each corpus.
+
+**Recorded tool output.** The tool's ranked topics, bridge labels, blind-spot
+flags and metrics for each query are in `recorded.json` (broad) and
+`recorded-both-sides.json` (bridging) beside each corpus, recorded on the
+frozen corpus before any outcome measure was computed. No page errors in any
+run.
+
+| Arm | Seed set | Runs | Distinct topics | of which bridge | File SHA-256 |
+|---|---|---|---|---|---|
+| A1 | Broad | 10 | 122 | 21 | `208b11bb59ff88b1c1484583c582cacb47e19c2f6103a9dd2c35d9f81161ba4a` |
+| A1 | Bridging | 8 | 126 | 27 | `caaa32d6a83f017265438560b49cd6b8f8eb740aaab5648b589888bad87d59cb` |
+| A2 | Broad | 10 | 129 | 33 | `08be072d55cd4dee29f77866737a9f55973119fd23415b347b7dfda549fe309a` |
+| A2 | Bridging | 10 | 145 | 41 | `d67b3fd44bd869f7edfbb4b2c69ce0909313d737766095508a67df332a0f22f3` |
+
+A topic is a distinct term across the arm's runs; a term labelled bridge in any
+run counts as bridge. That is how the unit of analysis in §3 is formed.
+
+H4's units, from the bridging set's full coverage: A1 — 87 codes, 39 blind spots, 14 covered, 34 neither; A2 — 87 codes, 26 blind spots, 16 covered, 45 neither.
 
 **Circularity, stated.** These codes also drive the tool's codebook-coverage
 panel, so H4 tests that panel against the vocabulary it is built from. That is
@@ -155,6 +213,53 @@ useful, and the paper will not present one as if it did.
 Both arms are analysed separately and reported side by side. A result that
 holds in one arm and not the other is reported as exactly that, not pooled
 until it is significant.
+
+### 7.1 Inference criteria, exclusions, missing data
+
+- **Tests are one-sided**, in the direction stated in §2, at **α = 0.05**.
+- **Multiplicity:** Holm–Bonferroni across the four hypotheses, within each arm.
+  Arms are not corrected against each other; they are replications, reported
+  side by side.
+- **Confidence intervals:** 95 %, percentile bootstrap, 10 000 resamples.
+  Random seeds are fixed in the analysis code and reported.
+- **A hypothesis is supported in an arm** only if its corrected test passes
+  *and* the effect is in the predicted direction. Support in both arms is
+  reported as replicated; in one, as not replicated.
+- **Exclusions:** none beyond those built into the corpus (§4) and the query
+  rule (§5). No topic, project or act is removed after outcome data is seen.
+- **Missing data:** a topic matching no outcome-window project has uptake 0 and
+  stays in the analysis. A project with no recorded EC contribution counts
+  toward project and organisation counts, contributes €0 to the primary
+  measure, and the number of such projects is reported per arm.
+
+### 7.2 From recorded output to the units analysed
+
+Each recorded run is one query and holds three ranked lists — bridge, policy
+and grant topics — plus the codebook coverage. A topic can recur across runs
+with different ranks, so how runs combine is fixed here rather than chosen
+later.
+
+- **H1, H2 — ranked lists.** The unit is a ranked list: every (run, scope)
+  list in the broad seed set with at least five topics. Per list, Spearman's ρ
+  between tool rank and uptake rank; the statistic is the unweighted mean ρ
+  across lists. H1's null permutes ranks within each list. H2's comparator
+  ranks each list's topics by raw document frequency (policy + funding
+  documents, as recorded); its test is a sign-flip permutation of the per-list
+  difference ρ<sub>tool</sub> − ρ<sub>frequency</sub>. The number of lists
+  used and excluded is reported.
+- **Topic-level summaries** — the headline effect size and H3. Each distinct
+  term counts once per arm, since its uptake does not depend on which query
+  found it. Its rank is its best (lowest) rank in any list; it is a **bridge
+  topic** if any run lists it under bridge, otherwise single-corpus.
+- **H3** uses the bridging seed set: uptake of bridge versus single-corpus
+  topics, Mann–Whitney, one-sided (bridge higher).
+- **H4 — codes, not topics.** The unit is a codebook code, using the tool's
+  full coverage computation (all 87 codes, not the 12 per dimension the panel
+  displays). In the bridging seed set, a code is a **blind spot** if the tool
+  marks it *not addressed* in every run, and **covered** if it marks it
+  addressed on both sides in at least one run. Codes that are neither are
+  left out of H4 and counted. A code's uptake is matched on its codebook terms
+  by the §6 rule. Mann–Whitney, one-sided (blind spots lower).
 
 ## 8. Tier B case studies — illustrative, not confirmatory
 
@@ -196,14 +301,33 @@ timestamps a reader can inspect.
 
 **Order of operations, which is the substance of this document:**
 
-1. Freeze the corpora; archive them with manifests. — *done, candidates*
+1. Freeze the corpora; archive them with manifests. — *done* (`paper/data/`)
 2. Select queries by rule; record every candidate's frequencies. — *done*
-3. Run the tool; record ranked topics, bridge labels, blind-spot flags. — *done*
-4. File this registration; tag the repository. — **pending**
+3. Run the tool; record ranked topics, bridge labels, blind-spot flags, for
+   both seed sets. — *done*
+4. File this registration; tag the repository `prereg-v1`. — **pending**
 5. *Only then* retrieve outcome data and compute §7.
 
-Steps 1–3 are complete for the candidate corpora and recorded in the Actions
-artifacts named in §4. Step 5 has not begun.
+Steps 1–3 are complete and their outputs are in the repository under
+`paper/data/`, each in a commit dated before this registration. Step 5 has not
+begun.
+
+### 9.1 What has and has not been seen
+
+"No outcome data" would overstate it, so here is exactly where things stand.
+
+- **Downloaded:** the CORDIS bulk files for FP5, FP6, FP7, H2020 and Horizon
+  Europe, which contain the post-*T* projects. The freeze reads them and keeps
+  only projects that started on or before *T*.
+- **Inspected:** how completely their *fields* are filled — signature date,
+  SME flag, activity type, organisation identifiers, across all programmes.
+  That is what established, before any design choice depended on it, that
+  `startDate` must stand in for signature date and that SME status cannot be a
+  stratum (§3, §8).
+- **Not done:** no post-*T* project has been matched to any topic or query; no
+  EC contribution, project count or organisation count has been computed for
+  any topic; no subsequent EUR-Lex act has been retrieved for the outcome
+  window. None of the §6 measures exists in any form.
 
 ## 10. Deviations
 

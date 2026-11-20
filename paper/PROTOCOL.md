@@ -688,3 +688,31 @@ and with the figures given in §5.1.
 Confidentiality until submission was replaced by working in the open. The
 registration is public rather than embargoed; the ordering it enforces is
 unchanged.
+
+### A.5 2026-11-20 — completed for filing (pre-registration §4, §5, §7.1, §9.1)
+Three gaps found while preparing the filing, closed before it:
+
+- **Bridging-set output had not been recorded.** The benchmark run recorded the
+  tool on the broad seed set only, so the four bridging-only codes (*storage*,
+  *collection*, *monitoring*, *land use*) that seed H3 and H4 had no recorded
+  output. Recorded by `.github/workflows/record-bridging.yml` over the archived
+  corpora, after verifying them against their manifests, with the tool at the
+  manifests' commit. No re-fetch; the input is unchanged.
+- **Blind-spot flags were recorded only as displayed.** The codebook panel
+  renders 12 codes per dimension; the tool computes all 87, and H4 compares
+  exactly those. The recorder now keeps the tool's own full computation
+  (recorder change only; the app is at the manifests' commit), and all four
+  recordings were re-made by `.github/workflows/record-full-coverage.yml`,
+  which commits nothing unless every previously recorded field comes out
+  identical.
+- **How runs combine into units was unstated.** Pre-registration §7.2 now fixes
+  it: ranked lists for H1/H2, distinct topics for H3 and the effect size,
+  codebook codes for H4.
+- **Inference criteria were unstated.** One-sided tests at α = 0.05,
+  Holm–Bonferroni across the four hypotheses within each arm, and the handling
+  of topics with no uptake and projects with no recorded contribution, are now
+  fixed in pre-registration §7.1.
+- **"No outcome data retrieved" overstated it.** The CORDIS files containing the
+  post-*T* projects were downloaded and their field completeness inspected in
+  WP0; no outcome measure was computed. Pre-registration §9.1 now says exactly
+  that.
