@@ -229,3 +229,25 @@ def test_whole_arm_end_to_end(tmp_path):
     assert out["secondary"]["acts"]["available"] is True
     text = A.report({"A1": out})
     assert "H1" in text and "Effect size" in text
+
+
+# ---------------------------------------------------------------- exploratory C.1
+
+def test_partial_r_removes_a_pure_frequency_effect():
+    import exploratory_frequency as E
+    rng = np.random.default_rng(0)
+    freq = np.arange(60, dtype=float)
+    cls = (freq > 30).astype(float)            # class tracks frequency…
+    uptake = freq + rng.normal(0, 8, 60)       # …and uptake is frequency plus noise
+    r = E.analyse(cls, uptake, freq, +1, np.random.default_rng(1))
+    assert abs(r["partial_r"]) < 0.3 and r["p_one_sided"] > 0.05
+
+
+def test_partial_r_keeps_an_effect_beyond_frequency():
+    import exploratory_frequency as E
+    rng = np.random.default_rng(0)
+    freq = rng.permutation(np.arange(80, dtype=float))
+    cls = (rng.random(80) > 0.5).astype(float)
+    uptake = freq + 40 * cls
+    r = E.analyse(cls, uptake, freq, +1, np.random.default_rng(1))
+    assert r["partial_r"] > 0.5 and r["p_one_sided"] < 0.01

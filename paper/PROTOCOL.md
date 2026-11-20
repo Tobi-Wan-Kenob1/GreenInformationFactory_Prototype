@@ -844,3 +844,48 @@ reading the results, not because anything was changed:
   *aims*), which match most outcome projects. They are single-corpus topics,
   not bridge topics, and are kept: no topic is removed after outcome data is
   seen (registration, "Data inclusion and exclusion").
+
+## Appendix C — exploratory analyses (after the registered results)
+
+Not registered, and labelled exploratory wherever they are reported. Each is
+specified here and committed before it is run, so its method was not chosen
+from its output. Its output was not seen when the method was written; the
+registered results were.
+
+### C.1 2026-11-20 — do H3 and H4 survive controlling for term frequency?
+**Why.** Bridge topics occur in both input corpora, and blind-spot codes occur in
+neither. Both properties go with how common a term is, and common terms also
+match more later projects. H2 found raw frequency ranking at least as well as
+the tool. So the registered H3/H4 effects might measure the persistence of
+common vocabulary rather than anything the classification adds.
+
+**Control variable.** Each unit's document frequency in the full frozen corpus
+of its arm: policy and funding sides together, all documents. It is computed
+with the tool's own `gif.codebook_queries.document_frequency` at `8ff0b35`, the
+function that selected the queries. A topic uses its own term; a code uses its
+codebook terms. This uses input data only.
+
+**Statistic.**
+- Partial Spearman correlation between class and primary uptake, controlling
+  for input frequency. Uptake and frequency are rank-transformed (average ranks);
+  class is the 0/1 indicator (H3: bridge = 1; H4: blind = 1). Uptake ranks and
+  class are each residualised on frequency ranks by least squares; the residuals
+  are correlated.
+- Expected sign: positive for H3, negative for H4.
+- p, one-sided in that direction: permute class within frequency terciles
+  (strata by frequency rank), 10 000 draws, p = (1 + #{null at least as
+  extreme}) / (1 + N).
+- 95 % CI: percentile bootstrap over units, 10 000 resamples.
+- Seeds: A1 20091232, A2 20131232.
+- Same units as the registered H3/H4: bridging seed set, blind vs covered,
+  "neither" left out.
+
+**Also reported, descriptively.**
+- Spearman ρ between input frequency and uptake.
+- Each class's frequency range, and its count in each tercile.
+- P(a > b) within each tercile.
+
+**If the classes do not overlap in frequency** — for example, every blind-spot
+code has frequency 0 and every covered code more — the effect cannot be
+separated from frequency with these data. That is reported as the finding,
+and no other model is tried in its place.
