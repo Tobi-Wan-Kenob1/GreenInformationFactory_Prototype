@@ -257,6 +257,7 @@ def freeze(out_dir: Path,
                               since=since or "1990-01-01", until=until)
     errors.update(snapshot.get("errors") or {})
     partial: Dict[str, List[str]] = dict(snapshot.get("partial") or {})
+    policy_filter: Dict[str, Any] = dict(snapshot.get("policy_filter") or {})
 
     projects: Dict[str, Any] = {}
     if not skip_projects:
@@ -270,6 +271,7 @@ def freeze(out_dir: Path,
                               programmes=programmes, label=label, repo_root=root)
     manifest["errors"] = errors
     manifest["partial_failures"] = partial
+    manifest["policy_filter"] = policy_filter
     manifest["complete"] = not partial and not errors
     path = write_manifest(out_dir, manifest)
 

@@ -408,11 +408,49 @@ def expand_keywords(keywords: Iterable[str],
 #: Each CONTAINS is a scan, so an over-expanded query can time the endpoint out.
 MAX_SPARQL_TERMS = 40
 
+#: Title fragments that mark routine market administration rather than policy.
+#:
+#: Searching EUR-Lex for "agriculture" returns, overwhelmingly, the Commission's
+#: standing market-management acts: the entry prices of fruit and vegetables are
+#: re-fixed every few days, each time as its own regulation. In the first frozen
+#: benchmark corpus these swamped the policy side — the term "standard" matched
+#: 77 of 148 acts, not because standardisation is a theme but because
+#: "establishing the **standard** import values" is boilerplate in half the
+#: corpus. An instrument that is re-issued weekly to publish a price is not a
+#: policy an organisation can align with, which is what this tool is for.
+#:
+#: Each fragment names an instrument type, not a subject, so the filter removes
+#: a kind of act rather than a topic. It is applied in the SPARQL query so the
+#: result limit is spent on substantive acts; post-filtering would leave a
+#: handful of acts per period, since the routine ones are also the most recent.
+ROUTINE_TITLE_PATTERNS = (
+    "standard import value",     # entry prices for fruit and vegetables
+    "world market price",        # e.g. unginned cotton, re-fixed periodically
+    "export refund",             # rates of refund, re-fixed per period
+    "import duties",             # cereals-sector duties
+    "import duty",
+    "representative price",      # poultry, eggs, sugar
+    "minimum selling price",     # intervention stock sales
+    "allocation coefficient",    # licence allocation when demand exceeds quota
+    "import licence",            # issue of licences applied for
+    "export licence",
+    "production levy",
+    "invitation to tender",
+    "corrigendum",               # a correction, not an instrument
+)
+
+
+def is_routine_act(title: Any) -> bool:
+    """Whether a title marks routine market administration (see the patterns)."""
+    low = str(title or "").lower()
+    return any(pattern in low for pattern in ROUTINE_TITLE_PATTERNS)
+
 
 def sparql_query(keywords: Iterable[str], since: str = "2015-01-01",
                  until: Optional[str] = None, limit: int = 150,
                  use_synonyms: bool = False,
-                 thesaurus: Optional[Dict[str, List[str]]] = None) -> str:
+                 thesaurus: Optional[Dict[str, List[str]]] = None,
+                 exclude_routine: bool = True) -> str:
     variants = expand_keywords((re.sub(r'["\\\\]', "", k) for k in keywords),
                                thesaurus=thesaurus,
                                use_synonyms=use_synonyms)[:MAX_SPARQL_TERMS]
@@ -420,6 +458,14 @@ def sparql_query(keywords: Iterable[str], since: str = "2015-01-01",
         f'CONTAINS(LCASE(STR(?title)), "{v}")' for v in variants
     )
     until_filter = f'\n  FILTER(?date <= "{until}"^^xsd:date)' if until else ""
+    # Excluded in the query, not afterwards: the routine acts are also the most
+    # recent, so with ORDER BY DESC(date) LIMIT n they would consume the whole
+    # budget and post-filtering would leave almost nothing.
+    routine_filter = ""
+    if exclude_routine:
+        clauses = " || ".join(f'CONTAINS(LCASE(STR(?title)), "{p}")'
+                              for p in ROUTINE_TITLE_PATTERNS)
+        routine_filter = f"\n  FILTER(!({clauses}))"
     # EuroVoc descriptors are the only per-act subject text CELLAR exposes —
     # there is no abstract — so they become the document's summary and feed the
     # topic analytics, which would otherwise run on the title alone.
@@ -446,7 +492,7 @@ SELECT ?work ?title ?date ?type ?celex ?force
   ?exp cdm:expression_belongs_to_work ?work .
   ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
   ?exp cdm:expression_title ?title .
-  FILTER({filters})
+  FILTER({filters}){routine_filter}
   FILTER(?date >= "{since}"^^xsd:date){until_filter}
 }} GROUP BY ?work ?title ?date ?type ?celex ?force
 ORDER BY DESC(?date) LIMIT {limit}"""
@@ -479,11 +525,12 @@ def normalize_policy(binding: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def _cellar_query(keywords: Iterable[str], since: str, until: Optional[str],
-                  limit: int) -> List[Dict[str, Any]]:
+                  limit: int, exclude_routine: bool = True) -> List[Dict[str, Any]]:
     """One CELLAR request → normalised policy documents."""
     resp = requests.get(
         CELLAR_URL,
-        params={"query": sparql_query(keywords, since=since, until=until, limit=limit),
+        params={"query": sparql_query(keywords, since=since, until=until, limit=limit,
+                                      exclude_routine=exclude_routine),
                 "format": "application/sparql-results+json"},
         headers={"Accept": "application/sparql-results+json"},
         timeout=TIMEOUT,
@@ -513,7 +560,10 @@ def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
                    until: Optional[str] = None,
                    limit: int = 150,
                    span_years: int = 5,
-                   failures_out: Optional[List[str]] = None) -> List[Dict[str, Any]]:
+                   failures_out: Optional[List[str]] = None,
+                   exclude_routine: bool = True,
+                   min_subjects: int = 0,
+                   report_out: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
     """Query CELLAR for EU acts whose English title matches any keyword.
 
     The query is ``ORDER BY DESC(date) LIMIT n``, so for a broad keyword set a
@@ -529,17 +579,34 @@ def fetch_policies(keywords: Iterable[str], since: str = "2015-01-01",
     docs: List[Dict[str, Any]] = []
     seen: set = set()
     failures: List[str] = []
+    thin = 0
     for b_since, b_until in buckets:
         try:
-            found = _cellar_query(keywords, b_since, b_until, per_bucket)
+            found = _cellar_query(keywords, b_since, b_until, per_bucket,
+                                  exclude_routine=exclude_routine)
         except Exception as exc:                  # noqa: BLE001 - collected below
             failures.append(f"{b_since[:4]}-{b_until[:4]}: {exc}")
             continue
         for doc in found:
-            if doc["id"] not in seen:
-                seen.add(doc["id"])
-                docs.append(doc)
+            if doc["id"] in seen:
+                continue
+            seen.add(doc["id"])
+            # An act with few or no EuroVoc descriptors gives the analytics
+            # almost nothing to work with, so it can be required to carry a
+            # minimum. Off by default: it discards real acts, and how many is
+            # worth measuring before it is switched on.
+            if min_subjects and len(doc.get("subjects") or []) < min_subjects:
+                thin += 1
+                continue
+            docs.append(doc)
 
+    if report_out is not None:
+        report_out.update({
+            "excluded_routine": bool(exclude_routine),
+            "routine_patterns": list(ROUTINE_TITLE_PATTERNS) if exclude_routine else [],
+            "min_subjects": min_subjects,
+            "dropped_thin": thin,
+        })
     if failures_out is not None:
         failures_out.extend(failures)
     if failures and not docs:
@@ -631,9 +698,11 @@ def build_snapshot(keywords: Optional[List[str]] = None,
                               failures_out=partial["grants"])
     except Exception as exc:                      # noqa: BLE001 - reported, not raised
         grants, errors["grants"] = [], f"{type(exc).__name__}: {exc}"
+    policy_filter: Dict[str, Any] = {}
     try:
         policies = fetch_policies(keywords, since=since, until=until,
-                                  failures_out=partial["policies"])
+                                  failures_out=partial["policies"],
+                                  report_out=policy_filter)
     except Exception as exc:                      # noqa: BLE001 - reported, not raised
         policies, errors["policies"] = [], f"{type(exc).__name__}: {exc}"
 
@@ -650,6 +719,9 @@ def build_snapshot(keywords: Optional[List[str]] = None,
         "policies": len(policies),
         "errors": errors,
         "partial": {k: v for k, v in partial.items() if v},
+        # What the policy side was filtered by, so a corpus is not just a count
+        # of acts but a statement of which acts it was willing to include.
+        "policy_filter": policy_filter,
         "skipped": skipped,
         "files": {k: str(v) for k, v in written.items()},
         "generated": date.today().isoformat(),

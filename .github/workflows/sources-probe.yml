@@ -1,0 +1,43 @@
+name: Sources probe (temporary)
+
+# Two checks that need the open internet: what the routine-act filter does to
+# the real policy corpus, and whether a list of candidate data sources answers
+# with usable data rather than a page.
+#
+# Delete once both are recorded.
+
+on:
+  workflow_dispatch:
+    inputs:
+      sections:
+        description: "A (filter effect), B (source list), or AB"
+        required: false
+        default: "AB"
+  push:
+    branches:
+      - claude/policy-grant-finder-l84zm2
+    paths:
+      - ".github/workflows/sources-probe.yml"
+      - "paper/analysis/sources_probe.py"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet -e .
+      - name: Probe
+        run: |
+          python paper/analysis/sources_probe.py "${{ inputs.sections || 'AB' }}" \
+            2>&1 | tee sources-report.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sources-report
+          path: sources-report.txt

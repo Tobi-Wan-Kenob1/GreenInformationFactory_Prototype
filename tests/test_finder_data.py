@@ -388,9 +388,11 @@ def test_plural_of_consonant_y_words():
 def test_sparql_query_uses_synonyms_and_caps_term_count():
     q = fd.sparql_query(["muck"], use_synonyms=True, thesaurus=THESAURUS)
     assert '"manure"' in q and '"organic fertiliser"' in q
-    # the cap protects the endpoint from an over-expanded filter
+    # the cap protects the endpoint from an over-expanded filter. Counted with
+    # the routine-act filter off, since that adds its own CONTAINS clauses and
+    # the cap is about keyword expansion.
     many = [f"kw{i}" for i in range(60)]
-    capped = fd.sparql_query(many)
+    capped = fd.sparql_query(many, exclude_routine=False)
     assert capped.count("CONTAINS(") <= fd.MAX_SPARQL_TERMS
 
 
@@ -447,12 +449,81 @@ def test_date_buckets_handle_short_and_inverted_windows():
     assert len(fd.date_buckets("2020-01-01", "2010-12-31", 5)) == 1
 
 
+def test_routine_market_acts_are_recognised_by_instrument_not_subject():
+    """The acts that swamped the first frozen corpus.
+
+    Searching EUR-Lex for "agriculture" returns mostly standing market
+    management: entry prices for fruit and vegetables, re-fixed every few days
+    as its own regulation. "standard" matched 77 of 148 acts for that reason.
+    """
+    routine = [
+        "Commission Regulation (EC) No 2274/2004 establishing the standard import "
+        "values for determining the entry price of certain fruit and vegetables",
+        "Commission Regulation determining the world market price for unginned cotton",
+        "Commission Regulation fixing the export refunds on milk products",
+        "Commission Regulation fixing the import duties in the cereals sector",
+        "Corrigendum to Commission Regulation (EC) No 2710/1999",
+        "Commission Regulation on the allocation coefficient for import licences",
+    ]
+    substantive = [
+        "Directive 2004/35/EC on environmental liability with regard to the "
+        "prevention and remedying of environmental damage",
+        "Commission Decision on the management of extractive waste from mining",
+        "Regulation establishing a framework for soil monitoring and resilience",
+        "Directive on the promotion of the use of energy from renewable sources",
+    ]
+    for title in routine:
+        assert fd.is_routine_act(title), title
+    for title in substantive:
+        assert not fd.is_routine_act(title), title
+
+
+def test_sparql_query_excludes_routine_acts_by_default():
+    q = fd.sparql_query(["agriculture"])
+    assert 'FILTER(!(' in q, "the exclusion should be a negative filter"
+    assert '"standard import value"' in q
+    assert '"corrigendum"' in q
+    # The exclusion belongs in the query: these acts are also the most recent,
+    # so with ORDER BY DESC(date) LIMIT n they would use the whole budget and
+    # post-filtering would leave almost nothing.
+    assert q.index("FILTER(!(") < q.index("ORDER BY")
+    assert 'FILTER(!(' not in fd.sparql_query(["agriculture"], exclude_routine=False)
+
+
+def test_fetch_policies_reports_which_filters_it_applied(monkeypatch):
+    monkeypatch.setattr(fd, "_cellar_query", lambda *a, **k: [
+        {"id": "p:1", "kind": "policy", "date": "2008-01-01",
+         "subjects": ["soil", "mining", "land use"]},
+        {"id": "p:2", "kind": "policy", "date": "2008-02-01", "subjects": ["soil"]},
+    ])
+    report = {}
+    docs = fd.fetch_policies(["mining"], since="2005-01-01", until="2009-12-31",
+                             min_subjects=2, report_out=report)
+    assert [d["id"] for d in docs] == ["p:1"], "the thinly-described act is dropped"
+    assert report["dropped_thin"] == 1
+    assert report["min_subjects"] == 2
+    assert report["excluded_routine"] is True
+    assert "standard import value" in report["routine_patterns"]
+
+
+def test_minimum_descriptors_is_off_unless_asked(monkeypatch):
+    """It discards real acts, so how many is worth measuring before enabling."""
+    monkeypatch.setattr(fd, "_cellar_query", lambda *a, **k: [
+        {"id": "p:1", "kind": "policy", "date": "2008-01-01", "subjects": []},
+    ])
+    report = {}
+    docs = fd.fetch_policies(["mining"], since="2005-01-01", until="2009-12-31",
+                             report_out=report)
+    assert [d["id"] for d in docs] == ["p:1"]
+    assert report["dropped_thin"] == 0
+
+
 def test_fetch_policies_samples_every_period(monkeypatch):
     """ORDER BY DESC + LIMIT returns only the newest slice for broad keywords,
     so each period is queried separately or historical depth is lost."""
     asked = []
 
-    def fake_query(keywords, since, until, limit):
+    def fake_query(keywords, since, until, limit, **kw):
         asked.append((since[:4], until[:4]))
         year = since[:4]
         return [{"id": f"p:{year}", "kind": "policy", "date": f"{year}-06-01"}]
@@ -467,7 +538,7 @@ def test_fetch_policies_samples_every_period(monkeypatch):
 
 
 def test_fetch_policies_survives_one_failing_slice(monkeypatch):
-    def fake_query(keywords, since, until, limit):
+    def fake_query(keywords, since, until, limit, **kw):
         if since.startswith("2005"):
             raise RuntimeError("CELLAR timeout")
         return [{"id": f"p:{since[:4]}", "kind": "policy", "date": f"{since[:4]}-06-01"}]

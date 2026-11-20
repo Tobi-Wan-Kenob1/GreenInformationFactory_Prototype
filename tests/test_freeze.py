@@ -226,7 +226,7 @@ def test_partial_failures_reach_the_caller(monkeypatch):
     import gif.finder_data as fd
     calls = []
 
-    def fake_cellar(keywords, since, until, limit):
+    def fake_cellar(keywords, since, until, limit, **kw):
         calls.append(since)
         if since.startswith("2000"):
             raise RuntimeError("HTTP 500")
