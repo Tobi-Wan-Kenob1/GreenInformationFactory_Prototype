@@ -1,0 +1,143 @@
+name: Re-record with the tool's full codebook coverage
+
+# H4 compares the codes the tool flags as blind spots against covered codes.
+# The first recordings read the codebook panel, which renders only 12 codes per
+# dimension, so most flags were never written down. The recorder now keeps the
+# tool's own full computation (recorder commit below). This re-records all four
+# files with it.
+#
+# What makes this admissible before filing:
+#   - the APP under test is exactly the manifests' commit: only the recorder
+#     script is taken from the newer commit, and the job fails unless the two
+#     commits differ in that one file;
+#   - the input is the archived corpus, verified against its manifest;
+#   - every field recorded before must come out identical — the job fails and
+#     commits nothing otherwise — so the only change is the added coverage.
+# No outcome data is touched.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/validation-paper
+    paths:
+      - ".github/workflows/record-full-coverage.yml"
+
+permissions:
+  contents: write
+
+env:
+  TOOL_COMMIT: "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e"      # named in both manifests
+  RECORDER_COMMIT: "4976b7ba8ffeed07520bcf1469a1e50cb54cd3f1"  # adds full coverage
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1     # both arms commit to the same branch
+      matrix:
+        include:
+          - label: A1
+            to_year: "2009"
+          - label: A2
+            to_year: "2013"
+    steps:
+      - name: Check out the archived corpora
+        uses: actions/checkout@v4
+        with:
+          ref: claude/validation-paper
+          path: paper-branch
+
+      - name: Check out the tool
+        uses: actions/checkout@v4
+        with:
+          ref: claude/policy-grant-finder-l84zm2
+          fetch-depth: 0
+          path: tool
+
+      - name: Use the manifests' commit, with only the recorder updated
+        working-directory: tool
+        run: |
+          changed=$(git diff --name-only "$TOOL_COMMIT" "$RECORDER_COMMIT")
+          echo "files differing between tool and recorder commits: $changed"
+          test "$changed" = "tests/browser/record.js"
+          git checkout --quiet "$TOOL_COMMIT"
+          git checkout --quiet "$RECORDER_COMMIT" -- tests/browser/record.js
+          git status --short
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: tool/tests/browser/package-lock.json
+
+      - name: Install the package
+        run: python -m pip install --quiet -e tool
+
+      - name: Install browser dependencies
+        working-directory: tool/tests/browser
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: npm ci
+
+      - name: Install Chromium
+        working-directory: tool/tests/browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify the archived corpus against its manifest
+        run: gif freeze --out "paper-branch/paper/data/frozen-${{ matrix.label }}" --verify
+
+      - name: Re-record both seed sets
+        run: |
+          CORPUS="paper-branch/paper/data/frozen-${{ matrix.label }}"
+          mkdir -p new
+          for pair in "queries.json:recorded.json:" "queries-both-sides.json:recorded-both-sides.json:-bridging"; do
+            IFS=: read sel out suffix <<< "$pair"
+            QUERIES=$(python -c "import json,sys; print(','.join(json.load(open(sys.argv[1]))['queries']))" "$CORPUS/$sel")
+            echo "== $out: $QUERIES"
+            node tool/tests/browser/record.js \
+              --corpus "$CORPUS" --out "new/$out" --queries "$QUERIES" \
+              --from 1990 --to "${{ matrix.to_year }}" \
+              --label "${{ matrix.label }}$suffix"
+          done
+
+      - name: Require everything recorded before to be unchanged
+        run: |
+          python - <<'PY'
+          import json, shutil
+          d = "paper-branch/paper/data/frozen-${{ matrix.label }}"
+          for name in ("recorded.json", "recorded-both-sides.json"):
+              old = json.load(open(f"{d}/{name}"))
+              new = json.load(open(f"new/{name}"))
+              assert [r["query"] for r in old["runs"]] == [r["query"] for r in new["runs"]], name
+              assert not new["pageErrors"], new["pageErrors"]
+              for o, n in zip(old["runs"], new["runs"]):
+                  n = json.loads(json.dumps(n))
+                  full = n["codebook"].pop("full")
+                  assert n == o, f"{name}: run {o['query']} changed beyond the added coverage"
+                  assert full and len(full["codes"]) == full["total"], (name, o["query"])
+                  print(f"{name} {o['query']:>12}: unchanged; coverage "
+                        f"{full['covered']} both / {full['gaps']} gaps / {full['total']} codes")
+              assert old["corpus"]["manifest"] == new["corpus"]["manifest"], name
+              shutil.copy(f"new/{name}", f"{d}/{name}")
+          PY
+
+      - name: Commit the recordings
+        working-directory: paper-branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper/data/frozen-${{ matrix.label }}/recorded*.json
+          if git diff --cached --quiet; then
+            echo "nothing new to commit"; exit 0
+          fi
+          git commit -m "Re-record arm ${{ matrix.label }} with the tool's full codebook coverage" \
+                     -m "App at ${TOOL_COMMIT}, recorder from ${RECORDER_COMMIT}; every previously recorded field verified unchanged."
+          for i in 1 2 3 4; do
+            git pull --rebase origin claude/validation-paper && git push origin HEAD:claude/validation-paper && break
+            sleep $((i * 5))
+          done
