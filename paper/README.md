@@ -1,23 +1,30 @@
 # Validation study — paper workspace
 
-Everything for the validation paper on the Policy & Grant Finder lives here,
-on the `claude/validation-paper` branch. The tool itself stays on `main`; this
+**Public, and conducted in the open** — see `PROTOCOL.md` §11.
+
+Everything for the validation paper on the Policy & Grant Finder lives here, on
+the `claude/validation-paper` branch. The tool itself lives on `main`; this
 branch adds the study around it.
+
+Pin the tool by commit when it matters: a frozen corpus is only reproducible
+against a stated commit, so the manifests record the commit hash rather than a
+branch name.
 
 | File | What it is |
 |------|------------|
 | `PROTOCOL.md` | The study protocol — design, hypotheses, data sources, analysis plan, limitations. **Read this first.** |
+| `PREREGISTRATION.md` | Generated from the protocol. Not yet filed; §9 lists what is still to be pasted in at filing. |
 | `analysis/wp0_probe.py` | Read-only data-availability probe. Takes section letters (`A` catalogue, `B` CORDIS, `C` Eurostat, `D` GLEIF, `E` ETS) to re-check one source; findings are recorded in protocol §6.1. |
 
-Planned, not yet present: `PREREGISTRATION.md` (generated from the protocol
-before outcome data is retrieved), `data/` (frozen corpora and linked outcome
-tables), further `analysis/` scripts producing the paper's figures and tables.
+Planned, not yet present: `data/` (frozen corpora and linked outcome tables)
+and the scripts producing the paper's figures and tables. The frozen corpora
+currently live as Actions artifacts, named in `PREREGISTRATION.md` §4.
 
-The probe needs internet access to EU hosts, which the development sandbox
-denies, so it runs on a GitHub Actions runner via
-`.github/workflows/wp0-probe.yml` — a temporary workflow that lives on this
-branch and fires when the probe is pushed, so nothing had to be added to
-`main`. Delete it once the data sources stop moving.
+The probe needs internet access to EU hosts, which some development sandboxes
+deny, so it runs on a GitHub Actions runner via
+`.github/workflows/wp0-probe.yml` — with an optional
+`sections` input to re-check one source. If that file is missing, the probe
+still runs anywhere with Python, `requests` and ordinary internet access.
 
 ## The one rule that matters
 
@@ -41,9 +48,13 @@ the frozen inputs.
 - [x] Design restructured around what the tool actually claims
 - [x] Protocol drafted (v0.1, for co-author review)
 - [x] WP0 — CORDIS / ETS / Eurostat / GLEIF confirmed; findings in §6.1
-- [ ] WP1 — on `main`: fix the `finder-data` date-window defect; `gif cordis`
-      adapter (extends the tool below 2014 — WP0 found CORDIS reaches FP1/1984)
-- [ ] WP2 — freeze corpora, run tool, pre-register
+- [x] WP1 — on the tool branch: date-window defect fixed; `gif cordis` adapter
+      added (extends the tool below 2014 — CORDIS reaches FP1/1984); act-text
+      enrichment and the routine-act filter (§6.2)
+- [x] WP2 — corpora frozen with manifests, queries selected by rule, tool
+      output recorded; pre-registration drafted
+- [ ] WP2 — **file the registration and tag the repository.** Nothing in WP3
+      may start before this: see `PREREGISTRATION.md` §9
 - [ ] WP3 — outcomes and analysis
 - [ ] WP4 — case studies
 - [ ] WP5 — write-up and FAIR release

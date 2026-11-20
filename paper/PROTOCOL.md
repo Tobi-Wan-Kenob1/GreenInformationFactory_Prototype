@@ -1,8 +1,11 @@
 # Validation study — protocol
 
 **Status:** draft for co-author review · **Version:** 0.1 · **Date:** 2026-10-30
-**Branch:** `claude/validation-paper` · **Tool under study:** Policy & Grant Finder
-(`docs/finder/`), part of the GreenInformationFactory prototype
+**Conducted in the open — see §11.**
+**Tool under study:** the Policy & Grant Finder (`docs/finder/`) in the public
+repository `Tobi-Wan-Kenob1/GreenInformationFactory_Prototype`. Every path
+below of the form `docs/…` or `src/…` refers to that repository; paths without
+a prefix are in this one.
 **Pre-registration:** not yet filed. Nothing in §6 (outcome data) may be
 retrieved before §8 is filed and this file is tagged. See §8.
 
@@ -94,7 +97,7 @@ transition — which predate this study and define the tool's declared sector
 scope, with the arm's upper date bound applied:
 
 ```bash
-gif finder-data --since 1990-01-01 --until 2009-12-31 --out paper/data/frozen-A1
+gif finder-data --since 1990-01-01 --until 2009-12-31 --out data/frozen-A1
 ```
 
 Query selection then measures document frequency *within* that fixed corpus,
@@ -122,8 +125,8 @@ Two consequences:
   indexes Horizon 2020 onward; A1's grant corpus comes from the CORDIS adapter
   instead, and is asserted against *T* the same way.
 
-Note that tool fixes belong on `main`, not on this branch; this branch carries
-the study, not the instrument.
+Note that tool fixes belong in the public prototype repository, not here; this
+repository carries the study, not the instrument.
 
 ### 4.2 Leakage — the trap to design out
 
@@ -189,13 +192,43 @@ The rule is therefore:
 1. Take every code in the barriers and drivers dimensions of the codebook.
 2. Compute each code's document frequency in the **frozen input corpus** for
    that arm (defined in §4.1 — built from the committed scope keywords, not
-   from these codes). Discard any code matching more than **20 %** of the
-   corpus — a term that broad is not a topic. This filter uses input data
-   only, so it introduces no leakage.
-3. Of those remaining, take the **ten with the highest codebook paper count**.
+   from these codes), **separately for the policy side and the funding side**.
+   Discard any code matching more than **20 %** of *either* side — a term that
+   broad is not a topic on that side. This filter uses input data only, so it
+   introduces no leakage.
+3. Discard codes absent from the corpus, and collapse codes whose term sets
+   coincide, keeping the higher paper count.
+4. Of those remaining, take the **ten with the highest codebook paper count**.
    Each becomes a single-keyword query set.
-4. Ties broken alphabetically. The resulting ten queries, the thresholds and
-   the computed document frequencies are recorded verbatim in §8.
+5. Ties broken alphabetically. The resulting queries, the thresholds and the
+   computed per-side document frequencies are recorded verbatim in §8.
+
+**Two seed sets, each matched to the hypotheses it can test.** Step 2 above is
+applied in two variants, both fixed before any outcome data is retrieved:
+
+| Variant | Rule | Serves |
+|---|---|---|
+| **Broad** | as steps 1–5 | H1, H2 |
+| **Bridging** | as above, plus: keep only codes present in **both** the policy and the funding corpus | H3, H4 |
+
+The reason is structural rather than convenient. H1 and H2 rank topics by
+subsequent uptake and want the widest defensible seed set — ten queries
+yielding roughly 150 topics, which is the *n* §4 assumes. H3 and H4 compare
+bridge topics against single-corpus ones, and a query term that appears in
+only one corpus cannot produce a bridge topic at all, so under the broad rule
+those hypotheses would be tested on whatever handful of terms happened to span
+both sides.
+
+Measured on the frozen corpora, the broad rule yields queries spanning both
+sides for 4 of 10 in A1 and 6 of 10 in A2; the bridging rule yields 8 queries
+in A1 and a full 10 in A2, all spanning both sides. Registering one rule for
+all four hypotheses would therefore mean either accepting that H3 and H4 rest
+on four terms, or halving the seed set for H1 and H2. Declaring both in
+advance, with their roles, costs nothing in rigour and is reported as two
+pre-specified analyses rather than one plus a rescue.
+
+Both selections are computed from the same frozen corpus in the same run, so
+neither is chosen after seeing the other's results.
 
 **Circularity caveat.** These codes also drive the tool's own codebook-coverage
 panel, so H4 tests that panel against the vocabulary it is built from — which
@@ -245,6 +278,24 @@ register**, which is the point: searching the web for "who acted on this"
 returns survivors with communications departments and silently drops every firm
 that tried the same thing and failed. The register includes the failures.
 
+**Fixing *k* (decided, pre-specified).** The frame should hold **200–600
+distinct organisations**. *k* is not set directly, because the number of
+organisations per topic is not known until the corpus is frozen; it is derived
+by rule:
+
+> Take topics in rank order, accumulating their distinct participating
+> organisations, and stop at the smallest *k* whose frame reaches **200**. If
+> adding the *k*-th topic would carry the frame past **600**, stop at *k* − 1
+> and report the frame size reached.
+
+So *k* is whatever the data makes it, within a band chosen in advance rather
+than after seeing which value gives a convenient answer. Both the rule and the
+resulting *k* and frame size go into §8. If rank order cannot reach 200
+organisations even using every topic, that is reported as a finding about
+corpus thinness, and Tier B proceeds on the frame available — it is
+illustrative, so a smaller frame weakens the case studies without touching the
+Tier A validation claim.
+
 **The frame is FP7 onward, not FP6.** WP0 found FP6's organisation register
 largely unpopulated — `organisationID` 1.5 %, `activityType` 3.7 %,
 `ecContribution` 4.3 %, `nutsCode` 0.7 % — against 99.7 %, 99.2 %, 94.1 % and
@@ -273,11 +324,23 @@ dimensions — within the limits in §9.2.
 
 ### 5.3 Retrieval and topic validity (C1, C2)
 
-Secondary, and cheap: a domain expert rates a stratified sample of ~100
+Secondary, and cheap: **two** domain raters score a stratified sample of ~100
 returned documents for topical relevance (precision), and the extracted topics
 are compared against independently-derived topic lists — ex-post Commission
-programme evaluations and euroSciVoc classifications. Inter-rater agreement on
-a 20 % overlap subsample.
+programme evaluations and euroSciVoc classifications.
+
+**Rating procedure (decided, pre-specified).** Two raters, so agreement is
+measurable rather than asserted. Each rates 60 documents, of which 20 are
+common to both — a 20 % overlap of the 100. Relevance is scored on a
+three-point scale (relevant / marginal / not relevant) against a written
+definition fixed before rating begins. **Cohen's κ** is computed on the overlap
+and reported with the precision estimate, whatever it comes to; a low κ is a
+finding about topical judgement in this domain, not a result to be suppressed
+or re-rated until it improves. Disagreements within the overlap are resolved by
+discussion, the resolution is recorded, and precision is reported both before
+and after resolution. Raters see documents in randomised order and are not told
+each document's rank or whether it came from a bridge topic, so the rating
+cannot track the hypothesis under test.
 
 ## 6. Data sources
 
@@ -368,13 +431,54 @@ rotate, it must be re-read from the share page rather than hard-coded.
 4. **Mining cannot be tracked regionally** through the national-accounts series
    (§9.2); it is tracked nationally via `sbs_na_sca_r2`.
 
+### 6.2 How the policy corpus is built
+
+The policy side is not simply "whatever EUR-Lex returns for the scope
+keywords". Two construction rules apply, both recorded in every snapshot and
+corpus manifest so a corpus states what it was willing to include. Appendix A.2
+gives the evidence that made them necessary and what they cost.
+
+**Routine instruments are excluded.** Thirteen title fragments mark the
+Commission's standing market administration: *standard import value*, *world
+market price*, *export refund*, *import duties*, *import duty*,
+*representative price*, *minimum selling price*, *allocation coefficient*,
+*import licence*, *export licence*, *production levy*, *invitation to tender*,
+and *corrigendum*. Each names an instrument type rather than a subject, so the
+rule removes a kind of act and not a topic. It is applied inside the SPARQL
+query: these acts are also the most recent, so with `ORDER BY DESC(date) LIMIT
+n` they would consume the whole result budget and filtering afterwards would
+leave a handful of acts per period.
+
+An act excluded this way is not a policy an organisation can align with, which
+is what the tool is for — the entry price of pears is re-published every few
+days. A reader who disagrees can see the patterns and re-run without them;
+`gif freeze` takes the filter off on request.
+
+**Acts carry an excerpt of their own text.** CELLAR serves the act by CELEX, so
+each document gets roughly 600 characters of its opening recitals in addition
+to its EuroVoc descriptors. The opening says what an act is for; the operative
+articles that follow are long, repetitive and far less discriminating.
+
+Enrichment is best-effort and every outcome is counted. Old acts exist only as
+scans, some have no English expression, and CELLAR answers 404 for a few CELEX
+numbers that SPARQL hands out — 31 of 148 in arm A1. An act that cannot be
+enriched keeps the summary it had. A corpus enriched for only part of its
+documents without saying so would be worse than one not enriched at all,
+because the thin part would read as an absence of topic rather than an absence
+of text.
+
+**Requiring a minimum number of EuroVoc descriptors is available and not
+used.** It was measured — 15 acts lost at a threshold of two, 22 at four — and
+rejected, because enrichment addresses the same weakness without discarding
+real acts.
+
 ## 7. Work packages
 
 - **WP0 — feasibility. Done, 2026-10-30.** All four outcome sources confirmed
   reachable without credentials and checked field by field; findings and the
   four design changes they forced are recorded in §6.1. Probe:
   `paper/analysis/wp0_probe.py`, run by `.github/workflows/wp0-probe.yml`.
-- **WP1 — tool work (on `main`, not this branch).**
+- **WP1 — tool work (on the public repository's `main`, not here).**
   (a) Fix the date-window defect in `build_snapshot` (§4.1) so a frozen corpus
   cannot contain post-*T* documents, with tests.
   (b) `gif cordis`: ingest FP6/FP7/H2020/HE projects and organisations into the
@@ -404,6 +508,20 @@ sampling rule.
 **Deviation policy.** Any departure from the frozen plan is recorded in a
 dated appendix to this file with its reason, and reported in the paper as a
 deviation. Analyses not pre-specified are reported as exploratory.
+
+**The registration is public, not embargoed** (§11). An earlier draft planned
+an embargo to reconcile registration with confidentiality; the study is open,
+so there is nothing to reconcile and the registration is readable from the day
+it is filed.
+
+What that changes is only who can check the dates, and the answer is now
+anyone. What it does not change is the ordering, which is the whole point.
+**A registration filed after the outcome data has been seen is worthless
+however it is dated.** Working in the open makes this easier to verify and no
+easier to fudge: the registration, the corpus manifests and the recorded tool
+output all carry timestamps a reader can inspect, so the claim that the
+ranking preceded the outcomes stands or falls on the record rather than on our
+word. The ordering in §4.2 and in `paper/README.md` is not negotiable.
 
 ## 9. Limitations — what this study cannot claim
 
@@ -455,8 +573,118 @@ outside this study.
 
 ## 10. Open decisions
 
-1. Target journal, which affects framing and length.
-2. Author list and contributions.
-3. *k* in "top-*k* ranked topics" for Tier B sampling — fix before WP2.
-4. Whether the expert rating in §5.3 is done by one co-author or two (two gives
-   inter-rater agreement; one is faster).
+1. Target journal, which affects framing and length. **Deferred by decision**
+   until the validations are finished.
+2. Author list and contributions. **Deferred by decision**, as above.
+
+Settled since v0.1:
+
+- ***k* for Tier B sampling** — frame target 200–600 distinct organisations,
+  *k* derived by the rule in §5.2.
+- **Raters for §5.3** — two, with a 20 % overlap and Cohen's κ.
+- **Publication of the study material** — see §11.
+
+## 11. Everything is public
+
+**Decision, superseding the one below.** The study is conducted in the open:
+protocol, pre-registration, frozen corpora, analysis and results all live in
+the public repository as they are produced. Nothing is withheld until
+submission.
+
+The consequence worth stating is for §8. An open study does not need an
+embargoed registration — the registration can be public from the moment it is
+filed — but the **ordering** it enforces matters more here, not less. Working
+in the open means the dates are checkable by anyone: the registration, the
+corpus manifests and the recorded tool output are all timestamped where a
+reader can see them, so a claim that the ranking preceded the outcome data can
+be verified rather than taken on trust. The discipline in §4.2 and in
+`paper/README.md` is unchanged and is not negotiable.
+
+What this costs, recorded so it is a choice and not an oversight: anyone
+reading this can run the same study. The protection against being scooped is
+the registration date and the work itself, not secrecy.
+
+### 11.1 The earlier decision, and why it was reversed
+
+For the record, since a reader will find it in the history. Study material was
+initially to be kept non-public until submission, on the reasoning that the
+protocol, hypotheses, selection rule and frozen corpora describe a result
+nobody has published, and that a reader could run the same study faster. The
+instrument was to stay public either way — it is a Horizon Europe deliverable
+and there was no case for hiding it — so the split was between the tool and the
+study built around it.
+
+Two things undid it in practice. The material was already public before the
+decision was taken: nine commits from `dd84ea7` to `38c66e4` on 2026-10-30,
+plus eight public Actions runs carrying the probe output, and removing them
+would have reduced discoverability without retracting anything already
+fetched. And the private repository the study would have moved to could not be
+reached: the GitHub App serving these sessions is scoped to public
+repositories, so every session would have faced the same obstacle while
+WP2-WP5 all handle study data.
+
+Rather than keep a confidentiality rule that the setup could not enforce, the
+study is open. That is the honest position: priority rests on a public,
+timestamped registration, not on material having been secret.
+
+## Appendix A — changes made before pre-registration
+
+Dated record of every change to the plan above, as §8 requires. All of these
+predate the filing of §8 and none involved retrieving outcome data, so they are
+revisions to a draft rather than deviations from a registered plan. They are
+recorded here because the reasoning is part of the method, and because a reader
+comparing this file to its history should not have to reconstruct why it moved.
+
+### A.1 2026-10-30 — WP0 findings (§6.1)
+Four design changes forced by what the data actually contains: arm A1 gains a
+grant corpus because CORDIS reaches back to FP1; the available-at-*T* rule keys
+on `startDate` because `ecSignatureDate` is empty in FP6 and FP7; Tier B draws
+on FP7 onward because FP6's participant register is unusable; mining is
+reported nationally because the regional accounts cannot isolate it.
+
+### A.2 2026-11-20 — the policy corpus was mostly not policy
+The first frozen corpus was built, the tool run on it, and the output recorded.
+That exercise is what exposed the problem, which is the purpose of running it.
+
+**What was found.** In arm A1, **110 of 148 acts (74 %)** were routine market
+administration — standard import values for fruit and vegetables, re-fixed
+every few days as a fresh regulation. The term `standard` matched 77 of 148
+acts for that reason alone. Searching EUR-Lex for "agriculture" returns these
+in overwhelming preference to policy instruments.
+
+A second, compounding problem: a policy document carried only its title and its
+EuroVoc descriptors as searchable text, a few dozen words, against a funded
+project's objective. Ten codebook query terms matched 679 projects and
+essentially no acts, so anything comparing the two corpora was measuring
+metadata rather than policy, and H3 and H4 had nothing to test.
+
+**What changed.** Thirteen title fragments now exclude routine instrument types
+in the SPARQL query (§6.2); acts carry an excerpt of their own text fetched
+from CELLAR; and the specificity filter in §5.1 step 2 is applied per side,
+because a corpus-wide ratio diluted by the larger side had let `regulation`
+through at 143 of 148 acts.
+
+**Effect, measured.** Corpus size held at 148 acts — the per-period budget
+refills with substantive acts rather than shrinking — while routine acts went
+to zero and coverage reached back to 1994 instead of starting at the newest
+price notice. 117 of 148 acts (79 %) yielded readable text. Queries spanning
+both corpora went from 1 of 10 to 4 of 10 in A1, and the bridging seed set from
+1 query to 8 in A1 and 10 in A2. `standard` now matches 6 acts rather than 77.
+
+**What it costs.** The filter is a judgement about what counts as policy, and it
+is auditable rather than hidden: the patterns are recorded in every snapshot and
+corpus manifest. Each fragment names an instrument type and not a subject, so
+it removes a kind of act rather than a topic — but a reader who disagrees with
+the judgement can see exactly what was dropped and re-run without it. Requiring
+a minimum number of EuroVoc descriptors was measured (15 acts lost at ≥2, 22 at
+≥4) and **not adopted**: act-text enrichment addresses the same weakness
+without discarding real acts.
+
+### A.3 2026-11-20 — two seed sets instead of one (§5.1)
+Declared in advance, each matched to the hypotheses it can test, for the reasons
+and with the figures given in §5.1.
+
+### A.4 2026-11-20 — the study is public (§8, §11)
+Confidentiality until submission was replaced by working in the open. The
+registration is public rather than embargoed; the ordering it enforces is
+unchanged.
