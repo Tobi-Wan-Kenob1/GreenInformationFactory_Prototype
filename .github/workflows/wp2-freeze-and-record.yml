@@ -74,6 +74,7 @@ jobs:
             --since 1990-01-01 \
             --until "${{ matrix.until }}" \
             --programmes "${{ matrix.programmes }}" \
+            --enrich-text \
             --label "${{ matrix.label }}"
 
       - name: Verify the corpus against its manifest
@@ -117,6 +118,14 @@ jobs:
           print(f"=== {manifest['label']} ===")
           print(f"corpus: {manifest['documents']} documents, "
                 f"complete={manifest['complete']}, window={manifest['window']}")
+          pf = manifest.get("policy_filter") or {}
+          print(f"policy filter: routine excluded={pf.get('excluded_routine')}, "
+                f"min_subjects={pf.get('min_subjects')}, "
+                f"thin dropped={pf.get('dropped_thin')}")
+          enriched = pf.get("enriched_text") or {}
+          if enriched:
+              print(f"act text: {enriched.get('enriched')}/{enriched.get('documents')} "
+                    f"acts enriched, statuses={enriched.get('statuses')}")
           print(f"tool: {manifest['tool']['commit'][:12]} dirty={manifest['tool']['dirty']}")
           for f in manifest["files"]:
               print(f"  {f['name']:15s} {f['items']:5d} items  "
