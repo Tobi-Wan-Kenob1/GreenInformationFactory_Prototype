@@ -86,3 +86,14 @@ def test_draw_is_deterministic_spreads_countries_and_keeps_a_reserve():
     sampled = {s["key"] for s in s1}
     assert not sampled & set(sum(extra1["reserve"].values(), []))
     assert len(sampled) + len(sum(extra1["reserve"].values(), [])) == len(frame)
+
+
+def test_draw_passes_over_authors_institutions_and_reports_them():
+    frame = [{"key": f"k{i}", "name": "Universitaet Bayreuth" if i == 0 else f"Uni {i}",
+              "activityType": "HES", "country": f"C{i}"} for i in range(4)]
+    for seed in range(20):
+        sample, extra = B.draw(frame, 2, seed, ("bayreuth",))
+        assert all("bayreuth" not in s["name"].casefold() for s in sample)
+        assert len(sample) == 2
+        assert [e["name"] for e in extra["excluded"]] == ["Universitaet Bayreuth"]
+        assert "k0" not in sum(extra["reserve"].values(), [])

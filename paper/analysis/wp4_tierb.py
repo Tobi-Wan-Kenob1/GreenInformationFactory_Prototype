@@ -29,6 +29,11 @@ import wp3_outcomes as O   # noqa: E402  (project reader shared with the registe
 FRAME_MIN, FRAME_MAX = 200, 600
 PER_ARM = 5
 SEEDS = {"A1": 20091233, "A2": 20131233}
+#: Second draw (PROTOCOL.md B.6): new seeds, frame restricted to the study scope,
+#: authors' own institutions excluded.
+SEEDS_B6 = {"A1": 20091234, "A2": 20131234}
+#: Name fragments of the authors' institutions (case-folded, any spelling seen in CORDIS).
+AUTHOR_INSTITUTIONS = ("bayreuth",)
 WINDOWS = {"A1": ("2010-01-01", "2012-12-31"), "A2": ("2014-01-01", "2016-12-31")}
 TYPES = ("PRC", "HES", "REC", "PUB", "OTH")
 GLEIF = "https://api.gleif.org/api/v1/lei-records"
@@ -158,8 +163,20 @@ def allocate(counts: Dict[str, int], n: int) -> Dict[str, int]:
     return {t: a for t, a in alloc.items() if a}
 
 
-def draw(frame: List[Dict[str, Any]], n: int, seed: int) -> Tuple[List[Dict[str, Any]], Dict[str, List[str]]]:
-    """Stratified sample (B.4) and the full reserve order per type."""
+def is_excluded(org: Dict[str, Any], fragments: Iterable[str]) -> bool:
+    name = org["name"].casefold()
+    return any(f in name for f in fragments)
+
+
+def draw(frame: List[Dict[str, Any]], n: int, seed: int,
+         exclude: Iterable[str] = ()) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """Stratified sample (B.4) and the full reserve order per type.
+
+    Organisations matching ``exclude`` (B.6: the authors' own institutions) are
+    passed over in draw order, so the next organisation of the same type takes
+    the place, and they are reported.
+    """
+    exclude = tuple(exclude)
     rng = np.random.default_rng(seed)
     by_type: Dict[str, List[Dict[str, Any]]] = {}
     for org in frame:
@@ -169,16 +186,19 @@ def draw(frame: List[Dict[str, Any]], n: int, seed: int) -> Tuple[List[Dict[str,
     sample, countries = [], set()
     for t in sorted(alloc):
         taken = 0
-        pool = list(order[t])
+        pool = [o for o in order[t] if not is_excluded(o, exclude)]
         while taken < alloc[t] and pool:
             pick = next((o for o in pool if o["country"] not in countries), pool[0])
             pool.remove(pick)
             countries.add(pick["country"])
             sample.append({**pick, "stratum": t, "draw": len(sample) + 1})
             taken += 1
-    reserve = {t: [o["key"] for o in order[t] if o["key"] not in {s["key"] for s in sample}]
+    taken_keys = {s["key"] for s in sample}
+    reserve = {t: [o["key"] for o in order[t] if o["key"] not in taken_keys and not is_excluded(o, exclude)]
                for t in order}
-    return sample, {"allocation": alloc, "reserve": reserve}
+    excluded = [{"key": o["key"], "name": o["name"], "activityType": o["activityType"]}
+                for orgs in order.values() for o in orgs if is_excluded(o, exclude)]
+    return sample, {"allocation": alloc, "reserve": reserve, "excluded": excluded}
 
 
 # ---------------------------------------------------------------- per-organisation data
@@ -219,7 +239,9 @@ def gleif_candidates(name: str, country: str, session=None) -> Dict[str, Any]:
 
 # ---------------------------------------------------------------- run
 
-def run(data: Path, archives: Dict[str, bytes], out: Path, gleif=True) -> Dict[str, Any]:
+def run(data: Path, archives: Dict[str, bytes], out: Path, gleif=True,
+        scoped: bool = False) -> Dict[str, Any]:
+    """``scoped`` selects the second draw (B.6); the default reproduces the first (B.4)."""
     from gif import cordis
 
     projects, org_rows = [], []
@@ -236,39 +258,60 @@ def run(data: Path, archives: Dict[str, bytes], out: Path, gleif=True) -> Dict[s
         queries = json.loads((data / f"frozen-{arm}" / "queries.json").read_text())["queries"]
         since, until = WINDOWS[arm]
         window = O.in_window(projects, since, until)
+        scope = None
+        if scoped:
+            # The frozen corpus's own scope keywords, the filter that built the input.
+            scope = json.loads((data / f"frozen-{arm}" / "manifest.json").read_text())["keywords"]
+            pat = cordis.term_pattern(scope)
+            window = [p for p in window if pat.search(p["text"])]
         pairs = ordered_pairs(rec, queries)
         fr = build_frame(pairs, window, org_rows, cordis)
         table = frame_table(fr["frame_keys"], fr["frame_projects"], org_rows)
-        sample, extra = draw(table, PER_ARM, SEEDS[arm])
+        seed = (SEEDS_B6 if scoped else SEEDS)[arm]
+        sample, extra = draw(table, PER_ARM, seed, AUTHOR_INSTITUTIONS if scoped else ())
         for s in sample:
             s["participations"] = participations(s["key"], org_rows, by_id)
             if gleif:
                 s["gleif"] = gleif_candidates(s["name"], s["country"])
-        payload = {"arm": arm, "protocol": "Appendix B.4", "window": [since, until],
+        payload = {"arm": arm, "protocol": "Appendix B.6" if scoped else "Appendix B.4",
+                   "scope_keywords": scope, "window": [since, until],
                    "pairs_available": len(pairs), "pairs_considered": fr["pairs_considered"],
                    "k": fr["k"], "frame_size": fr["frame_size"], "stop_reason": fr["stop_reason"],
                    "frame_by_type": dict(Counter(o["activityType"] for o in table)),
                    "frame_countries": len({o["country"] for o in table}),
-                   "seed": SEEDS[arm], **extra, "sample": sample,
+                   "seed": seed, **extra, "sample": sample,
                    "frame": [{k: o[k] for k in ("key", "name", "activityType", "country")} for o in table]}
         (out / f"tierb-{arm}.json").write_text(json.dumps(payload, indent=1, default=list) + "\n")
         summary[arm] = {k: payload[k] for k in ("k", "frame_size", "stop_reason", "frame_by_type",
                                                 "frame_countries", "allocation")}
+        summary[arm]["pairs"] = [(e["query"], e["topic"], e["organisations"], e["included"])
+                                 for e in fr["pairs_considered"]]
+        summary[arm]["excluded"] = [e["name"] for e in extra.get("excluded", [])]
         summary[arm]["sample"] = [(s["name"], s["activityType"], s["country"]) for s in sample]
-    (out / "TIERB.md").write_text(report(summary))
+    (out / "TIERB.md").write_text(report(summary, scoped))
     return summary
 
 
-def report(summary: Dict[str, Any]) -> str:
-    L = ["# Tier B — frame and sample", "",
-         "Illustrative case studies, not validation evidence. Frame rule: PROTOCOL.md Appendix B.4, a dated",
-         "deviation from registration §8 decided before sampling. Generated by `paper/analysis/wp4_tierb.py`.", ""]
+def report(summary: Dict[str, Any], scoped: bool = False) -> str:
+    if scoped:
+        head = ["# Tier B — frame and sample (second draw, B.6)", "",
+                "Illustrative case studies, not validation evidence. Frame rule: PROTOCOL.md Appendix B.4, restricted",
+                "by B.6 to projects within the study scope, with the authors' institutions excluded. B.6 was decided",
+                "**after the first draw (`results/tierb/`) had been seen**; both draws are published.", ""]
+    else:
+        head = ["# Tier B — frame and sample", "",
+                "Illustrative case studies, not validation evidence. Frame rule: PROTOCOL.md Appendix B.4, a dated",
+                "deviation from registration §8 decided before sampling.", ""]
+    L = head + ["Generated by `paper/analysis/wp4_tierb.py`.", ""]
     for arm, s in summary.items():
         L += [f"## {arm}", "",
               f"- Pairs used (*k*): **{s['k']}**, frame **{s['frame_size']}** organisations "
               f"in {s['frame_countries']} countries — {s['stop_reason']}.",
               f"- Frame by type: {', '.join(f'{t} {n}' for t, n in sorted(s['frame_by_type'].items()))}.",
               f"- Allocation of {PER_ARM}: {', '.join(f'{t} {n}' for t, n in sorted(s['allocation'].items()))}.",
+              "- Pairs considered (query / topic → organisations): " + "; ".join(
+                  f"{q} / {t} → {n}{'' if inc else ' (not included)'}" for q, t, n, inc in s.get("pairs", [])) + ".",
+              "- Excluded as an author's institution: " + (", ".join(s.get("excluded") or []) or "none") + ".",
               "", "| # | Organisation | Type | Country |", "|---|---|---|---|"]
         L += [f"| {i} | {n} | {t} | {c} |" for i, (n, t, c) in enumerate(s["sample"], 1)]
         L.append("")
@@ -281,11 +324,12 @@ def main(argv=None) -> int:
     ap.add_argument("--archives", type=Path, required=True)
     ap.add_argument("--out", type=Path, default=Path("paper/results/tierb"))
     ap.add_argument("--no-gleif", action="store_true")
+    ap.add_argument("--scoped", action="store_true", help="second draw, PROTOCOL.md B.6")
     args = ap.parse_args(argv)
     from gif import cordis
     archives = {p: (args.archives / cordis.PROGRAMMES[p].rsplit("/", 1)[1]).read_bytes()
                 for p in O.PROGRAMMES}
-    summary = run(args.data, archives, args.out, gleif=not args.no_gleif)
+    summary = run(args.data, archives, args.out, gleif=not args.no_gleif, scoped=args.scoped)
     print(json.dumps(summary, indent=1, default=str))
     return 0
 

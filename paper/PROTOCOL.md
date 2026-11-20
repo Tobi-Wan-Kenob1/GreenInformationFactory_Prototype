@@ -956,3 +956,35 @@ boilerplate, and a browser test now guards it. The change postdates
 registration. Every registered result, the exploratory C.1 and the Tier B
 frame use the tool at `8ff0b35`, so none of them is affected. The paper reports
 the defect as a finding of the validation.
+
+### B.6 2026-11-20 — Tier B re-drawn within scope (a second deviation, after seeing the first draw)
+**What the first draw showed** (`results/tierb/`, `05a7eac`).
+- In both arms the first (query, topic) pair, *management* within
+  *efficiency*, exceeded 600 organisations alone and so formed the whole frame:
+  1 883 organisations in A1, 2 171 in A2.
+- Neither term is specific to the study's scope. Four of the ten sampled
+  organisations work outside agriculture and mining: a wool mill, a boiler
+  maker, a space solar-cell maker and a nuclear research institute.
+- The A1 sample also contained Universität Bayreuth, the PI's institution.
+
+**Decision (by the PI, 2026-11-20).** This was decided **after** the first draw
+had been seen, which is why both draws are published and the paper says so.
+Everything else in B.4 is unchanged.
+- **Scope.** Frame projects must also match the frozen corpus's own scope
+  keywords, the filter that built the input corpus: *agriculture, mining,
+  bioeconomy, biomass, soil, circular economy, carbon farming, raw materials,
+  land use, just transition*. It is applied with the registered rule to the
+  same text (title, objective, euroSciVoc).
+- **Authors' institutions** are excluded, matched by name: currently any name
+  containing *Bayreuth*. Co-authors' institutions are added before their case
+  work starts, and every addition is dated here. An excluded organisation is
+  passed over in draw order, so the next of the same type takes its place.
+  Exclusions are reported.
+- **New seeds:** A1 20091234, A2 20131234.
+- **Output:** `results/tierb-scoped/`, drawn once by
+  `.github/workflows/wp4-tierb-scoped.yml`.
+
+**What this costs.** The restriction was chosen after the first sample was
+seen. It does not touch Tier A, and Tier B is illustrative. Still, a reader is
+entitled to weigh the scoped cases knowing that, and the first draw stays in
+the record for comparison.
