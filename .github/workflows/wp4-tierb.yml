@@ -1,0 +1,71 @@
+name: WP4 — Tier B frame and sample (once)
+
+# PROTOCOL.md Appendix B.4: the frame rule, the sample and the reserve order,
+# committed before this runs. One shot, like WP3: it refuses to run once the
+# sample exists, because a re-drawn sample would let the draw be chosen.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/validation-paper
+    paths:
+      - ".github/workflows/wp4-tierb.yml"
+
+permissions:
+  contents: write
+
+env:
+  TOOL_COMMIT: "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e"
+
+jobs:
+  tierb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/validation-paper
+          path: study
+      - name: Refuse a second draw
+        run: |
+          if [ -e study/paper/results/tierb/TIERB.md ]; then
+            echo "the Tier B sample exists; a re-draw is a deviation, not a retry"; exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TOOL_COMMIT }}
+          path: tool
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet -e tool numpy scipy pytest requests
+      - name: Tests on synthetic data must pass first
+        run: python -m pytest -q study/paper/analysis/test_wp4.py
+      - name: Download the CORDIS archives
+        run: |
+          mkdir -p archives
+          for f in cordis-fp7projects-csv.zip cordis-h2020projects-csv.zip cordis-HORIZONprojects-csv.zip; do
+            for i in 1 2 3 4; do
+              curl -fsSL --retry 3 -o "archives/$f" "https://cordis.europa.eu/data/$f" && break
+              sleep $((i * 20))
+            done
+            test -s "archives/$f"; sha256sum "archives/$f"
+          done
+      - name: Build the frame and draw the sample
+        working-directory: study
+        env:
+          PYTHONPATH: paper/analysis
+        run: python paper/analysis/wp4_tierb.py --data paper/data --archives ../archives --out paper/results/tierb
+      - name: Commit
+        working-directory: study
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper/results/tierb
+          git commit -m "WP4: Tier B frame and sample (protocol B.4)" \
+                     -m "Drawn once by paper/analysis/wp4_tierb.py with the tool at ${TOOL_COMMIT}."
+          for i in 1 2 3 4; do
+            git pull --rebase origin claude/validation-paper && git push origin HEAD:claude/validation-paper && break
+            sleep $((i * 5))
+          done

@@ -900,3 +900,59 @@ and no other model is tried in its place.
   in the top frequency tercile, and blind spots in the lower two. Partial r is
   near zero, with wide intervals. As specified, that is reported as the
   finding, and no other model replaces it.
+
+### B.4 2026-11-20 — Tier B frame: a deviation, decided before sampling
+**What broke.** Registration §8 builds the frame by accumulating top-ranked
+topics until 200–600 organisations. With topics matched on their term alone,
+as in Tier A, a single topic already brings thousands of organisations. For
+example, *land* matches projects with 12 241 organisations in A1, and only 47
+of 162 topics stay under 600 over the whole window. The rule as written stops
+at *k* = 0, leaving an empty frame. This was found by reading the registered
+outcome counts, before any frame was built or any organisation looked at.
+
+**Decision (by the PI, 2026-11-20).** A Tier B unit is a topic **as the tool
+offered it inside a query run**. This is a dated deviation from registration
+§8, reported in the paper as one. Tier B was never part of the validation
+claim.
+
+- **Units.** (query, topic) pairs from the broad seed set's **bridge** lists,
+  the list the tool shows by default. A topic identical to its query is skipped.
+- **Order.** By rank within its list. Equal ranks are ordered by the
+  registered query order (§5).
+- **Matching.** A project belongs to a pair if its title, objective or
+  euroSciVoc labels match **both** the query and the topic, by the registered
+  rule (`term_pattern` at `8ff0b35`).
+- **Projects.** FP7, H2020 and Horizon Europe, starting in the arm's first three
+  outcome years: A1 2010-01-01 – 2012-12-31, A2 2014-01-01 – 2016-12-31.
+- **Frame.** Distinct organisations (as in B.2) across the pairs, accumulated
+  in order until the frame holds at least 200. A pair that would carry it past
+  600 stops the accumulation before that pair. If the first pair alone exceeds
+  600, it is used alone and its size reported. If every pair together stays
+  under 200, the frame is what they give, and that is reported.
+- **Sample.** n = 10: five per arm.
+  - Within an arm, the five are allocated across CORDIS `activityType` in
+    proportion to the frame, by largest remainder.
+  - Within a type, organisations are taken in a seeded random order
+    (A1 20091233, A2 20131233), skipping a country already in that arm's sample
+    while another country is still available.
+  - Each organisation's type is the one most often recorded for it in the frame.
+  - The complete random order is kept as the **reserve list**.
+- **Dissolution.** A sampled organisation that has since dissolved or exited
+  stays in the sample. If more than three of the ten turn out to have done so,
+  the excess, latest in draw order, is replaced by the next reserve of the same
+  type, and the replacement is reported.
+- **Data per sampled organisation.** Every CORDIS participation (FP7 onward)
+  with its EC contribution; GLEIF records matching its name and country, as
+  candidates only. Status is established during the case work, not
+  automatically.
+
+`paper/analysis/wp4_tierb.py` implements this and is committed with it.
+
+### B.5 2026-11-20 — a tool change after registration
+The registered results showed the tool's topic lists headed by filler words:
+*will*, *develop*, *part*, *aims*. The stop list was extended on the tool
+branch (`93b68ff`) with modal verbs, connectives and research-proposal
+boilerplate, and a browser test now guards it. The change postdates
+registration. Every registered result, the exploratory C.1 and the Tier B
+frame use the tool at `8ff0b35`, so none of them is affected. The paper reports
+the defect as a finding of the validation.
