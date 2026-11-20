@@ -16,6 +16,7 @@ branch name.
 | `PREREGISTRATION.md` | Generated from the protocol. **Filed** on OSF, [doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP); registered text at tag `prereg-v1`. |
 | `OSF_FILING.md` | Where to file it and what to enter in each OSF field. |
 | `OSF_UPDATE.md` | The same-day correction to the OSF form, and why. |
+| Zenodo | The registered files: [doi:10.5281/zenodo.24392976](https://doi.org/10.5281/zenodo.24392976), verified against tag `prereg-v1`. |
 | `data/` | The registered corpora (`frozen-A1/`, `frozen-A2/`): corpus files and manifest, both query selections, and the tool's recorded output for each. `REGISTRATION_VALUES.md` holds every digest, computed by workflow. |
 | `analysis/wp0_probe.py` | Read-only data-availability probe. Takes section letters (`A` catalogue, `B` CORDIS, `C` Eurostat, `D` GLEIF, `E` ETS) to re-check one source; findings are recorded in protocol §6.1. |
 

@@ -739,3 +739,14 @@ deposit of the registered files linked as a resource. No hypothesis, measure,
 test, threshold or exclusion changed. Every corrected field matches the
 pre-registration at tag `prereg-v1`, and no outcome data had been retrieved
 when it was made.
+
+Update 1 was approved at 2026-11-20T09:28:45Z. The registered files were
+deposited on Zenodo,
+[doi:10.5281/zenodo.24392976](https://doi.org/10.5281/zenodo.24392976),
+published 2026-11-20T09:45:28Z and linked as a resource. Read back, the
+published files hash exactly as registered, and all 17 files inside the zip are
+byte-identical to `paper/data/` at the tag. Update 1 had been submitted from an
+earlier draft of the guide, before the deposit moved to Zenodo. It left one
+field claiming the files were attached and naming an OSF project, and one field
+empty. A second update replaces that field whole (`paper/OSF_UPDATE.md`,
+"Second update").

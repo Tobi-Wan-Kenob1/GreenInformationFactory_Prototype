@@ -131,3 +131,48 @@ Changes**.
 
 Tell me when it's through. I'll re-run the check against both OSF and
 Zenodo, and record the registration as filed.
+
+---
+
+## Second update — 2026-11-20, after reading the first one back
+
+Update 1 was approved at 2026-11-20T09:28:45Z. It was submitted from an
+earlier version of this guide, written before the files went to Zenodo, so
+two things remain:
+
+- In **Data collection procedures**, the new paragraph was added *below* the
+  old line instead of replacing it. The field still says "also attached as
+  prereg-v1-data.zip", and it names "the public OSF project" where the deposit
+  is Zenodo (published 2026-11-20T09:45:28Z).
+- **Other planned analysis** is still empty.
+
+Registration → **Updates** → **Update**.
+
+**Justification**
+```
+Completes update 1 (approved 2026-11-20T09:28:45Z), still before any outcome data was retrieved or analysed; nothing in the plan changes. (1) In "Data collection procedures" the corrected paragraph had been added below the line it was meant to replace, so the field still said the data were attached, and it named an OSF project where the deposit is Zenodo, doi:10.5281/zenodo.24392976 (linked under Resources). The field is replaced whole. Update 1's justification refers to that OSF project for the same reason; the deposit is the Zenodo record. (2) "Other planned analysis", left empty, is completed from PREREGISTRATION.md §8 and §11 at tag prereg-v1.
+```
+
+**Data collection procedures**: select all, delete, then paste:
+```
+Input: EUR-Lex via the CELLAR SPARQL endpoint (agriculture and mining subject codes; routine market instruments excluded by 13 title fragments naming instrument types; opening recitals added from CELLAR), and CORDIS bulk project files for FP6 and FP7. Frozen with `gif freeze`, which refuses a corpus that breaches its window or whose sources only partly answered, and writes a manifest of per-file SHA-256s and content digests.
+Registered corpora (manifest.json SHA-256):
+  A1  afd89a28d22cf15cab6ac1947137f98ee1ed87297f0f1c3e634263f29c44a1a8  (827 documents: 148 acts, 679 projects)
+  A2  9e8993581ed95109d7fd2680ab0ead992b32ed4efc7b20bbb0075df3a9fe8cb5  (1,523 documents: 150 acts, 1 call, 1,372 projects)
+Archived at paper/data/ in the repository, commit 8d023f45439b2b8c19b8956d628b71194ecd5b78 (tag prereg-v1). A copy is deposited on Zenodo, doi:10.5281/zenodo.24392976, linked under Resources. SHA-256 of the deposited files:
+  78d91753e665319926dbe1434e7bd22f2bca010c4a456dac3c1c1f0d120e8990  PREREGISTRATION.md
+  58cfa8b6761c53b1bfb6a597aab4ca2507a88b9244efb0eb9127672b3dfd336d  PROTOCOL.md
+  876fac9996bd4ebd14437a3b484865a8d27f924236a4df8074f4692c46b253e2  prereg-v1-data.zip
+The zip is not byte-reproducible (git stamps archive times); its 17 files are byte-identical to paper/data/ at the tag.
+Queries: derived by rule from the independent BioFairNet WP1/D1.2 literature codebook (§5); neither the tool's author nor the analyst picks them.
+Outcomes (after registration): CORDIS FP7, H2020 and Horizon Europe projects starting in the outcome window, and EUR-Lex acts in the outcome window, matched to topics by the same word-boundary rule.
+```
+
+**Other planned analysis**
+```
+Tier B case studies (about 10 organisations, stratified by CORDIS activity type and country, FP7 onward, including dissolved entities) are illustrative mechanism evidence only, with no causal attribution (PREREGISTRATION.md §8). A secondary retrieval-quality check: two raters, about 100 documents, Cohen's kappa on 20 in common (§11). Any analysis not listed in this registration is reported as exploratory.
+```
+
+Optional, outside the Update: **Resources** → **Add resource** → *Materials*,
+DOI `10.5281/zenodo.24392976`, description
+`Pre-registration document and study protocol at tag prereg-v1`.
