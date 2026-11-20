@@ -1,0 +1,123 @@
+{
+ "arm": "A1",
+ "seed": 20091231,
+ "draws": 10000,
+ "alpha": 0.05,
+ "primary_measure": "EC contribution share",
+ "lists_used": 15,
+ "lists_shorter_than_min": 15,
+ "tests": {
+  "H1": {
+   "lists": 15,
+   "lists_constant_outcome": 0,
+   "mean_rho": 0.011083065288538852,
+   "ci95": [
+    -0.12743394461206822,
+    0.16150615387365944
+   ],
+   "p": 0.44275572442755723,
+   "direction_ok": true,
+   "p_holm": 0.8855114488551145,
+   "supported": false
+  },
+  "H2": {
+   "lists": 14,
+   "lists_constant_outcome": 0,
+   "lists_undefined": 1,
+   "mean_diff": -0.1288626963962994,
+   "ci95": [
+    -0.2652367273327098,
+    -0.02380163109030711
+   ],
+   "p": 0.9868013198680132,
+   "direction_ok": false,
+   "p_holm": 0.9868013198680132,
+   "supported": false
+  },
+  "H3": {
+   "n": [
+    27,
+    99
+   ],
+   "p": 0.00021842593083449847,
+   "superiority": 0.7212869435091658,
+   "ci95": [
+    0.6247661803217359,
+    0.8103254769921436
+   ],
+   "median": [
+    0.0927641241427443,
+    0.0260598526328436
+   ],
+   "direction_ok": true,
+   "p_holm": 0.0006552777925034955,
+   "supported": true
+  },
+  "H4": {
+   "n": [
+    39,
+    14
+   ],
+   "p": 3.380046862316457e-05,
+   "superiority": 0.13736263736263737,
+   "ci95": [
+    0.04395604395604396,
+    0.2564102564102564
+   ],
+   "median": [
+    0.0062643620433665325,
+    0.05257059515250069
+   ],
+   "direction_ok": true,
+   "neither": 34,
+   "p_holm": 0.00013520187449265827,
+   "supported": true
+  }
+ },
+ "effect_size_top_decile": {
+  "topics": 122,
+  "top_decile": 24,
+  "median_top": 0.06757535979973175,
+  "median_all": 0.040194638614273914,
+  "ratio": 1.6812033178906205,
+  "ci95": [
+   0.884549808284779,
+   2.897723345777417
+  ],
+  "bootstrap_undefined": 0
+ },
+ "secondary": {
+  "projects": {
+   "available": true,
+   "lists": 15,
+   "lists_constant_outcome": 0,
+   "mean_rho": 0.000862669554518731
+  },
+  "organisations": {
+   "available": true,
+   "lists": 15,
+   "lists_constant_outcome": 0,
+   "mean_rho": 0.020156326774491553
+  },
+  "acts": {
+   "available": true,
+   "lists": 14,
+   "lists_constant_outcome": 1,
+   "mean_rho": 0.13027162635816195
+  }
+ },
+ "window": {
+  "since": "2010-01-01",
+  "until": "2026-12-31"
+ },
+ "denominator": {
+  "by_programme": {
+   "fp7": 19087,
+   "h2020": 35091,
+   "horizon": 22771
+  },
+  "ec_eur": 163883423605.3,
+  "projects": 76949,
+  "projects_missing_ec": 0
+ }
+}
