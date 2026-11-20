@@ -105,6 +105,8 @@ jobs:
                           at = b["attributes"]
                           if at.get("block_type") == "question-label":
                               current = at.get("display_text") or ""
+                          if at.get("block_type") in ("select-input-option", "select-other-option"):
+                              print(f"  option under '{current[:50]}': {at.get('display_text')}")
                           key = at.get("registration_response_key")
                           if key and key not in labels:
                               labels[key] = (current, at.get("block_type"), at.get("display_text"))
