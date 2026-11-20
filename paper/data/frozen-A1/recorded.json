@@ -1,8 +1,8 @@
 {
  "label": "A1",
- "recorded": "2026-11-20T05:57:40Z",
+ "recorded": "2026-11-20T07:41:19Z",
  "corpus": {
-  "dir": "corpus-A1",
+  "dir": "../paper-branch/paper/data/frozen-A1",
   "manifest": {
    "label": "A1",
    "created": "2026-11-20T05:57:27Z",
@@ -374,7 +374,712 @@
      "lignocellulosic",
      "biorefinery",
      "composting"
-    ]
+    ],
+    "full": {
+     "covered": 5,
+     "gaps": 53,
+     "total": 87,
+     "nPolicies": 6,
+     "nGrants": 76,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 6,
+       "nGrant": 58,
+       "status": "both"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 15,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 10,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 7,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 6,
+       "nGrant": 3,
+       "status": "both"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 6,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 24,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 6,
+       "nGrant": 29,
+       "status": "both"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 4,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 6,
+       "nGrant": 3,
+       "status": "both"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 6,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 5,
+       "nGrant": 2,
+       "status": "both"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 4,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -543,7 +1248,712 @@
      "biorefinery",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 0,
+     "gaps": 51,
+     "total": 87,
+     "nPolicies": 0,
+     "nGrants": 105,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 13,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 83,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 6,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 46,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 5,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 5,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 5,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 7,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 6,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 4,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -725,7 +2135,712 @@
      "biorefinery",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 0,
+     "gaps": 70,
+     "total": 87,
+     "nPolicies": 0,
+     "nGrants": 18,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 4,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 17,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -911,7 +3026,712 @@
      "biorefinery",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 0,
+     "gaps": 74,
+     "total": 87,
+     "nPolicies": 0,
+     "nGrants": 10,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 10,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 5,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -1090,7 +3910,712 @@
      "biorefinery",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 0,
+     "gaps": 64,
+     "total": 87,
+     "nPolicies": 0,
+     "nGrants": 57,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 6,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 57,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 17,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 4,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -1282,7 +4807,712 @@
      "biorefinery",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 0,
+     "gaps": 83,
+     "total": 87,
+     "nPolicies": 0,
+     "nGrants": 2,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -1573,7 +5803,712 @@
      "lignocellulosic",
      "biorefinery",
      "composting"
-    ]
+    ],
+    "full": {
+     "covered": 3,
+     "gaps": 70,
+     "total": 87,
+     "nPolicies": 3,
+     "nGrants": 19,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 5,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 3,
+       "nGrant": 0,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 7,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 3,
+       "nGrant": 19,
+       "status": "both"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 3,
+       "nGrant": 1,
+       "status": "both"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 3,
+       "nGrant": 1,
+       "status": "both"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -1744,7 +6679,712 @@
      "lignocellulosic",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 0,
+     "gaps": 52,
+     "total": 87,
+     "nPolicies": 0,
+     "nGrants": 87,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 9,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 7,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 27,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 4,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 47,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 5,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -2068,7 +7708,712 @@
      "biorefinery",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 3,
+     "gaps": 67,
+     "total": 87,
+     "nPolicies": 8,
+     "nGrants": 19,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 6,
+       "nGrant": 14,
+       "status": "both"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 2,
+       "nGrant": 1,
+       "status": "both"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 13,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 3,
+       "nGrant": 0,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 2,
+       "nGrant": 1,
+       "status": "both"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 4,
+       "nGrant": 0,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 6,
+       "nGrant": 0,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
@@ -2280,7 +8625,712 @@
      "biorefinery",
      "composting",
      "pyrolysis"
-    ]
+    ],
+    "full": {
+     "covered": 2,
+     "gaps": 65,
+     "total": 87,
+     "nPolicies": 2,
+     "nGrants": 23,
+     "codes": [
+      {
+       "dimension": "barriers",
+       "code": "land",
+       "papers": 99,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "water",
+       "papers": 90,
+       "nPolicy": 0,
+       "nGrant": 3,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landscape",
+       "papers": 40,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "database",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "dataset",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standard",
+       "papers": 17,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transport",
+       "papers": 17,
+       "nPolicy": 2,
+       "nGrant": 20,
+       "status": "both"
+      },
+      {
+       "dimension": "barriers",
+       "code": "infrastructure",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "storage",
+       "papers": 15,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "transportation",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "regulation",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "collection",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "feedstock",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "investment",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "seasonality",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landfills",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landsat",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watercourse",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "climate change",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "waterbodies",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "watershed",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "agriculture",
+       "papers": 2,
+       "nPolicy": 2,
+       "nGrant": 8,
+       "status": "both"
+      },
+      {
+       "dimension": "barriers",
+       "code": "few studies",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "barriers",
+       "code": "land use conflict",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landform",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "landslides",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "logistics",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "loss of biodiversity",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "standardization",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "barriers",
+       "code": "urbanisation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "demand",
+       "papers": 43,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "efficiency",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "technology",
+       "papers": 24,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "incentives",
+       "papers": 8,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "investment",
+       "papers": 7,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "collaboration",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "lca",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "regulations",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funds",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "monitoring",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "drivers",
+       "code": "spatial analysis",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "partnership",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "behaviours",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "funding",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "innovations",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "machine learning",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "revegetation",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "risk assessment",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "drivers",
+       "code": "satellite data",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "policymakers",
+       "papers": 34,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "farmers",
+       "papers": 29,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "consumers",
+       "papers": 14,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "producers",
+       "papers": 12,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "scholars",
+       "papers": 10,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "regulatory",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "government",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "local communities",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "agency",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "bank",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipality",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "retailer",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "university",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "user",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "communities",
+       "papers": 2,
+       "nPolicy": 1,
+       "nGrant": 0,
+       "status": "partial"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "manufacturer",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "municipalities",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "suppliers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "urban planners",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "utility",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "stakeholders",
+       "code": "workers",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "recycling",
+       "papers": 9,
+       "nPolicy": 0,
+       "nGrant": 2,
+       "status": "partial"
+      },
+      {
+       "dimension": "ce",
+       "code": "recyclable",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "reuse",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "ce",
+       "code": "waste management",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biogas",
+       "papers": 13,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biochar",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "biomethane",
+       "papers": 6,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "anaerobic digestion",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioenergy",
+       "papers": 5,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "digestate",
+       "papers": 4,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "bioethanol",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "lignocellulosic",
+       "papers": 3,
+       "nPolicy": 0,
+       "nGrant": 1,
+       "status": "partial"
+      },
+      {
+       "dimension": "bio",
+       "code": "biorefinery",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "composting",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      },
+      {
+       "dimension": "bio",
+       "code": "pyrolysis",
+       "papers": 2,
+       "nPolicy": 0,
+       "nGrant": 0,
+       "status": "gap"
+      }
+     ]
+    }
    },
    "selectedTopics": 3,
    "metrics": [
