@@ -1,5 +1,10 @@
 # Filing the pre-registration on OSF — what to enter where
 
+> **Filed 2026-11-20 as [doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP).**
+> The template on screen was a newer version than the one this guide was
+> written against: its field names and options differ. What that caused,
+> and the correction, are in `OSF_UPDATE.md`.
+
 **Where:** OSF Registries, <https://osf.io/registries> — free, run by the Center
 for Open Science, time-stamped and read-only once submitted, and it issues a DOI
 for public registrations. It is the standard registry for non-clinical

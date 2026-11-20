@@ -13,8 +13,9 @@ branch name.
 | File | What it is |
 |------|------------|
 | `PROTOCOL.md` | The study protocol — design, hypotheses, data sources, analysis plan, limitations. **Read this first.** |
-| `PREREGISTRATION.md` | Generated from the protocol. Complete and ready to file; every hash and query list is filled in. |
+| `PREREGISTRATION.md` | Generated from the protocol. **Filed** on OSF, [doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP); registered text at tag `prereg-v1`. |
 | `OSF_FILING.md` | Where to file it and what to enter in each OSF field. |
+| `OSF_UPDATE.md` | The same-day correction to the OSF form, and why. |
 | `data/` | The registered corpora (`frozen-A1/`, `frozen-A2/`): corpus files and manifest, both query selections, and the tool's recorded output for each. `REGISTRATION_VALUES.md` holds every digest, computed by workflow. |
 | `analysis/wp0_probe.py` | Read-only data-availability probe. Takes section letters (`A` catalogue, `B` CORDIS, `C` Eurostat, `D` GLEIF, `E` ETS) to re-check one source; findings are recorded in protocol §6.1. |
 
@@ -56,8 +57,10 @@ the frozen inputs.
 - [x] WP2 — corpora frozen with manifests, queries selected by rule, tool
       output recorded for both seed sets, with full codebook coverage;
       everything archived in `data/`; pre-registration complete
-- [ ] WP2 — **file the registration and tag the repository.** Nothing in WP3
-      may start before this: see `PREREGISTRATION.md` §9
+- [x] WP2 — registration filed 2026-11-20, public,
+      [doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP); repository tagged `prereg-v1`
+- [ ] WP2 — same-day correction of the OSF form and deposit of the files
+      (`OSF_UPDATE.md`). WP3 starts once the corrected form is accepted.
 - [ ] WP3 — outcomes and analysis
 - [ ] WP4 — case studies
 - [ ] WP5 — write-up and FAIR release

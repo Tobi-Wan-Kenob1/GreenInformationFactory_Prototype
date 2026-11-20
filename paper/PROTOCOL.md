@@ -6,8 +6,9 @@
 repository `Tobi-Wan-Kenob1/GreenInformationFactory_Prototype`. Every path
 below of the form `docs/…` or `src/…` refers to that repository; paths without
 a prefix are in this one.
-**Pre-registration:** not yet filed. Nothing in §6 (outcome data) may be
-retrieved before §8 is filed and this file is tagged. See §8.
+**Pre-registration:** filed 2026-11-20 on OSF, public —
+[doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP); registered material at
+tag `prereg-v1`. Changes after filing are in Appendix B.
 
 ---
 
@@ -716,3 +717,25 @@ Three gaps found while preparing the filing, closed before it:
   post-*T* projects were downloaded and their field completeness inspected in
   WP0; no outcome measure was computed. Pre-registration §9.1 now says exactly
   that.
+
+## Appendix B — after registration
+
+### B.1 2026-11-20 — filed, then the form corrected the same day
+Filed on OSF at 2026-11-20T08:27:36Z, public,
+[doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP). Read back
+through OSF's public API by `.github/workflows/check-registration.yml`, the form
+differed from the pre-registration in four places:
+
+- it certified that the authors had not accessed the data, which §9.1 says is
+  not so;
+- the explanation field was empty;
+- the sample size field repeated its rationale;
+- four fields were empty;
+- no files were attached, although one field said they were.
+
+The cause was a newer template than the filing guide assumed. The correction is
+an OSF Update with a stated justification (`paper/OSF_UPDATE.md`), plus a public
+deposit of the registered files linked as a resource. No hypothesis, measure,
+test, threshold or exclusion changed. Every corrected field matches the
+pre-registration at tag `prereg-v1`, and no outcome data had been retrieved
+when it was made.

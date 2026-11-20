@@ -1,6 +1,8 @@
 # Pre-registration — does the Policy & Grant Finder's ranking predict what was funded?
 
-**Status:** final draft, ready to file · **Prepared:** 2026-11-20
+**Status:** filed 2026-11-20T08:27:36Z on OSF, public — [doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP). The registered
+text is this file at tag `prereg-v1` (commit `8d023f4`); only this status line has
+changed since. · **Prepared:** 2026-11-20
 **Protocol:** `paper/PROTOCOL.md` (this document is generated from it; where the
 two disagree the protocol is wrong and gets a dated appendix entry, never a
 silent edit)
