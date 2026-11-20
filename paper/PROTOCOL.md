@@ -826,3 +826,21 @@ within-list ρ is reported descriptively, with no tests.
 - It commits the outcome data, then the analysis, as separate commits.
 - If a defect is found afterwards, the fix is a reported deviation, and both
   the original and the corrected results are published.
+
+### B.3 2026-11-20 — the registered run
+`wp3-outcomes.yml` ran once, from commit `f91baa6`. The analysis code is
+unchanged since the freeze at `6c62356`; the only later change is the
+workflow's trigger. Outcome data was retrieved at 2026-11-20T10:34:12Z and
+committed (`12d1fcb`) before the analysis was run and committed (`e372d0b`).
+There were no deviations from §7 or B.2.
+
+Two properties of the outcome data are recorded here because they bear on
+reading the results, not because anything was changed:
+
+- **The A1 act sample starts at 2012-12-10, not 2010-01-01.** The registered
+  construction takes the newest 37 acts in each five-year slice, so the first
+  slice is cut short. This affects only the secondary act measure.
+- **The tool's topic lists include generic words** (*will*, *develop*, *part*,
+  *aims*), which match most outcome projects. They are single-corpus topics,
+  not bridge topics, and are kept: no topic is removed after outcome data is
+  seen (registration, "Data inclusion and exclusion").
