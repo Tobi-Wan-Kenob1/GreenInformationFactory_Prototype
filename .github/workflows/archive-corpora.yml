@@ -195,14 +195,9 @@ jobs:
         run: |
           python - <<'PY'
           import html, re, requests
-          pages = [
-              "https://help.osf.io/article/158-create-a-preregistration",
-              "https://help.osf.io/article/330-welcome-to-registrations",
-              "https://help.osf.io/article/159-register-your-project",
-              "https://help.osf.io/article/229-select-a-registration-template",
-              "https://help.osf.io/article/150-withdraw-a-registration",
-              "https://help.osf.io/article/146-registration-embargoes",
-          ]
+          # The help centre folds every registration article into one guide;
+          # read it whole rather than six URLs that redirect to it.
+          pages = ["https://help.osf.io/article/158-create-a-preregistration"]
           for url in pages:
               print(f"\n{'=' * 78}\n{url}\n{'=' * 78}")
               try:
@@ -222,5 +217,5 @@ jobs:
               text = html.unescape(re.sub(r'<[^>]+>', ' ', text))
               text = re.sub(r'[ \t]+', ' ', text)
               text = re.sub(r'\n\s*\n+', '\n', text).strip()
-              print(text[:5000])
+              print(text[:60000])
           PY
