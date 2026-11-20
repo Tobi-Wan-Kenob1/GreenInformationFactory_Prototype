@@ -68,7 +68,50 @@ async function readCodebook(page) {
     summary: (await panel.locator('> summary').innerText()).replace(/\s+/g, ' ').trim(),
     both: clean(await page.locator('.cbtable tr.cb-both td:first-child').allInnerTexts()),
     gaps: clean(await page.locator('.cbtable tr.cb-gap td:first-child').allInnerTexts()),
+    // The panel shows the first 12 codes per dimension; the tool computes all
+    // of them. `full` is the tool's own computation, captured from the call the
+    // page made (see captureCoverage), not a reimplementation of it.
+    full: await page.evaluate(() => {
+      const cov = window.__recordedCoverage;
+      if (!cov) return null;
+      const codes = [];
+      for (const [dimension, rows] of Object.entries(cov.dimensions)) {
+        for (const r of rows) {
+          codes.push({ dimension, code: r.code, papers: r.papers,
+                       nPolicy: r.nPolicy, nGrant: r.nGrant, status: r.status });
+        }
+      }
+      return { covered: cov.covered, gaps: cov.gaps, total: cov.total,
+               nPolicies: cov.nPolicies, nGrants: cov.nGrants, codes };
+    }),
   };
+}
+
+/**
+ * Keep the last value the app's own FinderAnalytics.matchCodebook returned.
+ * Installed before any page script runs, it wraps the function as analytics.js
+ * publishes it, so the app's code is unchanged and still does the computing —
+ * this only keeps a copy of the answer the page rendered from.
+ */
+async function captureCoverage(page) {
+  await page.addInitScript(() => {
+    let published;
+    Object.defineProperty(window, 'FinderAnalytics', {
+      configurable: true,
+      get() { return published; },
+      set(api) {
+        const original = api && api.matchCodebook;
+        if (typeof original === 'function') {
+          api.matchCodebook = function (...args) {
+            const result = original.apply(this, args);
+            window.__recordedCoverage = result;
+            return result;
+          };
+        }
+        published = api;
+      },
+    });
+  });
 }
 
 async function recordQuery(page, baseUrl, query, from, to) {
@@ -215,6 +258,7 @@ async function main() {
   await context.route('**/*', route =>
     route.request().url().startsWith(server.baseUrl) ? route.continue() : route.abort());
   const page = await context.newPage();
+  await captureCoverage(page);
 
   const pageErrors = [];
   page.on('pageerror', e => pageErrors.push(e.message));
@@ -228,6 +272,18 @@ async function main() {
     const tiers = (record.sources || []).join(' | ');
     if (/demo|sample/i.test(tiers)) {
       throw new Error(`demo data reached a recorded run for "${query}": ${tiers}`);
+    }
+    const cb = record.codebook;
+    if (cb && cb.full) {
+      const both = cb.full.codes.filter(c => c.status === 'both').map(c => c.code);
+      const gaps = cb.full.codes.filter(c => c.status === 'gap').map(c => c.code);
+      const shown = [...cb.both.filter(c => !both.includes(c)),
+                     ...cb.gaps.filter(c => !gaps.includes(c))];
+      if (shown.length || cb.full.covered !== both.length || cb.full.gaps !== gaps.length) {
+        throw new Error(`coverage capture disagrees with the panel for "${query}"`);
+      }
+    } else if (cb) {
+      throw new Error(`coverage was not captured for "${query}"`);
     }
     records.push(record);
     console.log(`${record.counts.policies} policies, ${record.counts.grants} grants`);
