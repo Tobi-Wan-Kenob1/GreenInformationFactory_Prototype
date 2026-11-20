@@ -25,7 +25,20 @@
     // document C(2022) 1244", "laying down rules", "implementing/delegated".
     'text,relevance,eea,notified,document,documents,corrigendum,laying,down,repealing,' +
     'implementing,delegated,establishing,concerning,pursuant,annexes,official,journal,' +
-    'adoption,adopting,rules,provisions,certain,respect,view,means,within,accordance').split(','));
+    'adoption,adopting,rules,provisions,certain,respect,view,means,within,accordance,' +
+    // Function words the standard list above lacks. Modal and auxiliary verbs
+    // ("will" alone matched 90 % of all FP7–Horizon Europe funding in the
+    // 2026 back-test) and connectives carry no topic.
+    'will,may,might,must,can,cannot,via,thus,hence,however,therefore,among,across,upon,' +
+    'whether,per,etc,one,two,three,first,second,several,various,many,much,' +
+    // Research-proposal boilerplate: the verbs and nouns every project abstract
+    // uses to describe itself ("the project aims to develop…", "as part of").
+    // Words that can name a subject — development, impact, sustainable,
+    // innovation — are deliberately not here.
+    'research,aim,aims,aimed,aiming,develop,developed,developing,develops,part,parts,' +
+    'provide,provides,provided,providing,objective,objectives,result,results,approach,' +
+    'approaches,overall,main,order,way,ways,able,need,needs,make,making,made,take,' +
+    'taking,given,important').split(','));
 
   function tokenize(text) {
     const words = String(text || '').toLowerCase()
