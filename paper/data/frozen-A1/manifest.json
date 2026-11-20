@@ -1,0 +1,98 @@
+{
+ "label": "A1",
+ "created": "2026-11-20T05:57:27Z",
+ "window": {
+  "since": "1990-01-01",
+  "until": "2009-12-31"
+ },
+ "keywords": [
+  "agriculture",
+  "mining",
+  "bioeconomy",
+  "biomass",
+  "soil",
+  "circular economy",
+  "carbon farming",
+  "raw materials",
+  "land use",
+  "just transition"
+ ],
+ "programmes": [
+  "fp6",
+  "fp7"
+ ],
+ "tool": {
+  "commit": "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e",
+  "dirty": false,
+  "untracked": 3
+ },
+ "files": [
+  {
+   "name": "policies.json",
+   "source": "EUR-Lex via CELLAR SPARQL (publications.europa.eu)",
+   "sha256": "25f50b2e8336eddeeee7a80492c90cea356bd7199a1ec47392e9eabc2037d076",
+   "content_sha256": "357825a45ba80ee316ed51a9e8ba831fa12a46ac78dc07381b67176f6e95373b",
+   "bytes": 193752,
+   "items": 148,
+   "earliest": "1994-03-10",
+   "latest": "2009-12-18",
+   "generated": "2026-11-20T05:57:13Z"
+  },
+  {
+   "name": "grants.json",
+   "source": "EU Funding & Tenders search API (SEDIA)",
+   "sha256": "c315eb6a1241aa62cb694812eae4e828212a5b3f85b95175805889e1ad34452a",
+   "content_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "bytes": 303,
+   "items": 0,
+   "earliest": null,
+   "latest": null,
+   "generated": "2026-11-20T05:57:13Z"
+  },
+  {
+   "name": "projects.json",
+   "source": "CORDIS project archives (cordis.europa.eu)",
+   "sha256": "19bc548ecbd6f83fe1f5b77374e5664e5eeb062c3acb25b237e156dbcc737299",
+   "content_sha256": "be638c45ab1e209a45c8df419c71a265233eb24a9394d0b3bc9ef5be91ed261c",
+   "bytes": 577913,
+   "items": 679,
+   "earliest": "2003-08-01",
+   "latest": "2009-12-01",
+   "generated": "2026-11-20T05:57:27Z"
+  }
+ ],
+ "documents": 827,
+ "window_violations": [],
+ "undated": [],
+ "errors": {},
+ "partial_failures": {},
+ "policy_filter": {
+  "enriched_text": {
+   "documents": 148,
+   "enriched": 117,
+   "statuses": {
+    "http_404": 31,
+    "ok": 117
+   }
+  },
+  "excluded_routine": true,
+  "routine_patterns": [
+   "standard import value",
+   "world market price",
+   "export refund",
+   "import duties",
+   "import duty",
+   "representative price",
+   "minimum selling price",
+   "allocation coefficient",
+   "import licence",
+   "export licence",
+   "production levy",
+   "invitation to tender",
+   "corrigendum"
+  ],
+  "min_subjects": 0,
+  "dropped_thin": 0
+ },
+ "complete": true
+}

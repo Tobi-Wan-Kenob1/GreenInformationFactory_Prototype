@@ -1,0 +1,99 @@
+{
+ "label": "A2",
+ "created": "2026-11-20T05:59:39Z",
+ "window": {
+  "since": "1990-01-01",
+  "until": "2013-12-31"
+ },
+ "keywords": [
+  "agriculture",
+  "mining",
+  "bioeconomy",
+  "biomass",
+  "soil",
+  "circular economy",
+  "carbon farming",
+  "raw materials",
+  "land use",
+  "just transition"
+ ],
+ "programmes": [
+  "fp6",
+  "fp7"
+ ],
+ "tool": {
+  "commit": "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e",
+  "dirty": false,
+  "untracked": 3
+ },
+ "files": [
+  {
+   "name": "policies.json",
+   "source": "EUR-Lex via CELLAR SPARQL (publications.europa.eu)",
+   "sha256": "3226f94a672d35eee9b1ca14608b4529061fd4b4c587b2e5340dbf88d94adb96",
+   "content_sha256": "8a3d6d4c19326e12dee8513e5b37f12a647ef2c149b22281f462ee4a1f1347c5",
+   "bytes": 205311,
+   "items": 150,
+   "earliest": "1994-05-05",
+   "latest": "2013-12-18",
+   "generated": "2026-11-20T05:59:25Z"
+  },
+  {
+   "name": "grants.json",
+   "source": "EU Funding & Tenders search API (SEDIA)",
+   "sha256": "cdb9839ca6011312d0e5d3ff43e16b4e5c43c9d48ae3a54304fb9a817918c2ad",
+   "content_sha256": "8de5d7f85565dfa7280a92a6db6364cb0112d191272837a6d5d01e3845951581",
+   "bytes": 3013,
+   "items": 1,
+   "earliest": "2013-12-11",
+   "latest": "2013-12-11",
+   "generated": "2026-11-20T05:59:25Z"
+  },
+  {
+   "name": "projects.json",
+   "source": "CORDIS project archives (cordis.europa.eu)",
+   "sha256": "97fd05fcf176c60b10b0be1b2df99b61fcfd4726909d7f9a3e19c86293bc4c7f",
+   "content_sha256": "171d718302b5d40d882e72154f5d9ae861b58b022a9fbacbd27ff16ceff55937",
+   "bytes": 1165050,
+   "items": 1372,
+   "earliest": "2003-08-01",
+   "latest": "2013-12-13",
+   "generated": "2026-11-20T05:59:39Z"
+  }
+ ],
+ "documents": 1523,
+ "window_violations": [],
+ "undated": [],
+ "errors": {},
+ "partial_failures": {},
+ "policy_filter": {
+  "enriched_text": {
+   "documents": 150,
+   "enriched": 123,
+   "statuses": {
+    "http_404": 26,
+    "ok": 123,
+    "no_celex": 1
+   }
+  },
+  "excluded_routine": true,
+  "routine_patterns": [
+   "standard import value",
+   "world market price",
+   "export refund",
+   "import duties",
+   "import duty",
+   "representative price",
+   "minimum selling price",
+   "allocation coefficient",
+   "import licence",
+   "export licence",
+   "production levy",
+   "invitation to tender",
+   "corrigendum"
+  ],
+  "min_subjects": 0,
+  "dropped_thin": 0
+ },
+ "complete": true
+}

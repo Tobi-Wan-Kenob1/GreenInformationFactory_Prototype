@@ -1,0 +1,38 @@
+{
+ "generated": "2026-11-20T05:59:25Z",
+ "keywords": [
+  "agriculture",
+  "mining",
+  "bioeconomy",
+  "biomass",
+  "soil",
+  "circular economy",
+  "carbon farming",
+  "raw materials",
+  "land use",
+  "just transition"
+ ],
+ "window": {
+  "since": "1990-01-01",
+  "until": "2013-12-31"
+ },
+ "items": [
+  {
+   "id": "g:SC5-11a-2014",
+   "kind": "grant",
+   "title": "Mining of small and complex deposits and alternative mining",
+   "summary": "Scope : Specific challenge : The EU is highly dependent on imports of raw materials that are crucial for a strong European industrial base, an essential building block of the EU's growth and competitiveness. However, Europe is confronted with a number of challenges along the entire raw materials value chain, starting with exploration, to secure a sustainable access to raw materials, including Critical Raw Materials (CRM). The major challenges are the geological uncertainty, technological and economic feasibility of mine development, and high and growing costs for exploration. In Europe, additi · Mining and mineral processing, Surface chemistry, Igneous petrology, Geological engineering, geophysical engineering, m, Metamorphic petrology, Petrology, Biogeochemistry, biogeochemical cycles, environmen, Natural resources exploration and exploitation, Mineralogy, Physical properties, Nanochemistry, Chemical process engineering, Contractual public-private partnership, Y, Geochemistry, crystal chemistry, isotope geochemis, Technology development, Geo-information and spatial data analysis, Robotics, SME support, Metallo-genesis, Sea-bed mining, Sand, Extraction, 3D modelling, Mineral resources, Ferrous metallic ores, Non-ferrous metallic ores, Industrial minerals, Primary raw materials, Geology, Natural rubber, Mineral processing, SPIRE, Hydro-chemistry, Complex feeds, Precious metals, Non-metallic minerals, Alternative mining, 4D modelling, Energy-efficiency, Wood, Bio-hydro-metallurgy, Geo-chemistry, Raw materials, Low grade ores, Energy-efficient processes, ICT, High-tech metals, Non-ferrous ores, Milling, Ore dressing, Aggregates, Electro-chemistry, Crushed stone, Mining, Paper, Geological structure, Invisible mining, Geo-statistics, Pyro-chemistry, Metal processing, Small and medium sized enterprises, Grinding, Geo-physics, Remote sensing, Resource efficiency, Ferrous ores, Forest based products, Comminution, Low grade feeds, Construction materials, Complex ores, Bio-chemistry, Metal refining, Rare metals, Gravel, Mineral refining, By-products, Tailings, Extractive metallurgy, Intelligent mining, Sea-floor mining, Ore deposit",
+   "date": "2013-12-11",
+   "deadline": "2014-04-08",
+   "status": "31094503",
+   "callId": "H2020-SC5-2014-2015",
+   "programmePeriod": "2014 - 2020",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/sc5-11a-2014",
+   "budgetEUR": 78000000,
+   "doctype": "Call topic",
+   "level": "EU",
+   "source": "cache",
+   "matchedKeyword": "mining"
+  }
+ ]
+}

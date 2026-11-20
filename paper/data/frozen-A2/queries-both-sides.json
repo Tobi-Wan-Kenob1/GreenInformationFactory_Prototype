@@ -1,0 +1,1062 @@
+{
+ "corpus": "corpus-A2",
+ "documents": 1523,
+ "documents_by_side": {
+  "policy": 150,
+  "grant": 1373
+ },
+ "rule": {
+  "dimensions": [
+   "barriers",
+   "drivers"
+  ],
+  "max_df": 0.2,
+  "max_df_applies_to": "each side separately",
+  "top": 10,
+  "require_both_sides": true,
+  "tie_break": "alphabetical by code",
+  "matching": "leading word boundary, case-insensitive, no thesaurus"
+ },
+ "queries": [
+  "land",
+  "water",
+  "database",
+  "efficiency",
+  "standard",
+  "transport",
+  "storage",
+  "collection",
+  "monitoring",
+  "land use"
+ ],
+ "selected_on_both_sides": 10,
+ "selected": [
+  {
+   "code": "land",
+   "dimension": "barriers",
+   "terms": [
+    "land",
+    "lands"
+   ],
+   "papers": 99,
+   "documents": 149,
+   "df": 0.0978,
+   "policy_documents": 4,
+   "grant_documents": 145,
+   "both_sides": true,
+   "df_policy": 0.0267,
+   "df_grant": 0.1056,
+   "status": "selected",
+   "rank": 1
+  },
+  {
+   "code": "water",
+   "dimension": "barriers",
+   "terms": [
+    "water",
+    "waters"
+   ],
+   "papers": 90,
+   "documents": 150,
+   "df": 0.0985,
+   "policy_documents": 1,
+   "grant_documents": 149,
+   "both_sides": true,
+   "df_policy": 0.0067,
+   "df_grant": 0.1085,
+   "status": "selected",
+   "rank": 2
+  },
+  {
+   "code": "database",
+   "dimension": "barriers",
+   "terms": [
+    "database",
+    "databases"
+   ],
+   "papers": 29,
+   "documents": 78,
+   "df": 0.0512,
+   "policy_documents": 1,
+   "grant_documents": 77,
+   "both_sides": true,
+   "df_policy": 0.0067,
+   "df_grant": 0.0561,
+   "status": "selected",
+   "rank": 3
+  },
+  {
+   "code": "efficiency",
+   "dimension": "drivers",
+   "terms": [
+    "efficiency"
+   ],
+   "papers": 24,
+   "documents": 54,
+   "df": 0.0355,
+   "policy_documents": 3,
+   "grant_documents": 51,
+   "both_sides": true,
+   "df_policy": 0.02,
+   "df_grant": 0.0371,
+   "status": "selected",
+   "rank": 4
+  },
+  {
+   "code": "standard",
+   "dimension": "barriers",
+   "terms": [
+    "standard",
+    "standards"
+   ],
+   "papers": 17,
+   "documents": 30,
+   "df": 0.0197,
+   "policy_documents": 8,
+   "grant_documents": 22,
+   "both_sides": true,
+   "df_policy": 0.0533,
+   "df_grant": 0.016,
+   "status": "selected",
+   "rank": 5
+  },
+  {
+   "code": "transport",
+   "dimension": "barriers",
+   "terms": [
+    "transport",
+    "transports"
+   ],
+   "papers": 17,
+   "documents": 41,
+   "df": 0.0269,
+   "policy_documents": 4,
+   "grant_documents": 37,
+   "both_sides": true,
+   "df_policy": 0.0267,
+   "df_grant": 0.0269,
+   "status": "selected",
+   "rank": 6
+  },
+  {
+   "code": "storage",
+   "dimension": "barriers",
+   "terms": [
+    "storage"
+   ],
+   "papers": 15,
+   "documents": 16,
+   "df": 0.0105,
+   "policy_documents": 2,
+   "grant_documents": 14,
+   "both_sides": true,
+   "df_policy": 0.0133,
+   "df_grant": 0.0102,
+   "status": "selected",
+   "rank": 7
+  },
+  {
+   "code": "collection",
+   "dimension": "barriers",
+   "terms": [
+    "collection"
+   ],
+   "papers": 12,
+   "documents": 18,
+   "df": 0.0118,
+   "policy_documents": 11,
+   "grant_documents": 7,
+   "both_sides": true,
+   "df_policy": 0.0733,
+   "df_grant": 0.0051,
+   "status": "selected",
+   "rank": 8
+  },
+  {
+   "code": "monitoring",
+   "dimension": "drivers",
+   "terms": [
+    "monitoring"
+   ],
+   "papers": 4,
+   "documents": 59,
+   "df": 0.0387,
+   "policy_documents": 2,
+   "grant_documents": 57,
+   "both_sides": true,
+   "df_policy": 0.0133,
+   "df_grant": 0.0415,
+   "status": "selected",
+   "rank": 9
+  },
+  {
+   "code": "land use",
+   "dimension": "barriers",
+   "terms": [
+    "land use"
+   ],
+   "papers": 2,
+   "documents": 59,
+   "df": 0.0387,
+   "policy_documents": 4,
+   "grant_documents": 55,
+   "both_sides": true,
+   "df_policy": 0.0267,
+   "df_grant": 0.0401,
+   "status": "selected",
+   "rank": 10
+  }
+ ],
+ "candidates": [
+  {
+   "code": "land",
+   "dimension": "barriers",
+   "terms": [
+    "land",
+    "lands"
+   ],
+   "papers": 99,
+   "documents": 149,
+   "df": 0.0978,
+   "policy_documents": 4,
+   "grant_documents": 145,
+   "both_sides": true,
+   "df_policy": 0.0267,
+   "df_grant": 0.1056,
+   "status": "selected",
+   "rank": 1
+  },
+  {
+   "code": "water",
+   "dimension": "barriers",
+   "terms": [
+    "water",
+    "waters"
+   ],
+   "papers": 90,
+   "documents": 150,
+   "df": 0.0985,
+   "policy_documents": 1,
+   "grant_documents": 149,
+   "both_sides": true,
+   "df_policy": 0.0067,
+   "df_grant": 0.1085,
+   "status": "selected",
+   "rank": 2
+  },
+  {
+   "code": "demand",
+   "dimension": "drivers",
+   "terms": [
+    "demand",
+    "demands"
+   ],
+   "papers": 43,
+   "documents": 47,
+   "df": 0.0309,
+   "policy_documents": 0,
+   "grant_documents": 47,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0342,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "landscape",
+   "dimension": "barriers",
+   "terms": [
+    "landscape",
+    "landscapes"
+   ],
+   "papers": 40,
+   "documents": 23,
+   "df": 0.0151,
+   "policy_documents": 0,
+   "grant_documents": 23,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0168,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "database",
+   "dimension": "barriers",
+   "terms": [
+    "database",
+    "databases"
+   ],
+   "papers": 29,
+   "documents": 78,
+   "df": 0.0512,
+   "policy_documents": 1,
+   "grant_documents": 77,
+   "both_sides": true,
+   "df_policy": 0.0067,
+   "df_grant": 0.0561,
+   "status": "selected",
+   "rank": 3
+  },
+  {
+   "code": "dataset",
+   "dimension": "barriers",
+   "terms": [
+    "dataset",
+    "datasets"
+   ],
+   "papers": 24,
+   "documents": 5,
+   "df": 0.0033,
+   "policy_documents": 0,
+   "grant_documents": 5,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0036,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "efficiency",
+   "dimension": "drivers",
+   "terms": [
+    "efficiency"
+   ],
+   "papers": 24,
+   "documents": 54,
+   "df": 0.0355,
+   "policy_documents": 3,
+   "grant_documents": 51,
+   "both_sides": true,
+   "df_policy": 0.02,
+   "df_grant": 0.0371,
+   "status": "selected",
+   "rank": 4
+  },
+  {
+   "code": "technology",
+   "dimension": "drivers",
+   "terms": [
+    "technology"
+   ],
+   "papers": 24,
+   "documents": 112,
+   "df": 0.0735,
+   "policy_documents": 0,
+   "grant_documents": 112,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0816,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "standard",
+   "dimension": "barriers",
+   "terms": [
+    "standard",
+    "standards"
+   ],
+   "papers": 17,
+   "documents": 30,
+   "df": 0.0197,
+   "policy_documents": 8,
+   "grant_documents": 22,
+   "both_sides": true,
+   "df_policy": 0.0533,
+   "df_grant": 0.016,
+   "status": "selected",
+   "rank": 5
+  },
+  {
+   "code": "transport",
+   "dimension": "barriers",
+   "terms": [
+    "transport",
+    "transports"
+   ],
+   "papers": 17,
+   "documents": 41,
+   "df": 0.0269,
+   "policy_documents": 4,
+   "grant_documents": 37,
+   "both_sides": true,
+   "df_policy": 0.0267,
+   "df_grant": 0.0269,
+   "status": "selected",
+   "rank": 6
+  },
+  {
+   "code": "infrastructure",
+   "dimension": "barriers",
+   "terms": [
+    "infrastructure",
+    "infrastructures"
+   ],
+   "papers": 15,
+   "documents": 27,
+   "df": 0.0177,
+   "policy_documents": 0,
+   "grant_documents": 27,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0197,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "storage",
+   "dimension": "barriers",
+   "terms": [
+    "storage"
+   ],
+   "papers": 15,
+   "documents": 16,
+   "df": 0.0105,
+   "policy_documents": 2,
+   "grant_documents": 14,
+   "both_sides": true,
+   "df_policy": 0.0133,
+   "df_grant": 0.0102,
+   "status": "selected",
+   "rank": 7
+  },
+  {
+   "code": "transportation",
+   "dimension": "barriers",
+   "terms": [
+    "transportation"
+   ],
+   "papers": 14,
+   "documents": 7,
+   "df": 0.0046,
+   "policy_documents": 0,
+   "grant_documents": 7,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0051,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "regulation",
+   "dimension": "barriers",
+   "terms": [
+    "regulation",
+    "regulations"
+   ],
+   "papers": 13,
+   "documents": 159,
+   "df": 0.1044,
+   "policy_documents": 130,
+   "grant_documents": 29,
+   "both_sides": true,
+   "df_policy": 0.8667,
+   "df_grant": 0.0211,
+   "status": "dropped: too broad"
+  },
+  {
+   "code": "collection",
+   "dimension": "barriers",
+   "terms": [
+    "collection"
+   ],
+   "papers": 12,
+   "documents": 18,
+   "df": 0.0118,
+   "policy_documents": 11,
+   "grant_documents": 7,
+   "both_sides": true,
+   "df_policy": 0.0733,
+   "df_grant": 0.0051,
+   "status": "selected",
+   "rank": 8
+  },
+  {
+   "code": "feedstock",
+   "dimension": "barriers",
+   "terms": [
+    "feedstock",
+    "feedstocks"
+   ],
+   "papers": 12,
+   "documents": 23,
+   "df": 0.0151,
+   "policy_documents": 0,
+   "grant_documents": 23,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0168,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "incentives",
+   "dimension": "drivers",
+   "terms": [
+    "incentives",
+    "incentive"
+   ],
+   "papers": 8,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "investment",
+   "dimension": "barriers",
+   "terms": [
+    "investment",
+    "investments"
+   ],
+   "papers": 8,
+   "documents": 4,
+   "df": 0.0026,
+   "policy_documents": 0,
+   "grant_documents": 4,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0029,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "investment",
+   "dimension": "drivers",
+   "terms": [
+    "investment",
+    "investments"
+   ],
+   "papers": 7,
+   "documents": 4,
+   "df": 0.0026,
+   "policy_documents": 0,
+   "grant_documents": 4,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0029,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "collaboration",
+   "dimension": "drivers",
+   "terms": [
+    "collaboration",
+    "collaborations"
+   ],
+   "papers": 6,
+   "documents": 9,
+   "df": 0.0059,
+   "policy_documents": 0,
+   "grant_documents": 9,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0066,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "lca",
+   "dimension": "drivers",
+   "terms": [
+    "lca"
+   ],
+   "papers": 6,
+   "documents": 1,
+   "df": 0.0007,
+   "policy_documents": 0,
+   "grant_documents": 1,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0007,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "seasonality",
+   "dimension": "barriers",
+   "terms": [
+    "seasonality"
+   ],
+   "papers": 6,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "landfills",
+   "dimension": "barriers",
+   "terms": [
+    "landfills",
+    "landfill"
+   ],
+   "papers": 5,
+   "documents": 6,
+   "df": 0.0039,
+   "policy_documents": 0,
+   "grant_documents": 6,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0044,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "regulations",
+   "dimension": "drivers",
+   "terms": [
+    "regulations",
+    "regulation"
+   ],
+   "papers": 5,
+   "documents": 159,
+   "df": 0.1044,
+   "policy_documents": 130,
+   "grant_documents": 29,
+   "both_sides": true,
+   "df_policy": 0.8667,
+   "df_grant": 0.0211,
+   "status": "dropped: too broad"
+  },
+  {
+   "code": "funds",
+   "dimension": "drivers",
+   "terms": [
+    "funds"
+   ],
+   "papers": 4,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "landsat",
+   "dimension": "barriers",
+   "terms": [
+    "landsat"
+   ],
+   "papers": 4,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "monitoring",
+   "dimension": "drivers",
+   "terms": [
+    "monitoring"
+   ],
+   "papers": 4,
+   "documents": 59,
+   "df": 0.0387,
+   "policy_documents": 2,
+   "grant_documents": 57,
+   "both_sides": true,
+   "df_policy": 0.0133,
+   "df_grant": 0.0415,
+   "status": "selected",
+   "rank": 9
+  },
+  {
+   "code": "spatial analysis",
+   "dimension": "drivers",
+   "terms": [
+    "spatial analysis"
+   ],
+   "papers": 4,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "watercourse",
+   "dimension": "barriers",
+   "terms": [
+    "watercourse",
+    "watercourses"
+   ],
+   "papers": 4,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "climate change",
+   "dimension": "barriers",
+   "terms": [
+    "climate change"
+   ],
+   "papers": 3,
+   "documents": 68,
+   "df": 0.0446,
+   "policy_documents": 0,
+   "grant_documents": 68,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0495,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "partnership",
+   "dimension": "drivers",
+   "terms": [
+    "partnership",
+    "partnerships"
+   ],
+   "papers": 3,
+   "documents": 12,
+   "df": 0.0079,
+   "policy_documents": 0,
+   "grant_documents": 12,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0087,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "waterbodies",
+   "dimension": "barriers",
+   "terms": [
+    "waterbodies"
+   ],
+   "papers": 3,
+   "documents": 1,
+   "df": 0.0007,
+   "policy_documents": 0,
+   "grant_documents": 1,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0007,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "watershed",
+   "dimension": "barriers",
+   "terms": [
+    "watershed",
+    "watersheds"
+   ],
+   "papers": 3,
+   "documents": 1,
+   "df": 0.0007,
+   "policy_documents": 0,
+   "grant_documents": 1,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0007,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "agriculture",
+   "dimension": "barriers",
+   "terms": [
+    "agriculture"
+   ],
+   "papers": 2,
+   "documents": 615,
+   "df": 0.4038,
+   "policy_documents": 36,
+   "grant_documents": 579,
+   "both_sides": true,
+   "df_policy": 0.24,
+   "df_grant": 0.4217,
+   "status": "dropped: too broad"
+  },
+  {
+   "code": "behaviours",
+   "dimension": "drivers",
+   "terms": [
+    "behaviours"
+   ],
+   "papers": 2,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "few studies",
+   "dimension": "barriers",
+   "terms": [
+    "few studies"
+   ],
+   "papers": 2,
+   "documents": 1,
+   "df": 0.0007,
+   "policy_documents": 0,
+   "grant_documents": 1,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0007,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "funding",
+   "dimension": "barriers",
+   "terms": [
+    "funding"
+   ],
+   "papers": 2,
+   "documents": 5,
+   "df": 0.0033,
+   "policy_documents": 0,
+   "grant_documents": 5,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0036,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "funding",
+   "dimension": "drivers",
+   "terms": [
+    "funding"
+   ],
+   "papers": 2,
+   "documents": 5,
+   "df": 0.0033,
+   "policy_documents": 0,
+   "grant_documents": 5,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0036,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "innovations",
+   "dimension": "drivers",
+   "terms": [
+    "innovations"
+   ],
+   "papers": 2,
+   "documents": 11,
+   "df": 0.0072,
+   "policy_documents": 0,
+   "grant_documents": 11,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.008,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "land use",
+   "dimension": "barriers",
+   "terms": [
+    "land use"
+   ],
+   "papers": 2,
+   "documents": 59,
+   "df": 0.0387,
+   "policy_documents": 4,
+   "grant_documents": 55,
+   "both_sides": true,
+   "df_policy": 0.0267,
+   "df_grant": 0.0401,
+   "status": "selected",
+   "rank": 10
+  },
+  {
+   "code": "land use conflict",
+   "dimension": "barriers",
+   "terms": [
+    "land use conflict",
+    "land use conflicts"
+   ],
+   "papers": 2,
+   "documents": 1,
+   "df": 0.0007,
+   "policy_documents": 0,
+   "grant_documents": 1,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0007,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "landform",
+   "dimension": "barriers",
+   "terms": [
+    "landform",
+    "landforms"
+   ],
+   "papers": 2,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "landslides",
+   "dimension": "barriers",
+   "terms": [
+    "landslides",
+    "landslide"
+   ],
+   "papers": 2,
+   "documents": 6,
+   "df": 0.0039,
+   "policy_documents": 0,
+   "grant_documents": 6,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0044,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "logistics",
+   "dimension": "barriers",
+   "terms": [
+    "logistics"
+   ],
+   "papers": 2,
+   "documents": 5,
+   "df": 0.0033,
+   "policy_documents": 0,
+   "grant_documents": 5,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0036,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "loss of biodiversity",
+   "dimension": "barriers",
+   "terms": [
+    "loss of biodiversity"
+   ],
+   "papers": 2,
+   "documents": 2,
+   "df": 0.0013,
+   "policy_documents": 0,
+   "grant_documents": 2,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0015,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "machine learning",
+   "dimension": "drivers",
+   "terms": [
+    "machine learning"
+   ],
+   "papers": 2,
+   "documents": 9,
+   "df": 0.0059,
+   "policy_documents": 0,
+   "grant_documents": 9,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0066,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "revegetation",
+   "dimension": "drivers",
+   "terms": [
+    "revegetation"
+   ],
+   "papers": 2,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "risk assessment",
+   "dimension": "drivers",
+   "terms": [
+    "risk assessment"
+   ],
+   "papers": 2,
+   "documents": 7,
+   "df": 0.0046,
+   "policy_documents": 0,
+   "grant_documents": 7,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0051,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "satellite data",
+   "dimension": "drivers",
+   "terms": [
+    "satellite data"
+   ],
+   "papers": 2,
+   "documents": 0,
+   "df": 0.0,
+   "policy_documents": 0,
+   "grant_documents": 0,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0,
+   "status": "dropped: absent from corpus"
+  },
+  {
+   "code": "standardization",
+   "dimension": "barriers",
+   "terms": [
+    "standardization"
+   ],
+   "papers": 2,
+   "documents": 2,
+   "df": 0.0013,
+   "policy_documents": 0,
+   "grant_documents": 2,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0015,
+   "status": "dropped: one side only"
+  },
+  {
+   "code": "urbanisation",
+   "dimension": "barriers",
+   "terms": [
+    "urbanisation"
+   ],
+   "papers": 2,
+   "documents": 1,
+   "df": 0.0007,
+   "policy_documents": 0,
+   "grant_documents": 1,
+   "both_sides": false,
+   "df_policy": 0.0,
+   "df_grant": 0.0007,
+   "status": "dropped: one side only"
+  }
+ ],
+ "short": false
+}
