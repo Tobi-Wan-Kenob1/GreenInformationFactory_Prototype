@@ -64,7 +64,8 @@ the frozen inputs.
       files deposited on Zenodo, [doi:10.5281/zenodo.24392976](https://doi.org/10.5281/zenodo.24392976)
 - [x] WP3 — outcomes retrieved and the registered analysis run once
       (2026-11-20); results in `results/RESULTS.md`, run record in protocol B.3
-- [ ] WP4 — case studies
+- [ ] WP4 — Tier B sampled (protocol B.4, re-drawn within scope under B.6;
+      both draws in `results/`); 10 dossiers in `cases/` await the case work
 - [ ] WP5 — write-up and FAIR release
 
 Tool changes go on `main`. This branch carries the study, not the instrument.

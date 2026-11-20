@@ -988,3 +988,14 @@ Everything else in B.4 is unchanged.
 seen. It does not touch Tier A, and Tier B is illustrative. Still, a reader is
 entitled to weigh the scoped cases knowing that, and the first draw stays in
 the record for comparison.
+
+**Result of the second draw** (`results/tierb-scoped/`, `9554d35`).
+- The same first pair, *management* within *efficiency*, now reaches the
+  minimum inside the band: 260 organisations in A1 and 430 in A2, each with
+  *k* = 1.
+- No author's institution was in either frame.
+- Two pairs of sampled organisations share a frame project (A1-3/A1-4 in
+  `fp7:312185`, A2-1/A2-2 in `h2020:690797`), so their cases share a starting
+  point.
+- Case dossiers are in `paper/cases/`. Their register sections are generated;
+  the case work is done by hand and dated.
