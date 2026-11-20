@@ -1,0 +1,98 @@
+name: Check the OSF registration against the tagged commit
+
+# Reads the registration through OSF's public API — no credentials, so this
+# also proves it is publicly visible — and compares the SHA-256 of every file
+# OSF archived with it against the files at tag prereg-v1. A registration whose
+# attachments differ from the cited commit would not certify that commit.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/validation-paper
+    paths:
+      - ".github/workflows/check-registration.yml"
+
+permissions:
+  contents: read
+
+env:
+  REG: qc2sp
+  DOI: 10.17605/OSF.IO/QC2SP
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: prereg-v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet requests
+      - name: Rebuild the uploaded files from the tag
+        run: |
+          mkdir expected
+          cp paper/PREREGISTRATION.md paper/PROTOCOL.md expected/
+          git archive --format=zip --prefix=data/ -o expected/prereg-v1-data.zip HEAD:paper/data
+          sha256sum expected/*
+      - name: Read the registration and compare
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, pathlib, requests
+          API = "https://api.osf.io/v2"
+          reg_id, doi = os.environ["REG"], os.environ["DOI"]
+          s = requests.Session(); s.headers["User-Agent"] = "registration-check"
+
+          r = requests.head(f"https://doi.org/{doi}", allow_redirects=True, timeout=60)
+          print("DOI resolves to:", r.url, r.status_code)
+
+          reg = s.get(f"{API}/registrations/{reg_id}/", timeout=60)
+          print("registration HTTP", reg.status_code)
+          reg.raise_for_status()
+          a = reg.json()["data"]["attributes"]
+          for k in ("title", "date_created", "date_registered", "public", "embargoed",
+                    "pending_registration_approval", "withdrawn", "registration_supplement",
+                    "reviews_state", "article_doi"):
+              print(f"  {k}: {a.get(k)}")
+
+          expected = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                      for p in pathlib.Path("expected").iterdir()}
+          found = {}
+          def walk(url, prefix=""):
+              while url:
+                  j = s.get(url, timeout=60).json()
+                  for item in j.get("data", []):
+                      at = item["attributes"]
+                      if at["kind"] == "folder":
+                          walk(item["relationships"]["files"]["links"]["related"]["href"],
+                               prefix + at["name"] + "/")
+                      else:
+                          h = (at.get("extra") or {}).get("hashes") or {}
+                          found[prefix + at["name"]] = (h.get("sha256"), at.get("size"))
+                  url = (j.get("links") or {}).get("next")
+          prov = s.get(f"{API}/registrations/{reg_id}/files/", timeout=60).json()
+          for p in prov.get("data", []):
+              print("provider:", p["attributes"]["name"])
+              walk(p["relationships"]["files"]["links"]["related"]["href"],
+                   p["attributes"]["name"] + ":")
+
+          print("\nfiles archived with the registration:")
+          for name, (h, size) in sorted(found.items()):
+              base = name.rsplit("/", 1)[-1].split(":", 1)[-1]
+              verdict = ("MATCHES tag" if expected.get(base) == h else
+                         "DIFFERS from tag" if base in expected else "not one of ours")
+              print(f"  {name}  {size} B  sha256={h}  -> {verdict}")
+          missing = [n for n in expected
+                     if not any(k.rsplit('/', 1)[-1].split(':', 1)[-1] == n for k in found)]
+          print("\nexpected but not found:", missing or "none")
+
+          sr = s.get(f"{API}/registrations/{reg_id}/schema_responses/", timeout=60)
+          if sr.ok and sr.json().get("data"):
+              blocks = sr.json()["data"][0]["attributes"].get("revision_responses") or {}
+              print("\nform responses (first 200 chars each):")
+              for k, v in blocks.items():
+                  text = v if isinstance(v, str) else json.dumps(v)
+                  print(f"  {k}: {text[:200]!r}")
+          PY
