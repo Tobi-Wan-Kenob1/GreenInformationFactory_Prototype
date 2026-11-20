@@ -1,0 +1,131 @@
+name: Record the tool on the bridging seed set
+
+# The benchmark run recorded the tool on the broad seed set only. H3 and H4 are
+# seeded by the bridging set, which adds codes the broad set does not contain
+# (storage, collection, monitoring, land use), so without this their tool output
+# would not exist before filing — and output produced after filing is not
+# pre-registered output.
+#
+# It records over the ARCHIVED corpora, after verifying them against their
+# manifests, with the tool checked out at exactly the commit the manifests name.
+# Nothing is re-fetched: the input is the registered input, byte for byte.
+# Recording reads the frozen corpus only; no outcome data is touched.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/validation-paper
+    paths:
+      - ".github/workflows/record-bridging.yml"
+
+permissions:
+  contents: write
+
+env:
+  # The tool commit recorded in both manifests.
+  TOOL_COMMIT: "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e"
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1     # both arms commit to the same branch
+      matrix:
+        include:
+          - label: A1
+            to_year: "2009"
+          - label: A2
+            to_year: "2013"
+    steps:
+      - name: Check out the archived corpora
+        uses: actions/checkout@v4
+        with:
+          ref: claude/validation-paper
+          path: paper-branch
+
+      - name: Check out the tool at the manifests' commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TOOL_COMMIT }}
+          path: tool
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: tool/tests/browser/package-lock.json
+
+      - name: Install the package
+        run: python -m pip install --quiet -e tool
+
+      - name: Install browser dependencies
+        working-directory: tool/tests/browser
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: npm ci
+
+      - name: Install Chromium
+        working-directory: tool/tests/browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Confirm the tool is the one the manifest names
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          m = json.load(open("paper-branch/paper/data/frozen-${{ matrix.label }}/manifest.json"))
+          head = subprocess.check_output(["git", "-C", "tool", "rev-parse", "HEAD"], text=True).strip()
+          assert m["tool"]["commit"] == head, (m["tool"]["commit"], head)
+          print("tool commit matches manifest:", head)
+          PY
+
+      - name: Verify the archived corpus against its manifest
+        run: gif freeze --out "paper-branch/paper/data/frozen-${{ matrix.label }}" --verify
+
+      - name: Record the bridging seed set
+        run: |
+          CORPUS="paper-branch/paper/data/frozen-${{ matrix.label }}"
+          QUERIES=$(python -c "import json,sys; print(','.join(json.load(open(sys.argv[1]))['queries']))" "$CORPUS/queries-both-sides.json")
+          echo "queries: $QUERIES"
+          node tool/tests/browser/record.js \
+            --corpus "$CORPUS" \
+            --out "$CORPUS/recorded-both-sides.json" \
+            --queries "$QUERIES" \
+            --from 1990 --to "${{ matrix.to_year }}" \
+            --label "${{ matrix.label }}-bridging"
+
+      - name: Check what was recorded
+        run: |
+          python - <<'PY'
+          import json
+          d = "paper-branch/paper/data/frozen-${{ matrix.label }}"
+          sel = json.load(open(f"{d}/queries-both-sides.json"))["queries"]
+          rec = json.load(open(f"{d}/recorded-both-sides.json"))
+          got = [r["query"] for r in rec["runs"]]
+          assert got == sel, (got, sel)
+          assert not rec["pageErrors"], rec["pageErrors"]
+          for r in rec["runs"]:
+              print(r["query"], r["counts"], "|",
+                    "; ".join(f"{s['scope']}: " + ", ".join(t["term"] for t in s["topics"][:6])
+                              for s in r["scopes"]))
+          PY
+
+      - name: Commit the recording
+        working-directory: paper-branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper/data/frozen-${{ matrix.label }}/recorded-both-sides.json
+          if git diff --cached --quiet; then
+            echo "nothing new to commit"; exit 0
+          fi
+          git commit -m "Record the tool on the bridging seed set, arm ${{ matrix.label }}" \
+                     -m "Archived corpus verified against its manifest; tool at ${TOOL_COMMIT}."
+          for i in 1 2 3 4; do
+            git pull --rebase origin claude/validation-paper && git push origin HEAD:claude/validation-paper && break
+            sleep $((i * 5))
+          done
