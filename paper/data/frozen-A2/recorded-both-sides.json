@@ -1,0 +1,2818 @@
+{
+ "label": "A2-bridging",
+ "recorded": "2026-11-20T07:36:45Z",
+ "corpus": {
+  "dir": "../paper-branch/paper/data/frozen-A2",
+  "manifest": {
+   "label": "A2",
+   "created": "2026-11-20T05:59:39Z",
+   "documents": 1523,
+   "complete": true,
+   "window": {
+    "since": "1990-01-01",
+    "until": "2013-12-31"
+   },
+   "tool": {
+    "commit": "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e",
+    "dirty": false,
+    "untracked": 3
+   },
+   "files": [
+    {
+     "name": "policies.json",
+     "items": 150,
+     "sha256": "3226f94a672d35eee9b1ca14608b4529061fd4b4c587b2e5340dbf88d94adb96",
+     "content_sha256": "8a3d6d4c19326e12dee8513e5b37f12a647ef2c149b22281f462ee4a1f1347c5"
+    },
+    {
+     "name": "grants.json",
+     "items": 1,
+     "sha256": "cdb9839ca6011312d0e5d3ff43e16b4e5c43c9d48ae3a54304fb9a817918c2ad",
+     "content_sha256": "8de5d7f85565dfa7280a92a6db6364cb0112d191272837a6d5d01e3845951581"
+    },
+    {
+     "name": "projects.json",
+     "items": 1372,
+     "sha256": "97fd05fcf176c60b10b0be1b2df99b61fcfd4726909d7f9a3e19c86293bc4c7f",
+     "content_sha256": "171d718302b5d40d882e72154f5d9ae861b58b022a9fbacbd27ff16ceff55937"
+    }
+   ]
+  }
+ },
+ "window": {
+  "from": 1990,
+  "to": 2013
+ },
+ "queries": [
+  "land",
+  "water",
+  "database",
+  "efficiency",
+  "standard",
+  "transport",
+  "storage",
+  "collection",
+  "monitoring",
+  "land use"
+ ],
+ "runs": [
+  {
+   "query": "land",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 4,
+    "grants": 145
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 4 docs",
+    "Funding & Tenders: snapshot · 145 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 14",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "land",
+       "dfPolicy": 4,
+       "dfGrant": 96
+      },
+      {
+       "rank": 2,
+       "term": "agricultural",
+       "dfPolicy": 4,
+       "dfGrant": 23
+      },
+      {
+       "rank": 3,
+       "term": "production",
+       "dfPolicy": 4,
+       "dfGrant": 20
+      },
+      {
+       "rank": 4,
+       "term": "system",
+       "dfPolicy": 3,
+       "dfGrant": 12
+      },
+      {
+       "rank": 5,
+       "term": "common",
+       "dfPolicy": 3,
+       "dfGrant": 7
+      },
+      {
+       "rank": 6,
+       "term": "crop",
+       "dfPolicy": 2,
+       "dfGrant": 6
+      },
+      {
+       "rank": 7,
+       "term": "application",
+       "dfPolicy": 4,
+       "dfGrant": 4
+      },
+      {
+       "rank": 8,
+       "term": "materials",
+       "dfPolicy": 4,
+       "dfGrant": 4
+      },
+      {
+       "rank": 9,
+       "term": "processing",
+       "dfPolicy": 2,
+       "dfGrant": 4
+      },
+      {
+       "rank": 10,
+       "term": "set",
+       "dfPolicy": 4,
+       "dfGrant": 3
+      },
+      {
+       "rank": 11,
+       "term": "communities",
+       "dfPolicy": 3,
+       "dfGrant": 3
+      },
+      {
+       "rank": 12,
+       "term": "industry",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      },
+      {
+       "rank": 13,
+       "term": "agricultural production",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      },
+      {
+       "rank": 14,
+       "term": "material",
+       "dfPolicy": 4,
+       "dfGrant": 2
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "application",
+       "dfPolicy": 4,
+       "dfGrant": 4
+      },
+      {
+       "rank": 2,
+       "term": "detailed",
+       "dfPolicy": 4,
+       "dfGrant": 1
+      },
+      {
+       "rank": 3,
+       "term": "fallow land",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 4,
+       "term": "land set",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 5,
+       "term": "materials agricultural",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 6,
+       "term": "production raw",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 7,
+       "term": "raw material",
+       "dfPolicy": 4,
+       "dfGrant": 1
+      },
+      {
+       "rank": 8,
+       "term": "raw materials",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 9,
+       "term": "regards",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 10,
+       "term": "set aside",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 11,
+       "term": "aid system",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 12,
+       "term": "common",
+       "dfPolicy": 3,
+       "dfGrant": 7
+      },
+      {
+       "rank": 13,
+       "term": "communities",
+       "dfPolicy": 3,
+       "dfGrant": 3
+      },
+      {
+       "rank": 14,
+       "term": "community",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 15,
+       "term": "iva",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "land",
+       "dfPolicy": 4,
+       "dfGrant": 96
+      },
+      {
+       "rank": 2,
+       "term": "agriculture",
+       "dfPolicy": 0,
+       "dfGrant": 54
+      },
+      {
+       "rank": 3,
+       "term": "ecosystems",
+       "dfPolicy": 0,
+       "dfGrant": 47
+      },
+      {
+       "rank": 4,
+       "term": "management",
+       "dfPolicy": 0,
+       "dfGrant": 44
+      },
+      {
+       "rank": 5,
+       "term": "changes",
+       "dfPolicy": 0,
+       "dfGrant": 39
+      },
+      {
+       "rank": 6,
+       "term": "soil",
+       "dfPolicy": 0,
+       "dfGrant": 37
+      },
+      {
+       "rank": 7,
+       "term": "change",
+       "dfPolicy": 0,
+       "dfGrant": 30
+      },
+      {
+       "rank": 8,
+       "term": "climatic",
+       "dfPolicy": 0,
+       "dfGrant": 30
+      },
+      {
+       "rank": 9,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 30
+      },
+      {
+       "rank": 10,
+       "term": "climatic changes",
+       "dfPolicy": 0,
+       "dfGrant": 28
+      },
+      {
+       "rank": 11,
+       "term": "climate",
+       "dfPolicy": 0,
+       "dfGrant": 25
+      },
+      {
+       "rank": 12,
+       "term": "sustainable",
+       "dfPolicy": 0,
+       "dfGrant": 25
+      },
+      {
+       "rank": 13,
+       "term": "treatment",
+       "dfPolicy": 0,
+       "dfGrant": 25
+      },
+      {
+       "rank": 14,
+       "term": "water",
+       "dfPolicy": 0,
+       "dfGrant": 24
+      },
+      {
+       "rank": 15,
+       "term": "agricultural",
+       "dfPolicy": 4,
+       "dfGrant": 23
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 5 of 87 codes on both sides · 46 not addressed",
+    "both": [
+     "land",
+     "regulation",
+     "regulations"
+    ],
+    "gaps": [
+     "dataset",
+     "collection",
+     "incentives",
+     "investment",
+     "collaboration",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "partnership",
+     "scholars",
+     "regulatory",
+     "local communities",
+     "agency",
+     "bank",
+     "retailer",
+     "recyclable",
+     "reuse",
+     "biochar",
+     "biomethane",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: land",
+     "4",
+     "145",
+     "83.1–332.5 M€",
+     "0.2–10.5 M€",
+     "116",
+     "≈ 1.4 MtCO₂e (0.1–20) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: land: To realise the funding potential, prepare consortium proposals for the 145 Horizon topics in this scenario — realistically €83.1–332.5 M of the published call budgets. Anchor the work explicitly in the 4 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (17–89 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 1.4 MtCO₂e (0.1–20) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables); material & waste-disposal savings from circularity (indicative €0.2–10.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "water",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 1,
+    "grants": 189
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 1 docs",
+    "Funding & Tenders: snapshot · 189 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 1",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "water",
+       "dfPolicy": 1,
+       "dfGrant": 140
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 0",
+     "topics": []
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "water",
+       "dfPolicy": 1,
+       "dfGrant": 140
+      },
+      {
+       "rank": 2,
+       "term": "agriculture",
+       "dfPolicy": 0,
+       "dfGrant": 91
+      },
+      {
+       "rank": 3,
+       "term": "management",
+       "dfPolicy": 0,
+       "dfGrant": 49
+      },
+      {
+       "rank": 4,
+       "term": "soil",
+       "dfPolicy": 0,
+       "dfGrant": 46
+      },
+      {
+       "rank": 5,
+       "term": "processes",
+       "dfPolicy": 0,
+       "dfGrant": 43
+      },
+      {
+       "rank": 6,
+       "term": "treatment",
+       "dfPolicy": 0,
+       "dfGrant": 43
+      },
+      {
+       "rank": 7,
+       "term": "biomass",
+       "dfPolicy": 0,
+       "dfGrant": 40
+      },
+      {
+       "rank": 8,
+       "term": "treatment processes",
+       "dfPolicy": 0,
+       "dfGrant": 38
+      },
+      {
+       "rank": 9,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 38
+      },
+      {
+       "rank": 10,
+       "term": "wastewater treatment",
+       "dfPolicy": 0,
+       "dfGrant": 36
+      },
+      {
+       "rank": 11,
+       "term": "ecosystems",
+       "dfPolicy": 0,
+       "dfGrant": 34
+      },
+      {
+       "rank": 12,
+       "term": "irrigation",
+       "dfPolicy": 0,
+       "dfGrant": 34
+      },
+      {
+       "rank": 13,
+       "term": "production",
+       "dfPolicy": 0,
+       "dfGrant": 34
+      },
+      {
+       "rank": 14,
+       "term": "sustainable",
+       "dfPolicy": 0,
+       "dfGrant": 32
+      },
+      {
+       "rank": 15,
+       "term": "energy",
+       "dfPolicy": 0,
+       "dfGrant": 30
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 1 of 87 codes on both sides · 45 not addressed",
+    "both": [
+     "water"
+    ],
+    "gaps": [
+     "dataset",
+     "collection",
+     "incentives",
+     "investment",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "scholars",
+     "regulatory",
+     "government",
+     "local communities",
+     "agency",
+     "bank",
+     "municipality",
+     "retailer",
+     "biochar",
+     "biomethane",
+     "digestate",
+     "composting",
+     "pyrolysis"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: water",
+     "1",
+     "186",
+     "80.4–321.6 M€ (+3 without budget data)",
+     "0.2–8.5 M€",
+     "114",
+     "≈ 1.3 MtCO₂e (0.1–19) lifetime",
+     "High · 69/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: water: To realise the funding potential, prepare consortium proposals for the 186 Horizon topics in this scenario — realistically €80.4–321.6 M of the published call budgets (plus 3 topics without budget data as upside). Anchor the work explicitly in the 1 matching policy to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (17–89 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 1.3 MtCO₂e (0.1–19) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables); material & waste-disposal savings from circularity (indicative €0.2–8.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (69/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "database",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 1,
+    "grants": 77
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 1 docs",
+    "Funding & Tenders: snapshot · 77 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 1",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "database",
+       "dfPolicy": 1,
+       "dfGrant": 4
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 0",
+     "topics": []
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "databases",
+       "dfPolicy": 0,
+       "dfGrant": 76
+      },
+      {
+       "rank": 2,
+       "term": "data",
+       "dfPolicy": 1,
+       "dfGrant": 33
+      },
+      {
+       "rank": 3,
+       "term": "mining",
+       "dfPolicy": 0,
+       "dfGrant": 30
+      },
+      {
+       "rank": 4,
+       "term": "data mining",
+       "dfPolicy": 0,
+       "dfGrant": 25
+      },
+      {
+       "rank": 5,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 22
+      },
+      {
+       "rank": 6,
+       "term": "agriculture",
+       "dfPolicy": 0,
+       "dfGrant": 21
+      },
+      {
+       "rank": 7,
+       "term": "databases data",
+       "dfPolicy": 0,
+       "dfGrant": 17
+      },
+      {
+       "rank": 8,
+       "term": "soil",
+       "dfPolicy": 0,
+       "dfGrant": 17
+      },
+      {
+       "rank": 9,
+       "term": "development",
+       "dfPolicy": 0,
+       "dfGrant": 13
+      },
+      {
+       "rank": 10,
+       "term": "information",
+       "dfPolicy": 0,
+       "dfGrant": 13
+      },
+      {
+       "rank": 11,
+       "term": "research",
+       "dfPolicy": 0,
+       "dfGrant": 13
+      },
+      {
+       "rank": 12,
+       "term": "software",
+       "dfPolicy": 0,
+       "dfGrant": 13
+      },
+      {
+       "rank": 13,
+       "term": "systems",
+       "dfPolicy": 1,
+       "dfGrant": 13
+      },
+      {
+       "rank": 14,
+       "term": "environmental",
+       "dfPolicy": 0,
+       "dfGrant": 12
+      },
+      {
+       "rank": 15,
+       "term": "develop",
+       "dfPolicy": 0,
+       "dfGrant": 11
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 1 of 87 codes on both sides · 58 not addressed",
+    "both": [
+     "database"
+    ],
+    "gaps": [
+     "landscape",
+     "transport",
+     "transportation",
+     "demand",
+     "efficiency",
+     "incentives",
+     "investment",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "partnership",
+     "producers",
+     "scholars",
+     "local communities",
+     "bank",
+     "municipality",
+     "retailer",
+     "recyclable",
+     "reuse",
+     "biogas",
+     "biochar",
+     "biomethane",
+     "anaerobic digestion",
+     "bioenergy",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting",
+     "pyrolysis"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: database",
+     "1",
+     "77",
+     "42.9–171.5 M€",
+     "0.2–10.5 M€",
+     "96",
+     "≈ 1 MtCO₂e (0.1–15) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: database: To realise the funding potential, prepare consortium proposals for the 77 Horizon topics in this scenario — realistically €42.9–171.5 M of the published call budgets. Anchor the work explicitly in the 1 matching policy to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (11–63 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 1 MtCO₂e (0.1–15) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables); material & waste-disposal savings from circularity (indicative €0.2–10.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "efficiency",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 3,
+    "grants": 51
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 3 docs",
+    "Funding & Tenders: snapshot · 51 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 4",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "management",
+       "dfPolicy": 3,
+       "dfGrant": 12
+      },
+      {
+       "rank": 2,
+       "term": "energy",
+       "dfPolicy": 3,
+       "dfGrant": 11
+      },
+      {
+       "rank": 3,
+       "term": "government",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 4,
+       "term": "consumption",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "agreement",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 2,
+       "term": "america",
+       "dfPolicy": 3,
+       "dfGrant": 1
+      },
+      {
+       "rank": 3,
+       "term": "communities",
+       "dfPolicy": 3,
+       "dfGrant": 1
+      },
+      {
+       "rank": 4,
+       "term": "community position",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 5,
+       "term": "coordination energy-efficiency",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 6,
+       "term": "determining",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 7,
+       "term": "energy consumption",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 8,
+       "term": "energy-efficiency labelling",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 9,
+       "term": "government",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 10,
+       "term": "labelling programmes",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 11,
+       "term": "management entities",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 12,
+       "term": "office equipment",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 13,
+       "term": "part",
+       "dfPolicy": 3,
+       "dfGrant": 1
+      },
+      {
+       "rank": 14,
+       "term": "regard",
+       "dfPolicy": 3,
+       "dfGrant": 1
+      },
+      {
+       "rank": 15,
+       "term": "revision",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "efficiency",
+       "dfPolicy": 0,
+       "dfGrant": 47
+      },
+      {
+       "rank": 2,
+       "term": "agriculture",
+       "dfPolicy": 0,
+       "dfGrant": 18
+      },
+      {
+       "rank": 3,
+       "term": "biomass",
+       "dfPolicy": 0,
+       "dfGrant": 15
+      },
+      {
+       "rank": 4,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 13
+      },
+      {
+       "rank": 5,
+       "term": "management",
+       "dfPolicy": 3,
+       "dfGrant": 12
+      },
+      {
+       "rank": 6,
+       "term": "changes",
+       "dfPolicy": 0,
+       "dfGrant": 11
+      },
+      {
+       "rank": 7,
+       "term": "development",
+       "dfPolicy": 0,
+       "dfGrant": 11
+      },
+      {
+       "rank": 8,
+       "term": "energy",
+       "dfPolicy": 3,
+       "dfGrant": 11
+      },
+      {
+       "rank": 9,
+       "term": "sustainable",
+       "dfPolicy": 0,
+       "dfGrant": 11
+      },
+      {
+       "rank": 10,
+       "term": "systems",
+       "dfPolicy": 0,
+       "dfGrant": 11
+      },
+      {
+       "rank": 11,
+       "term": "climatic changes",
+       "dfPolicy": 0,
+       "dfGrant": 10
+      },
+      {
+       "rank": 12,
+       "term": "materials",
+       "dfPolicy": 0,
+       "dfGrant": 10
+      },
+      {
+       "rank": 13,
+       "term": "production",
+       "dfPolicy": 0,
+       "dfGrant": 10
+      },
+      {
+       "rank": 14,
+       "term": "environmental",
+       "dfPolicy": 0,
+       "dfGrant": 8
+      },
+      {
+       "rank": 15,
+       "term": "raw materials",
+       "dfPolicy": 0,
+       "dfGrant": 8
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 3 of 87 codes on both sides · 55 not addressed",
+    "both": [
+     "efficiency",
+     "government"
+    ],
+    "gaps": [
+     "landscape",
+     "database",
+     "dataset",
+     "collection",
+     "incentives",
+     "investment",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "policymakers",
+     "farmers",
+     "producers",
+     "scholars",
+     "regulatory",
+     "local communities",
+     "agency",
+     "bank",
+     "municipality",
+     "retailer",
+     "recyclable",
+     "biochar",
+     "biomethane",
+     "bioenergy",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: efficiency",
+     "3",
+     "51",
+     "46.3–185.2 M€",
+     "0.7–18.5 M€",
+     "114",
+     "≈ 765 ktCO₂e (52–11,215) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: efficiency: To realise the funding potential, prepare consortium proposals for the 51 Horizon topics in this scenario — realistically €46.3–185.2 M of the published call budgets. Anchor the work explicitly in the 3 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (17–89 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 765 ktCO₂e (52–11,215) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided eu ets / cbam carbon costs; avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables) (indicative €0.7–18.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "standard",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 10,
+    "grants": 27
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 10 docs",
+    "Funding & Tenders: snapshot · 27 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 12",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "management",
+       "dfPolicy": 4,
+       "dfGrant": 6
+      },
+      {
+       "rank": 2,
+       "term": "standards",
+       "dfPolicy": 2,
+       "dfGrant": 16
+      },
+      {
+       "rank": 3,
+       "term": "agricultural",
+       "dfPolicy": 2,
+       "dfGrant": 6
+      },
+      {
+       "rank": 4,
+       "term": "energy",
+       "dfPolicy": 4,
+       "dfGrant": 5
+      },
+      {
+       "rank": 5,
+       "term": "certification",
+       "dfPolicy": 2,
+       "dfGrant": 5
+      },
+      {
+       "rank": 6,
+       "term": "standard",
+       "dfPolicy": 7,
+       "dfGrant": 4
+      },
+      {
+       "rank": 7,
+       "term": "revision",
+       "dfPolicy": 4,
+       "dfGrant": 3
+      },
+      {
+       "rank": 8,
+       "term": "labelling",
+       "dfPolicy": 4,
+       "dfGrant": 2
+      },
+      {
+       "rank": 9,
+       "term": "quality",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 10,
+       "term": "directives",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 11,
+       "term": "plant",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 12,
+       "term": "eec",
+       "dfPolicy": 2,
+       "dfGrant": 2
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "community",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 2,
+       "term": "regard",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 3,
+       "term": "treaty",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 4,
+       "term": "determining",
+       "dfPolicy": 7,
+       "dfGrant": 0
+      },
+      {
+       "rank": 5,
+       "term": "office",
+       "dfPolicy": 7,
+       "dfGrant": 0
+      },
+      {
+       "rank": 6,
+       "term": "standard",
+       "dfPolicy": 7,
+       "dfGrant": 4
+      },
+      {
+       "rank": 7,
+       "term": "communities",
+       "dfPolicy": 6,
+       "dfGrant": 0
+      },
+      {
+       "rank": 8,
+       "term": "agreement",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 9,
+       "term": "america",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 10,
+       "term": "community position",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 11,
+       "term": "conditions",
+       "dfPolicy": 4,
+       "dfGrant": 1
+      },
+      {
+       "rank": 12,
+       "term": "coordination",
+       "dfPolicy": 4,
+       "dfGrant": 1
+      },
+      {
+       "rank": 13,
+       "term": "energy consumption",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 14,
+       "term": "government",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 15,
+       "term": "labelling programmes",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "standards",
+       "dfPolicy": 2,
+       "dfGrant": 16
+      },
+      {
+       "rank": 2,
+       "term": "agriculture",
+       "dfPolicy": 0,
+       "dfGrant": 13
+      },
+      {
+       "rank": 3,
+       "term": "biomass",
+       "dfPolicy": 0,
+       "dfGrant": 10
+      },
+      {
+       "rank": 4,
+       "term": "systems",
+       "dfPolicy": 0,
+       "dfGrant": 7
+      },
+      {
+       "rank": 5,
+       "term": "agricultural",
+       "dfPolicy": 2,
+       "dfGrant": 6
+      },
+      {
+       "rank": 6,
+       "term": "development",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 7,
+       "term": "food",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 8,
+       "term": "information",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 9,
+       "term": "management",
+       "dfPolicy": 4,
+       "dfGrant": 6
+      },
+      {
+       "rank": 10,
+       "term": "production",
+       "dfPolicy": 1,
+       "dfGrant": 6
+      },
+      {
+       "rank": 11,
+       "term": "sustainable",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 12,
+       "term": "certification",
+       "dfPolicy": 2,
+       "dfGrant": 5
+      },
+      {
+       "rank": 13,
+       "term": "energy",
+       "dfPolicy": 4,
+       "dfGrant": 5
+      },
+      {
+       "rank": 14,
+       "term": "research",
+       "dfPolicy": 0,
+       "dfGrant": 5
+      },
+      {
+       "rank": 15,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 5
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 3 of 87 codes on both sides · 64 not addressed",
+    "both": [
+     "standard",
+     "regulation",
+     "regulations"
+    ],
+    "gaps": [
+     "landscape",
+     "dataset",
+     "transport",
+     "infrastructure",
+     "storage",
+     "transportation",
+     "collection",
+     "demand",
+     "incentives",
+     "investment",
+     "collaboration",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "partnership",
+     "policymakers",
+     "producers",
+     "scholars",
+     "regulatory",
+     "local communities",
+     "agency",
+     "bank",
+     "retailer",
+     "recyclable",
+     "biochar",
+     "biomethane",
+     "anaerobic digestion",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting",
+     "pyrolysis"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: standard",
+     "2",
+     "26",
+     "17.1–68.5 M€",
+     "0.2–10.5 M€",
+     "104",
+     "≈ 342 ktCO₂e (22–5,201) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: standard: To realise the funding potential, prepare consortium proposals for the 26 Horizon topics in this scenario — realistically €17.1–68.5 M of the published call budgets. Anchor the work explicitly in the 2 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (13–76 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 342 ktCO₂e (22–5,201) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables); material & waste-disposal savings from circularity (indicative €0.2–10.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "transport",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 4,
+    "grants": 37
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 4 docs",
+    "Funding & Tenders: snapshot · 37 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 5",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "transport",
+       "dfPolicy": 4,
+       "dfGrant": 28
+      },
+      {
+       "rank": 2,
+       "term": "energy",
+       "dfPolicy": 2,
+       "dfGrant": 13
+      },
+      {
+       "rank": 3,
+       "term": "agriculture",
+       "dfPolicy": 4,
+       "dfGrant": 12
+      },
+      {
+       "rank": 4,
+       "term": "food",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      },
+      {
+       "rank": 5,
+       "term": "environment",
+       "dfPolicy": 2,
+       "dfGrant": 2
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "agriculture",
+       "dfPolicy": 4,
+       "dfGrant": 12
+      },
+      {
+       "rank": 2,
+       "term": "transport",
+       "dfPolicy": 4,
+       "dfGrant": 28
+      },
+      {
+       "rank": 3,
+       "term": "accession",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 4,
+       "term": "adapting",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 5,
+       "term": "fields free",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 6,
+       "term": "free movement",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 7,
+       "term": "goods freedom",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 8,
+       "term": "movement goods",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 9,
+       "term": "reason",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 10,
+       "term": "taxation",
+       "dfPolicy": 3,
+       "dfGrant": 1
+      },
+      {
+       "rank": 11,
+       "term": "transport policy",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 12,
+       "term": "agriculture food",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 13,
+       "term": "company law",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 14,
+       "term": "competition policy",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 15,
+       "term": "croatia accession",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "transport",
+       "dfPolicy": 4,
+       "dfGrant": 28
+      },
+      {
+       "rank": 2,
+       "term": "biomass",
+       "dfPolicy": 0,
+       "dfGrant": 15
+      },
+      {
+       "rank": 3,
+       "term": "energy",
+       "dfPolicy": 2,
+       "dfGrant": 13
+      },
+      {
+       "rank": 4,
+       "term": "agriculture",
+       "dfPolicy": 4,
+       "dfGrant": 12
+      },
+      {
+       "rank": 5,
+       "term": "fuels",
+       "dfPolicy": 0,
+       "dfGrant": 9
+      },
+      {
+       "rank": 6,
+       "term": "production",
+       "dfPolicy": 0,
+       "dfGrant": 8
+      },
+      {
+       "rank": 7,
+       "term": "biofuels",
+       "dfPolicy": 0,
+       "dfGrant": 7
+      },
+      {
+       "rank": 8,
+       "term": "sustainable",
+       "dfPolicy": 0,
+       "dfGrant": 7
+      },
+      {
+       "rank": 9,
+       "term": "transportation",
+       "dfPolicy": 0,
+       "dfGrant": 7
+      },
+      {
+       "rank": 10,
+       "term": "development",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 11,
+       "term": "increasing",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 12,
+       "term": "plant",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 13,
+       "term": "processes",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 14,
+       "term": "systems",
+       "dfPolicy": 0,
+       "dfGrant": 6
+      },
+      {
+       "rank": 15,
+       "term": "biofuels biomass",
+       "dfPolicy": 0,
+       "dfGrant": 5
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 4 of 87 codes on both sides · 58 not addressed",
+    "both": [
+     "transport",
+     "regulation",
+     "regulations"
+    ],
+    "gaps": [
+     "database",
+     "dataset",
+     "standard",
+     "collection",
+     "incentives",
+     "investment",
+     "collaboration",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "partnership",
+     "policymakers",
+     "farmers",
+     "producers",
+     "scholars",
+     "local communities",
+     "agency",
+     "bank",
+     "municipality",
+     "retailer",
+     "recyclable",
+     "reuse",
+     "waste management",
+     "biochar",
+     "biomethane",
+     "anaerobic digestion",
+     "bioenergy",
+     "digestate",
+     "composting"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: transport",
+     "4",
+     "37",
+     "19.6–78.2 M€",
+     "0.2–8.5 M€",
+     "112",
+     "≈ 320 ktCO₂e (22–4,651) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: transport: To realise the funding potential, prepare consortium proposals for the 37 Horizon topics in this scenario — realistically €19.6–78.2 M of the published call budgets. Anchor the work explicitly in the 4 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (17–89 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 320 ktCO₂e (22–4,651) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables); material & waste-disposal savings from circularity (indicative €0.2–8.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "storage",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 2,
+    "grants": 14
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 2 docs",
+    "Funding & Tenders: snapshot · 14 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 1",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "storage",
+       "dfPolicy": 2,
+       "dfGrant": 13
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 7",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "determining",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 2,
+       "term": "intervention agency",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 3,
+       "term": "particular",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 4,
+       "term": "regard",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 5,
+       "term": "storage",
+       "dfPolicy": 2,
+       "dfGrant": 13
+      },
+      {
+       "rank": 6,
+       "term": "thereof whereas",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 7,
+       "term": "treaty",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "storage",
+       "dfPolicy": 2,
+       "dfGrant": 13
+      },
+      {
+       "rank": 2,
+       "term": "climatic changes",
+       "dfPolicy": 0,
+       "dfGrant": 5
+      },
+      {
+       "rank": 3,
+       "term": "biofuels",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 4,
+       "term": "biomass",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 5,
+       "term": "carbon",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 6,
+       "term": "ecosystems",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 7,
+       "term": "energy",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 8,
+       "term": "soil",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 9,
+       "term": "systems",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 10,
+       "term": "agricultural",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      },
+      {
+       "rank": 11,
+       "term": "ecosystem",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      },
+      {
+       "rank": 12,
+       "term": "emissions",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      },
+      {
+       "rank": 13,
+       "term": "high",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      },
+      {
+       "rank": 14,
+       "term": "however",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      },
+      {
+       "rank": 15,
+       "term": "increasing",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 3 of 87 codes on both sides · 65 not addressed",
+    "both": [
+     "storage",
+     "regulation",
+     "regulations"
+    ],
+    "gaps": [
+     "landscape",
+     "dataset",
+     "standard",
+     "collection",
+     "incentives",
+     "investment",
+     "collaboration",
+     "lca",
+     "funds",
+     "monitoring",
+     "spatial analysis",
+     "partnership",
+     "policymakers",
+     "consumers",
+     "producers",
+     "scholars",
+     "local communities",
+     "bank",
+     "municipality",
+     "retailer",
+     "recycling",
+     "recyclable",
+     "reuse",
+     "waste management",
+     "biogas",
+     "biomethane",
+     "anaerobic digestion",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting",
+     "pyrolysis"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: storage",
+     "2",
+     "14",
+     "13.4–53.7 M€",
+     "0.7–18.5 M€",
+     "86",
+     "≈ 193 ktCO₂e (14–2,717) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: storage: To realise the funding potential, prepare consortium proposals for the 14 Horizon topics in this scenario — realistically €13.4–53.7 M of the published call budgets. Anchor the work explicitly in the 2 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (20–98 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 193 ktCO₂e (14–2,717) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided eu ets / cbam carbon costs; avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables) (indicative €0.7–18.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "collection",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 11,
+    "grants": 7
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 11 docs",
+    "Funding & Tenders: snapshot · 7 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 4",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "collection",
+       "dfPolicy": 11,
+       "dfGrant": 6
+      },
+      {
+       "rank": 2,
+       "term": "data",
+       "dfPolicy": 9,
+       "dfGrant": 6
+      },
+      {
+       "rank": 3,
+       "term": "resources",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      },
+      {
+       "rank": 4,
+       "term": "analysis",
+       "dfPolicy": 2,
+       "dfGrant": 2
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "collection",
+       "dfPolicy": 11,
+       "dfGrant": 6
+      },
+      {
+       "rank": 2,
+       "term": "regard",
+       "dfPolicy": 11,
+       "dfGrant": 0
+      },
+      {
+       "rank": 3,
+       "term": "treaty",
+       "dfPolicy": 11,
+       "dfGrant": 0
+      },
+      {
+       "rank": 4,
+       "term": "agricultural",
+       "dfPolicy": 10,
+       "dfGrant": 0
+      },
+      {
+       "rank": 5,
+       "term": "community",
+       "dfPolicy": 10,
+       "dfGrant": 0
+      },
+      {
+       "rank": 6,
+       "term": "data",
+       "dfPolicy": 9,
+       "dfGrant": 6
+      },
+      {
+       "rank": 7,
+       "term": "determining",
+       "dfPolicy": 9,
+       "dfGrant": 0
+      },
+      {
+       "rank": 8,
+       "term": "accountancy data",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 9,
+       "term": "agricultural holdings",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 10,
+       "term": "business operation",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 11,
+       "term": "collection accountancy",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 12,
+       "term": "data network",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 13,
+       "term": "farm accountancy",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 14,
+       "term": "incomes agricultural",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      },
+      {
+       "rank": 15,
+       "term": "june",
+       "dfPolicy": 8,
+       "dfGrant": 0
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "collection",
+       "dfPolicy": 11,
+       "dfGrant": 6
+      },
+      {
+       "rank": 2,
+       "term": "data",
+       "dfPolicy": 9,
+       "dfGrant": 6
+      },
+      {
+       "rank": 3,
+       "term": "data mining",
+       "dfPolicy": 0,
+       "dfGrant": 5
+      },
+      {
+       "rank": 4,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 4
+      },
+      {
+       "rank": 5,
+       "term": "knowledge",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      },
+      {
+       "rank": 6,
+       "term": "resources",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      },
+      {
+       "rank": 7,
+       "term": "time",
+       "dfPolicy": 0,
+       "dfGrant": 3
+      },
+      {
+       "rank": 8,
+       "term": "analysis",
+       "dfPolicy": 2,
+       "dfGrant": 2
+      },
+      {
+       "rank": 9,
+       "term": "automated collection",
+       "dfPolicy": 0,
+       "dfGrant": 2
+      },
+      {
+       "rank": 10,
+       "term": "available today",
+       "dfPolicy": 0,
+       "dfGrant": 2
+      },
+      {
+       "rank": 11,
+       "term": "data collection",
+       "dfPolicy": 1,
+       "dfGrant": 2
+      },
+      {
+       "rank": 12,
+       "term": "data pertinent",
+       "dfPolicy": 0,
+       "dfGrant": 2
+      },
+      {
+       "rank": 13,
+       "term": "data referenced",
+       "dfPolicy": 0,
+       "dfGrant": 2
+      },
+      {
+       "rank": 14,
+       "term": "databases data",
+       "dfPolicy": 0,
+       "dfGrant": 2
+      },
+      {
+       "rank": 15,
+       "term": "digital",
+       "dfPolicy": 0,
+       "dfGrant": 2
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 2 of 87 codes on both sides · 80 not addressed",
+    "both": [
+     "collection"
+    ],
+    "gaps": [
+     "land",
+     "water",
+     "landscape",
+     "dataset",
+     "standard",
+     "transport",
+     "infrastructure",
+     "storage",
+     "transportation",
+     "demand",
+     "efficiency",
+     "technology",
+     "incentives",
+     "investment",
+     "collaboration",
+     "lca",
+     "funds",
+     "monitoring",
+     "spatial analysis",
+     "partnership",
+     "policymakers",
+     "consumers",
+     "producers",
+     "scholars",
+     "regulatory",
+     "government",
+     "local communities",
+     "agency",
+     "bank",
+     "municipality",
+     "retailer",
+     "recycling",
+     "recyclable",
+     "reuse",
+     "waste management",
+     "biogas",
+     "biochar",
+     "biomethane",
+     "anaerobic digestion",
+     "bioenergy",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting",
+     "pyrolysis"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: collection",
+     "11",
+     "7",
+     "8.7–35 M€",
+     "0–0.5 M€",
+     "16",
+     "≈ 226 ktCO₂e (15–3,500) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: collection: To realise the funding potential, prepare consortium proposals for the 7 Horizon topics in this scenario — realistically €8.7–35 M of the published call budgets. Anchor the work explicitly in the 11 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Agriculture & soil carbon — make this the technical core of the work plan. At typical European abatement costs (10–60 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 226 ktCO₂e (15–3,500) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for agriculture & soil carbon: (1) run a soil-carbon baseline measurement on representative parcels; (2) pilot carbon-farming practices (cover crops, reduced tillage) on selected fields. Cost savings would come mainly from avoided agricultural input costs (indicative €0–0.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "monitoring",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 3,
+    "grants": 73
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 3 docs",
+    "Funding & Tenders: snapshot · 73 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 3",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "monitoring",
+       "dfPolicy": 2,
+       "dfGrant": 57
+      },
+      {
+       "rank": 2,
+       "term": "information",
+       "dfPolicy": 2,
+       "dfGrant": 10
+      },
+      {
+       "rank": 3,
+       "term": "policy",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 7",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "determining",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 2,
+       "term": "eec",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 3,
+       "term": "exchange",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 4,
+       "term": "information",
+       "dfPolicy": 2,
+       "dfGrant": 10
+      },
+      {
+       "rank": 5,
+       "term": "july",
+       "dfPolicy": 2,
+       "dfGrant": 0
+      },
+      {
+       "rank": 6,
+       "term": "monitoring",
+       "dfPolicy": 2,
+       "dfGrant": 57
+      },
+      {
+       "rank": 7,
+       "term": "policy",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "monitoring",
+       "dfPolicy": 2,
+       "dfGrant": 57
+      },
+      {
+       "rank": 2,
+       "term": "agriculture",
+       "dfPolicy": 1,
+       "dfGrant": 24
+      },
+      {
+       "rank": 3,
+       "term": "sensors",
+       "dfPolicy": 0,
+       "dfGrant": 19
+      },
+      {
+       "rank": 4,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 19
+      },
+      {
+       "rank": 5,
+       "term": "soil",
+       "dfPolicy": 0,
+       "dfGrant": 18
+      },
+      {
+       "rank": 6,
+       "term": "management",
+       "dfPolicy": 1,
+       "dfGrant": 17
+      },
+      {
+       "rank": 7,
+       "term": "data",
+       "dfPolicy": 1,
+       "dfGrant": 16
+      },
+      {
+       "rank": 8,
+       "term": "system",
+       "dfPolicy": 1,
+       "dfGrant": 16
+      },
+      {
+       "rank": 9,
+       "term": "control",
+       "dfPolicy": 1,
+       "dfGrant": 14
+      },
+      {
+       "rank": 10,
+       "term": "mining",
+       "dfPolicy": 0,
+       "dfGrant": 14
+      },
+      {
+       "rank": 11,
+       "term": "systems",
+       "dfPolicy": 0,
+       "dfGrant": 14
+      },
+      {
+       "rank": 12,
+       "term": "environmental",
+       "dfPolicy": 1,
+       "dfGrant": 13
+      },
+      {
+       "rank": 13,
+       "term": "water",
+       "dfPolicy": 0,
+       "dfGrant": 13
+      },
+      {
+       "rank": 14,
+       "term": "sensing",
+       "dfPolicy": 0,
+       "dfGrant": 12
+      },
+      {
+       "rank": 15,
+       "term": "biomass",
+       "dfPolicy": 0,
+       "dfGrant": 11
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 4 of 87 codes on both sides · 56 not addressed",
+    "both": [
+     "collection",
+     "monitoring",
+     "waste management"
+    ],
+    "gaps": [
+     "infrastructure",
+     "storage",
+     "transportation",
+     "incentives",
+     "investment",
+     "collaboration",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "policymakers",
+     "consumers",
+     "scholars",
+     "regulatory",
+     "local communities",
+     "agency",
+     "bank",
+     "municipality",
+     "retailer",
+     "recyclable",
+     "biochar",
+     "biomethane",
+     "bioenergy",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting",
+     "pyrolysis"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: monitoring",
+     "2",
+     "63",
+     "30.7–122.8 M€",
+     "0.2–8.5 M€",
+     "112",
+     "≈ 503 ktCO₂e (35–7,304) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: monitoring: To realise the funding potential, prepare consortium proposals for the 63 Horizon topics in this scenario — realistically €30.7–122.8 M of the published call budgets. Anchor the work explicitly in the 2 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Solar & wind energy, Bioenergy & biofuels, Forests & land restoration — make these the technical core of the work plan. At typical European abatement costs (17–89 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 503 ktCO₂e (35–7,304) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for solar & wind energy: (1) commission a site solar/wind yield assessment with a grid-connection pre-study; (2) tender a rooftop-PV or wind feasibility study including permitting screening. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Cost savings would come mainly from avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables); material & waste-disposal savings from circularity (indicative €0.2–8.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  },
+  {
+   "query": "land use",
+   "window": {
+    "from": 1990,
+    "to": 2013
+   },
+   "counts": {
+    "policies": 4,
+    "grants": 73
+   },
+   "sources": [
+    "window 1990–2013, incl. closed calls",
+    "EUR-Lex: snapshot · 4 docs",
+    "Funding & Tenders: snapshot · 73 docs"
+   ],
+   "scopes": [
+    {
+     "scope": "bridge",
+     "label": "Bridge topics 12",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "land",
+       "dfPolicy": 4,
+       "dfGrant": 70
+      },
+      {
+       "rank": 2,
+       "term": "production",
+       "dfPolicy": 4,
+       "dfGrant": 9
+      },
+      {
+       "rank": 3,
+       "term": "agricultural",
+       "dfPolicy": 4,
+       "dfGrant": 9
+      },
+      {
+       "rank": 4,
+       "term": "system",
+       "dfPolicy": 3,
+       "dfGrant": 5
+      },
+      {
+       "rank": 5,
+       "term": "application",
+       "dfPolicy": 4,
+       "dfGrant": 3
+      },
+      {
+       "rank": 6,
+       "term": "processing",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      },
+      {
+       "rank": 7,
+       "term": "crop",
+       "dfPolicy": 2,
+       "dfGrant": 3
+      },
+      {
+       "rank": 8,
+       "term": "set",
+       "dfPolicy": 4,
+       "dfGrant": 2
+      },
+      {
+       "rank": 9,
+       "term": "materials",
+       "dfPolicy": 4,
+       "dfGrant": 2
+      },
+      {
+       "rank": 10,
+       "term": "communities",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 11,
+       "term": "industry",
+       "dfPolicy": 2,
+       "dfGrant": 2
+      },
+      {
+       "rank": 12,
+       "term": "agricultural production",
+       "dfPolicy": 2,
+       "dfGrant": 2
+      }
+     ]
+    },
+    {
+     "scope": "policy",
+     "label": "Policy topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "application",
+       "dfPolicy": 4,
+       "dfGrant": 3
+      },
+      {
+       "rank": 2,
+       "term": "detailed",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 3,
+       "term": "fallow land",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 4,
+       "term": "land set",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 5,
+       "term": "materials agricultural",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 6,
+       "term": "production raw",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 7,
+       "term": "raw material",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 8,
+       "term": "raw materials",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 9,
+       "term": "regards",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 10,
+       "term": "set aside",
+       "dfPolicy": 4,
+       "dfGrant": 0
+      },
+      {
+       "rank": 11,
+       "term": "aid system",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 12,
+       "term": "common",
+       "dfPolicy": 3,
+       "dfGrant": 1
+      },
+      {
+       "rank": 13,
+       "term": "communities",
+       "dfPolicy": 3,
+       "dfGrant": 2
+      },
+      {
+       "rank": 14,
+       "term": "community",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      },
+      {
+       "rank": 15,
+       "term": "iva",
+       "dfPolicy": 3,
+       "dfGrant": 0
+      }
+     ]
+    },
+    {
+     "scope": "grant",
+     "label": "Grant topics 15",
+     "topics": [
+      {
+       "rank": 1,
+       "term": "land",
+       "dfPolicy": 4,
+       "dfGrant": 70
+      },
+      {
+       "rank": 2,
+       "term": "management",
+       "dfPolicy": 0,
+       "dfGrant": 33
+      },
+      {
+       "rank": 3,
+       "term": "ecosystems",
+       "dfPolicy": 0,
+       "dfGrant": 26
+      },
+      {
+       "rank": 4,
+       "term": "changes",
+       "dfPolicy": 0,
+       "dfGrant": 25
+      },
+      {
+       "rank": 5,
+       "term": "agriculture",
+       "dfPolicy": 0,
+       "dfGrant": 22
+      },
+      {
+       "rank": 6,
+       "term": "change",
+       "dfPolicy": 0,
+       "dfGrant": 22
+      },
+      {
+       "rank": 7,
+       "term": "land management",
+       "dfPolicy": 0,
+       "dfGrant": 21
+      },
+      {
+       "rank": 8,
+       "term": "will",
+       "dfPolicy": 0,
+       "dfGrant": 20
+      },
+      {
+       "rank": 9,
+       "term": "climate",
+       "dfPolicy": 0,
+       "dfGrant": 17
+      },
+      {
+       "rank": 10,
+       "term": "climatic",
+       "dfPolicy": 0,
+       "dfGrant": 16
+      },
+      {
+       "rank": 11,
+       "term": "assessment",
+       "dfPolicy": 0,
+       "dfGrant": 15
+      },
+      {
+       "rank": 12,
+       "term": "climatic changes",
+       "dfPolicy": 0,
+       "dfGrant": 15
+      },
+      {
+       "rank": 13,
+       "term": "impact",
+       "dfPolicy": 0,
+       "dfGrant": 15
+      },
+      {
+       "rank": 14,
+       "term": "soil",
+       "dfPolicy": 0,
+       "dfGrant": 14
+      },
+      {
+       "rank": 15,
+       "term": "sustainable",
+       "dfPolicy": 0,
+       "dfGrant": 14
+      }
+     ]
+    }
+   ],
+   "codebook": {
+    "summary": "BioFairNet literature codebook — what does this corpus actually address? 5 of 87 codes on both sides · 54 not addressed",
+    "both": [
+     "land",
+     "regulation",
+     "regulations"
+    ],
+    "gaps": [
+     "dataset",
+     "collection",
+     "efficiency",
+     "incentives",
+     "investment",
+     "collaboration",
+     "lca",
+     "funds",
+     "spatial analysis",
+     "partnership",
+     "farmers",
+     "scholars",
+     "regulatory",
+     "local communities",
+     "agency",
+     "bank",
+     "retailer",
+     "recyclable",
+     "reuse",
+     "waste management",
+     "biogas",
+     "biochar",
+     "biomethane",
+     "digestate",
+     "bioethanol",
+     "lignocellulosic",
+     "biorefinery",
+     "composting",
+     "pyrolysis"
+    ]
+   },
+   "selectedTopics": 3,
+   "metrics": [
+    [
+     "recorded: land use",
+     "4",
+     "73",
+     "50.9–203.5 M€",
+     "0.2–10.5 M€",
+     "88",
+     "≈ 702 ktCO₂e (48–10,174) lifetime",
+     "High · 70/75"
+    ]
+   ],
+   "recommendation": "How to proceed recorded: land use: To realise the funding potential, prepare consortium proposals for the 73 Horizon topics in this scenario — realistically €50.9–203.5 M of the published call budgets. Anchor the work explicitly in the 4 matching policies to demonstrate EU policy alignment in the proposal. The CO₂ mitigation potential is carried by Bioenergy & biofuels, Forests & land restoration, Agriculture & soil carbon — make these the technical core of the work plan. At typical European abatement costs (20–105 €/tCO₂e for this topic mix), a budget of this size corresponds to ≈ 702 ktCO₂e (48–10,174) of lifetime abatement if the results are deployed — a scale for framing impact claims, not a projection; the band is wide because funding share, deployment rate and abatement cost are each uncertain. Exemplary first operational steps for forests & land restoration: (1) map degraded parcels and agree restoration targets with land owners; (2) establish a carbon-sink monitoring baseline (field plots + remote sensing). Exemplary first operational steps for agriculture & soil carbon: (1) run a soil-carbon baseline measurement on representative parcels; (2) pilot carbon-farming practices (cover crops, reduced tillage) on selected fields. Cost savings would come mainly from avoided non-compliance fines & enforcement penalties; energy cost savings (efficiency & own renewables); material & waste-disposal savings from circularity (indicative €0.2–10.5 M/yr for a typical actor) — quantify these with site-specific data before any investment decision. Confidence: High (70/75 — capped, this is a keyword screening); verify against the linked source documents before committing resources."
+  }
+ ],
+ "pageErrors": []
+}
