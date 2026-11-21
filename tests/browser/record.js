@@ -108,6 +108,16 @@ async function captureCoverage(page) {
             return result;
           };
         }
+        // The documents the analytics ran on are the documents the tool
+        // returned (and the user kept) for the query: what a relevance check
+        // has to score. Keep their ids, as passed, in order.
+        const analyze = api && api.analyze;
+        if (typeof analyze === 'function') {
+          api.analyze = function (docs, ...rest) {
+            window.__recordedReturned = (docs || []).map(d => ({ id: d.id, kind: d.kind }));
+            return analyze.call(this, docs, ...rest);
+          };
+        }
         published = api;
       },
     });
@@ -163,6 +173,7 @@ async function recordQuery(page, baseUrl, query, from, to) {
     if (read) record.scopes.push(read);
   }
   record.codebook = await readCodebook(page);
+  record.returned = await page.evaluate(() => window.__recordedReturned || null);
 
   // A scenario over the top topics, so the metrics the tool would show are
   // recorded too — not to validate them (the protocol is explicit that they
