@@ -1,0 +1,3331 @@
+{
+ "arm": "A2",
+ "protocol": "Appendix B.7",
+ "recorded": "2026-11-21T15:36:19Z",
+ "app_commit": "8ff0b3537e5b9e1d938b2e90abc392811ac2c35e",
+ "recorder_commit": "f7e1d264d7b53d18af08871eb9230bf94ee118ef",
+ "runs": [
+  {
+   "query": "land",
+   "returned": [
+    {
+     "id": "p:32009R0316",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32008R1117",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32004R1973",
+     "kind": "policy"
+    },
+    {
+     "id": "p:31999R2461",
+     "kind": "policy"
+    },
+    {
+     "id": "c:fp7:603498",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603542",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605809",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:302290",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:298561",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:301443",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:295225",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:273758",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289578",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:269233",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282887",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289461",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282687",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282664",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:273191",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:272284",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:266394",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:264123",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:261562",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:266124",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:247657",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265104",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263522",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:256426",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:249714",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:236064",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244122",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226870",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226536",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211779",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36955",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36921",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44346",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:40552",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:29163",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16842",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516731",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:18543",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:8667",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510790",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6556",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3874",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:501837",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502184",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509115",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:338335",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603719",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603567",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:608422",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:612250",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:609490",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:604956",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:329690",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:331419",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:313769",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311879",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311781",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:303314",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:298644",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:302251",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:316020",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311766",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:312690",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:302801",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:315604",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:314190",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:300672",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:291152",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289712",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:287207",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:269240",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:284274",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282910",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:293886",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263271",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265865",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:255135",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:260392",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263188",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263287",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262241",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265097",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:252980",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:245986",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244983",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244031",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:243888",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:243827",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:237348",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226544",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:236923",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227321",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227161",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:218454",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:220832",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212345",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212492",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211578",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212811",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211917",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212723",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:46481",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:39053",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32350",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44245",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44240",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44423",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32233",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42718",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44345",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42261",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:31697",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32443",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:35833",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:26789",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:29627",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16322",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:31109",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24106",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:15031",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:15459",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516721",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:514391",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:17504",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16757",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:18412",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510745",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513195",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:514049",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:508698",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:7362",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:511208",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510564",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513023",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505582",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505428",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:508442",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:500501",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:501516",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502054",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502572",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502074",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502171",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505450",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:500696",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "water",
+   "returned": [
+    {
+     "id": "p:32013D0005",
+     "kind": "policy"
+    },
+    {
+     "id": "c:fp7:619061",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606304",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:612250",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:319998",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:324518",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311929",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311903",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268181",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:285854",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:295088",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:286840",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282882",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:285861",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:283638",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265570",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262949",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:267521",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:266360",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:266504",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263188",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262902",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:241759",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244255",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:232562",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227087",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226565",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:214505",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:207276",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:43526",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:43513",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36946",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42724",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:31697",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32443",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36958",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24096",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:37081",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:517620",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:23729",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:31109",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:15171",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:15114",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:517574",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16757",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:15410",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:21721",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516731",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:515941",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509161",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513778",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:18379",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3163",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509167",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505428",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509163",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509115",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:507259",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510524",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606662",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:613717",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:612587",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605809",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605357",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605893",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:329978",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:332016",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:326736",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:317714",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308983",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:324607",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:312126",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:312185",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:321741",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308645",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:315604",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:300869",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308372",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:294729",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:301466",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:301307",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289328",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282826",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:277616",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289365",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289300",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:286772",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:269233",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:269240",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:251863",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:293953",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282664",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:293727",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:272284",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:276680",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:252491",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265287",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263295",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265946",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:260392",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263287",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:246095",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:254983",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:247594",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:980069",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:232267",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:243827",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:231975",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:236989",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:220220",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226536",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:231646",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:230915",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:218916",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:222343",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:224751",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:220177",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212492",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:222440",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:217809",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211606",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211386",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212663",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212120",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:40375",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22169",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38573",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32387",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32539",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:41586",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44423",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32502",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32133",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36938",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38351",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:23120",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:15460",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:37005",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24823",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24106",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:15031",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22793",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22095",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:13427",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:8965",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:19829",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42417",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24698",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:12429",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:7362",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6331",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6647",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:14502",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509140",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:512877",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505582",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509087",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509278",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3219",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502527",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603744",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:313256",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308637",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:303176",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:294343",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:273654",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289582",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265471",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:261330",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268208",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:255215",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262241",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:243752",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:255180",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:222331",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:218442",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:204792",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:35420",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32447",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:26199",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:21768",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24050",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516231",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:14786",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:14873",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:508698",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513660",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503166",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505561",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502411",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "demand",
+   "returned": [
+    {
+     "id": "c:fp7:297852",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211779",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38639",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36245",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22698",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513489",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:604187",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605228",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606304",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606605",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:607044",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:319998",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:328162",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311781",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:324475",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311994",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:316020",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:283300",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282865",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:287062",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282873",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289540",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289300",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:291766",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282746",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:252830",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265865",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:269196",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:246450",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262937",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:264394",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:276662",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:252196",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:241759",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227422",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:215118",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211868",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:33339",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:29644",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:027749",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513558",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:512627",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:14502",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:004475",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503122",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509087",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502171",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "landscape",
+   "returned": [
+    {
+     "id": "c:fp7:273758",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289578",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282887",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:272284",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226870",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:40552",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510790",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6556",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:501837",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:338335",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:609490",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:329690",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:331419",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:313769",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311879",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265865",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244983",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244031",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:31697",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:35833",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16322",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:500501",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502054",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "database",
+   "returned": [
+    {
+     "id": "p:32013R0603",
+     "kind": "policy"
+    },
+    {
+     "id": "c:fp7:263240",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:613677",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:608622",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:312253",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:313149",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:299214",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:334274",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:301806",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308468",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289277",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:295179",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289782",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:286859",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:269796",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:264123",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:257184",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:252323",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:247945",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:248218",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:245347",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:218223",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:240750",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:239868",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:236936",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:115004",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:237348",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:222625",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:230193",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226195",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:231034",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211578",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:220407",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211386",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211708",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:200767",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:40298",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:217049",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:46478",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32387",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36296",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36921",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:045081",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36298",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42467",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42313",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:033331",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22986",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:21553",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36537",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:027446",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22653",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:027473",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22713",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516721",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516169",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16810",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6522",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:17147",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6516",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6491",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:514049",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:13968",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:10036",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:512143",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3874",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:506861",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3729",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:004017",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509920",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:501366",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502184",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:507752",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502315",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505368",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503614",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:507142",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:501997",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "dataset",
+   "returned": [
+    {
+     "id": "c:fp7:607379",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:610565",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:259569",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:230561",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22713",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "efficiency",
+   "returned": [
+    {
+     "id": "p:32009D0789",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32009D0489",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32009D0347",
+     "kind": "policy"
+    },
+    {
+     "id": "c:fp7:603860",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603959",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:331505",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:334019",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:317671",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308571",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308645",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282882",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289139",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268217",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265582",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:249809",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:249745",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:245070",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:239188",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:46579",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24096",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:517620",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:19761",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:518074",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:515941",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:508298",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510122",
+     "kind": "grant"
+    },
+    {
+     "id": "g:SC5-11a-2014",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:619061",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606096",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603518",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603509",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:314983",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:317228",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:321649",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311881",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:300672",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:290793",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289461",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:288133",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:276812",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:252491",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:253189",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:260111",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:248514",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:239357",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:045101",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513489",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:512789",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3985",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509140",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503122",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:2890",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:501516",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510524",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "technology",
+   "returned": [
+    {
+     "id": "c:fp7:605809",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:604770",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606554",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606464",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:609490",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:608466",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605065",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605893",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:332445",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:298619",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:323526",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:310645",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:315630",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:314983",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311881",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:293422",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:289194",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:286978",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:286840",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:278418",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:280855",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282882",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282506",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:273575",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268211",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268205",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:264123",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268189",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:266360",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263963",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:245819",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:248135",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244104",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:243827",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:240750",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:239868",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:239188",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:233476",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:230851",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226565",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:222051",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211523",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:222048",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:219457",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:217139",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38524",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38479",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38674",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44287",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:26674",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38979",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:33110",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38351",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:36556",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:20888",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:027510",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:518378",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:8965",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:24786",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:517814",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516731",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22515",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:517821",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513195",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16392",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:515941",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:12534",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:11892",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510680",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:18379",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509204",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509811",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503068",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:510636",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503238",
+     "kind": "grant"
+    },
+    {
+     "id": "g:SC5-11a-2014",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606662",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:613717",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:613870",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:605228",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:603719",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:608790",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606971",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606605",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:611307",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:611141",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:611425",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:612250",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606942",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:604319",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:323009",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:334274",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:318878",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:312768",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311766",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:323470",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:303176",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:311858",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282767",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:293431",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:294343",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:273654",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:288815",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:275571",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:287194",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268181",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:295031",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282826",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282793",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:296127",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:285463",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:284419",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:274110",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:251863",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282621",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:284274",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:286100",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:274303",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263240",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:268217",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:276812",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265570",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263295",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265179",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:266124",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:265946",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262937",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:249809",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262444",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263188",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262062",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262755",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:247650",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:260260",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:257543",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:263946",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:246095",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:257184",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:243752",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:245986",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:252323",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:246449",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:270538",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:249745",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:247081",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:248694",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:239201",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244362",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244166",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:248726",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:236263",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:226956",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:239379",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:233597",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227248",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:235460",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227522",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211898",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:204472",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:211708",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:221478",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212814",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:217049",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:41189",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:37730",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44275",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:518355",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:43602",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32020",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38994",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:30907",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:32133",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42313",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42807",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:29863",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:37063",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42563",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:22944",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:21768",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:027473",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:021321",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:18785",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:16757",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:19761",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516159",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:42417",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516961",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:12864",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3985",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:3729",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503138",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:004475",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:003773",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:509163",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "standard",
+   "returned": [
+    {
+     "id": "p:31994R3064",
+     "kind": "policy"
+    },
+    {
+     "id": "p:31994R1278",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32013R0715",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32012L0044",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32009D0789",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32009D0489",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32009D0347",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32005D0042",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32009L0097",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32008L0083",
+     "kind": "policy"
+    },
+    {
+     "id": "c:fp7:613677",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308372",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:312060",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212117",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38644",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:518312",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513660",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502411",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:606605",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:288048",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:286978",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:251972",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:244957",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227321",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212036",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:38572",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:19884",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:518443",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:516256",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:7080",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:18080",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:6489",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:7158",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502397",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502315",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:245085",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:44345",
+     "kind": "grant"
+    }
+   ]
+  },
+  {
+   "query": "transport",
+   "returned": [
+    {
+     "id": "p:32013R0517",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32013R0519",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32004L0066",
+     "kind": "policy"
+    },
+    {
+     "id": "p:32005D0009",
+     "kind": "policy"
+    },
+    {
+     "id": "c:fp7:302251",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:300672",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:218890",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:218335",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:221760",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:230876",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:208516",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:218923",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:35833",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:12534",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:503166",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502074",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:331171",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:329978",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:308019",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:314193",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:317671",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:287142",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:287194",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:287026",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:282873",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:262444",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:251151",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:232080",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:233597",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:227422",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:212492",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:220673",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:221427",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp7:213628",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:31321",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:13427",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513481",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:513778",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:502587",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:505561",
+     "kind": "grant"
+    },
+    {
+     "id": "c:fp6:501720",
+     "kind": "grant"
+    }
+   ]
+  }
+ ]
+}
