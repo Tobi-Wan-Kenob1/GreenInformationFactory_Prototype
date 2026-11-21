@@ -1,6 +1,6 @@
 # Does a policy–funding topic tool see where the money goes? A pre-registered back-test on EU policy and research funding, 2009 and 2013
 
-**Draft v0.1 — 2026-11-20 · for co-author review · not submitted**
+**Draft v0.2 — 2026-11-21 · for co-author review · not submitted** · target: see `JOURNALS.md`
 
 *Authors:* [author list deferred — protocol §10]
 *Correspondence:* [to be added]
@@ -302,8 +302,6 @@ The form was corrected the same day, before any outcome retrieval, by two OSF
 updates with stated justifications (protocol B.1). The registered files were
 deposited on Zenodo and linked to the registration.
 
-[DECIDE: whether this paragraph stays in Methods or moves to a supplementary
-note; we recommend Methods.]
 
 ### 3.8 Exploratory analysis: controlling for frequency
 
@@ -434,6 +432,11 @@ staying common.
 trajectory since *T*, and the link, if any, between the sampled topic and what
 the organisation did. Report attrition as a finding (protocol §5.2).]
 
+### 4.4 Retrieval quality
+
+[RATERS: two domain raters, 60 documents each with 20 in common, blinded to
+rank and topic class (protocol §5.3, B.7). Report precision and Cohen's κ.]
+
 ## 5 Discussion
 
 ### 5.1 What the tool sees, and what it does not
@@ -459,8 +462,8 @@ how such tools are presented: most interfaces lead with a ranked list.
   0.16–0.19, one interval reaching zero. It is concentrated where it would be
   most useful, among terms that are not yet common.
 - That is the most defensible claim the evidence supports for the bridge idea.
-  It is weaker than the claim such tools implicitly make. [DECIDE: how strongly
-  to frame this in the title and abstract.]
+  It is weaker than the claim such tools implicitly make, and it is the claim
+  this paper makes.
 
 ### 5.2 A defect found by the back-test
 
@@ -504,9 +507,9 @@ tests has done part of its job. We report it as a result.
 - **H4 circularity.** The same codebook drives the tool's coverage panel and
   the H4 units, so H4 tests the panel against its own vocabulary. We stated
   this before registration.
-- **Retrieval quality was not assessed.** The two-rater relevance check planned
-  as a secondary measure (protocol §5.3) has not yet been carried out.
-  [DECIDE: run before submission, or report as not done.]
+- **Retrieval quality** rests on a two-rater relevance check of a sample of
+  returned documents (§4.4), not on the full set.
+  [RATERS: results pending]
 - **Tier B.** Its frame was redefined twice. The second time came after a
   draw had been seen. Its cases are illustrative and are not evidence for or
   against the tool.
@@ -536,7 +539,8 @@ not rank them.
 - Pre-registration: OSF, doi:10.17605/OSF.IO/QC2SP, with two same-day updates.
 - The tool under test, at commit `8ff0b35`, is in the same repository.
 
-[DECIDE: Zenodo release of the full results at submission.]
+A Zenodo release of the full results, analysis code and case dossiers
+accompanies submission, with its own DOI.
 
 ## Funding
 

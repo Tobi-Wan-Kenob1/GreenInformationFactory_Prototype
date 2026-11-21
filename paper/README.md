@@ -15,6 +15,7 @@ branch name.
 | `PROTOCOL.md` | The study protocol — design, hypotheses, data sources, analysis plan, limitations. **Read this first.** |
 | `PREREGISTRATION.md` | Generated from the protocol. **Filed** on OSF, [doi:10.17605/OSF.IO/QC2SP](https://doi.org/10.17605/OSF.IO/QC2SP); registered text at tag `prereg-v1`. |
 | `MANUSCRIPT.md` | The paper, draft v0.1. Every number traces to a committed result file. |
+| `JOURNALS.md` | Target-journal analysis (DEAL-covered, interdisciplinary). |
 | `OSF_FILING.md` | Where to file it and what to enter in each OSF field. |
 | `OSF_UPDATE.md` | The same-day correction to the OSF form, and why. |
 | Zenodo | The registered files: [doi:10.5281/zenodo.24392976](https://doi.org/10.5281/zenodo.24392976), verified against tag `prereg-v1`. |
