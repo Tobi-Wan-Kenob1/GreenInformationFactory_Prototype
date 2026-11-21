@@ -999,3 +999,49 @@ the record for comparison.
   point.
 - Case dossiers are in `paper/cases/`. Their register sections are generated;
   the case work is done by hand and dated.
+
+### B.7 2026-11-21 — the two-rater relevance check (§5.3, registration §11), fixed before sampling
+**What is rated.**
+- The documents the tool returned for each broad-seed-set query.
+- They are captured by re-running the recorder over the archived corpora with
+  the app at `8ff0b35`. Only the recorder is updated (tool branch `f7e1d26`),
+  and it keeps the document ids passed to the app's own `analyze`. As before,
+  the job fails unless every previously recorded field comes out identical.
+- **Unit:** a (query, returned document) pair, because relevance is relative to
+  the query.
+
+**Sample.**
+- **Size:** 50 pairs per arm, 25 from the policy side and 25 from the funding
+  side. A side with fewer than 25 pairs contributes all of them, and the
+  shortfall comes from the other side.
+- **Draw:** seeded, without replacement (A1 20091235, A2 20131235).
+- **Assignment:**
+  - 20 pairs are rated by **both** raters: 10 per arm, drawn at random.
+  - The other 80 go 40 to each rater, 20 per arm each.
+  - Each rater sees their 60 in their own random order.
+  - The assignment seed is 20261121.
+
+**Blinding.** Raters see the query, and the document's title, summary, date,
+type and link. They do not see the arm, the tool's rank, the topic class, or
+which documents the other rater has.
+
+**Judgement.** Binary:
+> Is this document on-topic for someone who searched for *query* in EU policy
+> and funding for agriculture, mining or the bioeconomy?
+
+A free-text note is optional.
+
+**Measures.**
+- **Precision:** the share of pairs judged on-topic, per arm and side. A shared
+  pair counts as the mean of the two judgements.
+- **Agreement:** Cohen's κ on the 20 shared pairs, with a percentile bootstrap
+  interval (10 000 resamples, seed 20261121).
+- A low κ is reported, and the pairs are not re-rated. Disagreements are listed.
+
+**Raters.** Two people with domain knowledge in agriculture, mining or the
+bioeconomy, named in the paper. Neither is the person who built the tool.
+
+**Blinding in an open study.** The sample and its key are deterministic and
+public, so blinding cannot be technical. Raters are asked not to open
+`results/relevance/` or run the sampling code until they have finished, and the
+paper says so.
