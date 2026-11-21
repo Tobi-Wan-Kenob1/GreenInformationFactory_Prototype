@@ -1,0 +1,1105 @@
+{
+ "protocol": "Appendix B.7",
+ "available_pairs": {
+  "A1": {
+   "policy": 19,
+   "grant": 416
+  },
+  "A2": {
+   "policy": 23,
+   "grant": 795
+  }
+ },
+ "sampled": {
+  "A1": {
+   "policy": 19,
+   "grant": 31
+  },
+  "A2": {
+   "policy": 23,
+   "grant": 27
+  }
+ },
+ "items": [
+  {
+   "rater": "R1",
+   "item": 1,
+   "arm": "A2",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:295031",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 2,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32008L0083",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 3,
+   "arm": "A2",
+   "side": "grant",
+   "query": "demand",
+   "id": "c:fp7:287062",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 4,
+   "arm": "A2",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp6:16757",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 5,
+   "arm": "A1",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32007R1548",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 6,
+   "arm": "A1",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32009R0316",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 7,
+   "arm": "A2",
+   "side": "policy",
+   "query": "efficiency",
+   "id": "p:32009D0489",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 8,
+   "arm": "A1",
+   "side": "grant",
+   "query": "demand",
+   "id": "c:fp6:027749",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 9,
+   "arm": "A2",
+   "side": "grant",
+   "query": "efficiency",
+   "id": "c:fp6:510524",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 10,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:37081",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 11,
+   "arm": "A2",
+   "side": "policy",
+   "query": "transport",
+   "id": "p:32013R0517",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 12,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:41586",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 13,
+   "arm": "A2",
+   "side": "grant",
+   "query": "database",
+   "id": "c:fp7:248218",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 14,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:32443",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 15,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp7:243827",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 16,
+   "arm": "A2",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp7:311879",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 17,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0347",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 18,
+   "arm": "A1",
+   "side": "grant",
+   "query": "transport",
+   "id": "c:fp7:212492",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 19,
+   "arm": "A1",
+   "side": "policy",
+   "query": "efficiency",
+   "id": "p:32009D0347",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 20,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32008L0083",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 21,
+   "arm": "A1",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:226565",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 22,
+   "arm": "A2",
+   "side": "policy",
+   "query": "water",
+   "id": "p:32013D0005",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 23,
+   "arm": "A2",
+   "side": "policy",
+   "query": "efficiency",
+   "id": "p:32009D0789",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 24,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp7:226565",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 25,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0489",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 26,
+   "arm": "A1",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:243827",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 27,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32005D0042",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 28,
+   "arm": "A2",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:244362",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 29,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32005D0042",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 30,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:8667",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 31,
+   "arm": "A2",
+   "side": "grant",
+   "query": "demand",
+   "id": "c:fp6:502171",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 32,
+   "arm": "A1",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp6:003773",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 33,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:42724",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 34,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp7:265946",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 35,
+   "arm": "A1",
+   "side": "grant",
+   "query": "transport",
+   "id": "c:fp6:505561",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 36,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:502572",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 37,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:24050",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 38,
+   "arm": "A2",
+   "side": "grant",
+   "query": "demand",
+   "id": "c:fp7:311781",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 39,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:516231",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 40,
+   "arm": "A1",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:233476",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 41,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0789",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 42,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32013R0715",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 43,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:31994R3064",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 44,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009L0097",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 45,
+   "arm": "A2",
+   "side": "grant",
+   "query": "transport",
+   "id": "c:fp6:12534",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 46,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp7:211779",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 47,
+   "arm": "A2",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:257543",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 48,
+   "arm": "A2",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32004R1973",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 49,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:508698",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 50,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0789",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 51,
+   "arm": "A2",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:275571",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 52,
+   "arm": "A1",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32007R0993",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 53,
+   "arm": "A2",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32008R1117",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 54,
+   "arm": "A1",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32008R1117",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 55,
+   "arm": "A1",
+   "side": "grant",
+   "query": "transport",
+   "id": "c:fp7:208516",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 56,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:502054",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 57,
+   "arm": "A2",
+   "side": "policy",
+   "query": "transport",
+   "id": "p:32013R0519",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 58,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp7:247594",
+   "shared": false
+  },
+  {
+   "rater": "R1",
+   "item": 59,
+   "arm": "A2",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp7:331419",
+   "shared": true
+  },
+  {
+   "rater": "R1",
+   "item": 60,
+   "arm": "A2",
+   "side": "policy",
+   "query": "land",
+   "id": "p:31999R2461",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 1,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:38573",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 2,
+   "arm": "A1",
+   "side": "policy",
+   "query": "land",
+   "id": "p:31999R2461",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 3,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:31994R3064",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 4,
+   "arm": "A2",
+   "side": "policy",
+   "query": "transport",
+   "id": "p:32005D0009",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 5,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp7:265946",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 6,
+   "arm": "A1",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:239379",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 7,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:16757",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 8,
+   "arm": "A2",
+   "side": "grant",
+   "query": "demand",
+   "id": "c:fp7:311781",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 9,
+   "arm": "A1",
+   "side": "policy",
+   "query": "transport",
+   "id": "p:32005D0009",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 10,
+   "arm": "A2",
+   "side": "policy",
+   "query": "water",
+   "id": "p:32013D0005",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 11,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp7:211779",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 12,
+   "arm": "A2",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp6:16757",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 13,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:40552",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 14,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:31994R1278",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 15,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:13427",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 16,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:31994R1278",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 17,
+   "arm": "A2",
+   "side": "grant",
+   "query": "transport",
+   "id": "c:fp7:287142",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 18,
+   "arm": "A2",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32009R0316",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 19,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:37081",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 20,
+   "arm": "A2",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:611141",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 21,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0489",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 22,
+   "arm": "A1",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:502572",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 23,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0489",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 24,
+   "arm": "A1",
+   "side": "grant",
+   "query": "dataset",
+   "id": "c:fp7:230561",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 25,
+   "arm": "A1",
+   "side": "policy",
+   "query": "efficiency",
+   "id": "p:32009D0347",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 26,
+   "arm": "A1",
+   "side": "policy",
+   "query": "efficiency",
+   "id": "p:32009D0489",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 27,
+   "arm": "A2",
+   "side": "grant",
+   "query": "demand",
+   "id": "c:fp7:319998",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 28,
+   "arm": "A2",
+   "side": "grant",
+   "query": "landscape",
+   "id": "c:fp7:289578",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 29,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009L0097",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 30,
+   "arm": "A2",
+   "side": "policy",
+   "query": "transport",
+   "id": "p:32013R0517",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 31,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0347",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 32,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp7:317714",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 33,
+   "arm": "A2",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32008R1117",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 34,
+   "arm": "A2",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32012L0044",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 35,
+   "arm": "A1",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32009R0316",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 36,
+   "arm": "A2",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp7:331419",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 37,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009D0789",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 38,
+   "arm": "A1",
+   "side": "policy",
+   "query": "efficiency",
+   "id": "p:32009D0789",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 39,
+   "arm": "A2",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:42261",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 40,
+   "arm": "A2",
+   "side": "grant",
+   "query": "land",
+   "id": "c:fp6:514049",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 41,
+   "arm": "A1",
+   "side": "grant",
+   "query": "database",
+   "id": "c:fp6:514049",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 42,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32005D0042",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 43,
+   "arm": "A1",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32004R1973",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 44,
+   "arm": "A1",
+   "side": "grant",
+   "query": "database",
+   "id": "c:fp7:218223",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 45,
+   "arm": "A1",
+   "side": "grant",
+   "query": "efficiency",
+   "id": "c:fp6:46579",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 46,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:22793",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 47,
+   "arm": "A2",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp7:226565",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 48,
+   "arm": "A1",
+   "side": "grant",
+   "query": "transport",
+   "id": "c:fp6:505561",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 49,
+   "arm": "A2",
+   "side": "policy",
+   "query": "database",
+   "id": "p:32013R0603",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 50,
+   "arm": "A1",
+   "side": "policy",
+   "query": "transport",
+   "id": "p:32004L0066",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 51,
+   "arm": "A1",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp6:43602",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 52,
+   "arm": "A2",
+   "side": "grant",
+   "query": "standard",
+   "id": "c:fp6:518443",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 53,
+   "arm": "A2",
+   "side": "policy",
+   "query": "transport",
+   "id": "p:32004L0066",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 54,
+   "arm": "A2",
+   "side": "grant",
+   "query": "demand",
+   "id": "c:fp6:503122",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 55,
+   "arm": "A2",
+   "side": "policy",
+   "query": "efficiency",
+   "id": "p:32009D0347",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 56,
+   "arm": "A1",
+   "side": "grant",
+   "query": "water",
+   "id": "c:fp6:516731",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 57,
+   "arm": "A1",
+   "side": "policy",
+   "query": "standard",
+   "id": "p:32009L0097",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 58,
+   "arm": "A2",
+   "side": "policy",
+   "query": "land",
+   "id": "p:32004R1973",
+   "shared": true
+  },
+  {
+   "rater": "R2",
+   "item": 59,
+   "arm": "A1",
+   "side": "grant",
+   "query": "efficiency",
+   "id": "c:fp6:045101",
+   "shared": false
+  },
+  {
+   "rater": "R2",
+   "item": 60,
+   "arm": "A1",
+   "side": "grant",
+   "query": "technology",
+   "id": "c:fp7:233476",
+   "shared": true
+  }
+ ]
+}
