@@ -66,6 +66,6 @@ the frozen inputs.
       (2026-11-20); results in `results/RESULTS.md`, run record in protocol B.3
 - [ ] WP4 — Tier B sampled (protocol B.4, re-drawn within scope under B.6;
       both draws in `results/`); 10 dossiers in `cases/` await the case work
-- [ ] WP5 — write-up and FAIR release
+- [ ] WP5 — write-up (kept outside the repository until submission); FAIR release at submission
 
 Tool changes go on `main`. This branch carries the study, not the instrument.
